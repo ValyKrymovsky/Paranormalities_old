@@ -4,6 +4,7 @@ using UnityEngine.InputSystem;
 public class P_Camera : MonoBehaviour
 {
     // Parameters //
+    [Header("Sensetivity")]
     [SerializeField] private float sensetivity; // mouse sensetivity
     private float cur_rotX = 0f;                // current mouse rotation value on X axis
 

@@ -4,7 +4,7 @@ using UnityEngine.InputSystem;
 public class P_Movement : MonoBehaviour
 {
     // Speed //
-    [Header("Player Speed")]
+    [Header("Player speed")]
     [SerializeField]private float speed;    // walking speed
     [SerializeField]private float multiplier;    // sprint speed multiplier
 
@@ -25,14 +25,18 @@ public class P_Movement : MonoBehaviour
     // Components //
     private CharacterController ch_controller;    // Character Controller object
     private P_Controls p_input;
+    private P_Stamina p_stamina;
 
     // Input Actions //
     private InputAction ac_move;
     private InputAction ac_sprint;
 
+    int index = 0;
+
     private void Awake()
     {
         ch_controller = GetComponent<CharacterController>();
+        p_stamina = GetComponent<P_Stamina>();
         p_input = new P_Controls();
 
         ac_move = p_input.Player.Move;
@@ -57,7 +61,6 @@ public class P_Movement : MonoBehaviour
     private void Update()
     {
         PlayerMove();
-        Sprint();
     }
 
 
@@ -79,20 +82,50 @@ public class P_Movement : MonoBehaviour
         moveDir.y = velocity;
         ch_controller.Move(moveDir * (speed * multiplier) * Time.deltaTime);
 
-        isMoving = (moveDir.x + moveDir.z) != 0 ? true : false;
+        isMoving = (input_value.x + input_value.y) != 0 ? true : false;
+        isMovingForward = input_value.y > 0 ? true : false;
 
-        Debug.Log("isMoving: " + isMoving);
-        Debug.Log("isMovingForward: " + isMovingForward);
-        Debug.Log(moveDir);
-        // Debug.Log(velocity);
-        // Debug.Log(ch_controller.isGrounded);
+        Sprint();
+
+        // Debug.Log("isMoving: " + isMoving);
+        // Debug.Log("isMovingForward: " + isMovingForward);
+        // Debug.Log("isSprinting: " + isSprinting);
+        // Debug.Log(input_value);
+        // Debug.Log(p_stamina.getStamina());
     }
 
     private void Sprint()
     {
-        float input_value = ac_sprint.ReadValue<float>();
+        if (isMovingForward && !p_stamina.staminaDepleted())
+        {
+            float input_value = ac_sprint.ReadValue<float>();
+            (multiplier, isSprinting) = input_value == 1 ? (1.75f, true) : (1, false);
 
-        multiplier = input_value > 0 ? 1.5f : 1;
+            if (isSprinting)
+            {
+                if (p_stamina.regenerating)
+                {
+                    StopCoroutine(p_stamina.regenerateStamina(.25f));
+                    p_stamina.regenerating = false;
+                }
+                p_stamina.depleteStamina(.25f);
+            }
+
+        }
+        else if (p_stamina.staminaDepleted() && !p_stamina.regenerating)
+        {
+            multiplier = 1;
+            StartCoroutine(p_stamina.regenerateStamina(.25f));
+            index += 1;
+            Debug.Log(index);
+        }
+        else
+        {
+            multiplier = 1;
+        }
+
+        Debug.Log("startedRegenerating: " + p_stamina.regenerating);
+        Debug.Log("stamineDepleted: " + p_stamina.staminaDepleted());
     }
 }
 
