@@ -8,12 +8,21 @@ public class P_Stamina : MonoBehaviour
     [Header("Stamina")]
     [SerializeField] private float maxStamina;
     [SerializeField] private float currentStamina;
-    [SerializeField] public bool regenerating;
+    [SerializeField] public bool isRegenerating;
+    [SerializeField] public bool regenIsNeeded;
+    [SerializeField] public bool staminaWasDepleted;
+    [SerializeField] private float regenDelay;
 
     void Start()
     {
         currentStamina = maxStamina;
     }
+
+    void Update() 
+    {
+         regenIsNeeded = regenNeeded();
+    }
+
     public float getStamina()
     {
         return currentStamina;
@@ -53,34 +62,51 @@ public class P_Stamina : MonoBehaviour
 
     public IEnumerator regenerateStamina(float amount)
     {
-        if (currentStamina < maxStamina)
+        yield return new WaitForSeconds(regenDelay);
+        while (currentStamina <= maxStamina)
         {
-            yield return new WaitForSeconds(3);
-            regenerating = true;
             currentStamina += amount;
-
-            if (currentStamina > maxStamina)
-            {
-                regenerating = false;
-                currentStamina = maxStamina;
-                yield break;
-            }
+            yield return null;
         }
+
+        isRegenerating = false;
+        staminaWasDepleted = false;
+        currentStamina = maxStamina;
     }
 
-    public bool staminaDepleted()
+    public Coroutine startRegen(float regenValue)
     {
-        if (currentStamina == 0)
+        isRegenerating = true;
+        return StartCoroutine(regenerateStamina(regenValue));
+    }
+
+    public bool regenNeeded()
+    {
+        if (currentStamina != maxStamina)
         {
             return true;
         }
-        else if (regenerating && currentStamina != maxStamina)
+        return false;
+    }
+
+    public bool staminaRegenerating()
+    {
+        return isRegenerating;
+    }
+    public bool staminaDepleted()
+    {
+        if (currentStamina <= 0)
+        {
+            staminaWasDepleted = true;
+            return true;
+        }
+        else if (isRegenerating && currentStamina != maxStamina && staminaWasDepleted)
         {
             return true;
         }
         else
         {
-            regenerating = false;
+            staminaWasDepleted = false;
             return false;
         }
     }
