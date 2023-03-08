@@ -155,6 +155,7 @@ public class P_Movement : MonoBehaviour
         ch_controller.Move(moveDir * (speed * internalMultiplier * moveSensetivity) * Time.deltaTime);
 
     }
+
 }
 
     

@@ -10,6 +10,8 @@ public class P_Interactor : MonoBehaviour
     private Transform interactorSource;
     [SerializeField] private float range;
 
+    private Inventory inventory;
+
     // Components //
     private P_Controls p_input;
 
@@ -22,6 +24,9 @@ public class P_Interactor : MonoBehaviour
         p_input = new P_Controls();
         ac_interact = p_input.Player.Interact;
         interactorSource = transform;
+
+        inventory = new Inventory(4);
+        inventory.AddItem(new Item{ itemType = Item.ItemType.Key});
     }
 
     void OnEnable()
@@ -34,7 +39,7 @@ public class P_Interactor : MonoBehaviour
         p_input.Disable();
     }
 
-    public void Interaction(InputAction.CallbackContext context)
+    public void Interact(InputAction.CallbackContext context)
     {
         if (((int)context.phase) == 2)
         {
