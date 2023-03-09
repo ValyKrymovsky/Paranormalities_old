@@ -13,7 +13,8 @@ public class P_Movement : MonoBehaviour
     // Gravity //
     [Header("Gravity")]
     [SerializeField] private float velocity;
-    [SerializeField] private float gravity;
+    private float gravity = -9.8f;
+    [SerializeField] private float gravityMultiplier;
     [SerializeField] private bool isGrounded;
 
 
@@ -28,7 +29,8 @@ public class P_Movement : MonoBehaviour
 
 
     // Direction //
-    private Vector3 moveDir;    // direction where player should move
+    private Vector3 moveDir;    // Vector3 for player movement
+    private float moveDirY;    // float for gravity
     private Vector2 p_movement;    // movement value from Input System
 
 
@@ -75,14 +77,14 @@ public class P_Movement : MonoBehaviour
     private void Update()
     {
         PlayerMove();
-        Debug.Log(isGrounded);
     }
 
 
     private void PlayerMove() 
     {
         Vector2 input_value = ac_move.ReadValue<Vector2>();
-        moveDir = (input_value.y * transform.forward + input_value.x * transform.right).normalized;
+        float controllerMoveSensetivity = Mathf.Max(Mathf.Abs(input_value.x), Mathf.Abs(input_value.y));
+        moveDir = (input_value.x * transform.right + input_value.y * transform.forward).normalized * controllerMoveSensetivity;
 
         isMoving = (input_value.x + input_value.y) != 0 ? true : false;
         isMovingForward = input_value.y > 0 ? true : false;
@@ -140,30 +142,33 @@ public class P_Movement : MonoBehaviour
                 break;
 
         }
-        
 
+        ApplyGravity();
 
+        moveDir.y = moveDirY;
+
+        ch_controller.Move(moveDir * (speed * internalMultiplier) * Time.deltaTime);
+    }
+
+    private void ApplyGravity()
+    {
         // Checks if player is grounded
-        if (checkIsGrounded() && velocity < 0.0f)
+        if (CheckIsGrounded())
         {
             velocity = -1.0f;
         }
         else
         {
-            velocity += gravity * Time.deltaTime;
-            
+            velocity += (gravity * gravityMultiplier) * Time.deltaTime;
         }
 
-        moveDir.y = velocity;
-        float moveSensetivity = Mathf.Max(Mathf.Abs(input_value.x), Mathf.Abs(input_value.y));
-        ch_controller.Move(moveDir * (speed * internalMultiplier * moveSensetivity) * Time.deltaTime);
-
+        moveDirY = velocity;
     }
 
-    private bool checkIsGrounded()
+    private bool CheckIsGrounded()
     {
         Vector3 position = new Vector3(transform.position.x, transform.position.y, transform.position.z);
-        Vector3 boxSize = new Vector3(.1f, .2f, .1f);
+        Vector3 boxSize = new Vector3(.1f, .1f, .1f);
         
         bool checkSuc = Physics.BoxCast(position, boxSize, -(transform.up), out RaycastHit hit, transform.rotation, ch_controller.height / 2);
 
@@ -183,7 +188,7 @@ public class P_Movement : MonoBehaviour
     private void OnDrawGizmos()
     {
         Vector3 position = new Vector3(transform.position.x, transform.position.y - 1, transform.position.z);
-        Vector3 boxSize = new Vector3(.1f, .2f, .1f);
+        Vector3 boxSize = new Vector3(.1f, .1f, .1f);
         if (isGrounded)
         {
             Gizmos.color = Color.green;

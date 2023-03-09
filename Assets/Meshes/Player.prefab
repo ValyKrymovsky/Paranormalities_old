@@ -45,8 +45,8 @@ GameObject:
   - component: {fileID: 2515972407150619127}
   - component: {fileID: 2606980437195095453}
   - component: {fileID: 6433174313061882170}
-  - component: {fileID: 5046442445887444707}
   - component: {fileID: 3961792582450848752}
+  - component: {fileID: 5046442445887444707}
   - component: {fileID: 8993109297548743734}
   m_Layer: 0
   m_Name: Player
@@ -153,26 +153,6 @@ CharacterController:
   m_SkinWidth: 0.0001
   m_MinMoveDistance: 0.001
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &5046442445887444707
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5671594858818079098}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d31eb7102ae6dba48aa4c0b4812c7fce, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  speed: 2
-  sprintMultiplier: 1.75
-  velocity: 0
-  gravity: -4
-  isGrounded: 0
-  useStamina: 1
-  depletionValue: 0.2
-  regenValue: 0.1
 --- !u!114 &3961792582450848752
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -224,6 +204,26 @@ MonoBehaviour:
   m_DefaultActionMap: Player
   m_SplitScreenIndex: -1
   m_Camera: {fileID: 0}
+--- !u!114 &5046442445887444707
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5671594858818079098}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d31eb7102ae6dba48aa4c0b4812c7fce, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  speed: 2
+  sprintMultiplier: 1.75
+  velocity: 0
+  gravity: -4
+  isGrounded: 0
+  useStamina: 1
+  depletionValue: 0.2
+  regenValue: 0.1
 --- !u!114 &8993109297548743734
 MonoBehaviour:
   m_ObjectHideFlags: 0
