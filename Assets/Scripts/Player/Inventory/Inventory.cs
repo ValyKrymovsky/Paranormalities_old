@@ -4,18 +4,18 @@ using UnityEngine;
 
 public class Inventory
 {
-    private List<Item> inventory;
+    private List<ItemObject> inventory;
     private int inventorySize;
     private bool inventoryFull;
 
     public Inventory(int size)
     {
-        inventory = new List<Item>();
+        inventory = new List<ItemObject>();
         inventorySize = size;
         inventoryFull = false;
     }
 
-    public void AddItem(Item item)
+    public void AddItem(ItemObject item)
     {
         if (inventory.Count >= inventorySize)
         {
@@ -44,7 +44,7 @@ public class Inventory
         return inventory.Count;
     }
 
-    public void RemoveItem(Item item)
+    public void RemoveItem(ItemObject item)
     {
         
     }

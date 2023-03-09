@@ -2,14 +2,13 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "NewItem", menuName = "ItemData")]
-public class Item : ScriptableObject
+[CreateAssetMenu(fileName = "NewDefault", menuName = "Inventory Item")]
+public abstract class ItemObject : ScriptableObject
 {
     public enum ItemType 
     {
         Key,
         Health,
-        Valuable,
         Usable,
     }
 
@@ -17,6 +16,8 @@ public class Item : ScriptableObject
     public ItemType itemType;
     public GameObject model;
     public Sprite picture;
+    [TextArea(15,20)]
+    public string description;
 
 
 }
