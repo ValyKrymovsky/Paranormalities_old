@@ -14,9 +14,10 @@ public class P_Movement : MonoBehaviour
     [Header("Gravity")]
     [SerializeField] private float velocity;
     [SerializeField] private float gravity;
+    [SerializeField] private bool isGrounded;
 
 
-    // Booleans //
+    // Stamina //
     [Header("Stamina")]
      [SerializeField] private bool useStamina;  // use stamina system or not
      [SerializeField] private float depletionValue; // float value for stamina depletion
@@ -74,6 +75,7 @@ public class P_Movement : MonoBehaviour
     private void Update()
     {
         PlayerMove();
+        Debug.Log(isGrounded);
     }
 
 
@@ -140,8 +142,9 @@ public class P_Movement : MonoBehaviour
         }
         
 
+
         // Checks if player is grounded
-        if (ch_controller.isGrounded && velocity < 0.0f)
+        if (checkIsGrounded() && velocity < 0.0f)
         {
             velocity = -1.0f;
         }
@@ -150,12 +153,48 @@ public class P_Movement : MonoBehaviour
             velocity += gravity * Time.deltaTime;
             
         }
+
         moveDir.y = velocity;
         float moveSensetivity = Mathf.Max(Mathf.Abs(input_value.x), Mathf.Abs(input_value.y));
         ch_controller.Move(moveDir * (speed * internalMultiplier * moveSensetivity) * Time.deltaTime);
 
     }
 
+    private bool checkIsGrounded()
+    {
+        Vector3 position = new Vector3(transform.position.x, transform.position.y, transform.position.z);
+        Vector3 boxSize = new Vector3(.1f, .2f, .1f);
+        
+        bool checkSuc = Physics.BoxCast(position, boxSize, -(transform.up), out RaycastHit hit, transform.rotation, ch_controller.height / 2);
+
+        if (checkSuc)
+        {
+            isGrounded = hit.collider.gameObject.tag == "Floor" ? true : false;
+        }
+        else
+        {
+            isGrounded = false;
+        }
+        
+        return isGrounded;
+    }
+
+
+    private void OnDrawGizmos()
+    {
+        Vector3 position = new Vector3(transform.position.x, transform.position.y - 1, transform.position.z);
+        Vector3 boxSize = new Vector3(.1f, .2f, .1f);
+        if (isGrounded)
+        {
+            Gizmos.color = Color.green;
+            Gizmos.DrawWireCube(position, boxSize);
+        }
+        else
+        {
+            Gizmos.color = Color.red;
+            Gizmos.DrawWireCube(position, boxSize);
+        }
+    }
 }
 
     

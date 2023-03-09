@@ -2,7 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Item
+[CreateAssetMenu(fileName = "NewItem", menuName = "ItemData")]
+public class Item : ScriptableObject
 {
     public enum ItemType 
     {
@@ -12,6 +13,10 @@ public class Item
         Usable,
     }
 
+    public string objectName;
     public ItemType itemType;
+    public GameObject model;
+    public Sprite picture;
+
 
 }

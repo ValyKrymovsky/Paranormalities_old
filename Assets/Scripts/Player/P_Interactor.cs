@@ -26,7 +26,7 @@ public class P_Interactor : MonoBehaviour
         interactorSource = transform;
 
         inventory = new Inventory(4);
-        inventory.AddItem(new Item{ itemType = Item.ItemType.Key});
+        // inventory.AddItem(new Item{ itemType = Item.ItemType.Key});
     }
 
     void OnEnable()
