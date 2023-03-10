@@ -46,6 +46,7 @@ GameObject:
   - component: {fileID: 2606980437195095453}
   - component: {fileID: 6433174313061882170}
   - component: {fileID: 3961792582450848752}
+  - component: {fileID: 2094774383673574496}
   - component: {fileID: 5046442445887444707}
   - component: {fileID: 8993109297548743734}
   m_Layer: 0
@@ -204,6 +205,19 @@ MonoBehaviour:
   m_DefaultActionMap: Player
   m_SplitScreenIndex: -1
   m_Camera: {fileID: 0}
+--- !u!114 &2094774383673574496
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5671594858818079098}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ca5c5b8fcc6548f438d22d8ac797a08f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  inventory: {fileID: 11400000, guid: e4d20d38a75354642913ec5cd003b94e, type: 2}
 --- !u!114 &5046442445887444707
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -219,7 +233,7 @@ MonoBehaviour:
   speed: 2
   sprintMultiplier: 1.75
   velocity: 0
-  gravity: -4
+  gravityMultiplier: 0
   isGrounded: 0
   useStamina: 1
   depletionValue: 0.2
@@ -435,7 +449,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 7822746496191751813}
         m_TargetAssemblyTypeName: P_Interactor, Assembly-CSharp
-        m_MethodName: Interaction
+        m_MethodName: Interact
         m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

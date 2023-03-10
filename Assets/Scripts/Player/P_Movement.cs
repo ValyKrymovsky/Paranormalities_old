@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 
+[System.Serializable]
 public class P_Movement : MonoBehaviour
 {
     // Speed //
@@ -80,7 +81,7 @@ public class P_Movement : MonoBehaviour
     }
 
 
-    private void PlayerMove() 
+    public void PlayerMove() 
     {
         Vector2 input_value = ac_move.ReadValue<Vector2>();
         float controllerMoveSensetivity = Mathf.Max(Mathf.Abs(input_value.x), Mathf.Abs(input_value.y));

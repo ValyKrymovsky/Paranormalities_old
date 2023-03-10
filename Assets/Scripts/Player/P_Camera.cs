@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 
+[System.Serializable]
 public class P_Camera : MonoBehaviour
 {
     // Parameters //
@@ -45,7 +46,7 @@ public class P_Camera : MonoBehaviour
     }
 
 
-    private void Look()
+    public void Look()
     {
         Vector2 input_value = ac_look.ReadValue<Vector2>();
 

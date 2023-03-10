@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "NewHealth", menuName = "Inventory Item/Items/Health")]
+[CreateAssetMenu(fileName = "NewHealth", menuName = "Inventory System/Items/Health")]
 public class Health : ItemObject
 {
     [SerializeField] private int healValue;
