@@ -38,6 +38,7 @@ public class P_Interactor : MonoBehaviour
     {
         if (((int)context.phase) == 2)
         {
+            Debug.Log("Interacted!");
             Ray r = new Ray(interactorSource.position, interactorSource.forward);
             
             if (Physics.Raycast(r, out RaycastHit hitInfo, range)) 

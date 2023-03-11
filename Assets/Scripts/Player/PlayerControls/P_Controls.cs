@@ -71,6 +71,42 @@ public partial class @P_Controls : IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Hotbar"",
+                    ""type"": ""Button"",
+                    ""id"": ""2b4c15e6-90db-41d5-8011-f4547cc09c1c"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Drop item"",
+                    ""type"": ""Button"",
+                    ""id"": ""a9948610-de7f-48f7-8b98-71e7a92bd98f"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Stats"",
+                    ""type"": ""Button"",
+                    ""id"": ""f980ada6-fcf8-431d-b567-55f42ba4b8e6"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Menu"",
+                    ""type"": ""Button"",
+                    ""id"": ""214a6c92-6730-4576-9264-8692045c4ccf"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -293,6 +329,39 @@ public partial class @P_Controls : IInputActionCollection2, IDisposable
                     ""action"": ""Interact"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""ca7dde2d-ddf7-4994-8787-c6ffa6a8205d"",
+                    ""path"": ""<Keyboard>/q"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Drop item"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""42159758-5511-4e4b-b605-8f50a8ab4ec7"",
+                    ""path"": ""<Keyboard>/backquote"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Stats"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""1ff7a1e4-65cd-4891-8731-e7c17c6f24e2"",
+                    ""path"": ""<Keyboard>/escape"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Menu"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -345,6 +414,10 @@ public partial class @P_Controls : IInputActionCollection2, IDisposable
         m_Player_Sprint = m_Player.FindAction("Sprint", throwIfNotFound: true);
         m_Player_Crouch = m_Player.FindAction("Crouch", throwIfNotFound: true);
         m_Player_Interact = m_Player.FindAction("Interact", throwIfNotFound: true);
+        m_Player_Hotbar = m_Player.FindAction("Hotbar", throwIfNotFound: true);
+        m_Player_Dropitem = m_Player.FindAction("Drop item", throwIfNotFound: true);
+        m_Player_Stats = m_Player.FindAction("Stats", throwIfNotFound: true);
+        m_Player_Menu = m_Player.FindAction("Menu", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -409,6 +482,10 @@ public partial class @P_Controls : IInputActionCollection2, IDisposable
     private readonly InputAction m_Player_Sprint;
     private readonly InputAction m_Player_Crouch;
     private readonly InputAction m_Player_Interact;
+    private readonly InputAction m_Player_Hotbar;
+    private readonly InputAction m_Player_Dropitem;
+    private readonly InputAction m_Player_Stats;
+    private readonly InputAction m_Player_Menu;
     public struct PlayerActions
     {
         private @P_Controls m_Wrapper;
@@ -418,6 +495,10 @@ public partial class @P_Controls : IInputActionCollection2, IDisposable
         public InputAction @Sprint => m_Wrapper.m_Player_Sprint;
         public InputAction @Crouch => m_Wrapper.m_Player_Crouch;
         public InputAction @Interact => m_Wrapper.m_Player_Interact;
+        public InputAction @Hotbar => m_Wrapper.m_Player_Hotbar;
+        public InputAction @Dropitem => m_Wrapper.m_Player_Dropitem;
+        public InputAction @Stats => m_Wrapper.m_Player_Stats;
+        public InputAction @Menu => m_Wrapper.m_Player_Menu;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -442,6 +523,18 @@ public partial class @P_Controls : IInputActionCollection2, IDisposable
                 @Interact.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnInteract;
                 @Interact.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnInteract;
                 @Interact.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnInteract;
+                @Hotbar.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnHotbar;
+                @Hotbar.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnHotbar;
+                @Hotbar.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnHotbar;
+                @Dropitem.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnDropitem;
+                @Dropitem.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnDropitem;
+                @Dropitem.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnDropitem;
+                @Stats.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnStats;
+                @Stats.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnStats;
+                @Stats.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnStats;
+                @Menu.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnMenu;
+                @Menu.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnMenu;
+                @Menu.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnMenu;
             }
             m_Wrapper.m_PlayerActionsCallbackInterface = instance;
             if (instance != null)
@@ -461,6 +554,18 @@ public partial class @P_Controls : IInputActionCollection2, IDisposable
                 @Interact.started += instance.OnInteract;
                 @Interact.performed += instance.OnInteract;
                 @Interact.canceled += instance.OnInteract;
+                @Hotbar.started += instance.OnHotbar;
+                @Hotbar.performed += instance.OnHotbar;
+                @Hotbar.canceled += instance.OnHotbar;
+                @Dropitem.started += instance.OnDropitem;
+                @Dropitem.performed += instance.OnDropitem;
+                @Dropitem.canceled += instance.OnDropitem;
+                @Stats.started += instance.OnStats;
+                @Stats.performed += instance.OnStats;
+                @Stats.canceled += instance.OnStats;
+                @Menu.started += instance.OnMenu;
+                @Menu.performed += instance.OnMenu;
+                @Menu.canceled += instance.OnMenu;
             }
         }
     }
@@ -499,5 +604,9 @@ public partial class @P_Controls : IInputActionCollection2, IDisposable
         void OnSprint(InputAction.CallbackContext context);
         void OnCrouch(InputAction.CallbackContext context);
         void OnInteract(InputAction.CallbackContext context);
+        void OnHotbar(InputAction.CallbackContext context);
+        void OnDropitem(InputAction.CallbackContext context);
+        void OnStats(InputAction.CallbackContext context);
+        void OnMenu(InputAction.CallbackContext context);
     }
 }

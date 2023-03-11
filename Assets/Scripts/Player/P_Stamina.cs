@@ -45,6 +45,17 @@ public class P_Stamina : MonoBehaviour
         return maxStamina;
     }
 
+    public float getCurrentStamina()
+    {
+        return currentStamina;
+    }
+
+    public float setCurrentStamina(float amount)
+    {
+        currentStamina = amount;
+        return currentStamina;
+    }
+
     public float depleteStamina(float amount)
     {
         if (currentStamina <= maxStamina && currentStamina > 0)

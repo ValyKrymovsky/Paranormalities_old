@@ -1,20 +1,30 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
+
+interface IInventory
+{
+    public void PickUp();
+    public void Drop();
+}
 
 [CreateAssetMenu(fileName = "NewInventory", menuName = "Inventory System/Inventory")]
 public class InventoryObject : ScriptableObject
 {
-    public List<InventorySlot> inventory = new List<InventorySlot>();
+    public List<ItemObject> inventory = new List<ItemObject>();
     public int inventorySize;
     public bool inventoryFull;
+    private P_Controls p_input;
 
-    public void AddItem(ItemObject _item)
+    private InputAction ac_pickUp;
+    private InputAction ac_selection;
+
+    public bool AddItem(ItemObject _item)
     {
         bool hasItem = false;
         for (int i = 0; i < inventory.Count; i++)
         {
-            if (inventory[i].item == _item)
+            if (inventory[i] == _item)
             {
                 hasItem = true;
                 break;
@@ -24,7 +34,12 @@ public class InventoryObject : ScriptableObject
         // IsInventoryFull();
         if (!hasItem)
         {
-            inventory.Add(new InventorySlot(_item));
+            inventory.Add(_item);
+            return true;
+        }
+        else
+        {
+            return false;
         }
     }
 
@@ -43,16 +58,41 @@ public class InventoryObject : ScriptableObject
 
     }
 
-    public void printInventory()
+    public void DropItem(ItemObject _item)
+    {
+        bool hasItem = false;
+        int itemIndex = 0;
+        for (int i = 0; i < inventory.Count; i++)
+        {
+            if (inventory[i] == _item)
+            {
+                hasItem = true;
+                itemIndex = i;
+                break;
+            }
+        }
+
+        if (hasItem)
+        {
+            inventory.RemoveAt(itemIndex);
+        }
+    }
+
+    public void PrintInventory()
     {
         for (int i = 0; i < inventory.Count; i++)
         {
-            Debug.Log(inventory[i].item);
+            Debug.Log(inventory[i]);
         }
+    }
+
+    public int GetInventorySize()
+    {
+        return inventorySize;
     }
 }
 
-[System.Serializable]
+/**[System.Serializable]
 public class InventorySlot
 {
     public ItemObject item;
@@ -63,4 +103,4 @@ public class InventorySlot
     }
 
     
-}
+}**/
