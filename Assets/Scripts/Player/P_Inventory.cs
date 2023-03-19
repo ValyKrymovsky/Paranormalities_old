@@ -13,6 +13,8 @@ public class P_Inventory : MonoBehaviour
 
     public void Awake()
     {
+        inventory.inventorySize = inventory.GetInventorySize() <= 0 ? 1 : inventory.GetInventorySize();
+
         p_input = new P_Controls();
         ac_selection = p_input.Player.Hotbar;
 

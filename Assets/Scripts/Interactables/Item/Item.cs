@@ -6,11 +6,12 @@ public class Item : MonoBehaviour, IInteractable, IInventory
 {
     public ItemObject item;
     public P_Inventory inventory;
-    private GameObject body;
+    private GameObject model;
+    private GameObject selectedItem;
 
     public void Awake()
     {
-        body = this.gameObject;
+        model = this.gameObject;
     }
 
     
@@ -23,7 +24,7 @@ public class Item : MonoBehaviour, IInteractable, IInventory
     public void Drop()
     {
         Transform playerTransform = GameObject.FindGameObjectWithTag("Player").transform;
-        Instantiate(body, playerTransform.position + playerTransform.forward, transform.rotation);
+        Instantiate(selectedItem, playerTransform.position + playerTransform.forward, transform.rotation);
     }
 
     public void PickUp()
