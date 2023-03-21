@@ -1,17 +1,27 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class Item : MonoBehaviour, IInteractable, IInventory
 {
-    public ItemObject item;
-    public P_Inventory inventory;
+    [Header("Object")]
+    [SerializeField] private ItemObject item;
+    [SerializeField] private Sprite image;
     private GameObject model;
     private GameObject selectedItem;
+
+    [Header("Inventory")]
+    [SerializeField] private P_Inventory inventory;
+
+    [Header("Toolbar")]
+    [SerializeField] private GameObject toolbarObject;
+    [SerializeField] private Toolbar toolbar;
+    
+    
 
     public void Awake()
     {
         model = this.gameObject;
+        toolbarObject = GameObject.Find("Inventory Toolbar");
+        toolbar = toolbarObject.GetComponent<Toolbar>();
     }
 
     

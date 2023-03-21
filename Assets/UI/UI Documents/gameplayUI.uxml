@@ -1,0 +1,4 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" editor-extension-mode="False">
+    <Style src="project://database/Assets/UI/Style%20Sheets/gameplayUI.uss?fileID=7433441132597879392&amp;guid=1a21d1af51c69ee4a87e515f004b719a&amp;type=3#gameplayUI" />
+    <ui:Button text="Button" display-tooltip-when-elided="true" class="button" />
+</ui:UXML>
