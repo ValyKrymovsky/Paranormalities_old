@@ -1,0 +1,1521 @@
+fileFormatVersion: 2
+guid: 5e7ed4c8ec8de2743b9bd93130790085
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: 21300000
+    second: Crosshairs_Outline_Spritesheet_0
+  - first:
+      213: 21300002
+    second: Crosshairs_Outline_Spritesheet_1
+  - first:
+      213: 21300004
+    second: Crosshairs_Outline_Spritesheet_2
+  - first:
+      213: 21300006
+    second: Crosshairs_Outline_Spritesheet_3
+  - first:
+      213: 21300008
+    second: Crosshairs_Outline_Spritesheet_4
+  - first:
+      213: 21300010
+    second: Crosshairs_Outline_Spritesheet_5
+  - first:
+      213: 21300012
+    second: Crosshairs_Outline_Spritesheet_6
+  - first:
+      213: 21300014
+    second: Crosshairs_Outline_Spritesheet_7
+  - first:
+      213: 21300016
+    second: Crosshairs_Outline_Spritesheet_8
+  - first:
+      213: 21300018
+    second: Crosshairs_Outline_Spritesheet_9
+  - first:
+      213: 21300020
+    second: Crosshairs_Outline_Spritesheet_10
+  - first:
+      213: 21300022
+    second: Crosshairs_Outline_Spritesheet_11
+  - first:
+      213: 21300024
+    second: Crosshairs_Outline_Spritesheet_12
+  - first:
+      213: 21300026
+    second: Crosshairs_Outline_Spritesheet_13
+  - first:
+      213: 21300028
+    second: Crosshairs_Outline_Spritesheet_14
+  - first:
+      213: 21300030
+    second: Crosshairs_Outline_Spritesheet_15
+  - first:
+      213: 21300032
+    second: Crosshairs_Outline_Spritesheet_16
+  - first:
+      213: 21300034
+    second: Crosshairs_Outline_Spritesheet_17
+  - first:
+      213: 21300036
+    second: Crosshairs_Outline_Spritesheet_18
+  - first:
+      213: 21300038
+    second: Crosshairs_Outline_Spritesheet_19
+  - first:
+      213: 21300040
+    second: Crosshairs_Outline_Spritesheet_20
+  - first:
+      213: 21300042
+    second: Crosshairs_Outline_Spritesheet_21
+  - first:
+      213: 21300044
+    second: Crosshairs_Outline_Spritesheet_22
+  - first:
+      213: 21300046
+    second: Crosshairs_Outline_Spritesheet_23
+  - first:
+      213: 21300048
+    second: Crosshairs_Outline_Spritesheet_24
+  - first:
+      213: 21300050
+    second: Crosshairs_Outline_Spritesheet_25
+  - first:
+      213: 21300052
+    second: Crosshairs_Outline_Spritesheet_26
+  - first:
+      213: 21300054
+    second: Crosshairs_Outline_Spritesheet_27
+  - first:
+      213: 21300056
+    second: Crosshairs_Outline_Spritesheet_28
+  - first:
+      213: 21300058
+    second: Crosshairs_Outline_Spritesheet_29
+  - first:
+      213: 21300060
+    second: Crosshairs_Outline_Spritesheet_30
+  - first:
+      213: 21300062
+    second: Crosshairs_Outline_Spritesheet_31
+  - first:
+      213: 21300064
+    second: Crosshairs_Outline_Spritesheet_32
+  - first:
+      213: 21300066
+    second: Crosshairs_Outline_Spritesheet_33
+  - first:
+      213: 21300068
+    second: Crosshairs_Outline_Spritesheet_34
+  - first:
+      213: 21300070
+    second: Crosshairs_Outline_Spritesheet_35
+  - first:
+      213: 21300072
+    second: Crosshairs_Outline_Spritesheet_36
+  - first:
+      213: 21300074
+    second: Crosshairs_Outline_Spritesheet_37
+  - first:
+      213: 21300076
+    second: Crosshairs_Outline_Spritesheet_38
+  - first:
+      213: 21300078
+    second: Crosshairs_Outline_Spritesheet_39
+  - first:
+      213: 21300080
+    second: Crosshairs_Outline_Spritesheet_40
+  - first:
+      213: 21300082
+    second: Crosshairs_Outline_Spritesheet_41
+  - first:
+      213: 21300084
+    second: Crosshairs_Outline_Spritesheet_42
+  - first:
+      213: 21300086
+    second: Crosshairs_Outline_Spritesheet_43
+  - first:
+      213: 21300088
+    second: Crosshairs_Outline_Spritesheet_44
+  - first:
+      213: 21300090
+    second: Crosshairs_Outline_Spritesheet_45
+  - first:
+      213: 21300092
+    second: Crosshairs_Outline_Spritesheet_46
+  - first:
+      213: 21300094
+    second: Crosshairs_Outline_Spritesheet_47
+  - first:
+      213: 21300096
+    second: Crosshairs_Outline_Spritesheet_48
+  - first:
+      213: 21300098
+    second: Crosshairs_Outline_Spritesheet_49
+  - first:
+      213: 21300100
+    second: Crosshairs_Outline_Spritesheet_50
+  - first:
+      213: 21300102
+    second: Crosshairs_Outline_Spritesheet_51
+  - first:
+      213: 21300104
+    second: Crosshairs_Outline_Spritesheet_52
+  - first:
+      213: 21300106
+    second: Crosshairs_Outline_Spritesheet_53
+  externalObjects: {}
+  serializedVersion: 12
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMasterTextureLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 0
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 7
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 1
+  cookieLightType: 1
+  platformSettings:
+  - serializedVersion: 3
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 1
+  - serializedVersion: 3
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 1
+  - serializedVersion: 3
+    buildTarget: iPhone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 1
+  - serializedVersion: 3
+    buildTarget: Android
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 1
+  - serializedVersion: 3
+    buildTarget: Windows Store Apps
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 1
+  - serializedVersion: 3
+    buildTarget: WebGL
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 1
+  - serializedVersion: 3
+    buildTarget: Server
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 1
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: Crosshairs_Outline_Spritesheet_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 170
+        width: 17
+        height: 17
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f3c779f75cd5ff04689dd0ae0d030618
+      internalID: 21300000
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Crosshairs_Outline_Spritesheet_1
+      rect:
+        serializedVersion: 2
+        x: 17
+        y: 170
+        width: 17
+        height: 17
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7d13eb0f66cac5642af3fe24bd60157f
+      internalID: 21300002
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Crosshairs_Outline_Spritesheet_2
+      rect:
+        serializedVersion: 2
+        x: 34
+        y: 170
+        width: 17
+        height: 17
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7d650441be3a3364d8215562397acdd3
+      internalID: 21300004
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Crosshairs_Outline_Spritesheet_3
+      rect:
+        serializedVersion: 2
+        x: 51
+        y: 170
+        width: 17
+        height: 17
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 14fc77c1d8b8a804cbd93a39ed4b34ae
+      internalID: 21300006
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Crosshairs_Outline_Spritesheet_4
+      rect:
+        serializedVersion: 2
+        x: 68
+        y: 170
+        width: 17
+        height: 17
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a2cba40d9d7b7ac43a7bb640c2428656
+      internalID: 21300008
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Crosshairs_Outline_Spritesheet_5
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 153
+        width: 17
+        height: 17
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 54653a400b617694d9315a6e41075c8a
+      internalID: 21300010
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Crosshairs_Outline_Spritesheet_6
+      rect:
+        serializedVersion: 2
+        x: 17
+        y: 153
+        width: 17
+        height: 17
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 420a7a328fac04e4aa3cf0782e5c7da6
+      internalID: 21300012
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Crosshairs_Outline_Spritesheet_7
+      rect:
+        serializedVersion: 2
+        x: 34
+        y: 153
+        width: 17
+        height: 17
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 292a966afc2f1684bae0a22f05faa113
+      internalID: 21300014
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Crosshairs_Outline_Spritesheet_8
+      rect:
+        serializedVersion: 2
+        x: 51
+        y: 153
+        width: 17
+        height: 17
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: dbb10191cbcc04340b7cad24703d8368
+      internalID: 21300016
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Crosshairs_Outline_Spritesheet_9
+      rect:
+        serializedVersion: 2
+        x: 68
+        y: 153
+        width: 17
+        height: 17
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 43f766264660fe0448616f3eadb843e2
+      internalID: 21300018
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Crosshairs_Outline_Spritesheet_10
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 136
+        width: 17
+        height: 17
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c8e5e95cfa1b06342be8cf196e59ce4b
+      internalID: 21300020
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Crosshairs_Outline_Spritesheet_11
+      rect:
+        serializedVersion: 2
+        x: 17
+        y: 136
+        width: 17
+        height: 17
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f27f809260ecf704d945595670804c98
+      internalID: 21300022
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Crosshairs_Outline_Spritesheet_12
+      rect:
+        serializedVersion: 2
+        x: 34
+        y: 136
+        width: 17
+        height: 17
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ee234b5d07d23fb43b0ca0f3f0d5007d
+      internalID: 21300024
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Crosshairs_Outline_Spritesheet_13
+      rect:
+        serializedVersion: 2
+        x: 51
+        y: 136
+        width: 17
+        height: 17
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0118d51c8ef88b6489cd5477a4d391ff
+      internalID: 21300026
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Crosshairs_Outline_Spritesheet_14
+      rect:
+        serializedVersion: 2
+        x: 68
+        y: 136
+        width: 17
+        height: 17
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f0d7e0e94f5e1e941a469acbea4da261
+      internalID: 21300028
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Crosshairs_Outline_Spritesheet_15
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 119
+        width: 17
+        height: 17
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 93477fc6d72b54d4494c4b3d66cec05e
+      internalID: 21300030
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Crosshairs_Outline_Spritesheet_16
+      rect:
+        serializedVersion: 2
+        x: 17
+        y: 119
+        width: 17
+        height: 17
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c59fcf45bb2470948b55c817e29ac420
+      internalID: 21300032
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Crosshairs_Outline_Spritesheet_17
+      rect:
+        serializedVersion: 2
+        x: 34
+        y: 119
+        width: 17
+        height: 17
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a6a09ccb1a992b1469c94667c42219bb
+      internalID: 21300034
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Crosshairs_Outline_Spritesheet_18
+      rect:
+        serializedVersion: 2
+        x: 51
+        y: 119
+        width: 17
+        height: 17
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ed249ec85065e2b41bc47632fd53db7e
+      internalID: 21300036
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Crosshairs_Outline_Spritesheet_19
+      rect:
+        serializedVersion: 2
+        x: 68
+        y: 119
+        width: 17
+        height: 17
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5de95430832053b409095b68813e5bc3
+      internalID: 21300038
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Crosshairs_Outline_Spritesheet_20
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 102
+        width: 17
+        height: 17
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f3aefcff053f80f4ea082611ca846352
+      internalID: 21300040
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Crosshairs_Outline_Spritesheet_21
+      rect:
+        serializedVersion: 2
+        x: 17
+        y: 102
+        width: 17
+        height: 17
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c8cee1610e900b743a247db4596eb3b7
+      internalID: 21300042
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Crosshairs_Outline_Spritesheet_22
+      rect:
+        serializedVersion: 2
+        x: 34
+        y: 102
+        width: 17
+        height: 17
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 73879e169745b294db28d2eb5562b45c
+      internalID: 21300044
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Crosshairs_Outline_Spritesheet_23
+      rect:
+        serializedVersion: 2
+        x: 51
+        y: 102
+        width: 17
+        height: 17
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f27ac107d9c2a60409d8842f45d2be34
+      internalID: 21300046
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Crosshairs_Outline_Spritesheet_24
+      rect:
+        serializedVersion: 2
+        x: 68
+        y: 102
+        width: 17
+        height: 17
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d7838004ecd8a1a4ab0bf1c017f069f9
+      internalID: 21300048
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Crosshairs_Outline_Spritesheet_25
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 85
+        width: 17
+        height: 17
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e5c94b3b7c34c014691d229c7e09a358
+      internalID: 21300050
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Crosshairs_Outline_Spritesheet_26
+      rect:
+        serializedVersion: 2
+        x: 17
+        y: 85
+        width: 17
+        height: 17
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a30e03f3d2c43344b93eff9546d976f1
+      internalID: 21300052
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Crosshairs_Outline_Spritesheet_27
+      rect:
+        serializedVersion: 2
+        x: 34
+        y: 85
+        width: 17
+        height: 17
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e1ed9a201c929fe4ba52f23b273e0b9e
+      internalID: 21300054
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Crosshairs_Outline_Spritesheet_28
+      rect:
+        serializedVersion: 2
+        x: 51
+        y: 85
+        width: 17
+        height: 17
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b2d9ebbdd4999014a986bfa072be9ed8
+      internalID: 21300056
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Crosshairs_Outline_Spritesheet_29
+      rect:
+        serializedVersion: 2
+        x: 68
+        y: 85
+        width: 17
+        height: 17
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: eb845ef490c0d9f4280b6fb58e6fa622
+      internalID: 21300058
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Crosshairs_Outline_Spritesheet_30
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 68
+        width: 17
+        height: 17
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4e47a0074c45c3749920b20981098dc8
+      internalID: 21300060
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Crosshairs_Outline_Spritesheet_31
+      rect:
+        serializedVersion: 2
+        x: 17
+        y: 68
+        width: 17
+        height: 17
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d1de14d0c895e1742819a085d6778f8e
+      internalID: 21300062
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Crosshairs_Outline_Spritesheet_32
+      rect:
+        serializedVersion: 2
+        x: 34
+        y: 68
+        width: 17
+        height: 17
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: bb517cd4a9f80fb4a8e0b43198fd1e62
+      internalID: 21300064
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Crosshairs_Outline_Spritesheet_33
+      rect:
+        serializedVersion: 2
+        x: 51
+        y: 68
+        width: 17
+        height: 17
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 769e8d964fab08642956b26524f7d8bb
+      internalID: 21300066
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Crosshairs_Outline_Spritesheet_34
+      rect:
+        serializedVersion: 2
+        x: 68
+        y: 68
+        width: 17
+        height: 17
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3e54860a443fe884ea3b1616f5fd9a4d
+      internalID: 21300068
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Crosshairs_Outline_Spritesheet_35
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 51
+        width: 17
+        height: 17
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1e46ad5444252b242a02dced5d7ff1b3
+      internalID: 21300070
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Crosshairs_Outline_Spritesheet_36
+      rect:
+        serializedVersion: 2
+        x: 17
+        y: 51
+        width: 17
+        height: 17
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8c0e74631b235ee49b5491d438a770c4
+      internalID: 21300072
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Crosshairs_Outline_Spritesheet_37
+      rect:
+        serializedVersion: 2
+        x: 34
+        y: 51
+        width: 17
+        height: 17
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: bdd577c966a3b1b4881fbe401689c170
+      internalID: 21300074
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Crosshairs_Outline_Spritesheet_38
+      rect:
+        serializedVersion: 2
+        x: 51
+        y: 51
+        width: 17
+        height: 17
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b1b78a7ef1754944a9b652912b8bfab3
+      internalID: 21300076
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Crosshairs_Outline_Spritesheet_39
+      rect:
+        serializedVersion: 2
+        x: 68
+        y: 51
+        width: 17
+        height: 17
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 47df55df184038049893d32747112a1c
+      internalID: 21300078
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Crosshairs_Outline_Spritesheet_40
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 34
+        width: 17
+        height: 17
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e6cf63be5e33e66439fb85060b173ba8
+      internalID: 21300080
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Crosshairs_Outline_Spritesheet_41
+      rect:
+        serializedVersion: 2
+        x: 17
+        y: 34
+        width: 17
+        height: 17
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5c0d46e85804b3a4a9b10a1d9f845311
+      internalID: 21300082
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Crosshairs_Outline_Spritesheet_42
+      rect:
+        serializedVersion: 2
+        x: 34
+        y: 34
+        width: 17
+        height: 17
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3502000942a1c7b439a191798756cd56
+      internalID: 21300084
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Crosshairs_Outline_Spritesheet_43
+      rect:
+        serializedVersion: 2
+        x: 51
+        y: 34
+        width: 17
+        height: 17
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d35c71924b3ab7245b48a2558275c593
+      internalID: 21300086
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Crosshairs_Outline_Spritesheet_44
+      rect:
+        serializedVersion: 2
+        x: 68
+        y: 34
+        width: 17
+        height: 17
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 99cc2d41f785bcc4fafb39e2da3b27d0
+      internalID: 21300088
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Crosshairs_Outline_Spritesheet_45
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 17
+        width: 17
+        height: 17
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6ddee5f2ff3db9e428a6fce70916c57d
+      internalID: 21300090
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Crosshairs_Outline_Spritesheet_46
+      rect:
+        serializedVersion: 2
+        x: 17
+        y: 17
+        width: 17
+        height: 17
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 19b67568ede73ca42a3a86aee9948a79
+      internalID: 21300092
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Crosshairs_Outline_Spritesheet_47
+      rect:
+        serializedVersion: 2
+        x: 34
+        y: 17
+        width: 17
+        height: 17
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 26075c18390c3384a90b921b1de090dc
+      internalID: 21300094
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Crosshairs_Outline_Spritesheet_48
+      rect:
+        serializedVersion: 2
+        x: 51
+        y: 17
+        width: 17
+        height: 17
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 609332f4e4e065847ac5bcc3f8ca28c6
+      internalID: 21300096
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Crosshairs_Outline_Spritesheet_49
+      rect:
+        serializedVersion: 2
+        x: 68
+        y: 17
+        width: 17
+        height: 17
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ff0d60a6608f1764f87a3f50b11354ea
+      internalID: 21300098
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Crosshairs_Outline_Spritesheet_50
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 17
+        height: 17
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f91c3fe668788714f84837efc422b56f
+      internalID: 21300100
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Crosshairs_Outline_Spritesheet_51
+      rect:
+        serializedVersion: 2
+        x: 17
+        y: 0
+        width: 17
+        height: 17
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0c0df8a98eb7c4a4aa862ead53f3a0fa
+      internalID: 21300102
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Crosshairs_Outline_Spritesheet_52
+      rect:
+        serializedVersion: 2
+        x: 34
+        y: 0
+        width: 17
+        height: 17
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 52dffdc2b674cca46aaf89cbfc07b764
+      internalID: 21300104
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Crosshairs_Outline_Spritesheet_53
+      rect:
+        serializedVersion: 2
+        x: 51
+        y: 0
+        width: 17
+        height: 17
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d386e7a1e8926cd47ae89d5956695365
+      internalID: 21300106
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    physicsShape: []
+    bones: []
+    spriteID: db229472e03b66848a0231b6fa8e61c1
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    nameFileIdTable:
+      Crosshairs_Outline_Spritesheet_26: 21300052
+      Crosshairs_Outline_Spritesheet_52: 21300104
+      Crosshairs_Outline_Spritesheet_49: 21300098
+      Crosshairs_Outline_Spritesheet_21: 21300042
+      Crosshairs_Outline_Spritesheet_10: 21300020
+      Crosshairs_Outline_Spritesheet_29: 21300058
+      Crosshairs_Outline_Spritesheet_15: 21300030
+      Crosshairs_Outline_Spritesheet_46: 21300092
+      Crosshairs_Outline_Spritesheet_25: 21300050
+      Crosshairs_Outline_Spritesheet_47: 21300094
+      Crosshairs_Outline_Spritesheet_45: 21300090
+      Crosshairs_Outline_Spritesheet_20: 21300040
+      Crosshairs_Outline_Spritesheet_53: 21300106
+      Crosshairs_Outline_Spritesheet_28: 21300056
+      Crosshairs_Outline_Spritesheet_8: 21300016
+      Crosshairs_Outline_Spritesheet_39: 21300078
+      Crosshairs_Outline_Spritesheet_18: 21300036
+      Crosshairs_Outline_Spritesheet_16: 21300032
+      Crosshairs_Outline_Spritesheet_17: 21300034
+      Crosshairs_Outline_Spritesheet_35: 21300070
+      Crosshairs_Outline_Spritesheet_37: 21300074
+      Crosshairs_Outline_Spritesheet_32: 21300064
+      Crosshairs_Outline_Spritesheet_13: 21300026
+      Crosshairs_Outline_Spritesheet_14: 21300028
+      Crosshairs_Outline_Spritesheet_41: 21300082
+      Crosshairs_Outline_Spritesheet_1: 21300002
+      Crosshairs_Outline_Spritesheet_19: 21300038
+      Crosshairs_Outline_Spritesheet_3: 21300006
+      Crosshairs_Outline_Spritesheet_24: 21300048
+      Crosshairs_Outline_Spritesheet_7: 21300014
+      Crosshairs_Outline_Spritesheet_50: 21300100
+      Crosshairs_Outline_Spritesheet_42: 21300084
+      Crosshairs_Outline_Spritesheet_5: 21300010
+      Crosshairs_Outline_Spritesheet_12: 21300024
+      Crosshairs_Outline_Spritesheet_27: 21300054
+      Crosshairs_Outline_Spritesheet_0: 21300000
+      Crosshairs_Outline_Spritesheet_44: 21300088
+      Crosshairs_Outline_Spritesheet_43: 21300086
+      Crosshairs_Outline_Spritesheet_9: 21300018
+      Crosshairs_Outline_Spritesheet_23: 21300046
+      Crosshairs_Outline_Spritesheet_34: 21300068
+      Crosshairs_Outline_Spritesheet_6: 21300012
+      Crosshairs_Outline_Spritesheet_38: 21300076
+      Crosshairs_Outline_Spritesheet_4: 21300008
+      Crosshairs_Outline_Spritesheet_22: 21300044
+      Crosshairs_Outline_Spritesheet_51: 21300102
+      Crosshairs_Outline_Spritesheet_33: 21300066
+      Crosshairs_Outline_Spritesheet_31: 21300062
+      Crosshairs_Outline_Spritesheet_36: 21300072
+      Crosshairs_Outline_Spritesheet_30: 21300060
+      Crosshairs_Outline_Spritesheet_2: 21300004
+      Crosshairs_Outline_Spritesheet_48: 21300096
+      Crosshairs_Outline_Spritesheet_40: 21300080
+      Crosshairs_Outline_Spritesheet_11: 21300022
+  spritePackingTag: 
+  pSDRemoveMatte: 0
+  pSDShowRemoveMatteOption: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

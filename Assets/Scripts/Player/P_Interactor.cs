@@ -1,14 +1,15 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-interface IInteractable {
+interface IInteractable
+{
     public void Interact();
 }
 
 public class P_Interactor : MonoBehaviour
 {
     private Transform interactorSource;
-    [SerializeField] private float range;
+    [SerializeField] private float interactRange;
 
     // Components //
     private P_Controls p_input;
@@ -16,6 +17,7 @@ public class P_Interactor : MonoBehaviour
 
     // Input Actions //
     private InputAction ac_interact;  // input action for interacting
+
 
     void Awake()
     {
@@ -41,14 +43,18 @@ public class P_Interactor : MonoBehaviour
             Debug.Log("Interacted!");
             Ray r = new Ray(interactorSource.position, interactorSource.forward);
             
-            if (Physics.Raycast(r, out RaycastHit hitInfo, range)) 
+            if (Physics.Raycast(r, out RaycastHit hitInfo, interactRange)) 
             {
-                Debug.DrawLine(interactorSource.position, hitInfo.transform.position, Color.yellow, 5f);
+                Debug.DrawLine(interactorSource.position, hitInfo.transform.position, Color.yellow, interactRange);
                 if (hitInfo.collider.gameObject.TryGetComponent(out IInteractable interactObj))
                 {
                     interactObj.Interact();
                 }
             }
         }
+    }
+
+    private void Update() 
+    {
     }
 }

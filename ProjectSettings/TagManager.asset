@@ -5,11 +5,17 @@ TagManager:
   serializedVersion: 2
   tags:
   - Floor
+  - Player Camera
+  - Popup
+  - pickup
+  - destroy
+  - interact
+  - UI Camera
   layers:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - 
+  - Interactibles Crosshair
   - Water
   - UI
   - 
