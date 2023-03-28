@@ -1105,9 +1105,9 @@ MonoBehaviour:
   highlightRangeRadius: 1
   pickItemHighlight: {fileID: 4703598568949048109, guid: 1531f1f6ce2c27f46b0a84e1377aa7f1,
     type: 3}
-  destroyHighlight: {fileID: 4703598568949048109, guid: 1531f1f6ce2c27f46b0a84e1377aa7f1,
+  destroyHighlight: {fileID: 4703598568949048109, guid: 4039789592c99144880d99bccafddcc0,
     type: 3}
-  interactHighlight: {fileID: 4703598568949048109, guid: 1531f1f6ce2c27f46b0a84e1377aa7f1,
+  interactHighlight: {fileID: 4703598568949048109, guid: 9f700cfa2aa49c04e9b6c3608117e9b1,
     type: 3}
 --- !u!1 &687449910
 GameObject:
@@ -1350,7 +1350,7 @@ PrefabInstance:
     - target: {fileID: -8679921383154817045, guid: 0f654c7b3d8ca68428c91f7deaa0a1c8,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 2.68
+      value: 4.33
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 0f654c7b3d8ca68428c91f7deaa0a1c8,
         type: 3}
@@ -1658,7 +1658,7 @@ PrefabInstance:
     - target: {fileID: -8679921383154817045, guid: 0f654c7b3d8ca68428c91f7deaa0a1c8,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 3.551
+      value: 5.22
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 0f654c7b3d8ca68428c91f7deaa0a1c8,
         type: 3}
@@ -1718,7 +1718,7 @@ PrefabInstance:
     - target: {fileID: 919132149155446097, guid: 0f654c7b3d8ca68428c91f7deaa0a1c8,
         type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 0f654c7b3d8ca68428c91f7deaa0a1c8,
         type: 3}
@@ -1760,7 +1760,7 @@ Transform:
   m_GameObject: {fileID: 941967581}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 3.14, y: 0.34, z: 3.89}
-  m_LocalScale: {x: 2, y: 1, z: 2}
+  m_LocalScale: {x: 8.4268, y: 1, z: 2}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 740799826}
