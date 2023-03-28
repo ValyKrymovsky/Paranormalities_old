@@ -30,6 +30,7 @@ public class P_Interactor : MonoBehaviour
     private Dictionary<string, GameObject> highlights = new Dictionary<string, GameObject>();
     private List<Collider> activeHighlights;
     private Collider[] hitColliders;
+    private Collider[] hitItems;
 
     private static int layerId = 6;
     private int layerMask = 1 << layerId;
@@ -58,6 +59,7 @@ public class P_Interactor : MonoBehaviour
 
         activeHighlights = new List<Collider>();
         hitColliders = new Collider[0];
+        hitItems = new Collider[0];
 
         pickItemHighlight.tag = "Highlight";
         destroyHighlight.tag = "Highlight";
@@ -93,8 +95,16 @@ public class P_Interactor : MonoBehaviour
             if (Physics.Raycast(r, out RaycastHit hitInfo, interactRange)) 
             {
                 Debug.DrawLine(interactorSource.position, hitInfo.transform.position, Color.yellow);
-                if (hitInfo.collider.gameObject.TryGetComponent(out IInteractable interactObj))
+                List<float> hitItemsDistance = new List<float>();
+                hitItems = Physics.OverlapSphere(hitInfo.point, 5, layerMask);
+                foreach (Collider hitItem in hitItems)
                 {
+                    hitItemsDistance.Add(Vector3.Distance(hitInfo.transform.position, hitItem.transform.position));
+                }
+                Collider nearestItem = hitItems[hitItemsDistance.IndexOf(hitItemsDistance.Min())];
+                if (nearestItem.gameObject.TryGetComponent(out IInteractable interactObj))
+                {
+                    activeHighlights.Remove(nearestItem);
                     interactObj.Interact();
                 }
             }
@@ -110,6 +120,11 @@ public class P_Interactor : MonoBehaviour
             hittingAir = false;
             hitPosition = hitInfo.point;
             hitColliders = Physics.OverlapCapsule(transform.position, hitInfo.point, highlightRangeRadius, layerMask);
+            /*float[] minDistanceCollider = new float[0];
+            foreach (Collider hitCollider in hitColliders)
+            {
+                minDistanceCollider.Append(Vector3.Distance(hitInfo.point, hitCollider.transform.position));
+            }*/
             foreach(Collider hitCollider in hitColliders)
             {
                 Debug.DrawLine(hitInfo.point, hitCollider.transform.position);
