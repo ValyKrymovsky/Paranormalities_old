@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.18028334, g: 0.2257134, b: 0.30692226, a: 1}
+  m_IndirectSpecularColor: {r: 0.18028378, g: 0.22571412, b: 0.30692285, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -1350,7 +1350,7 @@ PrefabInstance:
     - target: {fileID: -8679921383154817045, guid: 0f654c7b3d8ca68428c91f7deaa0a1c8,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 3.424
+      value: 1.457
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 0f654c7b3d8ca68428c91f7deaa0a1c8,
         type: 3}
@@ -1858,6 +1858,7 @@ MonoBehaviour:
   playerBody: {fileID: 0}
   item: {fileID: 11400000, guid: 7c4cabd8cc4b5b24282bd8854ec1cd9c, type: 2}
   image: {fileID: 21300000, guid: 3a6214b0359c2e646b3a7c3fe9aad56b, type: 3}
+  model: {fileID: 0}
   inventory: {fileID: 2026089067}
   toolbarObject: {fileID: 0}
   toolbar: {fileID: 0}
@@ -2107,6 +2108,7 @@ MonoBehaviour:
   playerBody: {fileID: 0}
   item: {fileID: 11400000, guid: b13676278b3c107438ef1770f4bf8c9a, type: 2}
   image: {fileID: 21300000, guid: 3a6214b0359c2e646b3a7c3fe9aad56b, type: 3}
+  model: {fileID: 0}
   inventory: {fileID: 2026089067}
   toolbarObject: {fileID: 0}
   toolbar: {fileID: 0}
@@ -2767,7 +2769,19 @@ MonoBehaviour:
     m_ActionId: 2b4c15e6-90db-41d5-8011-f4547cc09c1c
     m_ActionName: Player/Hotbar
   - m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 2026089067}
+        m_TargetAssemblyTypeName: P_Inventory, Assembly-CSharp
+        m_MethodName: DropItem
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_ActionId: a9948610-de7f-48f7-8b98-71e7a92bd98f
     m_ActionName: Player/Drop item[/Keyboard/q]
   - m_PersistentCalls:

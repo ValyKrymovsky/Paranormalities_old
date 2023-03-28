@@ -1,6 +1,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using System;
+using System.Linq;
 
 interface IInventory
 {
@@ -11,7 +13,7 @@ interface IInventory
 [CreateAssetMenu(fileName = "NewInventory", menuName = "Inventory System/Inventory")]
 public class InventoryObject : ScriptableObject
 {
-    public List<ItemObject> inventory = new List<ItemObject>();
+    public Dictionary<ItemObject, GameObject> inventory = new Dictionary<ItemObject, GameObject>();
     public int inventorySize;
     public bool inventoryFull;
     private P_Controls p_input;
@@ -19,12 +21,12 @@ public class InventoryObject : ScriptableObject
     private InputAction ac_pickUp;
     private InputAction ac_selection;
 
-    public bool AddItem(ItemObject _item)
+    public bool AddItem(ItemObject _item, GameObject model)
     {
         bool hasItem = false;
         for (int i = 0; i < inventory.Count; i++)
         {
-            if (inventory[i] == _item)
+            if (inventory.ContainsKey(_item))
             {
                 hasItem = true;
                 break;
@@ -34,13 +36,36 @@ public class InventoryObject : ScriptableObject
         // IsInventoryFull();
         if (!hasItem)
         {
-            inventory.Add(_item);
+            inventory.Add(_item, model);
             return true;
         }
         else
         {
             return false;
         }
+    }
+
+    public void RemoveItem(ItemObject _item, GameObject _model)
+    {
+        bool hasItem = false;
+        for (int i = 0; i < inventory.Count; i++)
+        {
+            if (inventory.ContainsKey(_item) && inventory[_item] == _model)
+            {
+                hasItem = true;
+                break;
+            }
+        }
+
+        if (hasItem)
+        {
+            inventory.Remove(_item);
+        }
+    }
+
+    public int GetInventorySize()
+    {
+        return inventorySize;
     }
 
     public bool IsInventoryFull()
@@ -55,57 +80,61 @@ public class InventoryObject : ScriptableObject
             inventoryFull = false;
             return false;
         }
-
-    }
-
-    public void DropItem(ItemObject _item)
-    {
-        bool hasItem = false;
-        int itemIndex = 0;
-        for (int i = 0; i < inventory.Count; i++)
-        {
-            if (inventory[i] == _item)
-            {
-                hasItem = true;
-                itemIndex = i;
-                break;
-            }
-        }
-
-        if (hasItem)
-        {
-            inventory.RemoveAt(itemIndex);
-        }
     }
 
     public void PrintInventory()
     {
-        for (int i = 0; i < inventory.Count; i++)
+        foreach (var item in inventory)
         {
-            Debug.Log(inventory[i]);
+            Debug.Log(string.Format("Item: {0}, model : {1}", item.Key, item.Value));
         }
     }
 
-    public int GetInventorySize()
+    public (ItemObject, GameObject) SelectItem(int _index)
     {
-        return inventorySize;
+        // try
+        // {
+        //     return inventory.ElementAt(index);
+        // }
+        // catch (ArgumentOutOfRangeException e)
+        // {
+        //     return new KeyValuePair<ItemObject, GameObject>(null, null);
+        // }
+
+        // if (index > GetInventorySize())
+        // {
+        //     // return new KeyValuePair<ItemObject, GameObject>(null, null);
+        //     return (null, null);
+        // }
+        // else
+        // {
+        //     return (inventory.ElementAt(index).Key, inventory.ElementAt(index).Value);
+        // }
+
+        try
+        {
+            return (inventory.ElementAt(_index).Key, inventory.ElementAt(_index).Value);
+        }
+        catch (ArgumentOutOfRangeException)
+        {
+            return (null, null);
+        }  
     }
 
-    public ItemObject SelectItem(int index)
+    public bool HasItem(ItemObject _item, GameObject _model)
     {
-        return inventory[index];
+        if (_item == null || _model == null)
+        {
+            return false;
+        }
+
+        if (inventory.ContainsKey(_item) && inventory[_item] == _model)
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
     }
 }
-
-/**[System.Serializable]
-public class InventorySlot
-{
-    public ItemObject item;
-
-    public InventorySlot(ItemObject _item)
-    {
-        item = _item;
-    }
-
-    
-}**/

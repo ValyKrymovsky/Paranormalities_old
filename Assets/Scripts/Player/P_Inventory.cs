@@ -1,9 +1,14 @@
 using UnityEngine;
+using System.Collections.Generic;
 using UnityEngine.InputSystem;
+using System.Linq;
 
 public class P_Inventory : MonoBehaviour
 {
+
+    [Header("Inventory")]
     public InventoryObject inventory;
+    public (ItemObject, GameObject) selectedItem;
 
     private P_Controls p_input;
 
@@ -14,21 +19,11 @@ public class P_Inventory : MonoBehaviour
     public void Awake()
     {
         inventory.inventorySize = inventory.GetInventorySize() <= 0 ? 1 : inventory.GetInventorySize();
+        inventory.inventory.Clear();
 
         p_input = new P_Controls();
         ac_selection = p_input.Player.Selectitem;
         ac_pickUp = p_input.Player.Interact;
-
-        p_input.Disable();
-        for (int i = 1; i < inventory.GetInventorySize() + 1; i++)
-        {
-            ac_selection.AddBinding(string.Format("<Keyboard>/{0}", i), groups: "Keyboard&Mouse");
-        }
-        p_input.Enable();
-        foreach (InputBinding binding in ac_selection.bindings)
-        {
-            print(binding);
-        }
 
     }
 
@@ -39,15 +34,40 @@ public class P_Inventory : MonoBehaviour
         {
             Debug.Log("Binding: " + ac_selection.activeControl.displayName + ", phase: " + ac_selection.phase);
         }*/
-        
     }
 
     public void SelectItem(InputAction.CallbackContext context)
     {
-        float value = context.ReadValue<float>();
+        // selectedItem = inventory.inventory.ElementAt(int.Parse(context.control.displayName) - 1);
+        // print(int.Parse(context.control.displayName) - 1);
+        // print(inventory.inventory.ElementAt(int.Parse(context.control.displayName) - 1));
         if ((int)context.phase == 2)
         {
-            print(value);
+            selectedItem = inventory.SelectItem(int.Parse(context.control.displayName) - 1);
+            if (selectedItem.Item1 != null && selectedItem.Item2 != null)
+            {
+                print(selectedItem);
+            }
+            
+        }
+        
+    }
+
+    public void DropItem(InputAction.CallbackContext context)
+    {
+        if ((int)context.phase == 2)
+        {
+            if (inventory.HasItem(selectedItem.Item1, selectedItem.Item2))
+            {
+                inventory.RemoveItem(selectedItem.Item1, selectedItem.Item2);
+                Vector3 positionToSpawn = transform.position + (transform.forward * (2));
+                GameObject droppedItem = Instantiate(selectedItem.Item2, positionToSpawn, transform.rotation, GameObject.Find("Items").transform);
+                droppedItem.name = selectedItem.Item2.name;
+                droppedItem.GetComponent<Item>().highlightActive = false;
+                droppedItem.SetActive(true);
+                Object.Destroy(selectedItem.Item2);
+            }
+            
         }
     }
 

@@ -1,4 +1,6 @@
 using UnityEngine;
+using UnityEditor;
+
 
 public class Item : MonoBehaviour, IInteractable, IInventory, IHighlight
 {
@@ -8,7 +10,7 @@ public class Item : MonoBehaviour, IInteractable, IInventory, IHighlight
     [Header("Object")]
     [SerializeField] private ItemObject item;
     [SerializeField] private Sprite image;
-    private GameObject model;
+    public GameObject model;
     private GameObject selectedItem;
 
     [Header("Inventory")]
@@ -27,7 +29,6 @@ public class Item : MonoBehaviour, IInteractable, IInventory, IHighlight
     {
         model = this.gameObject;
         toolbarObject = GameObject.Find("Inventory Toolbar");
-        // toolbar = toolbarObject.GetComponent<Toolbar>();
         highlightActive = false;
         playerCamera = GameObject.FindGameObjectWithTag("UI Camera");
         playerBody = GameObject.FindGameObjectWithTag("Player");
@@ -46,9 +47,9 @@ public class Item : MonoBehaviour, IInteractable, IInventory, IHighlight
 
     public void PickUp()
     {
-        if (inventory.inventory.AddItem(item))
+        if (inventory.inventory.AddItem(item, model))
         {
-            Object.Destroy(this.gameObject);
+            this.gameObject.SetActive(false);
         }
         else
         {
@@ -65,7 +66,6 @@ public class Item : MonoBehaviour, IInteractable, IInventory, IHighlight
             highlightRenderer = highlight.GetComponent<SpriteRenderer>();
             highlight.name = string.Format("{0} highlight", name);
             highlightActive = true;
-            print("Created");
         }
         
     }
@@ -78,7 +78,6 @@ public class Item : MonoBehaviour, IInteractable, IInventory, IHighlight
             highlight = null;
             highlightRenderer = null;
             highlightActive = false;
-            print("Destroyed");
         }
         
     }
