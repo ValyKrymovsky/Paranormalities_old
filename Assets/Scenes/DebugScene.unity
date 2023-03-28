@@ -965,8 +965,8 @@ GameObject:
   - component: {fileID: 625288318}
   - component: {fileID: 625288317}
   - component: {fileID: 625288316}
-  - component: {fileID: 625288315}
   - component: {fileID: 625288314}
+  - component: {fileID: 625288319}
   m_Layer: 0
   m_Name: Camera
   m_TagString: Player Camera
@@ -1003,19 +1003,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   sensetivity: 10
---- !u!114 &625288315
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 625288312}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e7ba716ab84857f4fb810f9defd005db, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  interactRange: 5
 --- !u!114 &625288316
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1089,7 +1076,7 @@ Camera:
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
-    m_Bits: 55
+    m_Bits: 119
   m_RenderingPath: -1
   m_TargetTexture: {fileID: 0}
   m_TargetDisplay: 0
@@ -1101,6 +1088,27 @@ Camera:
   m_OcclusionCulling: 1
   m_StereoConvergence: 10
   m_StereoSeparation: 0.022
+--- !u!114 &625288319
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 625288312}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e7ba716ab84857f4fb810f9defd005db, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  interactRange: 3
+  visibleHighlightRange: 3
+  highlightRangeRadius: 1
+  pickItemHighlight: {fileID: 4703598568949048109, guid: 1531f1f6ce2c27f46b0a84e1377aa7f1,
+    type: 3}
+  destroyHighlight: {fileID: 4703598568949048109, guid: 1531f1f6ce2c27f46b0a84e1377aa7f1,
+    type: 3}
+  interactHighlight: {fileID: 4703598568949048109, guid: 1531f1f6ce2c27f46b0a84e1377aa7f1,
+    type: 3}
 --- !u!1 &687449910
 GameObject:
   m_ObjectHideFlags: 0
@@ -1393,6 +1401,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Key 02
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 0f654c7b3d8ca68428c91f7deaa0a1c8,
+        type: 3}
+      propertyPath: m_Layer
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 0f654c7b3d8ca68428c91f7deaa0a1c8,
         type: 3}
@@ -1699,6 +1712,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 0f654c7b3d8ca68428c91f7deaa0a1c8,
         type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 0f654c7b3d8ca68428c91f7deaa0a1c8,
+        type: 3}
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
@@ -1842,9 +1860,9 @@ MonoBehaviour:
   inventory: {fileID: 0}
   toolbarObject: {fileID: 0}
   toolbar: {fileID: 0}
-  popup: {fileID: 0}
-  popupActive: 0
-  popupHideDistance: 3
+  highlight: {fileID: 0}
+  highlightRenderer: {fileID: 0}
+  highlightActive: 0
 --- !u!54 &978367129
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -2091,9 +2109,9 @@ MonoBehaviour:
   inventory: {fileID: 0}
   toolbarObject: {fileID: 0}
   toolbar: {fileID: 0}
-  popup: {fileID: 0}
-  popupActive: 0
-  popupHideDistance: 3
+  highlight: {fileID: 0}
+  highlightRenderer: {fileID: 0}
+  highlightActive: 0
 --- !u!54 &1611702470
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -2207,7 +2225,7 @@ Camera:
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
-    m_Bits: 8
+    m_Bits: 136
   m_RenderingPath: -1
   m_TargetTexture: {fileID: 0}
   m_TargetDisplay: 0
@@ -2518,35 +2536,13 @@ GameObject:
   - component: {fileID: 2026089067}
   - component: {fileID: 2026089066}
   - component: {fileID: 2026089065}
-  - component: {fileID: 2026089064}
   m_Layer: 0
-  m_Name: Capsule
+  m_Name: Player
   m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &2026089064
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2026089063}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b613e286b2b0eab49a2f7805986e113f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  checkRange: 3
-  pickItemPopup: {fileID: 4703598568949048109, guid: 1531f1f6ce2c27f46b0a84e1377aa7f1,
-    type: 3}
-  destroyPopup: {fileID: 4703598568949048109, guid: 1531f1f6ce2c27f46b0a84e1377aa7f1,
-    type: 3}
-  interactPopup: {fileID: 4703598568949048109, guid: 1531f1f6ce2c27f46b0a84e1377aa7f1,
-    type: 3}
-  popupActive: 0
-  ch_controller: {fileID: 0}
 --- !u!114 &2026089065
 MonoBehaviour:
   m_ObjectHideFlags: 0

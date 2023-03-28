@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class Item : MonoBehaviour, IInteractable, IInventory, IPopUp
+public class Item : MonoBehaviour, IInteractable, IInventory, IHighlight
 {
     [SerializeField] private GameObject playerCamera;
     [SerializeField] private GameObject playerBody;
@@ -19,42 +19,19 @@ public class Item : MonoBehaviour, IInteractable, IInventory, IPopUp
     [SerializeField] private Toolbar toolbar;
 
     [Header("Popup")]
-    [SerializeField] private GameObject popup;
-    private SpriteRenderer popupRenderer;
-    public bool popupActive;
-    public float popupHideDistance;
+    public GameObject highlight;
+    [HideInInspector] public SpriteRenderer highlightRenderer;
+    public bool highlightActive;
 
     public void Awake()
     {
         model = this.gameObject;
         toolbarObject = GameObject.Find("Inventory Toolbar");
         // toolbar = toolbarObject.GetComponent<Toolbar>();
-        popupActive = false;
+        highlightActive = false;
         playerCamera = GameObject.FindGameObjectWithTag("UI Camera");
         playerBody = GameObject.FindGameObjectWithTag("Player");
     }
-
-    private void Update() {
-        float distance = Vector3.Distance(this.transform.position, playerBody.transform.position);
-        print("Player distance from item: " + distance);
-        if (popup != null)
-        {
-            if (distance > popupHideDistance)
-            {
-                if (popupActive)
-                {
-                    DestroyPopup();
-                }
-            }
-            else
-            {
-                popup.transform.LookAt(playerCamera.transform);
-                popupRenderer.color = new Color(255, 255, 255, Mathf.InverseLerp(popupHideDistance, 0, distance));
-            }
-        }
-    }
-
-    
 
     public void Interact()
     {
@@ -82,25 +59,26 @@ public class Item : MonoBehaviour, IInteractable, IInventory, IPopUp
 
     public void InstantiatePopup(GameObject target, string name)
     {
-        if (!popupActive)
+        if (!highlightActive)
         {
-            popup = Instantiate(target, this.gameObject.transform);
-            popupRenderer = popup.GetComponent<SpriteRenderer>();
-            popup.name = string.Format("{0} popup", name);
-            popupActive = true;
-            print("Succ!");
+            highlight = Instantiate(target, this.gameObject.transform);
+            highlightRenderer = highlight.GetComponent<SpriteRenderer>();
+            highlight.name = string.Format("{0} highlight", name);
+            highlightActive = true;
+            print("Created");
         }
         
     }
 
     public void DestroyPopup()
     {
-        if (popupActive)
+        if (highlightActive)
         {
-            Object.Destroy(popup);
-            popup = null;
-            popupRenderer = null;
-            popupActive = false;
+            Object.Destroy(highlight);
+            highlight = null;
+            highlightRenderer = null;
+            highlightActive = false;
+            print("Destroyed");
         }
         
     }

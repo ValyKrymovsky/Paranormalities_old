@@ -1,76 +1,70 @@
-using UnityEngine;
-using System.Collections;
-using System.Collections.Generic;
+// using UnityEngine;
+// using System.Collections.Generic;
 
-interface IPopUp
-{
-    public void InstantiatePopup(GameObject target, string name);
-    public void DestroyPopup();
-}
 
-public class P_InteractiblesCrosshair : MonoBehaviour
-{
-    [Header("Sphere Check")]
-    [SerializeField] private float checkRange;
 
-    [Header("Popups")]
-    public GameObject pickItemPopup;
-    public GameObject destroyPopup;
-    public GameObject interactPopup;
-    [SerializeField] private bool popupActive;
-    private Dictionary<string, GameObject> popups = new Dictionary<string, GameObject>();
+// public class P_InteractiblesCrosshair : MonoBehaviour
+// {
+//     [Header("Sphere Check")]
+//     [SerializeField] private float checkRange;
 
-    [Header("Components")]
-    public CharacterController ch_controller;
+//     [Header("Popups")]
+//     public GameObject pickItemPopup;
+//     public GameObject destroyPopup;
+//     public GameObject interactPopup;
+//     private Dictionary<string, GameObject> popups = new Dictionary<string, GameObject>();
 
-    void Awake()
-    {
-        ch_controller = GetComponent<CharacterController>();
-        popupActive = false;
+//     [Header("Components")]
+//     public CharacterController ch_controller;
 
-        popups.Add("pickup", pickItemPopup);
-        popups.Add("destroy", destroyPopup);
-        popups.Add("interact", interactPopup);
-    }
+//     void Awake()
+//     {
+//         ch_controller = GetComponent<CharacterController>();
 
-    void Update()
-    {
-        if (Physics.SphereCast(transform.position, checkRange, transform.forward, out RaycastHit hitInfo))
-        {
-            if (hitInfo.collider.gameObject.TryGetComponent(out IPopUp popupObj))
-            {
-                print(Vector3.Distance(hitInfo.collider.transform.position, this.transform.position));
-                if (!hitInfo.transform.GetComponent<Item>().popupActive)
-                {
-                    GameObject popupObject;
-                    switch (hitInfo.transform.tag)
-                    {
-                        case "pickup":
-                            popupObject = popups["pickup"];
-                            popupObj.InstantiatePopup(popupObject, "pick up");
-                            break;
+//         popups.Add("pickup", pickItemPopup);
+//         popups.Add("destroy", destroyPopup);
+//         popups.Add("interact", interactPopup);
+//     }
+
+//     void Update()
+//     {
+//         // if (Physics.SphereCast(transform.position, checkRange, transform.forward, out RaycastHit hitInfo))
+//         // {
+//         //     if (hitInfo.collider.gameObject.TryGetComponent(out IPopUp popupObj))
+//         //     {
+//         //         print(Vector3.Distance(hitInfo.collider.transform.position, this.transform.position));
+//         //         if (!hitInfo.transform.GetComponent<Item>().popupActive)
+//         //         {
+//         //             GameObject popupObject;
+//         //             switch (hitInfo.transform.tag)
+//         //             {
+//         //                 case "pickup":
+//         //                     popupObject = popups["pickup"];
+//         //                     popupObj.InstantiatePopup(popupObject, "pick up");
+//         //                     break;
                         
-                        case "destroy":
-                            popupObject = popups["destroy"];
-                            popupObj.InstantiatePopup(popupObject, "destroy");
-                            break;
+//         //                 case "destroy":
+//         //                     popupObject = popups["destroy"];
+//         //                     popupObj.InstantiatePopup(popupObject, "destroy");
+//         //                     break;
                         
-                        case "interact":
-                            popupObject = popups["interact"];
-                            popupObj.InstantiatePopup(popupObject, "interact");
-                            break;
-                    }
-                }
+//         //                 case "interact":
+//         //                     popupObject = popups["interact"];
+//         //                     popupObj.InstantiatePopup(popupObject, "interact");
+//         //                     break;
+//         //             }
+//         //         }
                 
-            }
-        }
-    }
+//         //     }
+//         // }
 
-    private void OnDrawGizmos() 
-    {
-        Gizmos.color = Color.cyan;
+//     }
 
-        Gizmos.DrawSphere(this.transform.position, checkRange);
-        Gizmos.DrawWireSphere(this.transform.position, checkRange);
-    }
-}
+//     private void OnDrawGizmos() 
+//     {
+//         Gizmos.color = Color.cyan;
+
+//         Gizmos.DrawSphere(this.transform.position, checkRange);
+//         Gizmos.DrawWireSphere(this.transform.position, checkRange);
+//     }
+// }

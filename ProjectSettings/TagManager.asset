@@ -6,20 +6,20 @@ TagManager:
   tags:
   - Floor
   - Player Camera
-  - Popup
   - pickup
   - destroy
   - interact
   - UI Camera
+  - Highlight
   layers:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - Interactibles Crosshair
+  - 
   - Water
   - UI
-  - 
-  - 
+  - Interactibles
+  - Interactibles Highlight
   - 
   - 
   - 
