@@ -112,6 +112,7 @@ public class P_Interactor : MonoBehaviour
             hitColliders = Physics.OverlapCapsule(transform.position, hitInfo.point, highlightRangeRadius, layerMask);
             foreach(Collider hitCollider in hitColliders)
             {
+                Debug.DrawLine(hitInfo.point, hitCollider.transform.position);
                 if (hitCollider.TryGetComponent(out IHighlight highlightObj))
                 {
                     if (!hitCollider.GetComponent<Item>().highlightActive)
@@ -148,11 +149,12 @@ public class P_Interactor : MonoBehaviour
         else
         {
             hittingAir = true;
-            pointInAir = transform.position + (transform.forward * (visibleHighlightRange / 2));
+            pointInAir = transform.position + (transform.forward * (visibleHighlightRange));
 
-            hitColliders = Physics.OverlapCapsule(transform.position, pointInAir, highlightRangeRadius / 2, layerMask);
+            hitColliders = Physics.OverlapCapsule(transform.position, pointInAir, highlightRangeRadius, layerMask);
             foreach(Collider hitCollider in hitColliders)
             {
+                Debug.DrawLine(pointInAir, hitCollider.transform.position);
                 if (hitCollider.TryGetComponent(out IHighlight highlightObj))
                 {
                     if (!hitCollider.GetComponent<Item>().highlightActive)
