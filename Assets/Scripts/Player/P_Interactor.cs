@@ -87,7 +87,7 @@ public class P_Interactor : MonoBehaviour
 
     public void Interact(InputAction.CallbackContext context)
     {
-        if (((int)context.phase) == 2)
+        if ((int)context.phase == 2)
         {
             Debug.Log("Interacted!");
             Ray r = new Ray(interactorSource.position, interactorSource.forward);
@@ -120,11 +120,6 @@ public class P_Interactor : MonoBehaviour
             hittingAir = false;
             hitPosition = hitInfo.point;
             hitColliders = Physics.OverlapCapsule(transform.position, hitInfo.point, highlightRangeRadius, layerMask);
-            /*float[] minDistanceCollider = new float[0];
-            foreach (Collider hitCollider in hitColliders)
-            {
-                minDistanceCollider.Append(Vector3.Distance(hitInfo.point, hitCollider.transform.position));
-            }*/
             foreach(Collider hitCollider in hitColliders)
             {
                 Debug.DrawLine(hitInfo.point, hitCollider.transform.position);
@@ -156,7 +151,6 @@ public class P_Interactor : MonoBehaviour
                 {
                     hitCollider.GetComponent<Item>().highlight.transform.LookAt(transform);
                     hitCollider.GetComponent<Item>().highlightRenderer.color = new Color(255, 255, 255, Mathf.InverseLerp(highlightRangeRadius, 0, Vector3.Distance(hitInfo.point, hitCollider.transform.position)));
-                    // print("Ground: " + Mathf.InverseLerp(highlightRangeRadius, 0, Vector3.Distance(hitInfo.point, hitCollider.transform.position)));
                 }
             }
 
@@ -198,7 +192,6 @@ public class P_Interactor : MonoBehaviour
                 {
                     hitCollider.GetComponent<Item>().highlight.transform.LookAt(transform);
                     hitCollider.GetComponent<Item>().highlightRenderer.color = new Color(255, 255, 255, Mathf.InverseLerp(highlightRangeRadius, 0, Vector3.Distance(pointInAir, hitCollider.transform.position)));
-                    // print("Air: " + Mathf.InverseLerp(highlightRangeRadius, 0, Vector3.Distance(pointInAir, hitCollider.transform.position)));
                 }
             }
         }

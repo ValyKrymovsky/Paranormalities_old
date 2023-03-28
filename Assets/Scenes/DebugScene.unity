@@ -2751,7 +2751,19 @@ MonoBehaviour:
     m_ActionId: 06ce6974-db0d-4dba-b7d5-5c70de623b83
     m_ActionName: Player/Interact[/Keyboard/e]
   - m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 2026089067}
+        m_TargetAssemblyTypeName: P_Inventory, Assembly-CSharp
+        m_MethodName: SelectItem
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_ActionId: 2b4c15e6-90db-41d5-8011-f4547cc09c1c
     m_ActionName: Player/Hotbar
   - m_PersistentCalls:

@@ -73,7 +73,7 @@ public partial class @P_Controls : IInputActionCollection2, IDisposable
                     ""initialStateCheck"": false
                 },
                 {
-                    ""name"": ""Hotbar"",
+                    ""name"": ""Select item"",
                     ""type"": ""Button"",
                     ""id"": ""2b4c15e6-90db-41d5-8011-f4547cc09c1c"",
                     ""expectedControlType"": ""Button"",
@@ -362,6 +362,17 @@ public partial class @P_Controls : IInputActionCollection2, IDisposable
                     ""action"": ""Menu"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""98dc3192-2b11-4f52-9a05-3e6e1733cbb3"",
+                    ""path"": ""<Keyboard>/5"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard&Mouse"",
+                    ""action"": ""Select item"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -414,7 +425,7 @@ public partial class @P_Controls : IInputActionCollection2, IDisposable
         m_Player_Sprint = m_Player.FindAction("Sprint", throwIfNotFound: true);
         m_Player_Crouch = m_Player.FindAction("Crouch", throwIfNotFound: true);
         m_Player_Interact = m_Player.FindAction("Interact", throwIfNotFound: true);
-        m_Player_Hotbar = m_Player.FindAction("Hotbar", throwIfNotFound: true);
+        m_Player_Selectitem = m_Player.FindAction("Select item", throwIfNotFound: true);
         m_Player_Dropitem = m_Player.FindAction("Drop item", throwIfNotFound: true);
         m_Player_Stats = m_Player.FindAction("Stats", throwIfNotFound: true);
         m_Player_Menu = m_Player.FindAction("Menu", throwIfNotFound: true);
@@ -482,7 +493,7 @@ public partial class @P_Controls : IInputActionCollection2, IDisposable
     private readonly InputAction m_Player_Sprint;
     private readonly InputAction m_Player_Crouch;
     private readonly InputAction m_Player_Interact;
-    private readonly InputAction m_Player_Hotbar;
+    private readonly InputAction m_Player_Selectitem;
     private readonly InputAction m_Player_Dropitem;
     private readonly InputAction m_Player_Stats;
     private readonly InputAction m_Player_Menu;
@@ -495,7 +506,7 @@ public partial class @P_Controls : IInputActionCollection2, IDisposable
         public InputAction @Sprint => m_Wrapper.m_Player_Sprint;
         public InputAction @Crouch => m_Wrapper.m_Player_Crouch;
         public InputAction @Interact => m_Wrapper.m_Player_Interact;
-        public InputAction @Hotbar => m_Wrapper.m_Player_Hotbar;
+        public InputAction @Selectitem => m_Wrapper.m_Player_Selectitem;
         public InputAction @Dropitem => m_Wrapper.m_Player_Dropitem;
         public InputAction @Stats => m_Wrapper.m_Player_Stats;
         public InputAction @Menu => m_Wrapper.m_Player_Menu;
@@ -523,9 +534,9 @@ public partial class @P_Controls : IInputActionCollection2, IDisposable
                 @Interact.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnInteract;
                 @Interact.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnInteract;
                 @Interact.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnInteract;
-                @Hotbar.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnHotbar;
-                @Hotbar.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnHotbar;
-                @Hotbar.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnHotbar;
+                @Selectitem.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnSelectitem;
+                @Selectitem.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnSelectitem;
+                @Selectitem.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnSelectitem;
                 @Dropitem.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnDropitem;
                 @Dropitem.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnDropitem;
                 @Dropitem.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnDropitem;
@@ -554,9 +565,9 @@ public partial class @P_Controls : IInputActionCollection2, IDisposable
                 @Interact.started += instance.OnInteract;
                 @Interact.performed += instance.OnInteract;
                 @Interact.canceled += instance.OnInteract;
-                @Hotbar.started += instance.OnHotbar;
-                @Hotbar.performed += instance.OnHotbar;
-                @Hotbar.canceled += instance.OnHotbar;
+                @Selectitem.started += instance.OnSelectitem;
+                @Selectitem.performed += instance.OnSelectitem;
+                @Selectitem.canceled += instance.OnSelectitem;
                 @Dropitem.started += instance.OnDropitem;
                 @Dropitem.performed += instance.OnDropitem;
                 @Dropitem.canceled += instance.OnDropitem;
@@ -604,7 +615,7 @@ public partial class @P_Controls : IInputActionCollection2, IDisposable
         void OnSprint(InputAction.CallbackContext context);
         void OnCrouch(InputAction.CallbackContext context);
         void OnInteract(InputAction.CallbackContext context);
-        void OnHotbar(InputAction.CallbackContext context);
+        void OnSelectitem(InputAction.CallbackContext context);
         void OnDropitem(InputAction.CallbackContext context);
         void OnStats(InputAction.CallbackContext context);
         void OnMenu(InputAction.CallbackContext context);

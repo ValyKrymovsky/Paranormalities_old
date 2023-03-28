@@ -90,6 +90,11 @@ public class InventoryObject : ScriptableObject
     {
         return inventorySize;
     }
+
+    public ItemObject SelectItem(int index)
+    {
+        return inventory[index];
+    }
 }
 
 /**[System.Serializable]
