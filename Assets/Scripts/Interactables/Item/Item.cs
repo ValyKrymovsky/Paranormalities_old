@@ -50,13 +50,17 @@ public class Item : MonoBehaviour, IInteractable, IInventory, IHighlight
             highlight = null;
             highlightRenderer = null;
             highlightActive = false;
-            Transform childHighlight = transform.Find("pick up highlight");
-            if (transform != null)
+            if (transform.childCount == 1)
             {
+                Transform childHighlight = transform.Find("pick up highlight");
                 Object.Destroy(childHighlight.gameObject);
             }
             
             this.gameObject.SetActive(false);
+        }
+        else if (!inventory.inventory.AddItem(item, model) && inventory.inventory.IsInventoryFull())
+        {
+            Debug.Log("Inventory full");
         }
         else
         {

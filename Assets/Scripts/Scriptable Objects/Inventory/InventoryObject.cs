@@ -25,8 +25,9 @@ public class InventoryObject : ScriptableObject
 
     public bool AddItem(ItemObject _item, GameObject _model)
     {
-        if (!IsInventoryFull())
+        if (IsInventoryFull() == false)
         {
+            Debug.Log("test");
             bool hasItem = false;
             for (int i = 0; i < inventory.Count; i++)
             {
@@ -37,14 +38,11 @@ public class InventoryObject : ScriptableObject
                 }
             }
 
-            // IsInventoryFull();
             if (!hasItem)
             {
                 var itemToAdd = new KeyValuePair<ItemObject, GameObject>(_item, _model);
-                //int indexForReplace = 0;
                 int itemToReplace = inventory.IndexOf(inventory.Where(index => index.Equals(nullItem)).First());
                 inventory[itemToReplace] = itemToAdd;
-                //inventory.Add(itemToAdd);
                 return true;
             }
             else
@@ -73,7 +71,6 @@ public class InventoryObject : ScriptableObject
 
         if (hasItem)
         {
-            //int itemIndex = inventory.Keys.ToList().IndexOf(_item);
             var temp = new KeyValuePair<ItemObject, GameObject>(_item, _model);
             var temp2 = new KeyValuePair<ItemObject, GameObject>(null, null);
             int itemIndex = inventory.IndexOf(temp);
@@ -90,14 +87,26 @@ public class InventoryObject : ScriptableObject
 
     public bool IsInventoryFull()
     {
-        if (inventory.Count >= inventorySize)
+        int nullItems = 0;
+        for (int i = 0; i < GetInventorySize(); i++)
         {
-            inventoryFull = true;
+            if (inventory[i].Key == null && inventory[i].Value == null)
+            {
+                nullItems += 1;
+                continue;
+            }
+            else
+            {
+                continue;
+            }
+        }
+        Debug.Log(nullItems);
+        if (nullItems == 0)
+        {
             return true;
         }
         else
         {
-            inventoryFull = false;
             return false;
         }
     }
@@ -114,25 +123,6 @@ public class InventoryObject : ScriptableObject
 
     public KeyValuePair<ItemObject, GameObject> SelectItem(int _index)
     {
-        // try
-        // {
-        //     return inventory.ElementAt(index);
-        // }
-        // catch (ArgumentOutOfRangeException e)
-        // {
-        //     return new KeyValuePair<ItemObject, GameObject>(null, null);
-        // }
-
-        // if (index > GetInventorySize())
-        // {
-        //     // return new KeyValuePair<ItemObject, GameObject>(null, null);
-        //     return (null, null);
-        // }
-        // else
-        // {
-        //     return (inventory.ElementAt(index).Key, inventory.ElementAt(index).Value);
-        // }
-
         try
         {
             KeyValuePair<ItemObject, GameObject> temp = new KeyValuePair<ItemObject, GameObject>(inventory.ElementAt(_index).Key, inventory.ElementAt(_index).Value);

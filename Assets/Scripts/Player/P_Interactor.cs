@@ -29,9 +29,9 @@ public class P_Interactor : MonoBehaviour
     public GameObject destroyHighlight;
     public GameObject interactHighlight;
     private Dictionary<string, GameObject> highlights = new Dictionary<string, GameObject>();
-    private List<Collider> activeHighlights;
+    private Collider activeHighlight;
+    private Collider nearestItem;
     private Collider[] hitColliders;
-    private Collider[] hitItems;
 
     private static int layerId = 6;
     private int layerMask = 1 << layerId;
@@ -58,9 +58,7 @@ public class P_Interactor : MonoBehaviour
         p_camera = GetComponent<Camera>();
         interactorSource = transform;
 
-        activeHighlights = new List<Collider>();
         hitColliders = new Collider[0];
-        hitItems = new Collider[0];
 
         pickItemHighlight.tag = "Highlight";
         destroyHighlight.tag = "Highlight";
@@ -84,6 +82,7 @@ public class P_Interactor : MonoBehaviour
     private void Update() 
     {
         CheckInteractibles();
+        Debug.Log(activeHighlight);
     }
 
     public void Interact(InputAction.CallbackContext context)
@@ -95,16 +94,9 @@ public class P_Interactor : MonoBehaviour
             if (Physics.Raycast(r, out RaycastHit hitInfo, interactRange)) 
             {
                 Debug.DrawLine(interactorSource.position, hitInfo.transform.position, Color.yellow);
-                List<float> hitItemsDistance = new List<float>();
-                hitItems = Physics.OverlapSphere(hitInfo.point, 5, layerMask);
-                foreach (Collider hitItem in hitItems)
+                if (activeHighlight.gameObject.TryGetComponent(out IInteractable interactObj))
                 {
-                    hitItemsDistance.Add(Vector3.Distance(hitInfo.transform.position, hitItem.transform.position));
-                }
-                Collider nearestItem = hitItems[hitItemsDistance.IndexOf(hitItemsDistance.Min())];
-                if (nearestItem.gameObject.TryGetComponent(out IInteractable interactObj))
-                {
-                    activeHighlights.Remove(nearestItem);
+                    activeHighlight = null;
                     interactObj.Interact();
                 }
             }
@@ -115,91 +107,103 @@ public class P_Interactor : MonoBehaviour
     {
         Ray r = new Ray(interactorSource.position, interactorSource.forward);
 
-        if (Physics.Raycast(r, out RaycastHit hitInfo, visibleHighlightRange)) 
+        if (Physics.Raycast(r, out RaycastHit hitInfo, visibleHighlightRange))
         {
             hittingAir = false;
+
             hitPosition = hitInfo.point;
-            hitColliders = Physics.OverlapCapsule(transform.position, hitInfo.point, highlightRangeRadius, layerMask);
-            foreach(Collider hitCollider in hitColliders)
+
+            hitColliders = Physics.OverlapSphere(hitInfo.point, highlightRangeRadius, layerMask);
+            List<float> hitItemsDistance = new List<float>();
+            Collider nearestItem = null;
+            if (hitColliders.Length != 0)
             {
-                Debug.DrawLine(hitInfo.point, hitCollider.transform.position);
-                if (hitCollider.TryGetComponent(out IHighlight highlightObj))
+                foreach (Collider hitItem in hitColliders)
                 {
-                    if (!hitCollider.GetComponent<Item>().highlightActive)
+                    hitItemsDistance.Add(Vector3.Distance(hitInfo.transform.position, hitItem.transform.position));
+                }
+                nearestItem = hitColliders[hitItemsDistance.IndexOf(hitItemsDistance.Min())];
+                Debug.DrawLine(hitInfo.point, nearestItem.transform.position);
+                if (nearestItem.TryGetComponent(out IHighlight highlightObj))
+                {
+                    if (!nearestItem.GetComponent<Item>().highlightActive)
                     {
-                        switch (hitCollider.tag)
+                        switch (nearestItem.tag)
                         {
                             case "pickup":
                                 highlightObj.InstantiatePopup(highlights["pickup"], "pick up");
-                                activeHighlights.Add(hitCollider);
+                                activeHighlight = nearestItem;
                                 break;
                             
                             case "destroy":
                                 highlightObj.InstantiatePopup(highlights["destroy"], "destroy");
-                                activeHighlights.Add(hitCollider);
+                                activeHighlight = nearestItem;
                                 break;
                             
                             case "interact":
                                 highlightObj.InstantiatePopup(highlights["interact"], "interact");
-                                activeHighlights.Add(hitCollider);
+                                activeHighlight = nearestItem;
                                 break;
                         }
                     }
                 }
-
-                if (hitCollider.GetComponent<Item>().highlight != null)
+                if (nearestItem.GetComponent<Item>().highlight != null)
                 {
-                    hitCollider.GetComponent<Item>().highlight.transform.LookAt(transform);
-                    hitCollider.GetComponent<Item>().highlightRenderer.color = new Color(255, 255, 255, Mathf.InverseLerp(highlightRangeRadius, 0, Vector3.Distance(hitInfo.point, hitCollider.transform.position)));
+                    nearestItem.GetComponent<Item>().highlight.transform.LookAt(transform);
+                    nearestItem.GetComponent<Item>().highlightRenderer.color = new Color(255, 255, 255, Mathf.InverseLerp(highlightRangeRadius, 0, Vector3.Distance(hitInfo.point, nearestItem.transform.position)));
                 }
-            }
-
+            } 
         }
         else
         {
             hittingAir = true;
             pointInAir = transform.position + (transform.forward * (visibleHighlightRange));
 
-            hitColliders = Physics.OverlapCapsule(transform.position, pointInAir, highlightRangeRadius, layerMask);
-            foreach(Collider hitCollider in hitColliders)
+            hitColliders = Physics.OverlapSphere(pointInAir, highlightRangeRadius, layerMask);
+            List<float> hitItemsDistance = new List<float>();
+            Collider nearestItem = null;
+            if (hitColliders.Length != 0)
             {
-                Debug.DrawLine(pointInAir, hitCollider.transform.position);
-                if (hitCollider.TryGetComponent(out IHighlight highlightObj))
+                foreach (Collider hitItem in hitColliders)
                 {
-                    if (!hitCollider.GetComponent<Item>().highlightActive)
+                    hitItemsDistance.Add(Vector3.Distance(pointInAir, hitItem.transform.position));
+                }
+                nearestItem = hitColliders[hitItemsDistance.IndexOf(hitItemsDistance.Min())];
+                Debug.DrawLine(pointInAir, nearestItem.transform.position);
+                if (nearestItem.TryGetComponent(out IHighlight highlightObj))
+                {
+                    if (!nearestItem.GetComponent<Item>().highlightActive)
                     {
-                        switch (hitCollider.tag)
+                        switch (nearestItem.tag)
                         {
                             case "pickup":
                                 highlightObj.InstantiatePopup(highlights["pickup"], "pick up");
-                                activeHighlights.Add(hitCollider);
+                                activeHighlight = nearestItem;
                                 break;
                             
                             case "destroy":
                                 highlightObj.InstantiatePopup(highlights["destroy"], "destroy");
-                                activeHighlights.Add(hitCollider);
+                                activeHighlight = nearestItem;
                                 break;
                             
                             case "interact":
                                 highlightObj.InstantiatePopup(highlights["interact"], "interact");
-                                activeHighlights.Add(hitCollider);
+                                activeHighlight = nearestItem;
                                 break;
                         }
                     }
                 }
-
-                if (hitCollider.GetComponent<Item>().highlight != null)
+                if (nearestItem.GetComponent<Item>().highlight != null)
                 {
-                    hitCollider.GetComponent<Item>().highlight.transform.LookAt(transform);
-                    hitCollider.GetComponent<Item>().highlightRenderer.color = new Color(255, 255, 255, Mathf.InverseLerp(highlightRangeRadius, 0, Vector3.Distance(pointInAir, hitCollider.transform.position)));
+                    nearestItem.GetComponent<Item>().highlight.transform.LookAt(transform);
+                    nearestItem.GetComponent<Item>().highlightRenderer.color = new Color(255, 255, 255, Mathf.InverseLerp(highlightRangeRadius, 0, Vector3.Distance(pointInAir, nearestItem.transform.position)));
                 }
-            }
+            } 
         }
 
         if (hitColliders.Length == 0)
         {
-            // print("hitColliders array is empty");
-            activeHighlights.Clear();
+            activeHighlight = null;
             GameObject[] allHighlights = GameObject.FindGameObjectsWithTag("Highlight");
             foreach(GameObject activeHighlight in allHighlights)
             {
@@ -210,28 +214,18 @@ public class P_Interactor : MonoBehaviour
             }
             
         }
-        else
+        
+        if (activeHighlight != null)
         {
             try
             {
-                foreach (Collider activeCollider in activeHighlights)
+                foreach (Collider hitCollider in hitColliders)
                 {
-                    /*if (!activeCollider.gameObject.activeSelf)
+                    if (activeHighlight != hitCollider)
                     {
-                        if (activeCollider.TryGetComponent(out IHighlight highlightObject))
+                        if (hitCollider.TryGetComponent(out IHighlight highlightObject))
                         {
-                            highlightObject.DestroyPopup();
-                            activeHighlights.Remove(activeCollider);
-                        }
-                        continue;
-                    }*/
-
-                    if (!hitColliders.Contains(activeCollider))
-                    {
-                        if (activeCollider.TryGetComponent(out IHighlight highlightObject))
-                        {
-                            highlightObject.DestroyPopup();
-                            activeHighlights.Remove(activeCollider);
+                            highlightObject.DestroyPopup();;
                         }
                     }
                 }
