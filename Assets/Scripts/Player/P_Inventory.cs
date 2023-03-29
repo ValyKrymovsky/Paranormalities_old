@@ -14,6 +14,8 @@ public class P_Inventory : MonoBehaviour
 
     private InputAction ac_pickUp;
     private InputAction ac_selection;
+
+    private GameObject placeholderModel;
     
 
     public void Awake()
@@ -29,11 +31,6 @@ public class P_Inventory : MonoBehaviour
 
     public void Update()
     {
-        /*float input_value = ac_selection.ReadValue<float>();
-        if (input_value != 0)
-        {
-            Debug.Log("Binding: " + ac_selection.activeControl.displayName + ", phase: " + ac_selection.phase);
-        }*/
     }
 
     public void SelectItem(InputAction.CallbackContext context)
@@ -46,6 +43,7 @@ public class P_Inventory : MonoBehaviour
             selectedItem = inventory.SelectItem(int.Parse(context.control.displayName) - 1);
             if (selectedItem.Item1 != null && selectedItem.Item2 != null)
             {
+                placeholderModel = selectedItem.Item2;
                 print(selectedItem);
             }
             
@@ -61,9 +59,11 @@ public class P_Inventory : MonoBehaviour
             {
                 inventory.RemoveItem(selectedItem.Item1, selectedItem.Item2);
                 Vector3 positionToSpawn = transform.position + (transform.forward * (2));
-                GameObject droppedItem = Instantiate(selectedItem.Item2, positionToSpawn, transform.rotation, GameObject.Find("Items").transform);
+                GameObject droppedItem = Instantiate(placeholderModel, positionToSpawn, transform.rotation, GameObject.Find("Items").transform);
                 droppedItem.name = selectedItem.Item2.name;
                 droppedItem.GetComponent<Item>().highlightActive = false;
+                droppedItem.GetComponent<Item>().highlight = null;
+                droppedItem.GetComponent<Item>().highlightRenderer = null;
                 droppedItem.SetActive(true);
                 Object.Destroy(selectedItem.Item2);
             }

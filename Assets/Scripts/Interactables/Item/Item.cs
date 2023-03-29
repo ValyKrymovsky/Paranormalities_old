@@ -41,14 +41,19 @@ public class Item : MonoBehaviour, IInteractable, IInventory, IHighlight
 
     public void Drop()
     {
-        Transform playerTransform = GameObject.FindGameObjectWithTag("Player").transform;
-        Instantiate(selectedItem, playerTransform.position + playerTransform.forward, transform.rotation);
+        /*Transform playerTransform = GameObject.FindGameObjectWithTag("Player").transform;
+        Instantiate(selectedItem, playerTransform.position + playerTransform.forward, transform.rotation);*/
     }
 
     public void PickUp()
     {
         if (inventory.inventory.AddItem(item, model))
         {
+            highlight = null;
+            highlightRenderer = null;
+            highlightActive = false;
+            Transform childHighlight = transform.Find("pick up highlight");
+            Object.Destroy(childHighlight.gameObject);
             this.gameObject.SetActive(false);
         }
         else

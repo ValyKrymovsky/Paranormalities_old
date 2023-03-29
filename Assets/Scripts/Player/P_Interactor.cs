@@ -1,7 +1,8 @@
 using UnityEngine;
-using System.Collections.Generic;
 using UnityEngine.InputSystem;
+using System.Collections.Generic;
 using System.Linq;
+using System;
 using DG.Tweening;
 
 interface IInteractable
@@ -205,23 +206,41 @@ public class P_Interactor : MonoBehaviour
                 activeHighlight.GetComponent<HighlightParent>().parent.GetComponent<Item>().highlight = null;
                 activeHighlight.GetComponent<HighlightParent>().parent.GetComponent<Item>().highlightRenderer = null;
                 activeHighlight.GetComponent<HighlightParent>().parent.GetComponent<Item>().highlightActive = false;
-                Object.Destroy(activeHighlight);
+                UnityEngine.Object.Destroy(activeHighlight);
             }
             
         }
         else
         {
-            foreach (Collider activeCollider in activeHighlights)
+            try
             {
-                if (!hitColliders.Contains(activeCollider))
+                foreach (Collider activeCollider in activeHighlights)
                 {
-                    if (activeCollider.TryGetComponent(out IHighlight highlightObject))
+                    /*if (!activeCollider.gameObject.activeSelf)
                     {
-                        highlightObject.DestroyPopup();
-                        activeHighlights.Remove(activeCollider);
+                        if (activeCollider.TryGetComponent(out IHighlight highlightObject))
+                        {
+                            highlightObject.DestroyPopup();
+                            activeHighlights.Remove(activeCollider);
+                        }
+                        continue;
+                    }*/
+
+                    if (!hitColliders.Contains(activeCollider))
+                    {
+                        if (activeCollider.TryGetComponent(out IHighlight highlightObject))
+                        {
+                            highlightObject.DestroyPopup();
+                            activeHighlights.Remove(activeCollider);
+                        }
                     }
                 }
             }
+            catch (InvalidOperationException)
+            {
+
+            }
+            
         }
     }
 
