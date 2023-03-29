@@ -41,8 +41,6 @@ public class Item : MonoBehaviour, IInteractable, IInventory, IHighlight
 
     public void Drop()
     {
-        /*Transform playerTransform = GameObject.FindGameObjectWithTag("Player").transform;
-        Instantiate(selectedItem, playerTransform.position + playerTransform.forward, transform.rotation);*/
     }
 
     public void PickUp()
@@ -53,7 +51,11 @@ public class Item : MonoBehaviour, IInteractable, IInventory, IHighlight
             highlightRenderer = null;
             highlightActive = false;
             Transform childHighlight = transform.Find("pick up highlight");
-            Object.Destroy(childHighlight.gameObject);
+            if (transform != null)
+            {
+                Object.Destroy(childHighlight.gameObject);
+            }
+            
             this.gameObject.SetActive(false);
         }
         else

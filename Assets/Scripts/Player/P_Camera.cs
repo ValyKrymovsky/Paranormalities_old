@@ -42,21 +42,25 @@ public class P_Camera : MonoBehaviour
 
     void Update()
     {
-        Look();
     }
 
 
-    public void Look()
+    public void Look(InputAction.CallbackContext _ctx)
     {
-        Vector2 input_value = ac_look.ReadValue<Vector2>();
+        if ((int)_ctx.phase == 2)
+        {
+            Vector2 input_value = _ctx.ReadValue<Vector2>();
 
-        mouseX = input_value.x * sensetivity * Time.deltaTime;
-        mouseY = input_value.y * sensetivity * Time.deltaTime;
+            mouseX = input_value.x * sensetivity * Time.deltaTime;
+            mouseY = input_value.y * sensetivity * Time.deltaTime;
 
-        cur_rotX -= mouseY;
-        cur_rotX = Mathf.Clamp(cur_rotX, -75f, 70f);
-        transform.localRotation = Quaternion.Euler(cur_rotX, 0, 0);
-        p_body.Rotate(Vector3.up * mouseX);
+            cur_rotX -= mouseY;
+            cur_rotX = Mathf.Clamp(cur_rotX, -75f, 70f);
+            transform.localRotation = Quaternion.Euler(cur_rotX, 0, 0);
+            p_body.Rotate(Vector3.up * mouseX);
+        }
+            
+
     }
 
 }

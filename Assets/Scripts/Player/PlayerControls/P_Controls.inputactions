@@ -24,18 +24,18 @@
                     "initialStateCheck": true
                 },
                 {
-                    "name": "Sprint",
+                    "name": "Sneak",
                     "type": "Button",
-                    "id": "17f16284-f353-4b56-84f3-880deb65b5a1",
+                    "id": "1faa6030-21c8-4dc4-8084-d63a971fb34b",
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
                 },
                 {
-                    "name": "Crouch",
+                    "name": "Sprint",
                     "type": "Button",
-                    "id": "9b342e41-6537-4f6b-b530-a9ce10d10071",
+                    "id": "17f16284-f353-4b56-84f3-880deb65b5a1",
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": "",
@@ -277,28 +277,6 @@
                 },
                 {
                     "name": "",
-                    "id": "41b3d34f-0846-4d81-99a4-4c8f1603a9b1",
-                    "path": "<Keyboard>/c",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "Crouch",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "f860228b-8020-45fd-8191-db1293ef129c",
-                    "path": "<Keyboard>/ctrl",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "Crouch",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
                     "id": "f7dd00a3-070b-43ef-bb03-9ea743635b6b",
                     "path": "<Keyboard>/e",
                     "interactions": "",
@@ -437,6 +415,28 @@
                     "processors": "",
                     "groups": "Keyboard&Mouse",
                     "action": "Select item",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "9bc3e812-43df-4566-9be6-485ac59b6e36",
+                    "path": "<Keyboard>/c",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Keyboard&Mouse",
+                    "action": "Sneak",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "553ddaf4-b245-4574-bd75-4903b67455ff",
+                    "path": "<Keyboard>/ctrl",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Keyboard&Mouse",
+                    "action": "Sneak",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
