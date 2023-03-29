@@ -13,8 +13,8 @@ interface IInventory
 [CreateAssetMenu(fileName = "NewInventory", menuName = "Inventory System/Inventory")]
 public class InventoryObject : ScriptableObject
 {
-    //public Dictionary<ItemObject, GameObject> inventory = new Dictionary<ItemObject, GameObject>();
     public List<KeyValuePair<ItemObject, GameObject>> inventory = new List<KeyValuePair<ItemObject, GameObject>>();
+    public KeyValuePair<ItemObject, GameObject> selectedItem = new KeyValuePair<ItemObject, GameObject>();
     public static KeyValuePair<ItemObject, GameObject> nullItem = new KeyValuePair<ItemObject, GameObject>(null, null);
     public int inventorySize;
     public bool inventoryFull;
@@ -27,7 +27,6 @@ public class InventoryObject : ScriptableObject
     {
         if (IsInventoryFull() == false)
         {
-            Debug.Log("test");
             bool hasItem = false;
             for (int i = 0; i < inventory.Count; i++)
             {
@@ -43,6 +42,7 @@ public class InventoryObject : ScriptableObject
                 var itemToAdd = new KeyValuePair<ItemObject, GameObject>(_item, _model);
                 int itemToReplace = inventory.IndexOf(inventory.Where(index => index.Equals(nullItem)).First());
                 inventory[itemToReplace] = itemToAdd;
+                PrintInventory();
                 return true;
             }
             else
@@ -54,7 +54,6 @@ public class InventoryObject : ScriptableObject
         {
             return false;
         }
-        
     }
 
     public void RemoveItem(ItemObject _item, GameObject _model)
@@ -71,9 +70,9 @@ public class InventoryObject : ScriptableObject
 
         if (hasItem)
         {
-            var temp = new KeyValuePair<ItemObject, GameObject>(_item, _model);
+            var item = new KeyValuePair<ItemObject, GameObject>(_item, _model);
             var temp2 = new KeyValuePair<ItemObject, GameObject>(null, null);
-            int itemIndex = inventory.IndexOf(temp);
+            int itemIndex = inventory.IndexOf(item);
             inventory.RemoveAt(itemIndex);
             inventory.Insert(itemIndex, temp2);
             PrintInventory();
@@ -100,7 +99,7 @@ public class InventoryObject : ScriptableObject
                 continue;
             }
         }
-        Debug.Log(nullItems);
+
         if (nullItems == 0)
         {
             return true;
@@ -121,18 +120,63 @@ public class InventoryObject : ScriptableObject
         }
     }
 
-    public KeyValuePair<ItemObject, GameObject> SelectItem(int _index)
+    public KeyValuePair<ItemObject, GameObject> GetItem(int _index)
     {
         try
         {
-            KeyValuePair<ItemObject, GameObject> temp = new KeyValuePair<ItemObject, GameObject>(inventory.ElementAt(_index).Key, inventory.ElementAt(_index).Value);
-            return temp;
+            KeyValuePair<ItemObject, GameObject> item = new KeyValuePair<ItemObject, GameObject>(inventory.ElementAt(_index).Key, inventory.ElementAt(_index).Value);
+            selectedItem = item;
+            return item;
         }
         catch (ArgumentOutOfRangeException)
         {
-            KeyValuePair<ItemObject, GameObject> temp = new KeyValuePair<ItemObject, GameObject>(null, null);
-            return temp;
+            KeyValuePair<ItemObject, GameObject> item = new KeyValuePair<ItemObject, GameObject>(null, null);
+            return item;
         }  
+    }
+
+    public KeyValuePair<ItemObject, GameObject> GetNextItem(int _index)
+    {
+        try
+        {
+            KeyValuePair<ItemObject, GameObject> item = new KeyValuePair<ItemObject, GameObject>(inventory.ElementAt(_index + 1).Key, inventory.ElementAt(_index + 1).Value);
+            selectedItem = item;
+            return item;
+        }
+        catch (ArgumentOutOfRangeException)
+        {
+            //KeyValuePair<ItemObject, GameObject> item = new KeyValuePair<ItemObject, GameObject>(null, null);
+            KeyValuePair<ItemObject, GameObject> item = new KeyValuePair<ItemObject, GameObject>(inventory.ElementAt(0).Key, inventory.ElementAt(0).Value);
+            selectedItem = item;
+            return item;
+        }
+    }
+
+    public KeyValuePair<ItemObject, GameObject> GetPreviousItem(int _index)
+    {
+        try
+        {
+            KeyValuePair<ItemObject, GameObject> item = new KeyValuePair<ItemObject, GameObject>(inventory.ElementAt(_index - 1).Key, inventory.ElementAt(_index - 1).Value);
+            selectedItem = item;
+            return item;
+        }
+        catch (ArgumentOutOfRangeException)
+        {
+            //KeyValuePair<ItemObject, GameObject> item = new KeyValuePair<ItemObject, GameObject>(null, null);
+            KeyValuePair<ItemObject, GameObject> item = new KeyValuePair<ItemObject, GameObject>(inventory.ElementAt(GetInventorySize() - 1).Key, inventory.ElementAt(GetInventorySize() - 1).Value);
+            selectedItem = item;
+            return item;
+        }
+    }
+
+    public int GetIndexOfItem(KeyValuePair<ItemObject, GameObject> _item)
+    {
+        return inventory.IndexOf(_item);
+    }
+
+    public KeyValuePair<ItemObject, GameObject> GetSelectedItem()
+    {
+        return selectedItem;
     }
 
     public bool HasItem(ItemObject _item, GameObject _model)

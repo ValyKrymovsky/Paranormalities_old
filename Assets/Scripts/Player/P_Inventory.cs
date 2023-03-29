@@ -9,7 +9,6 @@ public class P_Inventory : MonoBehaviour
     [Header("Inventory")]
     public InventoryObject inventory;
     public KeyValuePair<ItemObject, GameObject> selectedItem;
-    //public static KeyValuePair<ItemObject, GameObject> nullItem = new KeyValuePair<ItemObject, GameObject>(null, null);
 
     private P_Controls p_input;
 
@@ -42,15 +41,34 @@ public class P_Inventory : MonoBehaviour
     {
         if ((int)context.phase == 2)
         {
-            selectedItem = inventory.SelectItem(int.Parse(context.control.displayName) - 1);
-            if (selectedItem.Key != null && selectedItem.Value != null)
+            if (context.control.displayName == "D-Pad Right")
             {
-                placeholderModel = selectedItem.Value;
-                print(selectedItem);
+                selectedItem = inventory.GetNextItem(inventory.GetIndexOfItem(inventory.GetSelectedItem()));
+                if (selectedItem.Key != null && selectedItem.Value != null)
+                {
+                    placeholderModel = selectedItem.Value;
+                    print(selectedItem);
+                }
             }
-            
+            else if (context.control.displayName == "D-Pad Left")
+            {
+                selectedItem = inventory.GetPreviousItem(inventory.GetIndexOfItem(inventory.GetSelectedItem()));
+                if (selectedItem.Key != null && selectedItem.Value != null)
+                {
+                    placeholderModel = selectedItem.Value;
+                    print(selectedItem);
+                }
+            }
+            else
+            {
+                selectedItem = inventory.GetItem(int.Parse(context.control.displayName) - 1);
+                if (selectedItem.Key != null && selectedItem.Value != null)
+                {
+                    placeholderModel = selectedItem.Value;
+                    print(selectedItem);
+                }
+            }
         }
-        
     }
 
     public void DropItem(InputAction.CallbackContext context)

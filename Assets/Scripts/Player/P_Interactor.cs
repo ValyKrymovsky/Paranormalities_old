@@ -82,7 +82,6 @@ public class P_Interactor : MonoBehaviour
     private void Update() 
     {
         CheckInteractibles();
-        Debug.Log(activeHighlight);
     }
 
     public void Interact(InputAction.CallbackContext context)

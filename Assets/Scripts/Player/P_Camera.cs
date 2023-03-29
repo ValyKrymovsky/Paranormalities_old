@@ -13,6 +13,8 @@ public class P_Camera : MonoBehaviour
     private float mouseX;                       // mouse rotation on X axis
     private float mouseY;                       // mouse rotation on Y axis
 
+    private Vector2 input_value;
+
     // Components //
     private P_Controls p_input;
     private Transform p_body;
@@ -42,25 +44,23 @@ public class P_Camera : MonoBehaviour
 
     void Update()
     {
+        Look(input_value);
     }
 
-
-    public void Look(InputAction.CallbackContext _ctx)
+    public void GetLookValue(InputAction.CallbackContext _ctx)
     {
-        if ((int)_ctx.phase == 2)
-        {
-            Vector2 input_value = _ctx.ReadValue<Vector2>();
+        input_value = _ctx.ReadValue<Vector2>();
+    }
 
-            mouseX = input_value.x * sensetivity * Time.deltaTime;
-            mouseY = input_value.y * sensetivity * Time.deltaTime;
+    public void Look(Vector2 _input_value)
+    {
+        mouseX = _input_value.x * sensetivity * Time.deltaTime;
+        mouseY = _input_value.y * sensetivity * Time.deltaTime;
 
-            cur_rotX -= mouseY;
-            cur_rotX = Mathf.Clamp(cur_rotX, -75f, 70f);
-            transform.localRotation = Quaternion.Euler(cur_rotX, 0, 0);
-            p_body.Rotate(Vector3.up * mouseX);
-        }
-            
-
+        cur_rotX -= mouseY;
+        cur_rotX = Mathf.Clamp(cur_rotX, -75f, 70f);
+        transform.localRotation = Quaternion.Euler(cur_rotX, 0, 0);
+        p_body.Rotate(Vector3.up * mouseX);
     }
 
 }
