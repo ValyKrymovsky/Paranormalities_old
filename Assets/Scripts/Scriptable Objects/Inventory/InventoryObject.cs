@@ -7,7 +7,6 @@ using System.Linq;
 interface IInventory
 {
     public void PickUp();
-    public void Drop();
 }
 
 [CreateAssetMenu(fileName = "NewInventory", menuName = "Inventory System/Inventory")]

@@ -39,10 +39,6 @@ public class Item : MonoBehaviour, IInteractable, IInventory, IHighlight
         PickUp();
     }
 
-    public void Drop()
-    {
-    }
-
     public void PickUp()
     {
         if (inventory.inventory.AddItem(item, model))
