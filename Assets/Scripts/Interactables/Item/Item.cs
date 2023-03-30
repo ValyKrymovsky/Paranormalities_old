@@ -41,7 +41,7 @@ public class Item : MonoBehaviour, IInteractable, IInventory, IHighlight
 
     public void PickUp()
     {
-        if (inventory.inventory.AddItem(item, model))
+        if (inventory.Get().AddItem(item, model))
         {
             highlight = null;
             highlightRenderer = null;
@@ -54,7 +54,7 @@ public class Item : MonoBehaviour, IInteractable, IInventory, IHighlight
             
             this.gameObject.SetActive(false);
         }
-        else if (!inventory.inventory.AddItem(item, model) && inventory.inventory.IsInventoryFull())
+        else if (!inventory.Get().AddItem(item, model) && inventory.Get().IsFull())
         {
             Debug.Log("Inventory full");
         }
@@ -65,7 +65,7 @@ public class Item : MonoBehaviour, IInteractable, IInventory, IHighlight
         
     }
 
-    public void InstantiatePopup(GameObject target, string name)
+    public void SpawnHighlight(GameObject target, string name)
     {
         if (!highlightActive)
         {
@@ -77,7 +77,7 @@ public class Item : MonoBehaviour, IInteractable, IInventory, IHighlight
         
     }
 
-    public void DestroyPopup()
+    public void DestroyHighlight()
     {
         if (highlightActive)
         {

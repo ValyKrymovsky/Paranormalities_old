@@ -9,7 +9,7 @@ public class Toolbar : MonoBehaviour
     private List<GameObject> slotList;
 
     private void Awake() {
-        for (int i = 0; i < inventory.inventory.GetInventorySize(); i++)
+        for (int i = 0; i < inventory.Get().GetSize(); i++)
         {
             Instantiate(slotTemplate, this.gameObject.transform);
         }

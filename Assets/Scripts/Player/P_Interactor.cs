@@ -12,8 +12,8 @@ interface IInteractable
 
 interface IHighlight
 {
-    public void InstantiatePopup(GameObject target, string name);
-    public void DestroyPopup();
+    public void SpawnHighlight(GameObject target, string name);
+    public void DestroyHighlight();
 }
 
 public class P_Interactor : MonoBehaviour
@@ -130,17 +130,17 @@ public class P_Interactor : MonoBehaviour
                         switch (nearestItem.tag)
                         {
                             case "pickup":
-                                highlightObj.InstantiatePopup(highlights["pickup"], "pick up");
+                                highlightObj.SpawnHighlight(highlights["pickup"], "pick up");
                                 activeHighlight = nearestItem;
                                 break;
                             
                             case "destroy":
-                                highlightObj.InstantiatePopup(highlights["destroy"], "destroy");
+                                highlightObj.SpawnHighlight(highlights["destroy"], "destroy");
                                 activeHighlight = nearestItem;
                                 break;
                             
                             case "interact":
-                                highlightObj.InstantiatePopup(highlights["interact"], "interact");
+                                highlightObj.SpawnHighlight(highlights["interact"], "interact");
                                 activeHighlight = nearestItem;
                                 break;
                         }
@@ -176,17 +176,17 @@ public class P_Interactor : MonoBehaviour
                         switch (nearestItem.tag)
                         {
                             case "pickup":
-                                highlightObj.InstantiatePopup(highlights["pickup"], "pick up");
+                                highlightObj.SpawnHighlight(highlights["pickup"], "pick up");
                                 activeHighlight = nearestItem;
                                 break;
                             
                             case "destroy":
-                                highlightObj.InstantiatePopup(highlights["destroy"], "destroy");
+                                highlightObj.SpawnHighlight(highlights["destroy"], "destroy");
                                 activeHighlight = nearestItem;
                                 break;
                             
                             case "interact":
-                                highlightObj.InstantiatePopup(highlights["interact"], "interact");
+                                highlightObj.SpawnHighlight(highlights["interact"], "interact");
                                 activeHighlight = nearestItem;
                                 break;
                         }
@@ -224,7 +224,7 @@ public class P_Interactor : MonoBehaviour
                     {
                         if (hitCollider.TryGetComponent(out IHighlight highlightObject))
                         {
-                            highlightObject.DestroyPopup();;
+                            highlightObject.DestroyHighlight();
                         }
                     }
                 }

@@ -20,21 +20,19 @@ public class P_Inventory : MonoBehaviour
 
     public void Awake()
     {
-        inventory.inventorySize = inventory.GetInventorySize() <= 0 ? 1 : inventory.GetInventorySize();
-        inventory.ClearInventory();
+        if (inventory.GetSize() <= 0)
+        {
+            inventory.SetSize(1);
+        }
 
-        inventory.SetUpInventory();
-
+        inventory.Clear();
+        inventory.Fill();
         inventory.PrintInventory();
 
         p_input = new P_Controls();
         ac_selection = p_input.Player.Selectitem;
         ac_pickUp = p_input.Player.Interact;
 
-    }
-
-    public void Update()
-    {
     }
 
     public void SelectItem(InputAction.CallbackContext context)
@@ -92,6 +90,25 @@ public class P_Inventory : MonoBehaviour
             
         }
     }
+
+    /// <summary>
+    /// Returns inventory object that is currently used
+    /// </summary>
+    /// <returns>Active InventoryObject object</returns>
+    public InventoryObject Get()
+    {
+        return inventory;
+    }
+
+    /// <summary>
+    /// Sets active inventory object to specified _inventory
+    /// </summary>
+    /// <param name="_inventory"></param>
+    public void Set(InventoryObject _inventory)
+    {
+        inventory = _inventory;
+    }
+
 
     void OnEnable()
     {

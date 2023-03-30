@@ -15,7 +15,7 @@ public class InventoryObject : ScriptableObject
     public List<KeyValuePair<ItemObject, GameObject>> inventory = new List<KeyValuePair<ItemObject, GameObject>>();
     public KeyValuePair<ItemObject, GameObject> selectedItem = new KeyValuePair<ItemObject, GameObject>();
     public static KeyValuePair<ItemObject, GameObject> nullItem = new KeyValuePair<ItemObject, GameObject>(null, null);
-    public int inventorySize;
+    public int size;
     public bool inventoryFull;
     private P_Controls p_input;
 
@@ -24,7 +24,7 @@ public class InventoryObject : ScriptableObject
 
     public bool AddItem(ItemObject _item, GameObject _model)
     {
-        if (IsInventoryFull() == false)
+        if (IsFull() == false)
         {
             bool hasItem = false;
             for (int i = 0; i < inventory.Count; i++)
@@ -78,15 +78,20 @@ public class InventoryObject : ScriptableObject
         }
     }
 
-    public int GetInventorySize()
+    public int GetSize()
     {
-        return inventorySize;
+        return size;
     }
 
-    public bool IsInventoryFull()
+    public void SetSize(int _size)
+    {
+        size = _size;
+    }
+
+    public bool IsFull()
     {
         int nullItems = 0;
-        for (int i = 0; i < GetInventorySize(); i++)
+        for (int i = 0; i < GetSize(); i++)
         {
             if (inventory[i].Key == null && inventory[i].Value == null)
             {
@@ -162,7 +167,7 @@ public class InventoryObject : ScriptableObject
         catch (ArgumentOutOfRangeException)
         {
             //KeyValuePair<ItemObject, GameObject> item = new KeyValuePair<ItemObject, GameObject>(null, null);
-            KeyValuePair<ItemObject, GameObject> item = new KeyValuePair<ItemObject, GameObject>(inventory.ElementAt(GetInventorySize() - 1).Key, inventory.ElementAt(GetInventorySize() - 1).Value);
+            KeyValuePair<ItemObject, GameObject> item = new KeyValuePair<ItemObject, GameObject>(inventory.ElementAt(GetSize() - 1).Key, inventory.ElementAt(GetSize() - 1).Value);
             selectedItem = item;
             return item;
         }
@@ -197,15 +202,21 @@ public class InventoryObject : ScriptableObject
         }      
     }
 
-    public void SetUpInventory()
+    /// <summary>
+    /// Fills inventory with null items
+    /// </summary>
+    public void Fill()
     {
-        for (int i = 0; i < GetInventorySize(); i++)
+        for (int i = 0; i < GetSize(); i++)
         {
             inventory.Add(nullItem);
         }
     }
 
-    public void ClearInventory()
+    /// <summary>
+    /// Deletes all items from inventory
+    /// </summary>
+    public void Clear()
     {
         inventory.Clear();
     }
