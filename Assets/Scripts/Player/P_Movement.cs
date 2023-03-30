@@ -21,9 +21,9 @@ public class P_Movement : MonoBehaviour
 
     // Stamina //
     [Header("Stamina")]
-     [SerializeField] private bool useStamina;  // use stamina system or not
-     [SerializeField] private float depletionValue; // float value for stamina depletion
-     [SerializeField] private float regenValue; // float value for stamina regeneration
+    [SerializeField] private bool useStamina;  // use stamina system or not
+    [SerializeField] private float depletionValue; // float value for stamina depletion
+    [SerializeField] private float regenValue; // float value for stamina regeneration
     private bool isSprinting;
     private bool isMoving;
     private bool isMovingForward;
@@ -44,6 +44,14 @@ public class P_Movement : MonoBehaviour
     // Input Actions //
     private InputAction ac_move;    // input action for moving
     private InputAction ac_sprint;  // input action for sprinting
+    private InputAction ac_sneak;  // input action for sprinting
+
+
+    private int moveAction;
+
+    public Vector2 move_value;
+    public float sprint_value;
+    public float sneak_value;
 
 
     // Coroutines //
@@ -57,6 +65,7 @@ public class P_Movement : MonoBehaviour
 
         ac_move = p_input.Player.Move;
         ac_sprint = p_input.Player.Sprint;
+        ac_sneak = p_input.Player.Sneak;
     }
 
     void Start()
@@ -83,14 +92,29 @@ public class P_Movement : MonoBehaviour
 
     public void PlayerMove() 
     {
-        Vector2 input_value = ac_move.ReadValue<Vector2>();
-        float controllerMoveSensetivity = Mathf.Max(Mathf.Abs(input_value.x), Mathf.Abs(input_value.y));
-        moveDir = (input_value.x * transform.right + input_value.y * transform.forward).normalized * controllerMoveSensetivity;
+        move_value = ac_move.ReadValue<Vector2>();
+        float controllerMoveSensetivity = Mathf.Max(Mathf.Abs(move_value.x), Mathf.Abs(move_value.y));
+        moveDir = (move_value.x * transform.right + move_value.y * transform.forward).normalized * controllerMoveSensetivity;
 
-        isMoving = (input_value.x + input_value.y) != 0 ? true : false;
-        isMovingForward = input_value.y > 0 ? true : false;
+        isMoving = (move_value.x + move_value.y) != 0 ? true : false;
+        isMovingForward = move_value.y > 0 ? true : false;
 
-        // Checks if player should sprint or not
+        if ()
+        {
+
+        }
+
+
+        Sprint();
+        ApplyGravity();
+
+        moveDir.y = moveDirY;
+
+        ch_controller.Move(moveDir * (speed * internalMultiplier) * Time.deltaTime);
+    }
+
+    private void Sprint()
+    {
         switch (useStamina)
         {
             case true:
@@ -107,7 +131,6 @@ public class P_Movement : MonoBehaviour
                         }
                         else if (!p_stamina.staminaDepleted())
                         {
-                            // (internalMultiplier, isSprinting) = sprint_input_value > 0 ? (sprintMultiplier, true) : (1, false);
                             if (p_stamina.staminaRegenerating())
                             {
                                 StopCoroutine(s_regen);
@@ -127,7 +150,7 @@ public class P_Movement : MonoBehaviour
                             s_regen = p_stamina.startRegen(regenValue);
                         }
                     }
-                
+
                 }
                 else
                 {
@@ -143,12 +166,6 @@ public class P_Movement : MonoBehaviour
                 break;
 
         }
-
-        ApplyGravity();
-
-        moveDir.y = moveDirY;
-
-        ch_controller.Move(moveDir * (speed * internalMultiplier) * Time.deltaTime);
     }
 
     private void ApplyGravity()

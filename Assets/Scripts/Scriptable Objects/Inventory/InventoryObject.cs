@@ -88,42 +88,6 @@ public class InventoryObject : ScriptableObject
         size = _size;
     }
 
-    public bool IsFull()
-    {
-        int nullItems = 0;
-        for (int i = 0; i < GetSize(); i++)
-        {
-            if (inventory[i].Key == null && inventory[i].Value == null)
-            {
-                nullItems += 1;
-                continue;
-            }
-            else
-            {
-                continue;
-            }
-        }
-
-        if (nullItems == 0)
-        {
-            return true;
-        }
-        else
-        {
-            return false;
-        }
-    }
-
-    public void PrintInventory()
-    {
-        int index = 0;
-        foreach (var item in inventory)
-        {
-            Debug.Log(string.Format("Id: {0}, Item: {1}, model : {2}", index, item.Key, item.Value));
-            index++;
-        }
-    }
-
     public KeyValuePair<ItemObject, GameObject> GetItem(int _index)
     {
         try
@@ -219,5 +183,41 @@ public class InventoryObject : ScriptableObject
     public void Clear()
     {
         inventory.Clear();
+    }
+
+    public bool IsFull()
+    {
+        int nullItems = 0;
+        for (int i = 0; i < GetSize(); i++)
+        {
+            if (inventory[i].Key == null && inventory[i].Value == null)
+            {
+                nullItems += 1;
+                continue;
+            }
+            else
+            {
+                continue;
+            }
+        }
+
+        if (nullItems == 0)
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
+
+    public void PrintInventory()
+    {
+        int index = 0;
+        foreach (var item in inventory)
+        {
+            Debug.Log(string.Format("Id: {0}, Item: {1}, model : {2}", index, item.Key, item.Value));
+            index++;
+        }
     }
 }
