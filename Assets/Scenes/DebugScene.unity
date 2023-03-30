@@ -3019,12 +3019,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b47cc1ed35ba0f544a7a9c4fb8520c91, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  stamina: 0
   maxStamina: 100
-  currentStamina: 0
   regenerating: 0
   regenerate: 0
   depleted: 0
-  wasDepleted: 0
+  reachedLimit: 0
+  limit: 20
   regenDelay: 2
 --- !u!114 &2026089066
 MonoBehaviour:
@@ -3044,12 +3045,13 @@ MonoBehaviour:
   action: 0
   moving: 0
   movingForward: 0
+  walking: 0
   sprinting: 0
   sneaking: 0
   gravityForce: 0
   gravityMultiplier: 0
   isGrounded: 0
-  useStamina: 1
+  useStaminaSystem: 0
   depletionValue: 0.1
   regenValue: 0.1
 --- !u!114 &2026089067
