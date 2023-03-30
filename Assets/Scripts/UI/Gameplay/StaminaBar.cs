@@ -17,7 +17,7 @@ public class StaminaBar : MonoBehaviour
     public void Awake()
     {
         slider = GetComponent<Slider>();
-        slider.maxValue = p_stamina.getMaxStamina();
+        slider.maxValue = p_stamina.GetMaxStamina();
         staminaUIGroup = GetComponent<CanvasGroup>();
         active = false;
         staminaUIGroup.alpha = 0;
@@ -25,13 +25,13 @@ public class StaminaBar : MonoBehaviour
 
     public void Update()
     {
-        slider.value = p_stamina.getCurrentStamina();
+        slider.value = p_stamina.GetStamina();
 
-        if (p_stamina.getCurrentStamina() != p_stamina.getMaxStamina() && !active)
+        if (p_stamina.GetStamina() != p_stamina.GetMaxStamina() && !active)
         {
             StaminaFadeIn();
         }
-        else if (p_stamina.getCurrentStamina() == p_stamina.getMaxStamina() && active)
+        else if (p_stamina.GetStamina() == p_stamina.GetMaxStamina() && active)
         {
             StaminaFadeOut();
         }

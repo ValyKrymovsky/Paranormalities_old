@@ -1,124 +1,199 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 
 public class P_Stamina : MonoBehaviour
 {
 
     [Header("Stamina")]
+    [SerializeField] private float stamina;
     [SerializeField] private float maxStamina;
-    [SerializeField] private float currentStamina;
-    [SerializeField] public bool isRegenerating;
-    [SerializeField] public bool regenIsNeeded;
-    [SerializeField] public bool staminaWasDepleted;
+    [SerializeField] private bool regenerating;
+    [SerializeField] private bool regenerate;
+    [SerializeField] private bool depleted;
+    [SerializeField] private bool reachedLimit;
+    [SerializeField] private float limit;
+
+    [Header("Delays")]
     [SerializeField] private float regenDelay;
 
     void Start()
     {
-        currentStamina = maxStamina;
+        stamina = maxStamina;
+        SetDepleted(false);
     }
 
     void Update() 
     {
-         regenIsNeeded = regenNeeded();
+         if (Mathf.Round(GetStamina()) != GetMaxStamina())
+         {
+            regenerate = true;
+         }
+         else
+         {
+            regenerate = false;
+         }
     }
 
-    public float getStamina()
+    public bool IsFull()
     {
-        return currentStamina;
-    }
-
-    public float setStamina(float amount)
-    {
-        currentStamina = amount;
-        return currentStamina;
-    }
-
-    public float getMaxStamina()
-    {
-        return maxStamina;
-    }
-
-    public float setMaxStamina(float amount)
-    {
-        maxStamina = amount;
-        return maxStamina;
-    }
-
-    public float getCurrentStamina()
-    {
-        return currentStamina;
-    }
-
-    public float setCurrentStamina(float amount)
-    {
-        currentStamina = amount;
-        return currentStamina;
-    }
-
-    public float depleteStamina(float amount)
-    {
-        if (currentStamina <= maxStamina && currentStamina > 0)
-        {
-            currentStamina -= amount;
-        }
-
-        if (currentStamina < 0)
-        {
-            currentStamina = 0;
-        }
-
-        return currentStamina;
-    }
-
-    public IEnumerator regenerateStamina(float amount)
-    {
-        yield return new WaitForSeconds(regenDelay);
-        while (currentStamina <= maxStamina)
-        {
-            currentStamina += amount;
-            yield return null;
-        }
-
-        isRegenerating = false;
-        staminaWasDepleted = false;
-        currentStamina = maxStamina;
-    }
-
-    public Coroutine startRegen(float regenValue)
-    {
-        isRegenerating = true;
-        return StartCoroutine(regenerateStamina(regenValue));
-    }
-
-    public bool regenNeeded()
-    {
-        if (currentStamina != maxStamina)
-        {
-            return true;
-        }
-        return false;
-    }
-
-    public bool staminaRegenerating()
-    {
-        return isRegenerating;
-    }
-    public bool staminaDepleted()
-    {
-        if (currentStamina <= 0)
-        {
-            staminaWasDepleted = true;
-            return true;
-        }
-        else if (isRegenerating && currentStamina != maxStamina && staminaWasDepleted)
+        if (GetStamina() == GetMaxStamina())
         {
             return true;
         }
         else
         {
-            staminaWasDepleted = false;
             return false;
         }
     }
+    
+    public float GetStamina()
+    {
+        return stamina;
+    }
+
+    public void SetStamina(float _amount)
+    {
+        stamina = _amount;
+    }
+
+    public float GetMaxStamina()
+    {
+        return Mathf.Floor(maxStamina);
+    }
+
+    public void SetMaxStamina(float _amount)
+    {
+        maxStamina = _amount;
+    }
+
+    public bool IsRegenerating()
+    {
+        return regenerating;
+    }
+
+    public void SetRegenerating(bool _value)
+    {
+        regenerating = _value;
+    }
+    
+    public bool IsDepleted()
+    {
+        return depleted;
+    }
+
+    public void SetDepleted(bool _value)
+    {
+        depleted = _value;
+    }
+    
+    public float GetLimit()
+    {
+        return limit;
+    }
+
+    public void SetLimit(float _value)
+    {
+        limit = _value;
+    }
+
+    public bool LimitReached()
+    {
+        return reachedLimit;
+    }
+
+    public void SetLimitReached(bool _value)
+    {
+        reachedLimit = _value;
+    }
+
+    public bool NeedRegen()
+    {
+        return regenerate;
+    }
+
+    public IEnumerator Deplete(float _amount)
+    {
+        if (!IsDepleted())
+        {
+            SetRegenerating(false);
+            while (GetStamina() > 0)
+            {
+                stamina -= Mathf.Round(_amount);
+
+                if (GetStamina() < GetLimit())
+                {
+                    SetLimitReached(true);
+                }
+
+                yield return null;
+            }
+
+            if (GetStamina() <= 0)
+            {
+                SetStamina(0);
+                SetDepleted(true);
+            }
+        } 
+    }
+
+    public IEnumerator Regenerate(float _amount)
+    {
+        if (LimitReached())
+        {
+            yield return new WaitForSeconds(regenDelay + 1);
+        }
+        else
+        {
+            yield return new WaitForSeconds(regenDelay);
+        }
+        
+        SetRegenerating(true);
+        while (GetStamina() <= GetMaxStamina())
+        {
+            stamina += Mathf.Round(_amount);
+            yield return null;
+        }
+
+        if (GetStamina() >= GetMaxStamina())
+        {
+            SetStamina(GetMaxStamina());
+            SetDepleted(false);
+            SetRegenerating(false);
+            SetLimitReached(false);
+        }
+        
+    }
+    
+    public Coroutine StartDeplete(float _amount)
+    {
+        Coroutine cr = StartCoroutine(Deplete(_amount));
+        return cr;
+    }
+
+    public Coroutine StartRegenerate(float _amount)
+    {
+        Coroutine cr = StartCoroutine(Regenerate(_amount));
+        return cr;
+    }
+
+    public bool StaminaDepleted()
+    {
+        if (stamina <= 0)
+        {
+            reachedLimit = true;
+            return true;
+        }
+        else if (regenerating && stamina != maxStamina && reachedLimit)
+        {
+            return true;
+        }
+        else
+        {
+            reachedLimit = false;
+            return false;
+        }
+    }
+
 }

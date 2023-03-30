@@ -3021,9 +3021,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxStamina: 100
   currentStamina: 0
-  isRegenerating: 0
-  regenIsNeeded: 0
-  staminaWasDepleted: 0
+  regenerating: 0
+  regenerate: 0
+  depleted: 0
+  wasDepleted: 0
   regenDelay: 2
 --- !u!114 &2026089066
 MonoBehaviour:
@@ -3039,11 +3040,17 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   speed: 2
   sprintMultiplier: 1.75
-  velocity: 0
+  sneakMultiplier: 0.5
+  action: 0
+  moving: 0
+  movingForward: 0
+  sprinting: 0
+  sneaking: 0
+  gravityForce: 0
   gravityMultiplier: 0
   isGrounded: 0
   useStamina: 1
-  depletionValue: 0.2
+  depletionValue: 0.1
   regenValue: 0.1
 --- !u!114 &2026089067
 MonoBehaviour:
@@ -3085,7 +3092,19 @@ MonoBehaviour:
       m_Calls: []
   m_ActionEvents:
   - m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 2026089066}
+        m_TargetAssemblyTypeName: P_Movement, Assembly-CSharp
+        m_MethodName: GetMoveValue
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_ActionId: 582abaf2-8025-4bd1-9da3-dcd551aae871
     m_ActionName: Player/Move[/Keyboard/w,/Keyboard/upArrow,/Keyboard/s,/Keyboard/downArrow,/Keyboard/a,/Keyboard/leftArrow,/Keyboard/d,/Keyboard/rightArrow,/XInputControllerWindows/leftStick]
   - m_PersistentCalls:
@@ -3108,7 +3127,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 2026089066}
         m_TargetAssemblyTypeName: P_Movement, Assembly-CSharp
-        m_MethodName: PlayerMove
+        m_MethodName: GetSprintValue
         m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -3177,7 +3196,19 @@ MonoBehaviour:
     m_ActionId: 214a6c92-6730-4576-9264-8692045c4ccf
     m_ActionName: Player/Menu[/Keyboard/escape]
   - m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 2026089066}
+        m_TargetAssemblyTypeName: P_Movement, Assembly-CSharp
+        m_MethodName: GetSneakValue
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_ActionId: 1faa6030-21c8-4dc4-8084-d63a971fb34b
     m_ActionName: Player/Sneak[/Keyboard/c,/Keyboard/ctrl]
   m_NeverAutoSwitchControlSchemes: 0

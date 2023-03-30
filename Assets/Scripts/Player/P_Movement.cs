@@ -1,38 +1,54 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-[System.Serializable]
+public enum moveAction
+{
+    nothing,
+    walk,
+    sprint,
+    sneak
+}
+
+public enum useStamina
+{
+    yes,
+    no
+}
 public class P_Movement : MonoBehaviour
 {
     // Speed //
-    [Header("Player speed")]
-    [SerializeField]private float speed;    // walking speed
-    [SerializeField]private float sprintMultiplier;
-    private float internalMultiplier;   // speed multiplier
+    [Header("Player movement")]
+    [SerializeField] private float speed;
+    [SerializeField] private float sprintMultiplier, sneakMultiplier;
+    [SerializeField] private moveAction action;
+    [SerializeField] private bool moving, movingForward;
+    [SerializeField] private bool walking, sprinting, sneaking;
+    private float internalMultiplier;
+    
 
 
     // Gravity //
     [Header("Gravity")]
-    [SerializeField] private float velocity;
-    private float gravity = -9.8f;
+    [SerializeField] private float gravityForce;
     [SerializeField] private float gravityMultiplier;
     [SerializeField] private bool isGrounded;
+    private static float gravity = -9.8f;
 
 
     // Stamina //
     [Header("Stamina")]
-    [SerializeField] private bool useStamina;  // use stamina system or not
-    [SerializeField] private float depletionValue; // float value for stamina depletion
-    [SerializeField] private float regenValue; // float value for stamina regeneration
-    private bool isSprinting;
-    private bool isMoving;
-    private bool isMovingForward;
+    [SerializeField] private useStamina useStaminaSystem;
+    [SerializeField] private float depletionValue;
+    [SerializeField] private float regenValue;
+    
 
+    // Coroutines //
+    private Coroutine regenCoroutine;
+    private Coroutine depleteCoroutine;
 
-    // Direction //
-    private Vector3 moveDir;    // Vector3 for player movement
-    private float moveDirY;    // float for gravity
-    private Vector2 p_movement;    // movement value from Input System
+    // moveDirection //
+    private Vector3 moveDirection;    // Vector3 for player movement
+    
 
 
     // Components //
@@ -47,15 +63,10 @@ public class P_Movement : MonoBehaviour
     private InputAction ac_sneak;  // input action for sprinting
 
 
-    private int moveAction;
-
-    public Vector2 move_value;
-    public float sprint_value;
-    public float sneak_value;
-
-
-    // Coroutines //
-    [SerializeField] private Coroutine s_regen;    // coroutine for stamina regeneration
+    // Internal //
+    private Vector2 move_value;
+    private float sprint_value;
+    private float sneak_value;
 
     private void Awake()
     {
@@ -71,7 +82,10 @@ public class P_Movement : MonoBehaviour
     void Start()
     {
         internalMultiplier = 1;
-        isSprinting = false;
+        action = moveAction.nothing;
+        sprinting = false;
+        walking = false;
+        sneaking = false;
     }
 
     void OnEnable()
@@ -89,106 +103,180 @@ public class P_Movement : MonoBehaviour
         PlayerMove();
     }
 
+    public void GetMoveValue(InputAction.CallbackContext _ctx)
+    {
+        move_value = _ctx.ReadValue<Vector2>();
+    }
+
+    public void GetSprintValue(InputAction.CallbackContext _ctx)
+    {
+        sprint_value = _ctx.ReadValue<float>();
+    }
+
+    public void GetSneakValue(InputAction.CallbackContext _ctx)
+    {
+        sneak_value = _ctx.ReadValue<float>();
+    }
+
 
     public void PlayerMove() 
     {
-        move_value = ac_move.ReadValue<Vector2>();
         float controllerMoveSensetivity = Mathf.Max(Mathf.Abs(move_value.x), Mathf.Abs(move_value.y));
-        moveDir = (move_value.x * transform.right + move_value.y * transform.forward).normalized * controllerMoveSensetivity;
+        moveDirection = (move_value.x * transform.right + move_value.y * transform.forward).normalized * controllerMoveSensetivity;
 
-        isMoving = (move_value.x + move_value.y) != 0 ? true : false;
-        isMovingForward = move_value.y > 0 ? true : false;
-
-        if ()
+        if (move_value.x != 0 || move_value.y != 0)
         {
-
-        }
-
-
-        Sprint();
-        ApplyGravity();
-
-        moveDir.y = moveDirY;
-
-        ch_controller.Move(moveDir * (speed * internalMultiplier) * Time.deltaTime);
-    }
-
-    private void Sprint()
-    {
-        switch (useStamina)
-        {
-            case true:
-                if (isMovingForward)
-                {
-                    float sprint_input_value = ac_sprint.ReadValue<float>();
-                    if (sprint_input_value > 0)
-                    {
-                        if ((p_stamina.staminaDepleted() && !p_stamina.staminaRegenerating()))
-                        {
-                            internalMultiplier = 1;
-                            isSprinting = false;
-                            s_regen = p_stamina.startRegen(regenValue);
-                        }
-                        else if (!p_stamina.staminaDepleted())
-                        {
-                            if (p_stamina.staminaRegenerating())
-                            {
-                                StopCoroutine(s_regen);
-                                p_stamina.isRegenerating = false;
-                            }
-                            internalMultiplier = sprintMultiplier;
-                            isSprinting = true;
-                            p_stamina.depleteStamina(depletionValue);
-
-                        }
-                    }
-                    else
-                    {
-                        internalMultiplier = 1;
-                        if (!p_stamina.staminaRegenerating() && p_stamina.regenNeeded())
-                        {
-                            s_regen = p_stamina.startRegen(regenValue);
-                        }
-                    }
-
-                }
-                else
-                {
-                    internalMultiplier = 1;
-                    if (!p_stamina.staminaRegenerating() && p_stamina.regenNeeded())
-                    {
-                        s_regen = p_stamina.startRegen(regenValue);
-                    }
-                }
-                break;
-
-            case false:
-                break;
-
-        }
-    }
-
-    private void ApplyGravity()
-    {
-        // Checks if player is grounded
-        if (CheckIsGrounded())
-        {
-            velocity = -1.0f;
+            moving = true;
         }
         else
         {
-            velocity += (gravity * gravityMultiplier) * Time.deltaTime;
+            moving = false;
         }
 
-        moveDirY = velocity;
+        movingForward = move_value.y > 0 ? true : false;
+
+        if (((!movingForward && sprint_value != 0) || (movingForward && sprint_value == 0))  && sneak_value == 0)
+        {
+            action = moveAction.walk;
+        }
+        else if(movingForward && sprint_value != 0 && sneak_value == 0)
+        {
+            action = moveAction.sprint;
+        }
+        else if(moving && sneak_value != 0)
+        {
+            action = moveAction.sneak;
+        }
+        else if (!moving)
+        {
+            walking = false;
+            sprinting = false;
+            sneaking = false;
+            action = moveAction.nothing;
+        }
+
+        switch (action)
+        {
+            case moveAction.walk:
+                Walk();
+                break;
+
+            case moveAction.sprint:
+                Sprint();
+                break;
+            
+            case moveAction.sneak:
+                Sneak();
+                break;
+
+            case moveAction.nothing:
+                if ((p_stamina.IsDepleted() || p_stamina.NeedRegen()) && regenCoroutine == null)
+                {
+                    regenCoroutine = p_stamina.StartRegenerate(regenValue);
+                }
+
+                if (p_stamina.IsFull() && regenCoroutine != null)
+                {
+                    regenCoroutine = null;
+                }
+                break;
+        }
+
+        ApplyGravity();
+        ch_controller.Move(moveDirection * (speed * internalMultiplier) * Time.deltaTime);
     }
 
-    private bool CheckIsGrounded()
+    public void Walk()
     {
-        Vector3 position = new Vector3(transform.position.x, transform.position.y, transform.position.z);
+        walking = true;
+        sneaking = false;
+        sprinting = false;
+
+        if (depleteCoroutine != null)
+        {
+            StopCoroutine(depleteCoroutine);
+            depleteCoroutine = null;
+        }
+
+        CheckStaminaState();
+        internalMultiplier = 1;   
+    }
+
+    public void Sprint()
+    {
+        sprinting = true;
+        sneaking = false;
+        walking = false;
+
+        if (useStaminaSystem == useStamina.yes)
+        {
+            if ((!p_stamina.IsDepleted() && !p_stamina.LimitReached()) && depleteCoroutine == null)
+            {
+                if (regenCoroutine != null)
+                {
+                    StopCoroutine(regenCoroutine);
+                    regenCoroutine = null;
+                }
+                depleteCoroutine = p_stamina.StartDeplete(depletionValue);
+                internalMultiplier = sprintMultiplier;
+            }
+
+            if (p_stamina.IsDepleted() && depleteCoroutine != null)
+            {
+                depleteCoroutine = null;
+                regenCoroutine = p_stamina.StartRegenerate(regenValue);
+                internalMultiplier = 1;
+            }
+        }
+    }
+
+    public void Sneak()
+    {
+        sneaking = true;
+        sprinting = false;
+        walking = false;
+
+        if (depleteCoroutine != null)
+        {
+            StopCoroutine(depleteCoroutine);
+            depleteCoroutine = null;
+        }
+
+        CheckStaminaState();
+        internalMultiplier = sneakMultiplier;
+    }
+
+    private void CheckStaminaState()
+    {
+        if ((p_stamina.IsDepleted() || p_stamina.NeedRegen()) && regenCoroutine == null)
+        {
+            regenCoroutine = p_stamina.StartRegenerate(regenValue);
+        }
+
+        if (p_stamina.IsFull() && regenCoroutine != null)
+        {
+            regenCoroutine = null;
+        }
+    }
+
+
+    private void ApplyGravity()
+    {
+        if (IsGrounded())
+        {
+            gravityForce = -1.0f;
+        }
+        else
+        {
+            gravityForce += (gravity * gravityMultiplier) * Time.deltaTime;
+        }
+        moveDirection.y = gravityForce;
+    }
+
+    public bool IsGrounded()
+    {
         Vector3 boxSize = new Vector3(.1f, .1f, .1f);
-        
-        bool checkSuc = Physics.BoxCast(position, boxSize, -(transform.up), out RaycastHit hit, transform.rotation, ch_controller.height / 2);
+        bool checkSuc = Physics.BoxCast(transform.position, boxSize, -(transform.up), out RaycastHit hit, transform.rotation, ch_controller.height / 2);
 
         if (checkSuc)
         {
@@ -198,26 +286,9 @@ public class P_Movement : MonoBehaviour
         {
             isGrounded = false;
         }
-        
         return isGrounded;
     }
 
-
-    private void OnDrawGizmos()
-    {
-        Vector3 position = new Vector3(transform.position.x, transform.position.y - 1, transform.position.z);
-        Vector3 boxSize = new Vector3(.1f, .1f, .1f);
-        if (isGrounded)
-        {
-            Gizmos.color = Color.green;
-            Gizmos.DrawWireCube(position, boxSize);
-        }
-        else
-        {
-            Gizmos.color = Color.red;
-            Gizmos.DrawWireCube(position, boxSize);
-        }
-    }
 }
 
     
