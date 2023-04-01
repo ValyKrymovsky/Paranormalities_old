@@ -259,7 +259,10 @@ public class P_Movement : MonoBehaviour
         }
     }
 
-
+    public moveAction GetMoveAction()
+    {
+        return action;
+    }
     private void ApplyGravity()
     {
         if (IsGrounded())
