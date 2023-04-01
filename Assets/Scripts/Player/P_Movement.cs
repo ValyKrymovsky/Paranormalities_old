@@ -24,7 +24,7 @@ public class P_Movement : MonoBehaviour
     [SerializeField] private bool moving, movingForward;
     [SerializeField] private bool walking, sprinting, sneaking;
     private float internalMultiplier;
-    
+
 
 
     // Gravity //
@@ -40,7 +40,7 @@ public class P_Movement : MonoBehaviour
     [SerializeField] private useStamina useStaminaSystem;
     [SerializeField] private float depletionValue;
     [SerializeField] private float regenValue;
-    
+
 
     // Coroutines //
     private Coroutine regenCoroutine;
@@ -48,7 +48,7 @@ public class P_Movement : MonoBehaviour
 
     // moveDirection //
     private Vector3 moveDirection;    // Vector3 for player movement
-    
+
 
 
     // Components //
@@ -86,6 +86,9 @@ public class P_Movement : MonoBehaviour
         sprinting = false;
         walking = false;
         sneaking = false;
+
+        regenCoroutine = null;
+        depleteCoroutine = null;
     }
 
     void OnEnable()
@@ -119,7 +122,7 @@ public class P_Movement : MonoBehaviour
     }
 
 
-    public void PlayerMove() 
+    public void PlayerMove()
     {
         float controllerMoveSensetivity = Mathf.Max(Mathf.Abs(move_value.x), Mathf.Abs(move_value.y));
         moveDirection = (move_value.x * transform.right + move_value.y * transform.forward).normalized * controllerMoveSensetivity;
@@ -135,15 +138,15 @@ public class P_Movement : MonoBehaviour
 
         movingForward = move_value.y > 0 ? true : false;
 
-        if (((!movingForward && sprint_value != 0) || (movingForward && sprint_value == 0))  && sneak_value == 0)
+        if (((!movingForward && sprint_value != 0) || (movingForward && sprint_value == 0)) && sneak_value == 0)
         {
             action = moveAction.walk;
         }
-        else if(movingForward && sprint_value != 0 && sneak_value == 0)
+        else if (movingForward && sprint_value != 0 && sneak_value == 0)
         {
             action = moveAction.sprint;
         }
-        else if(moving && sneak_value != 0)
+        else if (moving && sneak_value != 0)
         {
             action = moveAction.sneak;
         }
@@ -164,21 +167,13 @@ public class P_Movement : MonoBehaviour
             case moveAction.sprint:
                 Sprint();
                 break;
-            
+
             case moveAction.sneak:
                 Sneak();
                 break;
 
             case moveAction.nothing:
-                if ((p_stamina.IsDepleted() || p_stamina.NeedRegen()) && regenCoroutine == null)
-                {
-                    regenCoroutine = p_stamina.StartRegenerate(regenValue);
-                }
-
-                if (p_stamina.IsFull() && regenCoroutine != null)
-                {
-                    regenCoroutine = null;
-                }
+                CheckStaminaState();
                 break;
         }
 
@@ -192,14 +187,8 @@ public class P_Movement : MonoBehaviour
         sneaking = false;
         sprinting = false;
 
-        if (depleteCoroutine != null)
-        {
-            StopCoroutine(depleteCoroutine);
-            depleteCoroutine = null;
-        }
-
         CheckStaminaState();
-        internalMultiplier = 1;   
+        internalMultiplier = 1;
     }
 
     public void Sprint()
@@ -236,18 +225,18 @@ public class P_Movement : MonoBehaviour
         sprinting = false;
         walking = false;
 
-        if (depleteCoroutine != null)
-        {
-            StopCoroutine(depleteCoroutine);
-            depleteCoroutine = null;
-        }
-
         CheckStaminaState();
         internalMultiplier = sneakMultiplier;
     }
 
     private void CheckStaminaState()
     {
+        if (depleteCoroutine != null)
+        {
+            StopCoroutine(depleteCoroutine);
+            depleteCoroutine = null;
+        }
+
         if ((p_stamina.IsDepleted() || p_stamina.NeedRegen()) && regenCoroutine == null)
         {
             regenCoroutine = p_stamina.StartRegenerate(regenValue);
@@ -294,4 +283,3 @@ public class P_Movement : MonoBehaviour
 
 }
 
-    

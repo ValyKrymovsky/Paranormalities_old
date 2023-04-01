@@ -120,7 +120,7 @@ public class P_Stamina : MonoBehaviour
             SetRegenerating(false);
             while (GetStamina() > 0)
             {
-                stamina -= Mathf.Round(_amount);
+                stamina -= _amount;
 
                 if (GetStamina() < GetLimit())
                 {
@@ -152,7 +152,7 @@ public class P_Stamina : MonoBehaviour
         SetRegenerating(true);
         while (GetStamina() <= GetMaxStamina())
         {
-            stamina += Mathf.Round(_amount);
+            stamina += _amount;
             yield return null;
         }
 
