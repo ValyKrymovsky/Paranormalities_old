@@ -30,9 +30,10 @@ public class P_Movement : MonoBehaviour
     // Gravity //
     [Header("Gravity")]
     [SerializeField] private float gravityForce;
-    [SerializeField] private float gravityMultiplier;
+    [SerializeField] private float gravityMultiplier = .5f;
     [SerializeField] private bool isGrounded;
     private static float gravity = -9.8f;
+    private float velocity;
 
 
     // Stamina //
@@ -256,12 +257,14 @@ public class P_Movement : MonoBehaviour
     {
         if (IsGrounded())
         {
-            gravityForce = -1.0f;
+            velocity = -1.0f;
         }
         else
         {
-            gravityForce += (gravity * gravityMultiplier) * Time.deltaTime;
+            velocity += (gravity * gravityMultiplier) * Time.deltaTime;
         }
+
+        gravityForce = velocity;
         moveDirection.y = gravityForce;
     }
 
@@ -279,6 +282,21 @@ public class P_Movement : MonoBehaviour
             isGrounded = false;
         }
         return isGrounded;
+    }
+
+    public int GetLayer()
+    {
+        if (IsGrounded())
+        {
+            Ray ray = new Ray(gameObject.transform.position, transform.up * -1);
+
+            if (Physics.Raycast(ray, out RaycastHit hitInfo, ch_controller.height))
+            {
+                Debug.DrawLine(transform.position, new Vector3(transform.position.x, transform.position.y - ch_controller.height, transform.position.z), Color.green);
+                return hitInfo.transform.gameObject.layer;
+            }
+        }
+        return 0;
     }
 
 }
