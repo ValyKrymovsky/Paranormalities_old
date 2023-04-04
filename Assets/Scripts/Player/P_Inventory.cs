@@ -27,7 +27,6 @@ public class P_Inventory : MonoBehaviour
 
         inventory.Clear();
         inventory.Fill();
-        inventory.PrintInventory();
 
         p_input = new P_Controls();
         ac_selection = p_input.Player.Selectitem;
