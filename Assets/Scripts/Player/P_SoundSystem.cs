@@ -26,29 +26,40 @@ public class P_SoundSystem : MonoBehaviour
     [SerializeField] private groundTypes ground;
 
     // footsteps on wood surface //
-    [SerializeField] private AudioClip[] footsteps_wood_walk;
-    [SerializeField] private AudioClip[] footsteps_wood_sprint;
+    [SerializeField] private List<AudioClip> footsteps_wood_walk;
+    [SerializeField] private List<AudioClip> footsteps_wood_sprint;
 
     // footsteps on concrete surface //
-    [SerializeField] private AudioClip[] footsteps_concrete_walk;
-    [SerializeField] private AudioClip[] footsteps_concrete_sprint;
+    [SerializeField] private List<AudioClip> footsteps_concrete_walk;
+    [SerializeField] private List<AudioClip> footsteps_concrete_sprint;
 
     // footsteps on grass surface //
-    [SerializeField] private AudioClip[] footsteps_grass_walk;
-    [SerializeField] private AudioClip[] footsteps_grass_sprint;
+    [SerializeField] private List<AudioClip> footsteps_grass_walk;
+    [SerializeField] private List<AudioClip> footsteps_grass_sprint;
     private List<AudioClip> playedFootsteps;
     private moveAction currentAction;
     
 
     [Header("Noise")]
     [SerializeField] private float noise;
-    [SerializeField] private float sprintMultiplier = 1.5f;
-    [SerializeField] private float sneakMultiplier = .75f;
+    [SerializeField] private float defaultNoise = 5;
+    [SerializeField] private float sprintMultiplier = 1.75f;
+    [SerializeField] private float sneakMultiplier = .45f;
 
     private void Awake() {
         p_movement = GetComponent<P_Movement>();
         ch_controller = GetComponent<CharacterController>();
         playedFootsteps = new List<AudioClip>();
+    }
+
+    public float GetNoise()
+    {
+        return noise;
+    }
+
+    public void SetNoise(float _value)
+    {
+        noise = _value;
     }
 
     public void PlaySound(AudioClip _clip)
@@ -66,6 +77,31 @@ public class P_SoundSystem : MonoBehaviour
         source.PlayOneShot(_clip);
     }
 
+    public AudioClip SelectClip(List<AudioClip> _clips, groundTypes _ground, moveAction _action)
+    {
+        AudioClip selectedClip = null;
+
+        if (playedFootsteps.Count >= footsteps_concrete_walk.Count)
+        {
+            playedFootsteps.Clear();
+        }
+        selectedClip = _clips[Random.Range(0, _clips.Count)];
+
+        while (playedFootsteps.Contains(selectedClip))
+        {
+            selectedClip = _clips[Random.Range(0, _clips.Count)];
+
+            if (!playedFootsteps.Contains(selectedClip))
+            {
+                break;
+            }
+        }
+
+        playedFootsteps.Add(selectedClip);
+
+        return selectedClip;
+    }
+
     private IEnumerator walkFootsteps(moveAction _moveAction, float _speed)
     {
         yield return new WaitForSeconds(.2f);
@@ -73,51 +109,15 @@ public class P_SoundSystem : MonoBehaviour
         {
             if (ground == groundTypes.concrete)
             {
-                AudioClip selectedClip = null;
-
-                if (_moveAction == moveAction.walk)
-                {
-                    if (playedFootsteps.Count >= footsteps_concrete_walk.Length)
-                    {
-                        playedFootsteps.Clear();
-                    }
-                    selectedClip = footsteps_concrete_walk[Random.Range(0, footsteps_concrete_walk.Length - 1)];
-                }
-                
-                PlaySound(selectedClip);
-                playedFootsteps.Add(selectedClip);
+                PlaySound(SelectClip(footsteps_concrete_walk, groundTypes.concrete, moveAction.walk));
             }
             else if (ground == groundTypes.wood)
             {
-                AudioClip selectedClip = null;
-
-                if (_moveAction == moveAction.walk)
-                {
-                    if (playedFootsteps.Count >= footsteps_wood_walk.Length)
-                    {
-                        playedFootsteps.Clear();
-                    }
-                    selectedClip = footsteps_wood_walk[Random.Range(0, footsteps_wood_walk.Length - 1)];
-                }
-                
-                PlaySound(selectedClip);
-                playedFootsteps.Add(selectedClip);
+                PlaySound(SelectClip(footsteps_wood_walk, groundTypes.wood, moveAction.walk));
             }
             else
             {
-                AudioClip selectedClip = null;
-
-                if (_moveAction == moveAction.walk)
-                {
-                    if (playedFootsteps.Count >= footsteps_grass_walk.Length)
-                    {
-                        playedFootsteps.Clear();
-                    }
-                    selectedClip = footsteps_grass_walk[Random.Range(0, footsteps_grass_walk.Length - 1)];
-                }
-                
-                PlaySound(selectedClip);
-                playedFootsteps.Add(selectedClip);
+                PlaySound(SelectClip(footsteps_grass_walk, groundTypes.grass, moveAction.walk));
             }
             yield return new WaitForSeconds(_speed);
         }
@@ -130,39 +130,15 @@ public class P_SoundSystem : MonoBehaviour
         {
             if (ground == groundTypes.concrete)
             {
-                AudioClip selectedClip = null;
-                if (playedFootsteps.Count >= footsteps_concrete_sprint.Length)
-                {
-                    playedFootsteps.Clear();
-                }
-                selectedClip = footsteps_concrete_sprint[Random.Range(0, footsteps_concrete_sprint.Length - 1)];
-
-                PlaySound(selectedClip);
-                playedFootsteps.Add(selectedClip);
+                PlaySound(SelectClip(footsteps_concrete_sprint, groundTypes.concrete, moveAction.sprint));
             }
             else if (ground == groundTypes.wood)
             {
-                AudioClip selectedClip = null;
-                if (playedFootsteps.Count >= footsteps_wood_sprint.Length)
-                {
-                    playedFootsteps.Clear();
-                }
-                selectedClip = footsteps_wood_sprint[Random.Range(0, footsteps_wood_sprint.Length - 1)];
-
-                PlaySound(selectedClip);
-                playedFootsteps.Add(selectedClip);
+                PlaySound(SelectClip(footsteps_wood_sprint, groundTypes.wood, moveAction.sprint));
             }
             else
             {
-                AudioClip selectedClip = null;
-                if (playedFootsteps.Count >= footsteps_grass_sprint.Length)
-                {
-                    playedFootsteps.Clear();
-                }
-                selectedClip = footsteps_grass_sprint[Random.Range(0, footsteps_grass_sprint.Length - 1)];
-
-                PlaySound(selectedClip);
-                playedFootsteps.Add(selectedClip);
+                PlaySound(SelectClip(footsteps_grass_sprint, groundTypes.grass, moveAction.sprint));
             }
             yield return new WaitForSeconds(_speed);
         }
@@ -173,41 +149,17 @@ public class P_SoundSystem : MonoBehaviour
         yield return new WaitForSeconds(.2f);
         while (true)
         {
-            if (ground == groundTypes.concrete)
+           if (ground == groundTypes.concrete)
             {
-                AudioClip selectedClip = null;
-                if (playedFootsteps.Count >= footsteps_concrete_walk.Length)
-                {
-                    playedFootsteps.Clear();
-                }
-                selectedClip = footsteps_concrete_walk[Random.Range(0, footsteps_concrete_walk.Length - 1)];
-
-                PlaySound(selectedClip, .7f);
-                playedFootsteps.Add(selectedClip);
+                PlaySound(SelectClip(footsteps_concrete_walk, groundTypes.concrete, moveAction.sneak));
             }
             else if (ground == groundTypes.wood)
             {
-                AudioClip selectedClip = null;
-                if (playedFootsteps.Count >= footsteps_wood_walk.Length)
-                {
-                    playedFootsteps.Clear();
-                }
-                selectedClip = footsteps_wood_walk[Random.Range(0, footsteps_wood_walk.Length - 1)];
-
-                PlaySound(selectedClip, .7f);
-                playedFootsteps.Add(selectedClip);
+                PlaySound(SelectClip(footsteps_wood_walk, groundTypes.wood, moveAction.sneak));
             }
             else
             {
-                AudioClip selectedClip = null;
-                if (playedFootsteps.Count >= footsteps_grass_walk.Length)
-                {
-                    playedFootsteps.Clear();
-                }
-                selectedClip = footsteps_grass_walk[Random.Range(0, footsteps_grass_walk.Length - 1)];
-
-                PlaySound(selectedClip, .7f);
-                playedFootsteps.Add(selectedClip);
+                PlaySound(SelectClip(footsteps_grass_walk, groundTypes.grass, moveAction.sneak));
             }
             yield return new WaitForSeconds(_speed);
         }
@@ -236,7 +188,9 @@ public class P_SoundSystem : MonoBehaviour
 
             if (walkCoroutine == null)
             {
+                playedFootsteps.Clear();
                 walkCoroutine = StartCoroutine(walkFootsteps(currentAction, .6f));
+                noise = defaultNoise;
             }
         }
         else if (currentAction == moveAction.sprint)
@@ -258,7 +212,9 @@ public class P_SoundSystem : MonoBehaviour
 
             if (sprintCoroutine == null)
             {
+                playedFootsteps.Clear();
                 sprintCoroutine = StartCoroutine(sprintFootsteps(currentAction, .35f));
+                noise = defaultNoise * sprintMultiplier;
             }
         }
         else if (currentAction == moveAction.sneak)
@@ -280,7 +236,9 @@ public class P_SoundSystem : MonoBehaviour
 
             if (sneakCoroutine == null)
             {
+                playedFootsteps.Clear();
                 sneakCoroutine = StartCoroutine(sneakFootsteps(currentAction, 1f));
+                noise = defaultNoise * sneakMultiplier;
             }
         }
         else
@@ -298,6 +256,15 @@ public class P_SoundSystem : MonoBehaviour
                 sprintCoroutine = null;
                 playedFootsteps.Clear();
             }
+
+            if (sneakCoroutine != null)
+            {
+                StopCoroutine(sneakCoroutine);
+                sneakCoroutine = null;
+                playedFootsteps.Clear();
+            }
+
+            noise = 0;
         }
     }
 
