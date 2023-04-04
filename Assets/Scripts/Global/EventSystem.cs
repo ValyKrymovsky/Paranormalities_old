@@ -90,10 +90,4 @@ public class EventSystem : MonoBehaviour
         
     }
 
-    // private void OnTriggerStay(Collider other) {
-    //     Debug.Log("Trigger stayed");
-    // }
-        
-        
-    
 }

@@ -93,10 +93,17 @@ public class P_Interactor : MonoBehaviour
             if (Physics.Raycast(r, out RaycastHit hitInfo, interactRange)) 
             {
                 Debug.DrawLine(interactorSource.position, hitInfo.transform.position, Color.yellow);
-                if (activeHighlight.gameObject.TryGetComponent(out IInteractable interactObj))
+                try
                 {
-                    activeHighlight = null;
-                    interactObj.Interact();
+                    if (activeHighlight.gameObject.TryGetComponent(out IInteractable interactObj))
+                    {
+                        activeHighlight = null;
+                        interactObj.Interact();
+                    }
+                }
+                catch(NullReferenceException)
+                {
+                    Debug.Log("Not interactible");
                 }
             }
         }
