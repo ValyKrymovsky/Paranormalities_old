@@ -4,7 +4,7 @@ interface IEnemy
 {
     void ScanForPlayer();
     void FindPlayer();
-    void Listen();
+    Transform Listen();
     void MoveTo(Transform _location);
 }
 

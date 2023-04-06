@@ -32,6 +32,7 @@ public class Item : MonoBehaviour, IInteractable, IInventory, IHighlight
         highlightActive = false;
         playerCamera = GameObject.FindGameObjectWithTag("UI Camera");
         playerBody = GameObject.FindGameObjectWithTag("Player");
+        inventory = playerBody.GetComponent<P_Inventory>();
     }
 
     public void Interact()

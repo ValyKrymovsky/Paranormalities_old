@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.Linq;
 
 public enum groundTypes
 {
@@ -42,14 +43,19 @@ public class P_SoundSystem : MonoBehaviour
 
     [Header("Noise")]
     [SerializeField] private float noise;
-    [SerializeField] private float defaultNoise = 5;
+    [SerializeField] private float defaultNoise = 1;
     [SerializeField] private float sprintMultiplier = 1.75f;
     [SerializeField] private float sneakMultiplier = .45f;
+
+    private Dictionary<groundTypes, float> groundNoiseMultiplier = new Dictionary<groundTypes, float>();
 
     private void Awake() {
         p_movement = GetComponent<P_Movement>();
         ch_controller = GetComponent<CharacterController>();
         playedFootsteps = new List<AudioClip>();
+        groundNoiseMultiplier.Add(groundTypes.concrete, 1f);
+        groundNoiseMultiplier.Add(groundTypes.grass, .75f);
+        groundNoiseMultiplier.Add(groundTypes.wood, 1.3f);
     }
 
     public float GetNoise()
@@ -66,6 +72,7 @@ public class P_SoundSystem : MonoBehaviour
     {
         float randomPitch = Random.Range(minPitch, maxPitch);
         source.pitch = randomPitch;
+        source.volume = volume;
         source.PlayOneShot(_clip);
     }
 
@@ -77,7 +84,7 @@ public class P_SoundSystem : MonoBehaviour
         source.PlayOneShot(_clip);
     }
 
-    public AudioClip SelectClip(List<AudioClip> _clips, groundTypes _ground, moveAction _action)
+    public AudioClip SelectClip(List<AudioClip> _clips)
     {
         AudioClip selectedClip = null;
 
@@ -109,15 +116,15 @@ public class P_SoundSystem : MonoBehaviour
         {
             if (ground == groundTypes.concrete)
             {
-                PlaySound(SelectClip(footsteps_concrete_walk, groundTypes.concrete, moveAction.walk));
+                PlaySound(SelectClip(footsteps_concrete_walk), .7f);
             }
             else if (ground == groundTypes.wood)
             {
-                PlaySound(SelectClip(footsteps_wood_walk, groundTypes.wood, moveAction.walk));
+                PlaySound(SelectClip(footsteps_wood_walk), .8f);
             }
             else
             {
-                PlaySound(SelectClip(footsteps_grass_walk, groundTypes.grass, moveAction.walk));
+                PlaySound(SelectClip(footsteps_grass_walk), .4f);
             }
             yield return new WaitForSeconds(_speed);
         }
@@ -130,15 +137,15 @@ public class P_SoundSystem : MonoBehaviour
         {
             if (ground == groundTypes.concrete)
             {
-                PlaySound(SelectClip(footsteps_concrete_sprint, groundTypes.concrete, moveAction.sprint));
+                PlaySound(SelectClip(footsteps_concrete_sprint), .7f);
             }
             else if (ground == groundTypes.wood)
             {
-                PlaySound(SelectClip(footsteps_wood_sprint, groundTypes.wood, moveAction.sprint));
+                PlaySound(SelectClip(footsteps_wood_sprint), .8f);
             }
             else
             {
-                PlaySound(SelectClip(footsteps_grass_sprint, groundTypes.grass, moveAction.sprint));
+                PlaySound(SelectClip(footsteps_grass_sprint), .4f);
             }
             yield return new WaitForSeconds(_speed);
         }
@@ -151,15 +158,15 @@ public class P_SoundSystem : MonoBehaviour
         {
            if (ground == groundTypes.concrete)
             {
-                PlaySound(SelectClip(footsteps_concrete_walk, groundTypes.concrete, moveAction.sneak));
+                PlaySound(SelectClip(footsteps_concrete_walk), .7f);
             }
             else if (ground == groundTypes.wood)
             {
-                PlaySound(SelectClip(footsteps_wood_walk, groundTypes.wood, moveAction.sneak));
+                PlaySound(SelectClip(footsteps_wood_walk), .8f);
             }
             else
             {
-                PlaySound(SelectClip(footsteps_grass_walk, groundTypes.grass, moveAction.sneak));
+                PlaySound(SelectClip(footsteps_grass_walk), .4f);
             }
             yield return new WaitForSeconds(_speed);
         }
@@ -171,7 +178,7 @@ public class P_SoundSystem : MonoBehaviour
         
         if (currentAction == moveAction.walk)
         {
-            CheckLayer();
+            GetGroundType();
             if (sprintCoroutine != null)
             {
                 StopCoroutine(sprintCoroutine);
@@ -190,12 +197,12 @@ public class P_SoundSystem : MonoBehaviour
             {
                 playedFootsteps.Clear();
                 walkCoroutine = StartCoroutine(walkFootsteps(currentAction, .6f));
-                noise = defaultNoise;
             }
+            noise = defaultNoise * groundNoiseMultiplier[GetGroundType()];
         }
         else if (currentAction == moveAction.sprint)
         {
-            CheckLayer();
+            GetGroundType();
             if (walkCoroutine != null)
             {
                 StopCoroutine(walkCoroutine);
@@ -214,12 +221,12 @@ public class P_SoundSystem : MonoBehaviour
             {
                 playedFootsteps.Clear();
                 sprintCoroutine = StartCoroutine(sprintFootsteps(currentAction, .35f));
-                noise = defaultNoise * sprintMultiplier;
             }
+            noise = defaultNoise * sprintMultiplier * groundNoiseMultiplier[GetGroundType()];
         }
         else if (currentAction == moveAction.sneak)
         {
-            CheckLayer();
+            GetGroundType();
             if (walkCoroutine != null)
             {
                 StopCoroutine(walkCoroutine);
@@ -238,8 +245,8 @@ public class P_SoundSystem : MonoBehaviour
             {
                 playedFootsteps.Clear();
                 sneakCoroutine = StartCoroutine(sneakFootsteps(currentAction, 1f));
-                noise = defaultNoise * sneakMultiplier;
             }
+            noise = defaultNoise * sneakMultiplier * groundNoiseMultiplier[GetGroundType()];
         }
         else
         {
@@ -266,23 +273,32 @@ public class P_SoundSystem : MonoBehaviour
 
             noise = 0;
         }
+
+
     }
 
-    private void CheckLayer()
+    private groundTypes GetGroundType()
     {
         switch(p_movement.GetLayer())
         {
             case 8:
                 ground = groundTypes.concrete;
-                break;
+                return ground;
             
             case 9:
                 ground = groundTypes.wood;
-                break;
+                return ground;
             
             case 10:
                 ground = groundTypes.grass;
-                break;
+                return ground;
         }
+        return ground;
+    }
+
+
+    private void OnDrawGizmos() {
+        Gizmos.color = Color.blue;
+        Gizmos.DrawWireSphere(transform.position, noise * 5);
     }
 }

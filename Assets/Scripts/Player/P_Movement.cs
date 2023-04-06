@@ -139,7 +139,7 @@ public class P_Movement : MonoBehaviour
 
         movingForward = move_value.y > 0 ? true : false;
 
-        if (((!movingForward && sprint_value != 0) || (movingForward && (sprint_value == 0 || p_stamina.IsDepleted()))) && sneak_value == 0)
+        if (((!movingForward && moving) || (movingForward && (sprint_value == 0 || p_stamina.IsDepleted()))) && sneak_value == 0)
         {
             action = moveAction.walk;
         }

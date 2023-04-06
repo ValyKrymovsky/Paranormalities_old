@@ -2,16 +2,17 @@ using UnityEngine;
 
 public class E_Teacher : MonoBehaviour, IEnemy
 {
-
+    [Header("Noise scan")]
+    [SerializeField] private float noiseScanRadius;
     
     public void FindPlayer()
     {
         throw new System.NotImplementedException();
     }
 
-    public void Listen()
+    public Transform Listen()
     {
-        throw new System.NotImplementedException();
+        return transform;
     }
 
     public void MoveTo(Transform _location)
