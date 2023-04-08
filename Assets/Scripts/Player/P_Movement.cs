@@ -16,39 +16,47 @@ public enum useStamina
 }
 public class P_Movement : MonoBehaviour
 {
-    // Speed //
-    [Header("Player movement")]
-    [SerializeField] private float speed;
-    [SerializeField] private float sprintMultiplier, sneakMultiplier;
-    [SerializeField] private moveAction action;
-    [SerializeField] private bool moving, movingForward;
-    [SerializeField] private bool walking, sprinting, sneaking;
+    [SerializeField, Header("Player movement")]
+    private float speed;
+    [SerializeField]
+    private float sprintMultiplier, sneakMultiplier;
+    [SerializeField]
+    private moveAction action;
+    [SerializeField]
+    private bool moving, movingForward;
+    [SerializeField]
+    private bool walking, sprinting, sneaking;
     private float internalMultiplier;
+    private Vector3 moveDirection;
+    private Vector2 currentMoveValue;
+    private Vector2 currentVelocity;
+
+    [SerializeField, Tooltip("Time before reaching full speed"), Header("Movement Smoothening")]
+    private float smoothTime;
 
 
 
-    // Gravity //
-    [Header("Gravity")]
-    [SerializeField] private float gravityForce;
-    [SerializeField] private float gravityMultiplier = .5f;
-    [SerializeField] private bool isGrounded;
+    [SerializeField, Header("Gravity")]
+    private float gravityForce;
+    [SerializeField]
+    private float gravityMultiplier = .5f;
+    [SerializeField]
+    private bool isGrounded;
     private static float gravity = -9.8f;
     private float velocity;
 
 
-    // Stamina //
-    [Header("Stamina")]
-    [SerializeField] private useStamina useStaminaSystem;
-    [SerializeField] private float depletionValue;
-    [SerializeField] private float regenValue;
+    [SerializeField, Header("Stamina")]
+    private useStamina useStaminaSystem;
+    [SerializeField]
+    private float depletionValue;
+    [SerializeField]
+    private float regenValue;
 
 
     // Coroutines //
     private Coroutine regenCoroutine;
     private Coroutine depleteCoroutine;
-
-    // moveDirection //
-    private Vector3 moveDirection;    // Vector3 for player movement
 
 
 
@@ -122,11 +130,18 @@ public class P_Movement : MonoBehaviour
         sneak_value = _ctx.ReadValue<float>();
     }
 
+    public Vector2 GetMoveValue()
+    {
+        return currentMoveValue;
+    }
+
 
     public void PlayerMove()
     {
         float controllerMoveSensetivity = Mathf.Max(Mathf.Abs(move_value.x), Mathf.Abs(move_value.y));
-        moveDirection = (move_value.x * transform.right + move_value.y * transform.forward).normalized * controllerMoveSensetivity;
+        currentMoveValue = Vector2.SmoothDamp(currentMoveValue, move_value, ref currentVelocity, smoothTime);
+        moveDirection = (currentMoveValue.x * transform.right + currentMoveValue.y * transform.forward) * controllerMoveSensetivity;
+        moveDirection = Vector3.ClampMagnitude(moveDirection, 1);
 
         if (move_value.x != 0 || move_value.y != 0)
         {
@@ -177,7 +192,6 @@ public class P_Movement : MonoBehaviour
                 CheckStaminaState();
                 break;
         }
-
         ApplyGravity();
         ch_controller.Move(moveDirection * (speed * internalMultiplier) * Time.deltaTime);
     }
@@ -270,12 +284,9 @@ public class P_Movement : MonoBehaviour
 
     public bool IsGrounded()
     {
-        Vector3 boxSize = new Vector3(.1f, .1f, .1f);
-        bool checkSuc = Physics.BoxCast(transform.position, boxSize, -(transform.up), out RaycastHit hit, transform.rotation, ch_controller.height / 2);
-
-        if (checkSuc)
+        if (Physics.Raycast(transform.position, transform.up * -1, out RaycastHit hitInfo, .1f))
         {
-            isGrounded = hit.collider.gameObject.tag == "Floor" ? true : false;
+            isGrounded = hitInfo.collider.gameObject.tag == "Floor" ? true : false;
         }
         else
         {
@@ -288,11 +299,10 @@ public class P_Movement : MonoBehaviour
     {
         if (IsGrounded())
         {
-            Ray ray = new Ray(gameObject.transform.position, transform.up * -1);
+            Ray ray = new Ray(transform.position, transform.up * -1);
 
             if (Physics.Raycast(ray, out RaycastHit hitInfo, ch_controller.height))
             {
-                Debug.DrawLine(transform.position, new Vector3(transform.position.x, transform.position.y - ch_controller.height, transform.position.z), Color.green);
                 return hitInfo.transform.gameObject.layer;
             }
         }

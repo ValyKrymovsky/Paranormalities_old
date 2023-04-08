@@ -1,5 +1,9 @@
 {
   "dependencies": {
+    "com.atteneder.gltfast": "https://github.com/atteneder/glTFast.git",
+    "com.readyplayerme.avatarloader": "https://github.com/readyplayerme/rpm-unity-sdk-avatar-loader.git",
+    "com.readyplayerme.core": "https://github.com/readyplayerme/rpm-unity-sdk-core.git",
+    "com.readyplayerme.webview": "https://github.com/readyplayerme/rpm-unity-sdk-webview.git",
     "com.unity.2d.sprite": "1.0.0",
     "com.unity.ai.navigation": "1.0.0-exp.4",
     "com.unity.collab-proxy": "1.17.7",

@@ -12,6 +12,8 @@ public class E_Teacher : MonoBehaviour, IEnemy
 
     public Transform Listen()
     {
+        Collider[] hitColliders = Physics.OverlapSphere(transform.position, noiseScanRadius);
+
         return transform;
     }
 

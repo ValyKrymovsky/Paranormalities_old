@@ -1,11 +1,52 @@
 {
   "dependencies": {
+    "com.atteneder.gltfast": {
+      "version": "https://github.com/atteneder/glTFast.git",
+      "depth": 0,
+      "source": "git",
+      "dependencies": {
+        "com.unity.modules.jsonserialize": "1.0.0",
+        "com.unity.modules.unitywebrequest": "1.0.0",
+        "com.unity.mathematics": "1.2.6",
+        "com.unity.burst": "1.6.6"
+      },
+      "hash": "197f3b7e32ed733890935324f41c32d6599fc0cd"
+    },
     "com.autodesk.fbx": {
       "version": "4.1.2",
       "depth": 2,
       "source": "registry",
       "dependencies": {},
       "url": "https://packages.unity.com"
+    },
+    "com.readyplayerme.avatarloader": {
+      "version": "https://github.com/readyplayerme/rpm-unity-sdk-avatar-loader.git",
+      "depth": 0,
+      "source": "git",
+      "dependencies": {
+        "com.unity.ugui": "1.0.0",
+        "com.unity.nuget.newtonsoft-json": "3.0.2"
+      },
+      "hash": "ba178d9f8adc8e090cd68780129117ac69f8b9c6"
+    },
+    "com.readyplayerme.core": {
+      "version": "https://github.com/readyplayerme/rpm-unity-sdk-core.git",
+      "depth": 0,
+      "source": "git",
+      "dependencies": {
+        "com.unity.nuget.newtonsoft-json": "3.0.2"
+      },
+      "hash": "25bd23987a82fe1266e1c3c863aae688c87cc5da"
+    },
+    "com.readyplayerme.webview": {
+      "version": "https://github.com/readyplayerme/rpm-unity-sdk-webview.git",
+      "depth": 0,
+      "source": "git",
+      "dependencies": {
+        "com.unity.ugui": "1.0.0",
+        "com.unity.nuget.newtonsoft-json": "3.0.2"
+      },
+      "hash": "12e725a2a7af509bbe0280eae746bf80ef6f27d1"
     },
     "com.unity.2d.sprite": {
       "version": "1.0.0",
@@ -172,7 +213,7 @@
     },
     "com.unity.nuget.newtonsoft-json": {
       "version": "3.0.2",
-      "depth": 2,
+      "depth": 1,
       "source": "registry",
       "dependencies": {},
       "url": "https://packages.unity.com"

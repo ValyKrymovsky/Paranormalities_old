@@ -10,12 +10,20 @@ public class P_Inventory : MonoBehaviour
     public InventoryObject inventory;
     public KeyValuePair<ItemObject, GameObject> selectedItem;
 
+    [SerializeField, Header("Drop")]
+    private float dropRange;
+
     private P_Controls p_input;
 
     private InputAction ac_pickUp;
     private InputAction ac_selection;
 
     private GameObject placeholderModel;
+
+    private CharacterController ch_controller;
+
+    private GameObject cameraObject;
+    private Camera p_camera;
     
 
     public void Awake()
@@ -29,6 +37,9 @@ public class P_Inventory : MonoBehaviour
         inventory.Fill();
 
         p_input = new P_Controls();
+        ch_controller = GetComponent<CharacterController>();
+        cameraObject = GameObject.FindGameObjectWithTag("Player Camera");
+        p_camera = cameraObject.GetComponent<Camera>();
         ac_selection = p_input.Player.Selectitem;
         ac_pickUp = p_input.Player.Interact;
 
@@ -74,17 +85,20 @@ public class P_Inventory : MonoBehaviour
         {
             if (inventory.HasItem(selectedItem.Key, selectedItem.Value))
             {
-                inventory.RemoveItem(selectedItem.Key, selectedItem.Value);
-                Vector3 positionToSpawn = transform.position + (transform.forward * (2));
-                /*print(placeholderModel);
-                inventory.PrintInventory();*/
-                GameObject droppedItem = Instantiate(placeholderModel, positionToSpawn, transform.rotation, GameObject.Find("Items").transform);
-                droppedItem.name = selectedItem.Value.name;
-                droppedItem.GetComponent<Item>().highlightActive = false;
-                droppedItem.GetComponent<Item>().highlight = null;
-                droppedItem.GetComponent<Item>().highlightRenderer = null;
-                droppedItem.SetActive(true);
-                Object.Destroy(selectedItem.Value);
+                if (Physics.Raycast(p_camera.transform.position, p_camera.transform.forward, out RaycastHit hitInfo, dropRange))
+                {
+                    inventory.RemoveItem(selectedItem.Key, selectedItem.Value);
+                    // Vector3 positionToSpawn = transform.position + (transform.forward * 2) + (transform.up * 2);
+                    Vector3 dropPosition = new Vector3(hitInfo.point.x, hitInfo.point.y + .1f, hitInfo.point.z);
+                    GameObject droppedItem = Instantiate(placeholderModel, dropPosition, transform.rotation, GameObject.Find("Items").transform);
+                    droppedItem.name = selectedItem.Value.name;
+                    droppedItem.GetComponent<Item>().highlightActive = false;
+                    droppedItem.GetComponent<Item>().highlight = null;
+                    droppedItem.GetComponent<Item>().highlightRenderer = null;
+                    droppedItem.SetActive(true);
+                    Object.Destroy(selectedItem.Value);
+                }
+                
             }
             
         }
