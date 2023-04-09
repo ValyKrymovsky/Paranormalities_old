@@ -1,29 +1,58 @@
 using UnityEngine;
+using UnityEngine.AI;
 
 public class E_Teacher : MonoBehaviour, IEnemy
 {
+    [SerializeField, Header("Player")]
+    private GameObject player;
+
+    [SerializeField, Header("Navigation")]
+    private NavMeshAgent navigationAgent;
+
     [Header("Noise scan")]
-    [SerializeField] private float noiseScanRadius;
+    [SerializeField] private float noiseScanRadius = 10f;
     
-    public void FindPlayer()
+    private void Awake() {
+        navigationAgent = GetComponent<NavMeshAgent>();
+    }
+
+
+    public Transform FindPlayer()
     {
-        throw new System.NotImplementedException();
+        if (player != null)
+        {
+            return player.transform;
+        }
+        return null;
     }
 
     public Transform Listen()
     {
-        Collider[] hitColliders = Physics.OverlapSphere(transform.position, noiseScanRadius);
+        (GameObject, float) earliestNoise = NoiseSystem.GetEarliestNoise();
 
-        return transform;
+        if (earliestNoise.Item1 != null)
+        {
+            bool noiseInRange = Vector3.Distance(transform.position, earliestNoise.Item1.transform.position) - noiseScanRadius - earliestNoise.Item2 < 0 ? true : false;
+            if (noiseInRange)
+            {
+                return earliestNoise.Item1.transform;
+            }
+            return null;
+        }
+        return null;
+        
     }
 
     public void MoveTo(Transform _location)
     {
-        throw new System.NotImplementedException();
+        navigationAgent.SetDestination(_location.position);
     }
 
-    public void ScanForPlayer()
-    {
-        throw new System.NotImplementedException();
+    private void Update() {
+        Transform noiseLocation = Listen();
+        if (noiseLocation != null)
+        {
+            MoveTo(noiseLocation);
+        }
     }
 }

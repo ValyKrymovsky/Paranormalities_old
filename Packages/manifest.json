@@ -5,6 +5,7 @@
     "com.readyplayerme.core": "https://github.com/readyplayerme/rpm-unity-sdk-core.git",
     "com.readyplayerme.webview": "https://github.com/readyplayerme/rpm-unity-sdk-webview.git",
     "com.unity.2d.sprite": "1.0.0",
+    "com.unity.addressables": "1.19.19",
     "com.unity.ai.navigation": "1.0.0-exp.4",
     "com.unity.collab-proxy": "1.17.7",
     "com.unity.feature.characters-animation": "1.0.0",

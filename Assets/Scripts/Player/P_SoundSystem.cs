@@ -22,43 +22,43 @@ public class P_SoundSystem : MonoBehaviour
     [Header("Audio")]
     [SerializeField] 
     private AudioSource source;
-    [SerializeField] 
+    [SerializeField]
     private float minPitch = .8f;
-    [SerializeField] 
+    [SerializeField]
     private float maxPitch = 1.2f;
-    [SerializeField] 
+    [SerializeField]
     private float volume = 1f;
-    [SerializeField] 
+    [SerializeField]
     private groundTypes ground;
 
-    // footsteps on wood surface //
-    [SerializeField] 
+    [SerializeField]
     private List<AudioClip> footsteps_wood_walk;
-    [SerializeField] 
+    [SerializeField]
     private List<AudioClip> footsteps_wood_sprint;
 
-    // footsteps on concrete surface //
-    [SerializeField] 
+    [SerializeField]
     private List<AudioClip> footsteps_concrete_walk;
-    [SerializeField] 
+    [SerializeField]
     private List<AudioClip> footsteps_concrete_sprint;
 
-    // footsteps on grass surface //
-    [SerializeField] 
+    [SerializeField]
     private List<AudioClip> footsteps_grass_walk;
-    [SerializeField] 
+    [SerializeField]
     private List<AudioClip> footsteps_grass_sprint;
-    private List<AudioClip> playedFootsteps;
     [SerializeField]
     private List<AudioClip> currentFootstepsList;
+    private List<AudioClip> playedFootsteps;
     private moveAction currentAction;
     
 
-    [Header("Noise")]
-    [SerializeField] private float noise;
-    [SerializeField] private float defaultNoise = 1;
-    [SerializeField] private float sprintMultiplier = 1.75f;
-    [SerializeField] private float sneakMultiplier = .45f;
+    [SerializeField, Header("Noise")]
+    private float noise;
+    [SerializeField]
+    private float defaultNoise = 1;
+    [SerializeField]
+    private float sprintMultiplier = 1.75f;
+    [SerializeField]
+    private float sneakMultiplier = .45f;
 
     private Dictionary<groundTypes, float> groundNoiseMultiplier = new Dictionary<groundTypes, float>();
 
@@ -97,11 +97,58 @@ public class P_SoundSystem : MonoBehaviour
                 source.volume = volume;
                 source.clip = clip;
                 source.Play();
+                if (GetGroundType() == groundTypes.concrete)
+                {
+                    if (GetMoveAction() == moveAction.sprint)
+                    {
+                        noise = defaultNoise * groundNoiseMultiplier.ElementAt(0).Value * sprintMultiplier;
+                    }
+                    else if (GetMoveAction() == moveAction.sneak)
+                    {
+                        noise = defaultNoise * groundNoiseMultiplier.ElementAt(0).Value * sneakMultiplier;
+                    }
+                    else if (GetMoveAction() == moveAction.walk)
+                    {
+                        noise = defaultNoise * groundNoiseMultiplier.ElementAt(0).Value;
+                    }
+                }
+                else if (GetGroundType() == groundTypes.grass)
+                {
+                    if (GetMoveAction() == moveAction.sprint)
+                    {
+                        noise = defaultNoise * groundNoiseMultiplier.ElementAt(1).Value * sprintMultiplier;
+                    }
+                    else if (GetMoveAction() == moveAction.sneak)
+                    {
+                        noise = defaultNoise * groundNoiseMultiplier.ElementAt(1).Value * sneakMultiplier;
+                    }
+                    else if (GetMoveAction() == moveAction.walk)
+                    {
+                        noise = defaultNoise * groundNoiseMultiplier.ElementAt(1).Value;
+                    }
+                }
+                else if (GetGroundType() == groundTypes.wood)
+                {
+                    if (GetMoveAction() == moveAction.sprint)
+                    {
+                        noise = defaultNoise * groundNoiseMultiplier.ElementAt(2).Value * sprintMultiplier;
+                    }
+                    else if (GetMoveAction() == moveAction.sneak)
+                    {
+                        noise = defaultNoise * groundNoiseMultiplier.ElementAt(2).Value * sneakMultiplier;
+                    }
+                    else if (GetMoveAction() == moveAction.walk)
+                    {
+                        noise = defaultNoise * groundNoiseMultiplier.ElementAt(2).Value;
+                    }
+                }
+
+                SpawnNoiseObject(NoiseObjectGlobalClass.noiseObject, gameObject, GameObject.Find("Noise Objects"), gameObject.transform.position, noise);
             }
         }
     }
 
-    public AudioClip SelectClip()
+    private AudioClip SelectClip()
     {
         AudioClip selectedClip = null;
 
@@ -216,5 +263,16 @@ public class P_SoundSystem : MonoBehaviour
         }
 
         return null;
+    }
+
+
+    public static void SpawnNoiseObject(GameObject _noiseObject, GameObject _instantiator, GameObject _parent, Vector3 _position, float _noise)
+    {
+        GameObject noiseObject = Instantiate(_noiseObject, _position, _instantiator.transform.rotation, _parent.transform);
+        NoiseSystem noiseSys = noiseObject.GetComponent<NoiseSystem>();
+
+        noiseSys.SetNoise(_noise);
+        noiseSys.SetParent(_instantiator);
+        noiseSys.tag = "Noise";
     }
 }

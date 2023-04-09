@@ -11,6 +11,7 @@ TagManager:
   - interact
   - UI Camera
   - Highlight
+  - Noise
   layers:
   - Default
   - TransparentFX

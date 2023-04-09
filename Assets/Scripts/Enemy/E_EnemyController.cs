@@ -2,8 +2,7 @@ using UnityEngine;
 
 interface IEnemy
 {
-    void ScanForPlayer();
-    void FindPlayer();
+    Transform FindPlayer();
     Transform Listen();
     void MoveTo(Transform _location);
 }
