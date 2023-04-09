@@ -4,29 +4,51 @@ using UnityEngine.InputSystem;
 [System.Serializable]
 public class P_Camera : MonoBehaviour
 {
-    // Parameters //
-    [Header("Sensetivity")]
-    [SerializeField] private float sensetivity; // mouse sensetivity
-    private float cur_rotX = 0f;                // current mouse rotation value on X axis
+    [SerializeField, Header("Sensetivity")] private float sensetivity;
+    private float mouseRotation = 0f;
+    private float mouseX;
+    private float mouseY;
 
-    // Floats //
-    private float mouseX;                       // mouse rotation on X axis
-    private float mouseY;                       // mouse rotation on Y axis
+    // [SerializeField, Header("Head Bob")]
+    // private float walkBobSpeed = 14f;
+    // [SerializeField]
+    // private float walkBobAmount = .5f;
+    // [SerializeField]
+    // private float sprintBobSpeed = 18f;
+    // [SerializeField]
+    // private float sprintBobAmount = .75f;
+    // [SerializeField]
+    // private float sneakBobSpeed = 18f;
+    // [SerializeField]
+    // private float sneakBobAmount = .75f;
+
+    [SerializeField, Header("Camera Stabilization")]
+    private bool useStabilization;
+    [SerializeField]
+    private GameObject camStabilizationObject;
+    [SerializeField, Range(0, 100)]
+    private float focusPointStabilizationAmount;
+    private Vector3 smoothVelocity = Vector3.zero;
 
     private Vector2 input_value;
 
-    // Components //
     private P_Controls p_input;
-    private Transform p_body;
-
-    // Input Actions //
     private InputAction ac_look;
+
+    private GameObject playerBody;
+    private Transform playerBodyPosition;
+
+    private Camera cam;
+    private Transform camPosition;
 
     private void Awake()
     {
         p_input = new P_Controls();
         Cursor.lockState = CursorLockMode.Locked;
-        p_body = transform.parent;
+        playerBody = GameObject.FindGameObjectWithTag("Player");
+        playerBodyPosition = playerBody.transform;
+        cam = GetComponent<Camera>();
+        camPosition = cam.transform;
 
         ac_look = p_input.Player.Look;
     }
@@ -44,7 +66,7 @@ public class P_Camera : MonoBehaviour
 
     void Update()
     {
-        Look(input_value);
+        Look();
     }
 
     public void GetLookValue(InputAction.CallbackContext _ctx)
@@ -52,15 +74,27 @@ public class P_Camera : MonoBehaviour
         input_value = _ctx.ReadValue<Vector2>();
     }
 
-    public void Look(Vector2 _input_value)
+    private void Look()
     {
-        mouseX = _input_value.x * sensetivity * Time.deltaTime;
-        mouseY = _input_value.y * sensetivity * Time.deltaTime;
+        mouseX = input_value.x * sensetivity * Time.deltaTime;
+        mouseY = input_value.y * sensetivity * Time.deltaTime;
 
-        cur_rotX -= mouseY;
-        cur_rotX = Mathf.Clamp(cur_rotX, -75f, 70f);
-        transform.localRotation = Quaternion.Euler(cur_rotX, 0, 0);
-        p_body.Rotate(Vector3.up * mouseX);
+        mouseRotation -= mouseY;
+        mouseRotation = Mathf.Clamp(mouseRotation, -75f, 70f);
+        transform.localRotation = Quaternion.Euler(mouseRotation, 0, 0);
+        camStabilizationObject.transform.localRotation = Quaternion.Euler(mouseRotation, 0, 0);
+        playerBodyPosition.Rotate(Vector3.up * mouseX);
+        if (useStabilization)
+        {
+            camPosition.LookAt(FocusTarget());
+        }
+        
     }
 
+    private Vector3 FocusTarget()
+    {
+        focusPointStabilizationAmount = focusPointStabilizationAmount <= 0 ? 1f : focusPointStabilizationAmount;
+        Vector3 pos = camStabilizationObject.transform.position + camStabilizationObject.transform.forward * focusPointStabilizationAmount;
+        return pos;
+    }
 }
