@@ -405,10 +405,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   sensetivity: 10
   useStabilization: 1
+  focusPointStabilizationDistance: 100
+  stabilizationAmount: 0.1
   camStabilizationObject: {fileID: 7027933504672788302}
   headJoint: {fileID: 1459634648416421091}
   eyeJoint: {fileID: 7786446919598636374}
-  focusPointStabilizationAmount: 100
 --- !u!114 &1014441539299005514
 MonoBehaviour:
   m_ObjectHideFlags: 0
