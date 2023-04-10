@@ -26,7 +26,7 @@ public class P_SoundSystem : MonoBehaviour
     private float minPitch = .8f;
     [SerializeField]
     private float maxPitch = 1.2f;
-    [SerializeField]
+    [SerializeField, Range(0, 10)]
     private float volume = 1f;
     [SerializeField]
     private groundTypes ground;
@@ -94,7 +94,7 @@ public class P_SoundSystem : MonoBehaviour
             {
                 float randomPitch = Random.Range(minPitch, maxPitch);
                 source.pitch = randomPitch;
-                source.volume = volume;
+                source.volume = volume / 10;
                 source.clip = clip;
                 source.Play();
                 if (GetGroundType() == groundTypes.concrete)

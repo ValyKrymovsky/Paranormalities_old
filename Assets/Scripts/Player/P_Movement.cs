@@ -203,7 +203,15 @@ public class P_Movement : MonoBehaviour
         sprinting = false;
 
         CheckStaminaState();
-        internalMultiplier = 1;
+        if (move_value.y < 0)
+        {
+            internalMultiplier = .75f;
+        }
+        else
+        {
+            internalMultiplier = 1;
+        }
+        
     }
 
     public void Sprint()
