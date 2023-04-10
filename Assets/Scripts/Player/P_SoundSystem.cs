@@ -158,7 +158,6 @@ public class P_SoundSystem : MonoBehaviour
             {
                 playedFootsteps.Clear();
                 currentFootstepsList = GetAudioList();
-                Debug.Log("List cleared");
             }
 
             if (playedFootsteps.Count >= GetAudioList().Count )
