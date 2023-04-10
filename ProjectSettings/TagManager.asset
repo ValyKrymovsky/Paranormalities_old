@@ -12,6 +12,8 @@ TagManager:
   - UI Camera
   - Highlight
   - Noise
+  - Parent Patrol Point
+  - Child Patrol Point
   layers:
   - Default
   - TransparentFX
