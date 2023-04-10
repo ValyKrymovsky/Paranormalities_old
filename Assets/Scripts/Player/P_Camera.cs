@@ -24,11 +24,18 @@ public class P_Camera : MonoBehaviour
 
     [SerializeField, Header("Camera Stabilization")]
     private bool useStabilization;
+    [SerializeField, Range(0, 100)]
+    private float focusPointStabilizationDistance;
+    [SerializeField, Range(0, 1)]
+    private float stabilizationAmount;
     [SerializeField]
     private GameObject camStabilizationObject;
-    [SerializeField, Range(0, 100)]
-    private float focusPointStabilizationAmount;
+    [SerializeField]
+    private GameObject headJoint;
+    [SerializeField]
+    private GameObject eyeJoint;
     private Vector3 smoothVelocity = Vector3.zero;
+    private Vector3 smootheningVelocity;
 
     private Vector2 input_value;
 
@@ -87,14 +94,29 @@ public class P_Camera : MonoBehaviour
         if (useStabilization)
         {
             camPosition.LookAt(FocusTarget());
+            transform.position = FollowHeadJoint(headJoint, eyeJoint, .2f, stabilizationAmount);
+        }
+        else
+        {
+            transform.position = FollowHeadJoint(headJoint, eyeJoint, .2f);
         }
         
     }
 
     private Vector3 FocusTarget()
     {
-        focusPointStabilizationAmount = focusPointStabilizationAmount <= 0 ? 1f : focusPointStabilizationAmount;
-        Vector3 pos = camStabilizationObject.transform.position + camStabilizationObject.transform.forward * focusPointStabilizationAmount;
+        focusPointStabilizationDistance = focusPointStabilizationDistance <= 0 ? 1f : focusPointStabilizationDistance;
+        Vector3 pos = camStabilizationObject.transform.position + camStabilizationObject.transform.forward * focusPointStabilizationDistance;
         return pos;
+    }
+
+    private Vector3 FollowHeadJoint(GameObject _headJoint, GameObject _eyeJoint, float _offset)
+    {
+        return new Vector3(_headJoint.transform.position.x, _eyeJoint.transform.position.y, _headJoint.transform.position.z) + _headJoint.transform.forward * _offset;
+    }
+
+    private Vector3 FollowHeadJoint(GameObject _headJoint, GameObject _eyeJoint, float _offset, float _stabilizationAmount)
+    {
+        return Vector3.SmoothDamp(transform.position, new Vector3(_headJoint.transform.position.x, _eyeJoint.transform.position.y, _headJoint.transform.position.z) + _headJoint.transform.forward * _offset, ref smootheningVelocity, _stabilizationAmount);
     }
 }
