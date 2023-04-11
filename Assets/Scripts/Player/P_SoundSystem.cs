@@ -2,12 +2,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
+using MyBox;
 
-public enum groundTypes
+enum currentFoot
 {
-    concrete,
-    wood,
-    grass
+    left,
+    right
 }
 
 public class P_SoundSystem : MonoBehaviour
@@ -18,8 +18,7 @@ public class P_SoundSystem : MonoBehaviour
     private Coroutine sprintCoroutine;
     private Coroutine sneakCoroutine;
 
-
-    [Header("Audio")]
+    [Separator("Audio", true)]
     [SerializeField] 
     private AudioSource source;
     [SerializeField]
@@ -29,29 +28,19 @@ public class P_SoundSystem : MonoBehaviour
     [SerializeField, Range(0, 10)]
     private float volume = 1f;
     [SerializeField]
-    private groundTypes ground;
-
-    [SerializeField]
-    private List<AudioClip> footsteps_wood_walk;
-    [SerializeField]
-    private List<AudioClip> footsteps_wood_sprint;
-
-    [SerializeField]
-    private List<AudioClip> footsteps_concrete_walk;
-    [SerializeField]
-    private List<AudioClip> footsteps_concrete_sprint;
-
-    [SerializeField]
-    private List<AudioClip> footsteps_grass_walk;
-    [SerializeField]
-    private List<AudioClip> footsteps_grass_sprint;
-    [SerializeField]
-    private List<AudioClip> currentFootstepsList;
+    private SurfaceIdentity ground;
+    private List<AudioClip> walkClips;
+    private List<AudioClip> sprintClips;
+    private List<AudioClip> currentFootstepsList = new List<AudioClip>();
     private List<AudioClip> playedFootsteps;
-    private moveAction currentAction;
+    private moveAction currentMoveAction;
+    [SerializeField]
+    private GameObject leftFootJoint;
+    [SerializeField]
+    private GameObject rightFootJoint;
     
-
-    [SerializeField, Header("Noise")]
+    [Separator("Noise", true)]
+    [SerializeField]
     private float noise;
     [SerializeField]
     private float defaultNoise = 1;
@@ -59,20 +48,30 @@ public class P_SoundSystem : MonoBehaviour
     private float sprintMultiplier = 1.75f;
     [SerializeField]
     private float sneakMultiplier = .45f;
+    [SerializeField]
+    private currentFoot currentFoot;
 
-    private Dictionary<groundTypes, float> groundNoiseMultiplier = new Dictionary<groundTypes, float>();
+    [Separator("Noise Multipliers", true)]
+    [SerializeField]
+    private float stoneMultiplier;
+    [SerializeField]
+    private float grassMultiplier;
+    [SerializeField]
+    private float woodMultiplier;
+
+    private Dictionary<SurfaceIdentity, float> groundNoiseMultiplier = new Dictionary<SurfaceIdentity, float>();
 
     private void Awake() {
         p_movement = GetComponent<P_Movement>();
         ch_controller = GetComponent<CharacterController>();
         playedFootsteps = new List<AudioClip>();
-        groundNoiseMultiplier.Add(groundTypes.concrete, 1f);
-        groundNoiseMultiplier.Add(groundTypes.grass, .75f);
-        groundNoiseMultiplier.Add(groundTypes.wood, 1.3f);
+        groundNoiseMultiplier.Add(SurfaceIdentity.stone, 1f);
+        groundNoiseMultiplier.Add(SurfaceIdentity.grass, .75f);
+        groundNoiseMultiplier.Add(SurfaceIdentity.wood, 1.3f);
     }
 
     private void Update() {
-        GetGroundType();
+        // GetSurfaceIdentity();
     }
 
     public float GetNoise()
@@ -97,7 +96,7 @@ public class P_SoundSystem : MonoBehaviour
                 source.volume = volume / 10;
                 source.clip = clip;
                 source.Play();
-                if (GetGroundType() == groundTypes.concrete)
+                if (ground == SurfaceIdentity.stone)
                 {
                     if (GetMoveAction() == moveAction.sprint)
                     {
@@ -112,7 +111,7 @@ public class P_SoundSystem : MonoBehaviour
                         noise = defaultNoise * groundNoiseMultiplier.ElementAt(0).Value;
                     }
                 }
-                else if (GetGroundType() == groundTypes.grass)
+                else if (ground == SurfaceIdentity.grass)
                 {
                     if (GetMoveAction() == moveAction.sprint)
                     {
@@ -127,7 +126,7 @@ public class P_SoundSystem : MonoBehaviour
                         noise = defaultNoise * groundNoiseMultiplier.ElementAt(1).Value;
                     }
                 }
-                else if (GetGroundType() == groundTypes.wood)
+                else if (ground == SurfaceIdentity.wood)
                 {
                     if (GetMoveAction() == moveAction.sprint)
                     {
@@ -187,81 +186,117 @@ public class P_SoundSystem : MonoBehaviour
         }
     }
 
-    private groundTypes GetGroundType()
+    private SurfaceIdentity GetLeftSurfaceIdentity()
     {
-        switch(p_movement.GetLayer())
+        Ray ray = new Ray(leftFootJoint.transform.position, transform.up * -1);
+        RaycastHit hitInfo = new RaycastHit();
+
+        if (Physics.Raycast(ray, out hitInfo, .2f))
         {
-            case 8:
-                ground = groundTypes.concrete;
+            if (hitInfo.collider.TryGetComponent(out SurfaceMaterialData surfaceMaterialData))
+            {
+                ground = surfaceMaterialData.GetSurfaceIndentity();
+                SetAudioList(surfaceMaterialData);
+                currentFoot = currentFoot.left;
                 return ground;
-            
-            case 9:
-                ground = groundTypes.wood;
-                return ground;
-            
-            case 10:
-                ground = groundTypes.grass;
-                return ground;
+            }
+            return 0;
         }
-        
-        return ground;
+        return 0;
+    }
+
+    private SurfaceIdentity GetRightSurfaceIdentity()
+    {
+        Ray ray = new Ray(rightFootJoint.transform.position, transform.up * -1);
+        RaycastHit hitInfo = new RaycastHit();
+
+        if (Physics.Raycast(ray, out hitInfo, .2f))
+        {
+            if (hitInfo.collider.TryGetComponent(out SurfaceMaterialData surfaceMaterialData))
+            {
+                ground = surfaceMaterialData.GetSurfaceIndentity();
+                SetAudioList(surfaceMaterialData);
+                currentFoot = currentFoot.right;
+                return ground;
+            }
+            return 0;
+        }
+        return 0;
     }
 
     private moveAction GetMoveAction()
     {
-        currentAction = p_movement.GetMoveAction();
-        return currentAction;
+        return p_movement.GetMoveAction();
     }
 
     private List<AudioClip> GetAudioList()
     {
-        if (GetGroundType() == groundTypes.concrete)
+        currentMoveAction = GetMoveAction();
+
+        if (currentMoveAction == moveAction.walk || currentMoveAction == moveAction.sneak)
         {
-            if (GetMoveAction() == moveAction.walk || GetMoveAction() == moveAction.sneak)
-            {
-                return footsteps_concrete_walk;
-            }
-            else if (GetMoveAction() == moveAction.sprint)
-            {
-                return footsteps_concrete_sprint;
-            }
-            else
-            {
-                return null;
-            }
+            return walkClips;
         }
-        else if (GetGroundType() == groundTypes.wood)
+        else if (currentMoveAction == moveAction.sprint)
         {
-            if (GetMoveAction() == moveAction.walk || GetMoveAction() == moveAction.sneak)
-            {
-                return footsteps_wood_walk;
-            }
-            else if (GetMoveAction() == moveAction.sprint)
-            {
-                return footsteps_wood_sprint;
-            }
-            else
-            {
-                return null;
-            }
-        }
-        else if (GetGroundType() == groundTypes.grass)
-        {
-            if (GetMoveAction() == moveAction.walk || GetMoveAction() == moveAction.sneak)
-            {
-                return footsteps_grass_walk;
-            }
-            else if (GetMoveAction() == moveAction.sprint)
-            {
-                return footsteps_grass_sprint;
-            }
-            else
-            {
-                return null;
-            }
+            return sprintClips;
         }
 
         return null;
+    }
+
+    private void SetAudioList(SurfaceMaterialData _surfaceMaterialData)
+    {
+        walkClips = _surfaceMaterialData.GetWalkClips();
+        sprintClips = _surfaceMaterialData.GetSprintClips();
+
+        // if (GetSurfaceIdentity() == SurfaceIdentity.stone)
+        // {
+        //     if (GetMoveAction() == moveAction.walk || GetMoveAction() == moveAction.sneak)
+        //     {
+        //         return footsteps_concrete_walk;
+        //     }
+        //     else if (GetMoveAction() == moveAction.sprint)
+        //     {
+        //         return footsteps_concrete_sprint;
+        //     }
+        //     else
+        //     {
+        //         return null;
+        //     }
+        // }
+        // else if (GetSurfaceIdentity() == SurfaceIdentity.wood)
+        // {
+        //     if (GetMoveAction() == moveAction.walk || GetMoveAction() == moveAction.sneak)
+        //     {
+        //         return footsteps_wood_walk;
+        //     }
+        //     else if (GetMoveAction() == moveAction.sprint)
+        //     {
+        //         return footsteps_wood_sprint;
+        //     }
+        //     else
+        //     {
+        //         return null;
+        //     }
+        // }
+        // else if (GetSurfaceIdentity() == SurfaceIdentity.grass)
+        // {
+        //     if (GetMoveAction() == moveAction.walk || GetMoveAction() == moveAction.sneak)
+        //     {
+        //         return footsteps_grass_walk;
+        //     }
+        //     else if (GetMoveAction() == moveAction.sprint)
+        //     {
+        //         return footsteps_grass_sprint;
+        //     }
+        //     else
+        //     {
+        //         return null;
+        //     }
+        // }
+
+        // return null;
     }
 
 

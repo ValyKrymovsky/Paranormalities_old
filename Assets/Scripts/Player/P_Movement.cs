@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
+using MyBox;
 
 public enum moveAction
 {
@@ -9,11 +10,6 @@ public enum moveAction
     sneak
 }
 
-public enum useStamina
-{
-    yes,
-    no
-}
 public class P_Movement : MonoBehaviour
 {
     [SerializeField, Header("Player movement")]
@@ -47,10 +43,10 @@ public class P_Movement : MonoBehaviour
 
 
     [SerializeField, Header("Stamina")]
-    private useStamina useStaminaSystem;
-    [SerializeField]
+    private bool useStaminaSystem;
+    [SerializeField, ConditionalField("useStaminaSystem")]
     private float depletionValue;
-    [SerializeField]
+    [SerializeField, ConditionalField("useStaminaSystem")]
     private float regenValue;
 
 
@@ -220,7 +216,7 @@ public class P_Movement : MonoBehaviour
         sneaking = false;
         walking = false;
 
-        if (useStaminaSystem == useStamina.yes)
+        if (useStaminaSystem)
         {
             if ((!p_stamina.IsDepleted() && !p_stamina.LimitReached()) && depleteCoroutine == null)
             {
