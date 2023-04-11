@@ -1,16 +1,16 @@
 using UnityEngine;
 using UnityEngine.AI;
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using MyBox;
 
 public class E_Teacher : MonoBehaviour, IEnemy
 {
-    [SerializeField, Header("Player")]
+    [SerializeField, Separator("Player", true)]
     private GameObject player;
 
-    [SerializeField, Header("Patrol")]
+    [SerializeField, Separator("Patrol", true)]
     private bool useLocationalPatrol;
     [SerializeField]
     private List<GameObject> locationalParentPatrolPoints;
@@ -24,23 +24,23 @@ public class E_Teacher : MonoBehaviour, IEnemy
     private GameObject currentChildPatrolPoint;
 
     [SerializeField]
-    private bool patroling;
+    private bool patroling = false;
     [SerializeField]
-    private bool newParentPatrolPoint;
+    private bool newParentPatrolPoint = false;
     [SerializeField]
-    private bool nextParentPatrolPoint;
+    private bool nextParentPatrolPoint = false;
     [SerializeField]
-    private bool nextChildPatrolPoint;
+    private bool nextChildPatrolPoint = false;
     [SerializeField]
-    private bool movingToPatrolPoint;
+    private bool movingToPatrolPoint = false;
 
     [SerializeField]
     private float distanceToChildPatrolPoint;
 
-    [SerializeField, Header("Navigation")]
+    [SerializeField, Separator("Navigation", true)]
     private NavMeshAgent navigationAgent;
 
-    [Header("Noise scan")]
+    [Separator("Noise scan", true)]
     [SerializeField] private float noiseScanRadius = 10f;
     
     private void Awake() {
