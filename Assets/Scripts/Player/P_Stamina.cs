@@ -2,20 +2,23 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System;
+using MyBox;
 
 public class P_Stamina : MonoBehaviour
 {
 
-    [Header("Stamina")]
-    [SerializeField] private float stamina;
-    [SerializeField] private float maxStamina;
-    [SerializeField] private bool regenerating;
-    [SerializeField] private bool regenerate;
-    [SerializeField] private bool depleted;
-    [SerializeField] private bool reachedLimit;
-    [SerializeField] private float limit;
+    [Separator("Stamina", true)]
+    [SerializeField]
+    private float stamina;
+    [SerializeField]
+    private float maxStamina;
+    private bool regenerating = false;
+    private bool regenerate = false;
+    private bool depleted = false;
+    private bool reachedLimit = false;
+    private float limit;
 
-    [Header("Delays")]
+    [Separator("Delays", true)]
     [SerializeField] private float regenDelay;
 
     void Start()

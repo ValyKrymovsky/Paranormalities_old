@@ -2,15 +2,16 @@ using UnityEngine;
 using System.Collections.Generic;
 using UnityEngine.InputSystem;
 using System.Linq;
+using MyBox;
 
 public class P_Inventory : MonoBehaviour
 {
 
-    [Header("Inventory")]
+    [Separator("Inventory", true)]
     public InventoryObject inventory;
     public KeyValuePair<ItemObject, GameObject> selectedItem;
 
-    [SerializeField, Header("Drop")]
+    [SerializeField, Separator("Drop", true)]
     private float dropRange;
 
     private P_Controls p_input;

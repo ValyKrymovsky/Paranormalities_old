@@ -12,16 +12,14 @@ public enum moveAction
 
 public class P_Movement : MonoBehaviour
 {
-    [SerializeField, Header("Player movement")]
+    [SerializeField, Separator("Player movement", true)]
     private float speed;
     [SerializeField]
     private float sprintMultiplier, sneakMultiplier;
     [SerializeField]
     private moveAction action;
-    [SerializeField]
-    private bool moving, movingForward;
-    [SerializeField]
-    private bool walking, sprinting, sneaking;
+    private bool moving, movingForward = false;
+    private bool walking, sprinting, sneaking = false;
     private float internalMultiplier;
     private Vector3 moveDirection;
     private Vector2 currentMoveValue;
@@ -32,7 +30,7 @@ public class P_Movement : MonoBehaviour
 
 
 
-    [SerializeField, Header("Gravity")]
+    [SerializeField, Separator("Gravity", true)]
     private float gravityForce;
     [SerializeField]
     private float gravityMultiplier = .5f;
@@ -42,7 +40,7 @@ public class P_Movement : MonoBehaviour
     private float velocity;
 
 
-    [SerializeField, Header("Stamina")]
+    [SerializeField, Separator("Stamina", true)]
     private bool useStaminaSystem;
     [SerializeField, ConditionalField("useStaminaSystem")]
     private float depletionValue;
@@ -235,6 +233,10 @@ public class P_Movement : MonoBehaviour
                 regenCoroutine = p_stamina.StartRegenerate(regenValue);
                 internalMultiplier = 1;
             }
+        }
+        else
+        {
+            internalMultiplier = sprintMultiplier;
         }
     }
 
