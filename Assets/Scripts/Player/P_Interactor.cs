@@ -244,18 +244,18 @@ public class P_Interactor : MonoBehaviour
         }
     }
 
-    private void OnDrawGizmos() 
-    {
-        if (hittingAir)
-        {
-            Gizmos.color = Color.red;
-            Gizmos.DrawWireSphere(pointInAir, highlightRangeRadius / 2);
-        }
-        else
-        {
-            Gizmos.color = Color.yellow;
-            Gizmos.DrawWireSphere(hitPosition, highlightRangeRadius);
-        }
+    // private void OnDrawGizmos() 
+    // {
+    //     if (hittingAir)
+    //     {
+    //         Gizmos.color = Color.red;
+    //         Gizmos.DrawWireSphere(pointInAir, highlightRangeRadius / 2);
+    //     }
+    //     else
+    //     {
+    //         Gizmos.color = Color.yellow;
+    //         Gizmos.DrawWireSphere(hitPosition, highlightRangeRadius);
+    //     }
         
-    }
+    // }
 }

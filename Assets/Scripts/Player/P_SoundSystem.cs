@@ -104,7 +104,7 @@ public class P_SoundSystem : MonoBehaviour
                     }
                     else if (GetMoveAction() == moveAction.sneak)
                     {
-                        noise = defaultNoise * groundNoiseMultiplier.ElementAt(0).Value * sneakMultiplier;
+                        noise = 0;
                     }
                     else if (GetMoveAction() == moveAction.walk)
                     {
@@ -119,7 +119,7 @@ public class P_SoundSystem : MonoBehaviour
                     }
                     else if (GetMoveAction() == moveAction.sneak)
                     {
-                        noise = defaultNoise * groundNoiseMultiplier.ElementAt(1).Value * sneakMultiplier;
+                        noise = 0;
                     }
                     else if (GetMoveAction() == moveAction.walk)
                     {
@@ -134,7 +134,7 @@ public class P_SoundSystem : MonoBehaviour
                     }
                     else if (GetMoveAction() == moveAction.sneak)
                     {
-                        noise = defaultNoise * groundNoiseMultiplier.ElementAt(2).Value * sneakMultiplier;
+                        noise = 0;
                     }
                     else if (GetMoveAction() == moveAction.walk)
                     {
@@ -142,7 +142,10 @@ public class P_SoundSystem : MonoBehaviour
                     }
                 }
 
-                SpawnNoiseObject(NoiseObjectGlobalClass.noiseObject, gameObject, GameObject.Find("Noise Objects"), gameObject.transform.position, noise);
+                if (GetMoveAction() == moveAction.walk || GetMoveAction() == moveAction.sprint)
+                {
+                    SpawnNoiseObject(NoiseObjectGlobalClass.noiseObject, gameObject, GameObject.Find("Noise Objects"), gameObject.transform.position, noise);
+                }  
             }
         }
     }

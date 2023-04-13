@@ -1,69 +1,80 @@
-using UnityEngine;
-using UnityEngine.AI;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using UnityEngine;
+using UnityEngine.AI;
 using MyBox;
 
-public class E_Teacher : MonoBehaviour, IEnemy
-{
-    [SerializeField, Separator("Player", true)]
-    private GameObject player;
-
+public class E_TeacherController : MonoBehaviour, IEnemy {
     [SerializeField, Separator("Patrol", true)]
-    private bool useLocationalPatrol;
+    public bool useLocationalPatrol;
     [SerializeField]
-    private List<GameObject> locationalParentPatrolPoints;
+    public List<GameObject> locationalParentPatrolPoints;
     [SerializeField]
-    private List<GameObject> parentPatrolPoints;
+    public List<GameObject> parentPatrolPoints;
     [SerializeField]
-    private GameObject currentParentPatrolPoint;
+    public GameObject currentParentPatrolPoint;
     [SerializeField]
-    private List<GameObject> childPatrolPoints;
+    public List<GameObject> childPatrolPoints;
     [SerializeField]
-    private GameObject currentChildPatrolPoint;
+    public GameObject currentChildPatrolPoint;
 
     [SerializeField]
-    private bool patroling = false;
+    public bool patroling = false;
     [SerializeField]
-    private bool newParentPatrolPoint = false;
+    public bool newParentPatrolPoint = false;
     [SerializeField]
-    private bool nextParentPatrolPoint = false;
+    public bool nextParentPatrolPoint = false;
     [SerializeField]
-    private bool nextChildPatrolPoint = false;
+    public bool nextChildPatrolPoint = false;
     [SerializeField]
-    private bool movingToPatrolPoint = false;
+    public bool movingToPatrolPoint = false;
 
     [SerializeField]
-    private float distanceToChildPatrolPoint;
+    public float distanceToChildPatrolPoint;
 
     [SerializeField, Separator("Navigation", true)]
-    private NavMeshAgent navigationAgent;
+    public GameObject player;
+    [SerializeField]
+    public NavMeshAgent navigationAgent;
+    [SerializeField]
+    public Vector3 locationToMove;
 
-    [Separator("Noise scan", true)]
+    [Separator("Hearing", true)]
     [SerializeField] private float noiseScanRadius = 10f;
+
+    [SerializeField, Separator("Sight", true)]
+    public float sightDistance = 5f;
+    [SerializeField, Range(0, 360)]
+    public float sightAngle = 75f;
+    [SerializeField]
+    public bool playerInSight;
+    [SerializeField]
+    public bool playerInRange;
+    public Coroutine sightCheck;
+    public Coroutine patrolCoroutine;
+    [SerializeField]
+    public LayerMask playerMask;
+    [SerializeField]
+    public LayerMask obstacleMask;
     
     private void Awake() {
         navigationAgent = GetComponent<NavMeshAgent>();
+        player = GameObject.FindGameObjectWithTag("Player");
     }
 
     private void Start() {
         UpdateParentPatrolPoints();
-        player = GameObject.FindGameObjectWithTag("Player");
+        sightCheck = StartCoroutine(CheckSightCoroutine());
     }
 
-    private void UpdateParentPatrolPoints()
-    {
+    public void UpdateParentPatrolPoints() {
         parentPatrolPoints = GetAllParentPatrolPoints();
     }
 
-    private void Update() {
-        Patrol();
-    }
-
-    private void Patrol()
-    {
-        if (patroling)
+    public IEnumerator Patrol() {
+        while (true)
         {
             if (currentParentPatrolPoint == null || nextParentPatrolPoint)
             {
@@ -107,11 +118,29 @@ public class E_Teacher : MonoBehaviour, IEnemy
                     nextChildPatrolPoint = true;
                 }
             }
+            yield return null;
         }
     }
 
-    public Transform FindPlayer()
-    {
+    public void StopPatroling() {
+        if (patrolCoroutine != null)
+        {
+            StopCoroutine(patrolCoroutine);
+            patrolCoroutine = null;
+        }
+
+        patroling = false;
+        newParentPatrolPoint = false;
+        nextParentPatrolPoint = false;
+        nextChildPatrolPoint = false;
+        movingToPatrolPoint = false;
+
+        currentParentPatrolPoint = null;
+        childPatrolPoints = null;
+        currentChildPatrolPoint = null;
+    }
+
+    public Transform FindPlayer() {
         if (player != null)
         {
             return player.transform;
@@ -119,8 +148,7 @@ public class E_Teacher : MonoBehaviour, IEnemy
         return null;
     }
 
-    public Transform Listen()
-    {
+    public Transform Listen() {
         (GameObject, float) earliestNoise = NoiseSystem.GetEarliestNoise();
 
         if (earliestNoise.Item1 != null)
@@ -136,8 +164,7 @@ public class E_Teacher : MonoBehaviour, IEnemy
         
     }
 
-    public List<GameObject> GetAllParentPatrolPoints()
-    {
+    public List<GameObject> GetAllParentPatrolPoints() {
         if (useLocationalPatrol)
         {
             List<GameObject> allParentPatrolPoints = locationalParentPatrolPoints;
@@ -151,14 +178,29 @@ public class E_Teacher : MonoBehaviour, IEnemy
         }
     }
 
-    public GameObject RandomParentPatrolPoint()
-    {
+    public GameObject RandomParentPatrolPoint() {
         int index = UnityEngine.Random.Range(0, parentPatrolPoints.Count);
         return parentPatrolPoints[index];
     }
 
-    public GameObject NextParentPatrolPoint()
-    {
+    public GameObject ParentPatrolPointNearLocation(Vector3 _location) {
+        float lowestDistance = 100;
+        int parentIndex = 0;
+        int index = 0;
+        foreach (GameObject parentPoint in parentPatrolPoints)
+        {
+            float distance = Vector3.Distance(_location, parentPoint.transform.position);
+            if (distance < lowestDistance)
+            {
+                lowestDistance = distance;
+                parentIndex = index;
+            }
+            index++;
+        }
+        return parentPatrolPoints[parentIndex];
+    }
+
+    public GameObject NextParentPatrolPoint() {
         try
         {
             GameObject nextParentPatrolPoint = parentPatrolPoints[parentPatrolPoints.IndexOf(currentParentPatrolPoint) + 1];
@@ -172,8 +214,7 @@ public class E_Teacher : MonoBehaviour, IEnemy
         
     }
 
-    public GameObject PreviousParentPatrolPoint()
-    {
+    public GameObject PreviousParentPatrolPoint() {
         try
         {
             GameObject nextParentPatrolPoint = parentPatrolPoints[parentPatrolPoints.IndexOf(currentParentPatrolPoint) - 1];
@@ -186,8 +227,7 @@ public class E_Teacher : MonoBehaviour, IEnemy
         }
     }
 
-    public List<GameObject> GetAllChildPatrolPoints(GameObject _parentPatrolPoint)
-    {
+    public List<GameObject> GetAllChildPatrolPoints(GameObject _parentPatrolPoint) {
         if (_parentPatrolPoint.TryGetComponent(out EnemyPatrolSystem patrolSystem))
         {
             List<GameObject> allChildPatrolPoints = patrolSystem.GetAllChildPatrolPoints();
@@ -196,27 +236,22 @@ public class E_Teacher : MonoBehaviour, IEnemy
         return null;
     }
 
-    public GameObject RandomChildPatrolPoint()
-    {
+    public GameObject RandomChildPatrolPoint() {
         int index = UnityEngine.Random.Range(0, childPatrolPoints.Count);
         return childPatrolPoints[index];
     }
 
-    public GameObject NextChildPatrolPoint()
-    {
-        try
-        {
+    public GameObject NextChildPatrolPoint() {
+        try {
             GameObject nextChildPatrolPoint = childPatrolPoints[childPatrolPoints.IndexOf(currentChildPatrolPoint) + 1];
             return nextChildPatrolPoint;
         }
-        catch (ArgumentOutOfRangeException)
-        {
-            return null;
+        catch (ArgumentOutOfRangeException) {
+            return null; 
         }
     }
     
-    public GameObject PreviousChildPatrolPoint()
-    {
+    public GameObject PreviousChildPatrolPoint() {
         try
         {
             GameObject nextChildPatrolPoint = childPatrolPoints[childPatrolPoints.IndexOf(currentChildPatrolPoint) - 1];
@@ -228,8 +263,59 @@ public class E_Teacher : MonoBehaviour, IEnemy
         }
     }
 
-    public void MoveTo(Vector3 _location)
-    {
+    public void MoveTo(Vector3 _location) {
+        locationToMove = _location;
         navigationAgent.SetDestination(_location);
+    }
+
+    public IEnumerator CheckSightCoroutine() {
+        while (true)
+        {
+            yield return new WaitForSeconds(0.2f);
+            CheckSight();
+        }
+    }
+
+    public void CheckSight() {
+        Collider[] hitColliders = Physics.OverlapSphere(transform.position, sightDistance, playerMask);
+
+        if (hitColliders.Length != 0)
+        {
+            Vector3 directionToPlayer = (player.transform.position - transform.position).normalized;
+            if (Vector3.Angle(transform.forward, directionToPlayer) < sightAngle / 2)
+            {
+                float distanceToPlayer = Vector3.Distance(transform.position, player.transform.position);
+
+                if (!Physics.Raycast(transform.position, directionToPlayer, distanceToPlayer, obstacleMask))
+                {
+                    playerInSight = true;
+                }
+                else
+                {
+                    playerInSight = false;
+                }
+            }
+            else
+            {
+                playerInSight = false;
+            }
+        }
+        else
+        {
+            playerInSight = false;
+        }
+    }
+
+    public bool PlayerInCloseRange() {
+        Collider[] hitColliders = Physics.OverlapSphere(transform.position, 2, playerMask);
+
+        foreach (Collider collider in hitColliders)
+        {
+            if (collider.CompareTag("Player"))
+            {
+                return true;
+            }
+        }
+        return false;
     }
 }

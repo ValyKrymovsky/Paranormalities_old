@@ -15,6 +15,3 @@ interface IEnemy
     void MoveTo(Vector3 _location);
 }
 
-public class E_EnemyController : MonoBehaviour
-{
-}

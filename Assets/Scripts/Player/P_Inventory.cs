@@ -39,7 +39,7 @@ public class P_Inventory : MonoBehaviour
 
         p_input = new P_Controls();
         ch_controller = GetComponent<CharacterController>();
-        cameraObject = GameObject.FindGameObjectWithTag("Player Camera");
+        cameraObject = GameObject.FindGameObjectWithTag("MainCamera");
         p_camera = cameraObject.GetComponent<Camera>();
         ac_selection = p_input.Player.Selectitem;
         ac_pickUp = p_input.Player.Interact;

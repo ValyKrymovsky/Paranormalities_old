@@ -18,14 +18,14 @@ TagManager:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - 
+  - Player
   - Water
   - UI
   - Interactibles
   - Interactibles Highlight
-  - Concrete
-  - Wood
-  - Grass
+  - Obstacles
+  - 
+  - 
   - 
   - 
   - 
