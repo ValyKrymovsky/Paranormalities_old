@@ -147,9 +147,9 @@ public class InventoryObject : ScriptableObject
         return selectedItem;
     }
 
-    public bool HasItem(ItemObject _item, GameObject _model)
+    public bool HasItem(ItemObject _item)
     {
-        if (_item == null && _model == null)
+        if (_item == null)
         {
             return false;
         }
@@ -157,7 +157,7 @@ public class InventoryObject : ScriptableObject
         {
             foreach (var item in inventory)
             {
-                if (item.Key == _item && item.Value == _model)
+                if (item.Key == _item)
                 {
                     return true;
                 }

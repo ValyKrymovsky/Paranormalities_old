@@ -24,11 +24,15 @@ public class P_Movement : MonoBehaviour
     private Vector3 moveDirection;
     private Vector2 currentMoveValue;
     private Vector2 currentVelocity;
-
     [SerializeField, Tooltip("Time before reaching full speed"), Header("Movement Smoothening")]
     private float smoothTime;
 
-
+    [SerializeField, Separator("Stamina", true)]
+    private bool useStaminaSystem;
+    [SerializeField, ConditionalField("useStaminaSystem")]
+    private float depletionValue;
+    [SerializeField, ConditionalField("useStaminaSystem")]
+    private float regenValue;
 
     [SerializeField, Separator("Gravity", true)]
     private float gravityForce;
@@ -39,15 +43,8 @@ public class P_Movement : MonoBehaviour
     private static float gravity = -9.8f;
     private float velocity;
 
-
-    [SerializeField, Separator("Stamina", true)]
-    private bool useStaminaSystem;
-    [SerializeField, ConditionalField("useStaminaSystem")]
-    private float depletionValue;
-    [SerializeField, ConditionalField("useStaminaSystem")]
-    private float regenValue;
-
-
+    [SerializeField, Separator("Rigidbody manipulation")]
+    private float forceAmount = 1;
     // Coroutines //
     private Coroutine regenCoroutine;
     private Coroutine depleteCoroutine;
@@ -313,6 +310,20 @@ public class P_Movement : MonoBehaviour
             }
         }
         return 0;
+    }
+
+    private void OnControllerColliderHit(ControllerColliderHit hit)
+    {
+        Rigidbody rigidbody = hit.collider.attachedRigidbody;
+
+        if (rigidbody != null)
+        {
+            Vector3 forceDirection = hit.gameObject.transform.position - transform.position;
+            forceDirection.y = 0;
+            forceDirection.Normalize();
+
+            rigidbody.AddForceAtPosition(forceDirection * forceAmount, transform.position, ForceMode.Impulse);
+        }
     }
 
 }

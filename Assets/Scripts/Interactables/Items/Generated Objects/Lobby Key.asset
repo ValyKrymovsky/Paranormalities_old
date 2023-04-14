@@ -10,11 +10,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: eca436b52e5195848912cebe67fa8c6b, type: 3}
-  m_Name: Basement Key
+  m_Name: Lobby Key
   m_EditorClassIdentifier: 
-  objectName: Basement Key
+  objectName: 
   itemType: 0
-  model: {fileID: 919132149155446097, guid: 5910becd1905d954db8bccaca2de176e, type: 3}
-  picture: {fileID: 0}
-  description: Key to the basement
+  description: 
   target: {fileID: 0}

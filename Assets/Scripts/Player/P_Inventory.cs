@@ -84,7 +84,7 @@ public class P_Inventory : MonoBehaviour
     {
         if ((int)context.phase == 2)
         {
-            if (inventory.HasItem(selectedItem.Key, selectedItem.Value))
+            if (inventory.HasItem(selectedItem.Key))
             {
                 if (Physics.Raycast(p_camera.transform.position, p_camera.transform.forward, out RaycastHit hitInfo, dropRange))
                 {
@@ -93,9 +93,9 @@ public class P_Inventory : MonoBehaviour
                     Vector3 dropPosition = new Vector3(hitInfo.point.x, hitInfo.point.y + .1f, hitInfo.point.z);
                     GameObject droppedItem = Instantiate(placeholderModel, dropPosition, transform.rotation, GameObject.Find("Items").transform);
                     droppedItem.name = selectedItem.Value.name;
-                    droppedItem.GetComponent<Item>().highlightActive = false;
-                    droppedItem.GetComponent<Item>().highlight = null;
-                    droppedItem.GetComponent<Item>().highlightRenderer = null;
+                    droppedItem.GetComponent<InteractionController>().highlightActive = false;
+                    droppedItem.GetComponent<InteractionController>().highlight = null;
+                    droppedItem.GetComponent<InteractionController>().highlightRenderer = null;
                     droppedItem.SetActive(true);
                     Object.Destroy(selectedItem.Value);
                 }
