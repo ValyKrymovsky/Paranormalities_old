@@ -20,6 +20,7 @@ public class InteractionController : MonoBehaviour, IInteractable, IInventory, I
     private bool locked;
     [SerializeField, ConditionalField("locked")]
     private ItemObject itemForUnlock;
+    public bool interactible = true;
 
     [Separator("Highlight", true)]
     public GameObject highlight;
@@ -28,10 +29,18 @@ public class InteractionController : MonoBehaviour, IInteractable, IInventory, I
     public bool highlightActive;
 
     [Separator("Inventory")]
-    [SerializeField] private bool isItem;
-    [SerializeField, ConditionalField("isItem")] private ItemObject item;
-    [ConditionalField("isItem")]public GameObject model;
-    [SerializeField, ConditionalField("isItem")] private P_Inventory inventory;
+    [SerializeField]
+    private bool isItem;
+    [SerializeField, ConditionalField("isItem")]
+    private ItemObject item;
+    [ConditionalField("isItem")]
+    public GameObject model;
+    [SerializeField, ConditionalField("isItem")]
+    private P_Inventory inventory;
+    [SerializeField]
+    private GameObject placeholderParent;
+    [SerializeField]
+    private GameObject[] itemPlaceholders;
     
     private void Awake()
     {
@@ -42,6 +51,15 @@ public class InteractionController : MonoBehaviour, IInteractable, IInventory, I
         inventory = playerBody.GetComponent<P_Inventory>();
         animator = GetComponent<Animator>();
 
+        itemPlaceholders = new GameObject[inventory.inventory.GetSize()];
+
+        placeholderParent = GameObject.Find("Item Placeholders");
+
+        for (int i = 0; i < placeholderParent.transform.childCount; i++)
+        {
+            itemPlaceholders[i] = placeholderParent.transform.GetChild(i).gameObject;
+        }
+
         if (highlightLocation == null)
         {
             highlightLocation = gameObject;
@@ -50,24 +68,28 @@ public class InteractionController : MonoBehaviour, IInteractable, IInventory, I
 
     public void Interact()
     {
-        if (isItem)
+        if (interactible)
         {
-            PickUp();
-        }
-        else
-        {
-            if (locked)
+            if (isItem)
             {
-                Debug.Log("Object locked");
-                locked = !inventory.inventory.HasItem(itemForUnlock);
+                PickUp();
             }
             else
             {
-                Debug.Log("Interacted");
-                animator.SetBool(parameterName, !animator.GetBool(parameterName));
+                if (locked)
+                {
+                    Debug.Log("Object locked");
+                    locked = !inventory.inventory.HasItem(itemForUnlock);
+                }
+                else
+                {
+                    Debug.Log("Interacted");
+                    animator.SetBool(parameterName, !animator.GetBool(parameterName));
+                }
+                
             }
-            
         }
+        
     }
 
     public void PickUp()
@@ -83,7 +105,17 @@ public class InteractionController : MonoBehaviour, IInteractable, IInventory, I
                 Object.Destroy(childHighlight.gameObject);
             }
             
-            this.gameObject.SetActive(false);
+            int placeholderIndex = inventory.Get().GetIndexOfItem(new KeyValuePair<ItemObject, GameObject>(item, model));
+            // this.gameObject.SetActive(false);
+
+            Rigidbody itemRigidbody = GetComponent<Rigidbody>();
+
+            itemRigidbody.constraints = RigidbodyConstraints.FreezePositionX | RigidbodyConstraints.FreezePositionY | RigidbodyConstraints.FreezePositionZ;
+            transform.parent = itemPlaceholders[placeholderIndex].transform;
+            transform.position = itemPlaceholders[placeholderIndex].transform.position;
+            
+
+            interactible = false;
         }
         else if (!inventory.Get().AddItem(item, model) && inventory.Get().IsFull())
         {
@@ -100,7 +132,7 @@ public class InteractionController : MonoBehaviour, IInteractable, IInventory, I
         if (!highlightActive)
         {
             // _target.transform.localScale = new Vector3(_target.transform.localScale.x / gameObject.transform.localScale.x, _target.transform.localScale.y / gameObject.transform.localScale.y, _target.transform.localScale.z / gameObject.transform.localScale.z);
-            _target.transform.localScale = new Vector3(.01f, .01f, .01f);
+            _target.transform.localScale = new Vector3(.25f, .25f, .25f);
             highlight = Instantiate(_target, highlightLocation.transform.position, transform.rotation, gameObject.transform);
             highlightRenderer = highlight.GetComponent<SpriteRenderer>();
             highlight.name = string.Format("{0} highlight", name);
@@ -117,5 +149,17 @@ public class InteractionController : MonoBehaviour, IInteractable, IInventory, I
             highlightRenderer = null;
             highlightActive = false;
         }
+    }
+
+    private GameObject TeleportToPlaceholder()
+    {
+        foreach (GameObject placeholder in itemPlaceholders)
+        {
+            if (placeholder.transform.childCount == 0)
+            {
+                return placeholder;
+            }
+        }
+        return null;
     }
 }

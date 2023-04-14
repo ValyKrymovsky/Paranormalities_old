@@ -123,40 +123,49 @@ public class P_Interactor : MonoBehaviour
                 {
                     if (hitItem.TryGetComponent(out InteractionController interactorObject))
                     {
+                        if (!interactorObject.interactible)
+                        {
+                            continue;
+                        }
                         hitItemsDistance.Add(Vector3.Distance(hitInfo.transform.position, interactorObject.highlightLocation.transform.position));
                     }
                 }
-                nearestItem = hitColliders[hitItemsDistance.IndexOf(hitItemsDistance.Min())];
-                interactor = nearestItem.GetComponent<InteractionController>();
-                Debug.DrawLine(hitInfo.point, nearestItem.transform.position);
-                if (nearestItem.TryGetComponent(out IHighlight highlightObj))
+                if (hitItemsDistance.Count != 0)
                 {
-                    if (!nearestItem.GetComponent<InteractionController>().highlightActive)
+                    nearestItem = hitColliders[hitItemsDistance.IndexOf(hitItemsDistance.Min())];
+                    interactor = nearestItem.GetComponent<InteractionController>();
+                    Debug.DrawLine(hitInfo.point, nearestItem.transform.position);
+                    if (nearestItem.TryGetComponent(out IHighlight highlightObj))
                     {
-                        switch (nearestItem.tag)
+                        if (!nearestItem.GetComponent<InteractionController>().highlightActive)
                         {
-                            case "pickup":
-                                highlightObj.SpawnHighlight(highlights["pickup"], "pick up");
-                                activeHighlight = nearestItem;
-                                break;
-                            
-                            case "destroy":
-                                highlightObj.SpawnHighlight(highlights["destroy"], "destroy");
-                                activeHighlight = nearestItem;
-                                break;
-                            
-                            case "interact":
-                                highlightObj.SpawnHighlight(highlights["interact"], "interact");
-                                activeHighlight = nearestItem;
-                                break;
+                            switch (nearestItem.tag)
+                            {
+                                case "pickup":
+                                    highlightObj.SpawnHighlight(highlights["pickup"], "pick up");
+                                    activeHighlight = nearestItem;
+                                    break;
+                                
+                                case "destroy":
+                                    highlightObj.SpawnHighlight(highlights["destroy"], "destroy");
+                                    activeHighlight = nearestItem;
+                                    break;
+                                
+                                case "interact":
+                                    highlightObj.SpawnHighlight(highlights["interact"], "interact");
+                                    activeHighlight = nearestItem;
+                                    break;
+                            }
                         }
                     }
+                    if (nearestItem.GetComponent<InteractionController>().highlight != null)
+                    {
+                        nearestItem.GetComponent<InteractionController>().highlight.transform.LookAt(transform);
+                        nearestItem.GetComponent<InteractionController>().highlightRenderer.color = new Color(255, 255, 255, Mathf.InverseLerp(highlightRangeRadius, 0, Vector3.Distance(hitInfo.point, interactor.highlightLocation.transform.position)));
+                    }
                 }
-                if (nearestItem.GetComponent<InteractionController>().highlight != null)
-                {
-                    nearestItem.GetComponent<InteractionController>().highlight.transform.LookAt(transform);
-                    nearestItem.GetComponent<InteractionController>().highlightRenderer.color = new Color(255, 255, 255, Mathf.InverseLerp(highlightRangeRadius, 0, Vector3.Distance(hitInfo.point, interactor.highlightLocation.transform.position)));
-                }
+                
+                
             } 
         }
         else
@@ -172,42 +181,48 @@ public class P_Interactor : MonoBehaviour
             {
                 foreach (Collider hitItem in hitColliders)
                 {
-                    // hitItemsDistance.Add(Vector3.Distance(pointInAir, hitItem.transform.position));
                     if (hitItem.TryGetComponent(out InteractionController interactorObject))
                     {
+                        if (!interactorObject.interactible)
+                        {
+                            continue;
+                        }
                         hitItemsDistance.Add(Vector3.Distance(pointInAir, interactorObject.highlightLocation.transform.position));
                     }
                 }
-                nearestItem = hitColliders[hitItemsDistance.IndexOf(hitItemsDistance.Min())];
-                interactor = nearestItem.GetComponent<InteractionController>();
-                Debug.DrawLine(pointInAir, nearestItem.transform.position);
-                if (nearestItem.TryGetComponent(out IHighlight highlightObj))
+                if (hitItemsDistance.Count != 0)
                 {
-                    if (!nearestItem.GetComponent<InteractionController>().highlightActive)
+                    nearestItem = hitColliders[hitItemsDistance.IndexOf(hitItemsDistance.Min())];
+                    interactor = nearestItem.GetComponent<InteractionController>();
+                    Debug.DrawLine(pointInAir, nearestItem.transform.position);
+                    if (nearestItem.TryGetComponent(out IHighlight highlightObj))
                     {
-                        switch (nearestItem.tag)
+                        if (!nearestItem.GetComponent<InteractionController>().highlightActive)
                         {
-                            case "pickup":
-                                highlightObj.SpawnHighlight(highlights["pickup"], "pick up");
-                                activeHighlight = nearestItem;
-                                break;
-                            
-                            case "destroy":
-                                highlightObj.SpawnHighlight(highlights["destroy"], "destroy");
-                                activeHighlight = nearestItem;
-                                break;
-                            
-                            case "interact":
-                                highlightObj.SpawnHighlight(highlights["interact"], "interact");
-                                activeHighlight = nearestItem;
-                                break;
+                            switch (nearestItem.tag)
+                            {
+                                case "pickup":
+                                    highlightObj.SpawnHighlight(highlights["pickup"], "pick up");
+                                    activeHighlight = nearestItem;
+                                    break;
+                                
+                                case "destroy":
+                                    highlightObj.SpawnHighlight(highlights["destroy"], "destroy");
+                                    activeHighlight = nearestItem;
+                                    break;
+                                
+                                case "interact":
+                                    highlightObj.SpawnHighlight(highlights["interact"], "interact");
+                                    activeHighlight = nearestItem;
+                                    break;
+                            }
                         }
                     }
-                }
-                if (nearestItem.GetComponent<InteractionController>().highlight != null)
-                {
-                    nearestItem.GetComponent<InteractionController>().highlight.transform.LookAt(transform);
-                    nearestItem.GetComponent<InteractionController>().highlightRenderer.color = new Color(255, 255, 255, Mathf.InverseLerp(highlightRangeRadius, 0, Vector3.Distance(pointInAir, interactor.highlightLocation.transform.position)));
+                    if (nearestItem.GetComponent<InteractionController>().highlight != null)
+                    {
+                        nearestItem.GetComponent<InteractionController>().highlight.transform.LookAt(transform);
+                        nearestItem.GetComponent<InteractionController>().highlightRenderer.color = new Color(255, 255, 255, Mathf.InverseLerp(highlightRangeRadius, 0, Vector3.Distance(pointInAir, interactor.highlightLocation.transform.position)));
+                    }
                 }
             } 
         }

@@ -93,9 +93,14 @@ public class P_Inventory : MonoBehaviour
                     Vector3 dropPosition = new Vector3(hitInfo.point.x, hitInfo.point.y + .1f, hitInfo.point.z);
                     GameObject droppedItem = Instantiate(placeholderModel, dropPosition, transform.rotation, GameObject.Find("Items").transform);
                     droppedItem.name = selectedItem.Value.name;
-                    droppedItem.GetComponent<InteractionController>().highlightActive = false;
-                    droppedItem.GetComponent<InteractionController>().highlight = null;
-                    droppedItem.GetComponent<InteractionController>().highlightRenderer = null;
+                    InteractionController interactionController = droppedItem.GetComponent<InteractionController>();
+                    interactionController.highlightActive = false;
+                    interactionController.highlight = null;
+                    interactionController.highlightRenderer = null;
+                    interactionController.interactible = true;
+                    Rigidbody rigidbody = droppedItem.GetComponent<Rigidbody>();
+                    RigidbodyConstraints constraints = RigidbodyConstraints.FreezePositionX | RigidbodyConstraints.FreezePositionY | RigidbodyConstraints.FreezePositionZ;
+                    rigidbody.ToggleConstraints(constraints, false);
                     droppedItem.SetActive(true);
                     Object.Destroy(selectedItem.Value);
                 }
