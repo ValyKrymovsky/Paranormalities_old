@@ -94,6 +94,8 @@ public class P_Inventory : MonoBehaviour
                     GameObject droppedItem = Instantiate(placeholderModel, dropPosition, transform.rotation, GameObject.Find("Items").transform);
                     droppedItem.name = selectedItem.Value.name;
                     InteractionController interactionController = droppedItem.GetComponent<InteractionController>();
+                    Collider itemCollider = droppedItem.GetComponent<Collider>();
+                    itemCollider.enabled = true;
                     interactionController.highlightActive = false;
                     interactionController.highlight = null;
                     interactionController.highlightRenderer = null;

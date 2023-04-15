@@ -1,0 +1,54 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <Style src="project://database/Assets/Scripts/UI/UI%20Toolkit/Style%20Sheets/MainMenu.uss?fileID=7433441132597879392&amp;guid=9b690cf0138953743a6bee054d0f59be&amp;type=3#MainMenu" />
+    <ui:VisualElement name="Screen" focusable="false" usage-hints="GroupTransform" style="width: 100%; height: 100%; align-items: center; justify-content: space-around; margin-left: 0; margin-right: 0; margin-top: 0; margin-bottom: 0; padding-left: 0; padding-right: 0; padding-top: 0; padding-bottom: 0; background-image: url(&apos;project://database/Assets/Sprites/UI/MainMenu/MainMenuBackground.jpg?fileID=21300000&amp;guid=59553409c4d83a445965369ae5ea4b20&amp;type=3#MainMenuBackground&apos;); -unity-background-scale-mode: scale-to-fit; -unity-background-image-tint-color: rgb(115, 43, 43); background-color: rgb(0, 0, 0); display: flex;">
+        <ui:VisualElement name="MainMenu" style="width: 100%; height: 100%; justify-content: space-around; align-items: center; display: flex;">
+            <ui:VisualElement name="Name" usage-hints="GroupTransform" style="white-space: normal; align-items: center; justify-content: space-around; flex-wrap: wrap; flex-direction: column; top: 5%;">
+                <ui:Label text="Para" display-tooltip-when-elided="true" name="Para" class="gameName" style="color: rgb(255, 0, 0); padding-left: 0; padding-right: 0; padding-top: 0; padding-bottom: 0;" />
+                <ui:Label text="normalities" display-tooltip-when-elided="true" name="normalities" class="gameName" style="padding-left: 0; padding-right: 0; padding-top: 0; padding-bottom: 0; -unity-background-image-tint-color: rgb(255, 255, 255); color: rgb(255, 255, 255);" />
+            </ui:VisualElement>
+            <ui:VisualElement name="Buttons" usage-hints="GroupTransform" style="width: 100%; height: 100%; padding-left: 50px; padding-right: 50px; padding-top: 50px; padding-bottom: 50px; justify-content: space-around; align-items: center; display: flex;">
+                <ui:Button text="Play" display-tooltip-when-elided="true" name="Play" class="button" style="width: 6%; height: 14%;" />
+                <ui:Button text="Options" display-tooltip-when-elided="true" name="Options" class="button" style="align-items: stretch; width: 9%; height: 14%;" />
+                <ui:Button text="Exit" display-tooltip-when-elided="true" name="Exit" class="button" style="width: 6%; height: 14%;" />
+            </ui:VisualElement>
+        </ui:VisualElement>
+        <ui:VisualElement name="OptionsMenu" style="overflow: visible; width: 100%; height: 100%; visibility: visible; display: none; align-items: center; justify-content: space-around;">
+            <ui:VisualElement name="OptionsBox" style="width: 75%; height: 75%; justify-content: flex-start; align-items: center; border-left-color: rgba(46, 46, 46, 0.43); border-right-color: rgba(46, 46, 46, 0.43); border-top-color: rgba(46, 46, 46, 0.43); border-bottom-color: rgba(46, 46, 46, 0.43); border-left-width: 5px; border-right-width: 5px; border-top-width: 5px; border-bottom-width: 5px; border-top-left-radius: 15px; border-bottom-left-radius: 15px; border-top-right-radius: 15px; border-bottom-right-radius: 15px; background-color: rgba(26, 26, 26, 0.64); flex-direction: row;">
+                <ui:VisualElement name="OptionsMenu" style="left: auto; right: auto; width: 20%; height: 100%; justify-content: center; align-items: center; flex-direction: column; flex-wrap: nowrap; border-right-color: rgb(51, 51, 51); border-left-color: rgba(255, 255, 255, 0); border-top-color: rgba(255, 255, 255, 0); border-bottom-color: rgba(255, 255, 255, 0); border-left-width: 2px; border-right-width: 2px; border-top-width: 2px; border-bottom-width: 2px; border-top-left-radius: 50px; border-bottom-left-radius: 50px; border-top-right-radius: 50px; border-bottom-right-radius: 50px;">
+                    <ui:Button text="General" display-tooltip-when-elided="true" name="General" class="button" style="width: 100%; margin-left: 0; margin-right: 0; margin-top: 10px; margin-bottom: 10px; padding-left: 0; padding-right: 0; padding-top: 0; padding-bottom: 0; height: 10%; align-items: stretch; overflow: visible; max-width: none; min-width: auto;" />
+                    <ui:Button text="Sound" display-tooltip-when-elided="true" name="Sound" class="button" style="width: 100%; margin-left: 0; margin-right: 0; margin-top: 10px; margin-bottom: 10px; padding-left: 0; padding-right: 0; padding-top: 0; padding-bottom: 0; height: 10%; align-items: stretch; overflow: visible; max-width: none; min-width: auto;" />
+                </ui:VisualElement>
+                <ui:VisualElement name="GeneralOptions" style="width: 70%; height: 100%; align-items: flex-start; padding-left: 20px; padding-top: 30px; padding-bottom: 30px; justify-content: center;">
+                    <ui:ScrollView scroll-deceleration-rate="0,135" elasticity="0,1" horizontal-page-size="-1" style="width: 80%; height: 100%; flex-direction: column; flex-wrap: nowrap;">
+                        <ui:VisualElement name="Test01" class="option" style="flex-direction: row; margin-left: 0; margin-right: 0; margin-top: 0; margin-bottom: 0; padding-left: 0; padding-right: 0; padding-top: 0; padding-bottom: 0; align-items: center; justify-content: flex-start;">
+                            <ui:Label text="Test01" display-tooltip-when-elided="true" class="name" style="padding-left: 0; padding-right: 20px; padding-top: 0; padding-bottom: 0; width: 25%; margin-top: 10px; margin-bottom: 10px;" />
+                            <ui:Slider picking-mode="Ignore" value="100" high-value="100" class="slider" style="flex-direction: row; align-items: center; width: 50%; height: 100%;" />
+                        </ui:VisualElement>
+                        <ui:VisualElement name="Test02" class="option" style="flex-direction: row; margin-left: 0; margin-right: 0; margin-top: 0; margin-bottom: 0; padding-left: 0; padding-right: 0; padding-top: 0; padding-bottom: 0; align-items: center; justify-content: flex-start;">
+                            <ui:Label text="Test02" display-tooltip-when-elided="true" class="name" style="padding-left: 0; padding-right: 20px; padding-top: 0; padding-bottom: 0; width: 25%; margin-top: 10px; margin-bottom: 10px;" />
+                            <ui:Slider picking-mode="Ignore" value="100" high-value="100" class="slider" style="flex-direction: row; align-items: center; width: 50%; height: 100%;" />
+                        </ui:VisualElement>
+                    </ui:ScrollView>
+                    <ui:VisualElement style="width: 100%; align-items: center;" />
+                </ui:VisualElement>
+                <ui:VisualElement name="SoundOptions" style="width: 70%; height: 100%; align-items: flex-start; padding-left: 20px; padding-top: 30px; padding-bottom: 30px; justify-content: center; display: none;">
+                    <ui:ScrollView scroll-deceleration-rate="0,135" elasticity="0,1" horizontal-page-size="-1" style="width: 80%; height: 100%; flex-direction: column; flex-wrap: nowrap;">
+                        <ui:VisualElement name="MasterSound" class="option" style="flex-direction: row; margin-left: 0; margin-right: 0; margin-top: 0; margin-bottom: 0; padding-left: 0; padding-right: 0; padding-top: 0; padding-bottom: 0; align-items: center; justify-content: flex-start;">
+                            <ui:Label text="General Volume" display-tooltip-when-elided="true" class="name" style="padding-left: 0; padding-right: 20px; padding-top: 0; padding-bottom: 0; width: 25%; margin-top: 10px; margin-bottom: 10px;" />
+                            <ui:Slider picking-mode="Ignore" value="1" high-value="1" name="MasterSlider" low-value="0.0001" class="slider" style="flex-direction: row; align-items: center; width: 50%; height: 100%;" />
+                        </ui:VisualElement>
+                        <ui:VisualElement name="MusicSound" class="option" style="flex-direction: row; margin-left: 0; margin-right: 0; margin-top: 0; margin-bottom: 0; padding-left: 0; padding-right: 0; padding-top: 0; padding-bottom: 0; align-items: center; justify-content: flex-start;">
+                            <ui:Label text="Music Volume" display-tooltip-when-elided="true" class="name" style="padding-left: 0; padding-right: 20px; padding-top: 0; padding-bottom: 0; width: 25%; margin-top: 10px; margin-bottom: 10px;" />
+                            <ui:Slider picking-mode="Ignore" value="1" high-value="1" name="MusicSlider" low-value="0.0001" class="slider" style="flex-direction: row; align-items: center; width: 50%; height: 100%;" />
+                        </ui:VisualElement>
+                    </ui:ScrollView>
+                    <ui:VisualElement style="width: 100%; align-items: center;" />
+                </ui:VisualElement>
+                <ui:VisualElement style="width: 10%; height: 100%; align-items: center; justify-content: center;">
+                    <ui:Button text="Apply" display-tooltip-when-elided="true" name="Apply" class="button" style="align-items: stretch; justify-content: flex-start; max-width: none; min-width: auto; height: 10%; width: 100%; font-size: 15px; flex-direction: column;" />
+                    <ui:Button text="Back" display-tooltip-when-elided="true" name="Back" class="button" style="align-items: stretch; justify-content: flex-start; max-width: none; min-width: auto; height: 10%; width: 100%; font-size: 15px; flex-direction: column;" />
+                </ui:VisualElement>
+            </ui:VisualElement>
+        </ui:VisualElement>
+    </ui:VisualElement>
+</ui:UXML>

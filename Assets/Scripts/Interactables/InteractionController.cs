@@ -114,6 +114,8 @@ public class InteractionController : MonoBehaviour, IInteractable, IInventory, I
             transform.parent = itemPlaceholders[placeholderIndex].transform;
             transform.position = itemPlaceholders[placeholderIndex].transform.position;
             
+            Collider itemCollider = GetComponent<Collider>();
+            itemCollider.enabled = false;
 
             interactible = false;
         }
