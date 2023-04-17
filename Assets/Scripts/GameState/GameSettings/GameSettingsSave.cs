@@ -2,7 +2,7 @@ using System.IO;
 using UnityEngine;
 using UnityEngine.Audio;
 
-public class GameSettingsSave : MonoBehaviour
+public class GameSettingsSave
 {
     private GameSettings gameSettings;
 

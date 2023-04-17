@@ -70,20 +70,29 @@ public class P_SoundSystem : MonoBehaviour
         groundNoiseMultiplier.Add(SurfaceIdentity.wood, 1.3f);
     }
 
-    private void Update() {
-        // GetSurfaceIdentity();
+    private void Update()
+    {
     }
 
+    /// <summary>
+    /// </summary>
+    /// <returns>noise value</returns>
     public float GetNoise()
     {
         return noise;
     }
-
+    /// <summary>
+    /// Sets noise value.
+    /// </summary>
+    /// <param name="_value"></param>
     public void SetNoise(float _value)
     {
         noise = _value;
     }
 
+    /// <summary>
+    /// Plays sound based on current selected clip.
+    /// </summary>
     public void PlaySound()
     {
         if (!source.isPlaying || source.time >(source.clip.length * .5f))
@@ -150,6 +159,10 @@ public class P_SoundSystem : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Selects clip from current surfaceMaterial footstep list based on current player move action
+    /// </summary>
+    /// <returns>random AudioCLip</returns>
     private AudioClip SelectClip()
     {
         AudioClip selectedClip = null;
@@ -189,6 +202,10 @@ public class P_SoundSystem : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Gets Surface Identity from left foot joint.
+    /// </summary>
+    /// <returns>SurfaceIndentity ground</returns>
     private SurfaceIdentity GetLeftSurfaceIdentity()
     {
         Ray ray = new Ray(leftFootJoint.transform.position, transform.up * -1);
@@ -208,6 +225,10 @@ public class P_SoundSystem : MonoBehaviour
         return 0;
     }
 
+    /// <summary>
+    /// Gets Surface Identity from right foot joint.
+    /// </summary>
+    /// <returns>SurfaceIndentity ground</returns>
     private SurfaceIdentity GetRightSurfaceIdentity()
     {
         Ray ray = new Ray(rightFootJoint.transform.position, transform.up * -1);
@@ -227,11 +248,17 @@ public class P_SoundSystem : MonoBehaviour
         return 0;
     }
 
+    /// <summary>
+    /// </summary>
+    /// <returns>Current player move action</returns>
     private moveAction GetMoveAction()
     {
         return p_movement.GetMoveAction();
     }
 
+    /// <summary>
+    /// </summary>
+    /// <returns>Footstep list based on current player move action</returns>
     private List<AudioClip> GetAudioList()
     {
         currentMoveAction = GetMoveAction();
@@ -248,61 +275,24 @@ public class P_SoundSystem : MonoBehaviour
         return null;
     }
 
+    /// <summary>
+    /// Sets walkClips and sprintClips based on surface material walk and sprint clip lists.
+    /// </summary>
+    /// <param name="_surfaceMaterialData"></param>
     private void SetAudioList(SurfaceMaterialData _surfaceMaterialData)
     {
         walkClips = _surfaceMaterialData.GetWalkClips();
         sprintClips = _surfaceMaterialData.GetSprintClips();
-
-        // if (GetSurfaceIdentity() == SurfaceIdentity.stone)
-        // {
-        //     if (GetMoveAction() == moveAction.walk || GetMoveAction() == moveAction.sneak)
-        //     {
-        //         return footsteps_concrete_walk;
-        //     }
-        //     else if (GetMoveAction() == moveAction.sprint)
-        //     {
-        //         return footsteps_concrete_sprint;
-        //     }
-        //     else
-        //     {
-        //         return null;
-        //     }
-        // }
-        // else if (GetSurfaceIdentity() == SurfaceIdentity.wood)
-        // {
-        //     if (GetMoveAction() == moveAction.walk || GetMoveAction() == moveAction.sneak)
-        //     {
-        //         return footsteps_wood_walk;
-        //     }
-        //     else if (GetMoveAction() == moveAction.sprint)
-        //     {
-        //         return footsteps_wood_sprint;
-        //     }
-        //     else
-        //     {
-        //         return null;
-        //     }
-        // }
-        // else if (GetSurfaceIdentity() == SurfaceIdentity.grass)
-        // {
-        //     if (GetMoveAction() == moveAction.walk || GetMoveAction() == moveAction.sneak)
-        //     {
-        //         return footsteps_grass_walk;
-        //     }
-        //     else if (GetMoveAction() == moveAction.sprint)
-        //     {
-        //         return footsteps_grass_sprint;
-        //     }
-        //     else
-        //     {
-        //         return null;
-        //     }
-        // }
-
-        // return null;
     }
 
-
+    /// <summary>
+    /// Spawns noise object on givel location and given noise value.
+    /// </summary>
+    /// <param name="_noiseObject"></param>
+    /// <param name="_instantiator"></param>
+    /// <param name="_parent"></param>
+    /// <param name="_position"></param>
+    /// <param name="_noise"></param>
     public static void SpawnNoiseObject(GameObject _noiseObject, GameObject _instantiator, GameObject _parent, Vector3 _position, float _noise)
     {
         GameObject noiseObject = Instantiate(_noiseObject, _position, _instantiator.transform.rotation, _parent.transform);

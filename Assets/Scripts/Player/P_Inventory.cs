@@ -46,6 +46,10 @@ public class P_Inventory : MonoBehaviour
 
     }
 
+    /// <summary>
+    /// Selects item from inventory based on pressed keyboard or controller button.
+    /// </summary>
+    /// <param name="context"></param>
     public void SelectItem(InputAction.CallbackContext context)
     {
         if ((int)context.phase == 2)
@@ -80,6 +84,10 @@ public class P_Inventory : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="context"></param>
     public void DropItem(InputAction.CallbackContext context)
     {
         if ((int)context.phase == 2)

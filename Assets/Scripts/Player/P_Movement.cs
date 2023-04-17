@@ -106,27 +106,44 @@ public class P_Movement : MonoBehaviour
         PlayerMove();
     }
 
+    /// <summary>
+    /// Reads value from InputAction Move.
+    /// </summary>
+    /// <param name="_ctx"></param>
     public void GetMoveValue(InputAction.CallbackContext _ctx)
     {
         move_value = _ctx.ReadValue<Vector2>();
     }
 
+    /// <summary>
+    /// Reads value from InputAction Sprint.
+    /// </summary>
+    /// <param name="_ctx"></param>
     public void GetSprintValue(InputAction.CallbackContext _ctx)
     {
         sprint_value = _ctx.ReadValue<float>();
     }
 
+    /// <summary>
+    /// Reads value from InputAction Sneak.
+    /// </summary>
+    /// <param name="_ctx"></param>
     public void GetSneakValue(InputAction.CallbackContext _ctx)
     {
         sneak_value = _ctx.ReadValue<float>();
     }
 
+    /// <summary>
+    /// </summary>
+    /// <returns>Current player move value</returns>
     public Vector2 GetMoveValue()
     {
         return currentMoveValue;
     }
 
-
+    /// <summary>
+    /// Is responsible for player movement. Gets values from GetMoveValue(), GetSprintValue() and GetSneakValue(), calculates how the player should move.
+    /// </summary>
     public void PlayerMove()
     {
         float controllerMoveSensetivity = Mathf.Max(Mathf.Abs(move_value.x), Mathf.Abs(move_value.y));
@@ -187,6 +204,9 @@ public class P_Movement : MonoBehaviour
         ch_controller.Move(moveDirection * (speed * internalMultiplier) * Time.deltaTime);
     }
 
+    /// <summary>
+    /// Sets up necessary parameters for walking.
+    /// </summary>
     public void Walk()
     {
         walking = true;
@@ -204,7 +224,9 @@ public class P_Movement : MonoBehaviour
         }
         
     }
-
+    /// <summary>
+    /// Sets up necessary parameters for sprinting. If useStaminaSystem is true, handles logic for depleting and regenerating stamina.
+    /// </summary>
     public void Sprint()
     {
         sprinting = true;
@@ -237,6 +259,9 @@ public class P_Movement : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Sets up necessary parameters from sneaking.
+    /// </summary>
     public void Sneak()
     {
         sneaking = true;
@@ -247,6 +272,9 @@ public class P_Movement : MonoBehaviour
         internalMultiplier = sneakMultiplier;
     }
 
+    /// <summary>
+    /// Starts regeneration coroutine if necessary and stops and sets deplete coroutine to null if it is not already null.
+    /// </summary>
     private void CheckStaminaState()
     {
         if (depleteCoroutine != null)
@@ -262,14 +290,23 @@ public class P_Movement : MonoBehaviour
 
         if (p_stamina.IsFull() && regenCoroutine != null)
         {
+            StopCoroutine(regenCoroutine);
             regenCoroutine = null;
         }
     }
 
+    /// <summary>
+    /// </summary>
+    /// <returns>current players move action</returns>
     public moveAction GetMoveAction()
     {
         return action;
     }
+
+    /// <summary>
+    /// Applies gravity to player movement. Sets y coordinate of player movement to gravity force.
+    /// If player is grounded, sets gravity to -1, otherwise adds negative force each frame.
+    /// </summary>
     private void ApplyGravity()
     {
         if (IsGrounded())
@@ -285,6 +322,10 @@ public class P_Movement : MonoBehaviour
         moveDirection.y = gravityForce;
     }
 
+    /// <summary>
+    /// Checks if player is grounded by casting ray to the ground from players position.
+    /// </summary>
+    /// <returns>True if player is grounded, false if not</returns>
     public bool IsGrounded()
     {
         if (Physics.Raycast(transform.position, transform.up * -1, out RaycastHit hitInfo, .1f))
@@ -298,20 +339,10 @@ public class P_Movement : MonoBehaviour
         return isGrounded;
     }
 
-    public int GetLayer()
-    {
-        if (IsGrounded())
-        {
-            Ray ray = new Ray(transform.position, transform.up * -1);
-
-            if (Physics.Raycast(ray, out RaycastHit hitInfo, ch_controller.height))
-            {
-                return hitInfo.transform.gameObject.layer;
-            }
-        }
-        return 0;
-    }
-
+    /// <summary>
+    /// Adds force to rigidbodies when in contact.
+    /// </summary>
+    /// <param name="hit"></param>
     private void OnControllerColliderHit(ControllerColliderHit hit)
     {
         Rigidbody rigidbody = hit.collider.attachedRigidbody;
