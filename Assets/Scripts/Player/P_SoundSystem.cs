@@ -70,10 +70,6 @@ public class P_SoundSystem : MonoBehaviour
         groundNoiseMultiplier.Add(SurfaceIdentity.wood, 1.3f);
     }
 
-    private void Update()
-    {
-    }
-
     /// <summary>
     /// </summary>
     /// <returns>noise value</returns>
@@ -81,6 +77,7 @@ public class P_SoundSystem : MonoBehaviour
     {
         return noise;
     }
+
     /// <summary>
     /// Sets noise value.
     /// </summary>
@@ -286,7 +283,7 @@ public class P_SoundSystem : MonoBehaviour
     }
 
     /// <summary>
-    /// Spawns noise object on givel location and given noise value.
+    /// Spawns noise object on givel location with given noise value.
     /// </summary>
     /// <param name="_noiseObject"></param>
     /// <param name="_instantiator"></param>

@@ -85,6 +85,10 @@ public class P_Interactor : MonoBehaviour
         CheckInteractibles();
     }
 
+    /// <summary>
+    /// Checks if activeHighlight game object has interface IInteractible, then calls Interact() method if the interface was found.
+    /// </summary>
+    /// <param name="context"></param>
     public void Interact(InputAction.CallbackContext context)
     {
         if ((int)context.phase == 3)
@@ -103,6 +107,9 @@ public class P_Interactor : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Checks if there are any interactibles in front of you, then calculates the shortest distance between hitInfo.point and interactible and highlights the item with HighLight Object.
+    /// </summary>
     public void CheckInteractibles()
     {
         Ray r = new Ray(interactorSource.position, interactorSource.forward);

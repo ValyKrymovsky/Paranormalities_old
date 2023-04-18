@@ -224,6 +224,7 @@ public class P_Movement : MonoBehaviour
         }
         
     }
+    
     /// <summary>
     /// Sets up necessary parameters for sprinting. If useStaminaSystem is true, handles logic for depleting and regenerating stamina.
     /// </summary>

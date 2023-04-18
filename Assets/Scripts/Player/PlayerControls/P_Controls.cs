@@ -387,6 +387,17 @@ public partial class @P_Controls : IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": """",
+                    ""id"": ""bedc5957-cc83-43a3-8929-e1a7170052c5"",
+                    ""path"": ""<Keyboard>/r"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard&Mouse"",
+                    ""action"": ""Menu"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
                     ""id"": ""98dc3192-2b11-4f52-9a05-3e6e1733cbb3"",
                     ""path"": ""<Keyboard>/1"",
                     ""interactions"": """",

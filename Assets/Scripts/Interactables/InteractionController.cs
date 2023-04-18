@@ -67,6 +67,9 @@ public class InteractionController : MonoBehaviour, IInteractable, IInventory, I
         }
     }
 
+    /// <summary>
+    /// Checks if gameObject is item. Calls PicUp() if yes, otherwise playes animation if gameObject is not locked. In that case must be unlocked by given ItemObject.
+    /// </summary>
     public void Interact()
     {
         if (interactible)
@@ -93,6 +96,9 @@ public class InteractionController : MonoBehaviour, IInteractable, IInventory, I
         
     }
 
+    /// <summary>
+    /// Tries to add item to inventory.
+    /// </summary>
     public void PickUp()
     {
         if (inventory.Get().AddItem(item, model))
@@ -107,16 +113,12 @@ public class InteractionController : MonoBehaviour, IInteractable, IInventory, I
             }
             
             int placeholderIndex = inventory.Get().GetIndexOfItem(new KeyValuePair<ItemObject, GameObject>(item, model));
-            // this.gameObject.SetActive(false);
 
             Rigidbody itemRigidbody = GetComponent<Rigidbody>();
 
             itemRigidbody.constraints = RigidbodyConstraints.FreezePositionX | RigidbodyConstraints.FreezePositionY | RigidbodyConstraints.FreezePositionZ;
             transform.parent = itemPlaceholders[placeholderIndex].transform;
             transform.position = itemPlaceholders[placeholderIndex].transform.position;
-            
-            // Collider itemCollider = GetComponent<Collider>();
-            // itemCollider.enabled = false;
 
             interactible = false;
         }
@@ -130,6 +132,11 @@ public class InteractionController : MonoBehaviour, IInteractable, IInventory, I
         }
     }
 
+    /// <summary>
+    /// Spawns highlight object if not already active.
+    /// </summary>
+    /// <param name="_target"></param>
+    /// <param name="_name"></param>
     public void SpawnHighlight(GameObject _target, string _name)
     {
         if (!highlightActive)
@@ -143,6 +150,9 @@ public class InteractionController : MonoBehaviour, IInteractable, IInventory, I
         }
     }
 
+    /// <summary>
+    /// Destroys highlight object if it is active.
+    /// </summary>
     public void DestroyHighlight()
     {
         if (highlightActive)
@@ -154,6 +164,10 @@ public class InteractionController : MonoBehaviour, IInteractable, IInventory, I
         }
     }
 
+    /// <summary>
+    /// Teleports picked up item to empty item placeholder.
+    /// </summary>
+    /// <returns></returns>
     private GameObject TeleportToPlaceholder()
     {
         foreach (GameObject placeholder in itemPlaceholders)

@@ -86,7 +86,7 @@ public class P_Inventory : MonoBehaviour
     }
 
     /// <summary>
-    /// 
+    /// Drops item. Casts ray from camera and spawns the item on hitInfo.point location.
     /// </summary>
     /// <param name="context"></param>
     public void DropItem(InputAction.CallbackContext context)
@@ -121,6 +121,10 @@ public class P_Inventory : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Casts ray from player position down to the ground. Returns parents name to which the ground mesh belongs to.
+    /// </summary>
+    /// <returns>string roomName</returns>
     private string GetCurrentRoomName()
     {
         Ray ray = new Ray(transform.position, transform.up * -1);
@@ -153,7 +157,6 @@ public class P_Inventory : MonoBehaviour
     {
         inventory = _inventory;
     }
-
 
     void OnEnable()
     {

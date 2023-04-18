@@ -14,12 +14,18 @@ public class GameSettingsSave
         gameSettings = new GameSettings(_masterSoundVolume, _musicSoundVolume);
     }
 
+    /// <summary>
+    /// Sets up paths for both editor app and built game.
+    /// </summary>
     public void SetPaths()
     {
         path = Application.dataPath + Path.AltDirectorySeparatorChar + "GameSettings.json";
         persistentPath = Application.persistentDataPath + Path.AltDirectorySeparatorChar + "GameSettings.json";
     }
 
+    /// <summary>
+    /// Saves gameSettings object to json file
+    /// </summary>
     public void SaveData()
     {
         string savePath = path;
@@ -33,6 +39,10 @@ public class GameSettingsSave
         writer.Close();
     }
 
+    /// <summary>
+    /// Returns data from json file.
+    /// </summary>
+    /// <returns></returns>
     public GameSettings LoadData()
     {
         StreamReader reader = new StreamReader(path);
@@ -43,6 +53,9 @@ public class GameSettingsSave
         return data;
     }
 
+    /// <summary>
+    /// Applies volume settings.
+    /// </summary>
     public void ApplySettings()
     {
         MixerObject.mixer.SetFloat("MasterVolume", Mathf.Log10(gameSettings.masterSoundVolume) * 20);

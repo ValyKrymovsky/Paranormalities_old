@@ -19,7 +19,7 @@ public class SurfaceMaterialData : MonoBehaviour
         }
         return null;
     }
-
+    
     public List<AudioClip> GetSprintClips()
     {
         if (surfaceMaterial.useSprintClips)

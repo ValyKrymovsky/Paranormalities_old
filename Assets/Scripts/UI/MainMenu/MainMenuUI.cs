@@ -37,7 +37,8 @@ public class MainMenuUI : MonoBehaviour
     private VisualElement generalSettings;
     private VisualElement soundSettings;
 
-    private void OnEnable() {
+    private void OnEnable()
+    {
         source = GetComponent<AudioSource>();
         saveSettings = new GameSettingsSave();
         root = GetComponent<UIDocument>().rootVisualElement;

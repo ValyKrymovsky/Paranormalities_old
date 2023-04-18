@@ -22,6 +22,12 @@ public class InventoryObject : ScriptableObject
     private InputAction ac_pickUp;
     private InputAction ac_selection;
 
+    /// <summary>
+    /// Checks if ItemObject is in inventory. Adds the item with mesh model if not.
+    /// </summary>
+    /// <param name="_item"></param>
+    /// <param name="_model"></param>
+    /// <returns>True if item was successfully added</returns>
     public bool AddItem(ItemObject _item, GameObject _model)
     {
         if (IsFull() == false)
@@ -55,6 +61,11 @@ public class InventoryObject : ScriptableObject
         }
     }
 
+    /// <summary>
+    /// Checks if ItemObject is in inventory. Removes the item with mesh model if yes.
+    /// </summary>
+    /// <param name="_item"></param>
+    /// <param name="_model"></param>
     public void RemoveItem(ItemObject _item, GameObject _model)
     {
         bool hasItem = false;
@@ -78,16 +89,28 @@ public class InventoryObject : ScriptableObject
         }
     }
 
+    /// <summary>
+    /// </summary>
+    /// <returns>Inventory size</returns>
     public int GetSize()
     {
         return size;
     }
 
+    /// <summary>
+    /// Sets inventory size to _size.
+    /// </summary>
+    /// <param name="_size"></param>
     public void SetSize(int _size)
     {
         size = _size;
     }
 
+    /// <summary>
+    /// Returns KeyValuePair from inventory at given index.
+    /// </summary>
+    /// <param name="_index"></param>
+    /// <returns></returns>
     public KeyValuePair<ItemObject, GameObject> GetItem(int _index)
     {
         try
@@ -103,6 +126,11 @@ public class InventoryObject : ScriptableObject
         }  
     }
 
+    /// <summary>
+    /// Returns next KeyValuePair from inventory at given index.
+    /// </summary>
+    /// <param name="_index"></param>
+    /// <returns></returns>
     public KeyValuePair<ItemObject, GameObject> GetNextItem(int _index)
     {
         try
@@ -120,6 +148,11 @@ public class InventoryObject : ScriptableObject
         }
     }
 
+    /// <summary>
+    /// Returns previout KeyPairValue from inventory at given
+    /// </summary>
+    /// <param name="_index"></param>
+    /// <returns></returns>
     public KeyValuePair<ItemObject, GameObject> GetPreviousItem(int _index)
     {
         try
@@ -137,16 +170,30 @@ public class InventoryObject : ScriptableObject
         }
     }
 
+    /// <summary>
+    /// Returns index of given KeyValuePair in inventory.
+    /// </summary>
+    /// <param name="_item"></param>
+    /// <returns></returns>
     public int GetIndexOfItem(KeyValuePair<ItemObject, GameObject> _item)
     {
         return inventory.IndexOf(_item);
     }
 
+    /// <summary>
+    /// Returns current selected item.
+    /// </summary>
+    /// <returns></returns>
     public KeyValuePair<ItemObject, GameObject> GetSelectedItem()
     {
         return selectedItem;
     }
 
+    /// <summary>
+    /// Check if given ItemObject is in inventory. Returns true if inventory contains the item.
+    /// </summary>
+    /// <param name="_item"></param>
+    /// <returns></returns>
     public bool HasItem(ItemObject _item)
     {
         if (_item == null)
@@ -185,6 +232,10 @@ public class InventoryObject : ScriptableObject
         inventory.Clear();
     }
 
+    /// <summary>
+    /// Checks if inventory is full.
+    /// </summary>
+    /// <returns></returns>
     public bool IsFull()
     {
         int nullItems = 0;
@@ -211,6 +262,9 @@ public class InventoryObject : ScriptableObject
         }
     }
 
+    /// <summary>
+    /// Writes to console every item in inventory.
+    /// </summary>
     public void PrintInventory()
     {
         int index = 0;
