@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 using MyBox;
 
 public class InteractionController : MonoBehaviour, IInteractable, IInventory, IHighlight
@@ -24,7 +25,7 @@ public class InteractionController : MonoBehaviour, IInteractable, IInventory, I
 
     [Separator("Highlight", true)]
     public GameObject highlight;
-    [HideInInspector] public SpriteRenderer highlightRenderer;
+    [HideInInspector] public TextMeshPro highlightRenderer;
     public GameObject highlightLocation;
     public bool highlightActive;
 
@@ -114,8 +115,8 @@ public class InteractionController : MonoBehaviour, IInteractable, IInventory, I
             transform.parent = itemPlaceholders[placeholderIndex].transform;
             transform.position = itemPlaceholders[placeholderIndex].transform.position;
             
-            Collider itemCollider = GetComponent<Collider>();
-            itemCollider.enabled = false;
+            // Collider itemCollider = GetComponent<Collider>();
+            // itemCollider.enabled = false;
 
             interactible = false;
         }
@@ -136,7 +137,7 @@ public class InteractionController : MonoBehaviour, IInteractable, IInventory, I
             // _target.transform.localScale = new Vector3(_target.transform.localScale.x / gameObject.transform.localScale.x, _target.transform.localScale.y / gameObject.transform.localScale.y, _target.transform.localScale.z / gameObject.transform.localScale.z);
             _target.transform.localScale = new Vector3(.25f, .25f, .25f);
             highlight = Instantiate(_target, highlightLocation.transform.position, transform.rotation, gameObject.transform);
-            highlightRenderer = highlight.GetComponent<SpriteRenderer>();
+            highlightRenderer = highlight.GetComponentInChildren<TextMeshPro>();
             highlight.name = string.Format("{0} highlight", name);
             highlightActive = true;
         }

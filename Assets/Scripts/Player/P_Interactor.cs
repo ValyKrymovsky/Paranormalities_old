@@ -233,9 +233,17 @@ public class P_Interactor : MonoBehaviour
             GameObject[] allHighlights = GameObject.FindGameObjectsWithTag("Highlight");
             foreach(GameObject activeHighlight in allHighlights)
             {
-                activeHighlight.GetComponent<HighlightParent>().parent.GetComponent<InteractionController>().highlight = null;
-                activeHighlight.GetComponent<HighlightParent>().parent.GetComponent<InteractionController>().highlightRenderer = null;
-                activeHighlight.GetComponent<HighlightParent>().parent.GetComponent<InteractionController>().highlightActive = false;
+                try
+                {
+                    activeHighlight.GetComponent<HighlightParent>().parent.GetComponent<InteractionController>().highlight = null;
+                    activeHighlight.GetComponent<HighlightParent>().parent.GetComponent<InteractionController>().highlightRenderer = null;
+                    activeHighlight.GetComponent<HighlightParent>().parent.GetComponent<InteractionController>().highlightActive = false;
+                }
+                catch(NullReferenceException)
+                {
+                    Debug.Log("Highlight already null");
+                }
+                
                 UnityEngine.Object.Destroy(activeHighlight);
             }
             

@@ -52,7 +52,7 @@ public class P_Inventory : MonoBehaviour
     /// <param name="context"></param>
     public void SelectItem(InputAction.CallbackContext context)
     {
-        if ((int)context.phase == 2)
+        if ((int)context.phase == 3)
         {
             if (context.control.displayName == "D-Pad Right")
             {
@@ -79,6 +79,7 @@ public class P_Inventory : MonoBehaviour
                 {
                     placeholderModel = selectedItem.Value;
                     print(selectedItem);
+                    Debug.Log(placeholderModel);
                 }
             }
         }
@@ -90,16 +91,16 @@ public class P_Inventory : MonoBehaviour
     /// <param name="context"></param>
     public void DropItem(InputAction.CallbackContext context)
     {
-        if ((int)context.phase == 2)
+        if ((int)context.phase == 3)
         {
             if (inventory.HasItem(selectedItem.Key))
             {
                 if (Physics.Raycast(p_camera.transform.position, p_camera.transform.forward, out RaycastHit hitInfo, dropRange))
                 {
-                    inventory.RemoveItem(selectedItem.Key, selectedItem.Value);
-                    // Vector3 positionToSpawn = transform.position + (transform.forward * 2) + (transform.up * 2);
                     Vector3 dropPosition = new Vector3(hitInfo.point.x, hitInfo.point.y + .1f, hitInfo.point.z);
-                    GameObject droppedItem = Instantiate(placeholderModel, dropPosition, transform.rotation, GameObject.Find("Items").transform);
+                    string currentRoom = GetCurrentRoomName();
+                    GameObject droppedItem = Instantiate(placeholderModel, dropPosition, transform.rotation, GameObject.Find(currentRoom).transform);
+                    inventory.RemoveItem(selectedItem.Key, selectedItem.Value);
                     droppedItem.name = selectedItem.Value.name;
                     InteractionController interactionController = droppedItem.GetComponent<InteractionController>();
                     Collider itemCollider = droppedItem.GetComponent<Collider>();
@@ -120,8 +121,23 @@ public class P_Inventory : MonoBehaviour
         }
     }
 
+    private string GetCurrentRoomName()
+    {
+        Ray ray = new Ray(transform.position, transform.up * -1);
+        string roomName = null;
+        if (Physics.Raycast(ray,  out RaycastHit hitInfo, ch_controller.height / 2))
+        {
+            if (hitInfo.collider.TryGetComponent(out SurfaceMaterialData surfaceMaterialData))
+            {
+                roomName = hitInfo.transform.parent.name;
+            }
+        }
+
+        return roomName;
+    }
+
     /// <summary>
-    /// Returns inventory object that is currently used
+    /// Returns inventory object that is currently used.
     /// </summary>
     /// <returns>Active InventoryObject object</returns>
     public InventoryObject Get()
@@ -130,7 +146,7 @@ public class P_Inventory : MonoBehaviour
     }
 
     /// <summary>
-    /// Sets active inventory object to specified _inventory
+    /// Sets active inventory object to specified _inventory.
     /// </summary>
     /// <param name="_inventory"></param>
     public void Set(InventoryObject _inventory)
