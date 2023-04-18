@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.18028378, g: 0.22571412, b: 0.30692285, a: 1}
+  m_IndirectSpecularColor: {r: 0.18028334, g: 0.2257134, b: 0.30692226, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -2178,14 +2178,20 @@ MonoBehaviour:
   playerCamera: {fileID: 0}
   playerBody: {fileID: 0}
   animator: {fileID: 0}
-  item: {fileID: 11400000, guid: 1169366dedf583143983aaa65d41973c, type: 2}
-  image: {fileID: 0}
-  model: {fileID: 0}
+  parameterName: 
+  locked: 0
+  itemForUnlock: {fileID: 0}
+  interactible: 1
   highlight: {fileID: 0}
   highlightRenderer: {fileID: 0}
+  highlightLocation: {fileID: 0}
   highlightActive: 0
   isItem: 1
+  item: {fileID: 11400000, guid: 1169366dedf583143983aaa65d41973c, type: 2}
+  model: {fileID: 0}
   inventory: {fileID: 0}
+  placeholderParent: {fileID: 0}
+  itemPlaceholders: []
 --- !u!1 &981270528 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 0f654c7b3d8ca68428c91f7deaa0a1c8,
@@ -2229,14 +2235,20 @@ MonoBehaviour:
   playerCamera: {fileID: 0}
   playerBody: {fileID: 0}
   animator: {fileID: 0}
-  item: {fileID: 11400000, guid: 7c4cabd8cc4b5b24282bd8854ec1cd9c, type: 2}
-  image: {fileID: 0}
-  model: {fileID: 0}
+  parameterName: 
+  locked: 0
+  itemForUnlock: {fileID: 0}
+  interactible: 1
   highlight: {fileID: 0}
   highlightRenderer: {fileID: 0}
+  highlightLocation: {fileID: 0}
   highlightActive: 0
   isItem: 1
+  item: {fileID: 11400000, guid: 7c4cabd8cc4b5b24282bd8854ec1cd9c, type: 2}
+  model: {fileID: 0}
   inventory: {fileID: 0}
+  placeholderParent: {fileID: 0}
+  itemPlaceholders: []
 --- !u!1 &1003391349
 GameObject:
   m_ObjectHideFlags: 0
@@ -2515,14 +2527,20 @@ MonoBehaviour:
   playerCamera: {fileID: 0}
   playerBody: {fileID: 0}
   animator: {fileID: 0}
-  item: {fileID: 11400000, guid: ac6b648165e363947aa4a1ad2a0d7f65, type: 2}
-  image: {fileID: 0}
-  model: {fileID: 0}
+  parameterName: 
+  locked: 0
+  itemForUnlock: {fileID: 0}
+  interactible: 1
   highlight: {fileID: 0}
   highlightRenderer: {fileID: 0}
+  highlightLocation: {fileID: 0}
   highlightActive: 0
   isItem: 1
+  item: {fileID: 11400000, guid: ac6b648165e363947aa4a1ad2a0d7f65, type: 2}
+  model: {fileID: 0}
   inventory: {fileID: 0}
+  placeholderParent: {fileID: 0}
+  itemPlaceholders: []
 --- !u!1001 &1041706122
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3033,7 +3051,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &1571127179
 Transform:
   m_ObjectHideFlags: 0
@@ -3093,14 +3111,20 @@ MonoBehaviour:
   playerCamera: {fileID: 0}
   playerBody: {fileID: 0}
   animator: {fileID: 0}
-  item: {fileID: 11400000, guid: b13676278b3c107438ef1770f4bf8c9a, type: 2}
-  image: {fileID: 0}
-  model: {fileID: 0}
+  parameterName: 
+  locked: 0
+  itemForUnlock: {fileID: 0}
+  interactible: 1
   highlight: {fileID: 0}
   highlightRenderer: {fileID: 0}
+  highlightLocation: {fileID: 0}
   highlightActive: 0
   isItem: 1
+  item: {fileID: 11400000, guid: b13676278b3c107438ef1770f4bf8c9a, type: 2}
+  model: {fileID: 0}
   inventory: {fileID: 0}
+  placeholderParent: {fileID: 0}
+  itemPlaceholders: []
 --- !u!1 &1661285702 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 0f654c7b3d8ca68428c91f7deaa0a1c8,
@@ -3144,14 +3168,20 @@ MonoBehaviour:
   playerCamera: {fileID: 0}
   playerBody: {fileID: 0}
   animator: {fileID: 0}
-  item: {fileID: 11400000, guid: b13676278b3c107438ef1770f4bf8c9a, type: 2}
-  image: {fileID: 0}
-  model: {fileID: 0}
+  parameterName: 
+  locked: 0
+  itemForUnlock: {fileID: 0}
+  interactible: 1
   highlight: {fileID: 0}
   highlightRenderer: {fileID: 0}
+  highlightLocation: {fileID: 0}
   highlightActive: 0
   isItem: 1
+  item: {fileID: 11400000, guid: b13676278b3c107438ef1770f4bf8c9a, type: 2}
+  model: {fileID: 0}
   inventory: {fileID: 0}
+  placeholderParent: {fileID: 0}
+  itemPlaceholders: []
 --- !u!1 &1704352964
 GameObject:
   m_ObjectHideFlags: 0

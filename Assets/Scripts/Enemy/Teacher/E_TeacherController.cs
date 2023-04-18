@@ -88,6 +88,8 @@ public class E_TeacherController : MonoBehaviour, IEnemy {
             {
                 if (newParentPatrolPoint)
                 {
+                    MoveTo(transform.position);
+                    yield return new WaitForSeconds(1f);
                     currentChildPatrolPoint = childPatrolPoints[0];
                     MoveTo(currentChildPatrolPoint.transform.position);
                     newParentPatrolPoint = false;
@@ -98,6 +100,8 @@ public class E_TeacherController : MonoBehaviour, IEnemy {
                 {
                     if (NextChildPatrolPoint() != null)
                     {
+                        MoveTo(transform.position);
+                        yield return new WaitForSeconds(1f);
                         currentChildPatrolPoint = NextChildPatrolPoint();
                         MoveTo(currentChildPatrolPoint.transform.position);
                         movingToPatrolPoint = true;
