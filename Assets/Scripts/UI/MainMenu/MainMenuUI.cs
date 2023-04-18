@@ -120,7 +120,6 @@ public class MainMenuUI : MonoBehaviour
     {
         Debug.Log("Application closed");
         Application.Quit();
-        UnityEditor.EditorApplication.isPlaying = false;
     }
 
     private void ApplySettings()
