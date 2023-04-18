@@ -83,12 +83,18 @@ public class MainMenuUI : MonoBehaviour
         musicSlider.value = LoadDataFromFile().musicSoundVolume;
     }
 
+    /// <summary>
+    /// Loads school scene.
+    /// </summary>
     private void StartGame()
     {
         Debug.Log("Game started");
         SceneManager.LoadScene("School", LoadSceneMode.Single);
     }
 
+    /// <summary>
+    /// Displays options menu and hides main menu.
+    /// </summary>
     private void OpenOptions()
     {
         mainMenu.style.display = DisplayStyle.None;
@@ -99,6 +105,10 @@ public class MainMenuUI : MonoBehaviour
         generalSettings.style.display = DisplayStyle.Flex;
     }   
 
+    /// <summary>
+    /// Chenges menu based on selected option
+    /// </summary>
+    /// <param name="_button"></param>
     private void ChangeOptionsMenu(Button _button)
     {
         selectedButton = _button;
@@ -117,12 +127,18 @@ public class MainMenuUI : MonoBehaviour
 
     }
 
+    /// <summary>
+    /// Closes game.
+    /// </summary>
     private void ExitGame()
     {
         Debug.Log("Application closed");
         Application.Quit();
     }
 
+    /// <summary>
+    /// Applies settings
+    /// </summary>
     private void ApplySettings()
     {
         saveSettings.SetPaths();
@@ -131,22 +147,37 @@ public class MainMenuUI : MonoBehaviour
         saveSettings.ApplySettings();
     }
 
+    /// <summary>
+    /// Hides option menu and displays main menu.
+    /// </summary>
     private void BackToMainMenu()
     {
         optionsMenu.style.display = DisplayStyle.None;
         mainMenu.style.display = DisplayStyle.Flex;
     }
 
+    /// <summary>
+    /// Returns Mixer master volume value.
+    /// </summary>
+    /// <returns></returns>
     private float GetMasterVolume()
     {
         return masterSlider.value;
     }
 
+    /// <summary>
+    /// Returns Mixer music volume value.
+    /// </summary>
+    /// <returns></returns>
     private float GetMusicVolume()
     {
         return musicSlider.value;
     }
 
+    /// <summary>
+    /// Returns GameSettings object from json file.
+    /// </summary>
+    /// <returns></returns>
     private GameSettings LoadDataFromFile()
     {
         string path = Application.dataPath + Path.AltDirectorySeparatorChar + "GameSettings.json";

@@ -34,6 +34,10 @@ public class PauseMenuUI : MonoBehaviour
         paused = false;
     }
 
+    /// <summary>
+    /// Pauses the game if not already paused. Sets Time.timeScale to 0. Is handled by InputAction.
+    /// </summary>
+    /// <param name="_context"></param>
     public void PauseGame(InputAction.CallbackContext _context)
     {
         if (!paused)
@@ -47,6 +51,10 @@ public class PauseMenuUI : MonoBehaviour
         
     }
 
+    /// <summary>
+    /// Resumes the game if not already resumed. Sets Time.timeScale to 1. Is handled by InputAction.
+    /// </summary>
+    /// <param name="_context"></param>
     public void ResumeGame(InputAction.CallbackContext _context)
     {
         if (paused)
@@ -60,6 +68,9 @@ public class PauseMenuUI : MonoBehaviour
         
     }
 
+    /// <summary>
+    /// Resumes the game if not already resumes. Sets Time.timeScale to 1.
+    /// </summary>
     private void ResumeGame()
     {
         if (paused)
@@ -72,6 +83,9 @@ public class PauseMenuUI : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Loads main menu scene.
+    /// </summary>
     private void ExitGame()
     {
         Time.timeScale = 1.0f;
