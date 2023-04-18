@@ -10,8 +10,6 @@ public class PauseMenuUI : MonoBehaviour
 
     VisualElement root;
 
-    VisualElement pauseMenu;
-
     private Button resume;
     private Button exit;
 
@@ -21,8 +19,6 @@ public class PauseMenuUI : MonoBehaviour
     {
         document = GetComponent<UIDocument>();
         root = document.rootVisualElement;
-
-        pauseMenu = root.Q<VisualElement>("Screen");
 
         resume = root.Q<Button>("Resume");
         exit = root.Q<Button>("Exit");
@@ -44,7 +40,6 @@ public class PauseMenuUI : MonoBehaviour
         {
             Time.timeScale = 0f;
             UnityEngine.Cursor.lockState = CursorLockMode.None;
-            pauseMenu.style.display = DisplayStyle.Flex;
             root.style.display = DisplayStyle.Flex;
             paused = true;
         }
@@ -61,7 +56,6 @@ public class PauseMenuUI : MonoBehaviour
         {
             Time.timeScale = 1;
             UnityEngine.Cursor.lockState = CursorLockMode.Locked;
-            pauseMenu.style.display = DisplayStyle.None;
             root.style.display = DisplayStyle.None;
             paused = false;
         }
@@ -77,7 +71,6 @@ public class PauseMenuUI : MonoBehaviour
         {
             Time.timeScale = 1;
             UnityEngine.Cursor.lockState = CursorLockMode.Locked;
-            pauseMenu.style.display = DisplayStyle.None;
             root.style.display = DisplayStyle.None;
             paused = false;
         }

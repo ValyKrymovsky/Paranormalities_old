@@ -1,4 +1,7 @@
 using UnityEngine;
+using System.Collections;
+using UnityEngine.UIElements;
+using UnityEngine.SceneManagement;
 using MyBox;
 
 public class P_Health : MonoBehaviour
@@ -10,14 +13,23 @@ public class P_Health : MonoBehaviour
     [SerializeField]
     private bool dead = false;
     
+    [SerializeField, Separator("Death Screen", true)]
+    private UIDocument deathScreen;
+    private VisualElement root;
+    private Coroutine deathScreenCoroutine;
+    
     private void Awake() {
         health = maxHealth;
+        deathScreen = GameObject.Find("DeathScreen").GetComponent<UIDocument>();
+        root = deathScreen.rootVisualElement;
+        root.style.display = DisplayStyle.None;
     }
 
     private void Update() {
         if (health <= 0)
         {
             dead = true;
+            deathScreenCoroutine = StartCoroutine(StartDeathScreen());
         }
             
     }
@@ -103,5 +115,13 @@ public class P_Health : MonoBehaviour
         {
             health = maxHealth;
         }
+    }
+
+    private IEnumerator StartDeathScreen()
+    {
+        root.style.display = DisplayStyle.Flex;
+        yield return new WaitForSeconds(3f);
+        SceneManager.LoadScene("MainMenu", LoadSceneMode.Single);
+        UnityEngine.Cursor.lockState = CursorLockMode.None;
     }
 }

@@ -28,7 +28,7 @@ public class E_Teacher : MonoBehaviour
         controller.playerInRange = controller.PlayerInCloseRange();
         Transform noise = controller.Listen();
 
-        if (controller.playerInRange)
+        if (controller.playerInRange && !p_health.IsDead())
         {
             if (dealDamageCoroutine == null)
             {
@@ -36,7 +36,7 @@ public class E_Teacher : MonoBehaviour
             }
         }
 
-        if (controller.playerInSight || controller.playerInRange)
+        if ((controller.playerInSight || controller.playerInRange) && !p_health.IsDead())
         {
             controller.StopPatroling();
             controller.MoveTo(controller.player.transform.position);
