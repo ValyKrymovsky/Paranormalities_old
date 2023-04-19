@@ -4,6 +4,13 @@ using UnityEngine;
 using TMPro;
 using MyBox;
 
+public enum HighlightType
+{
+    PickUp,
+    Interact,
+    Destroy
+}
+
 public class InteractionController : MonoBehaviour, IInteractable, IInventory, IHighlight
 {
     [SerializeField]
@@ -24,6 +31,7 @@ public class InteractionController : MonoBehaviour, IInteractable, IInventory, I
     public bool interactible = true;
 
     [Separator("Highlight", true)]
+    public HighlightType highlightType;
     public GameObject highlight;
     [HideInInspector] public TextMeshPro highlightRenderer;
     public GameObject highlightLocation;

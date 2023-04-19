@@ -6,9 +6,6 @@ TagManager:
   tags:
   - Floor
   - Player Camera
-  - pickup
-  - destroy
-  - interact
   - UI Camera
   - Highlight
   - Noise
