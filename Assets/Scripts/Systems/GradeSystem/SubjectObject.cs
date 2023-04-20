@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public enum GradeType
+public enum Subject
     {
         English,
         Math,
@@ -16,7 +16,7 @@ public enum GradeType
         French
     }
 
-    public enum GradeGroup
+    public enum SubjectGroup
     {
         Nothing,
         General,
@@ -25,10 +25,9 @@ public enum GradeType
         Physical,
     }
 
-[CreateAssetMenu(fileName = "NewGrade", menuName = "Grade System/Grade")]
-public class GradeObject : ScriptableObject
+[CreateAssetMenu(fileName = "NewSubject", menuName = "Grade System/Subject")]
+public class SubjectObject : ScriptableObject
 {
-    public GradeType gradeType;
-    public GradeGroup gradeGroup;
-    public GameObject gradeChanger;
+    public Subject subject;
+    public SubjectGroup subjectGroup;
 }

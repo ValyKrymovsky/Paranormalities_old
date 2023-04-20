@@ -94,9 +94,18 @@ public class InteractionController : MonoBehaviour, IInteractable, IInventory, I
                     locked = !inventory.inventory.HasItem(itemForUnlock);
                 }
                 else
-                {
+                {   
                     Debug.Log("Interacted");
-                    animator.SetBool(parameterName, !animator.GetBool(parameterName));
+                    if (gameObject.TryGetComponent(out SubjectController subjectController))
+                    {
+                        Debug.Log("Is computer");
+                    }
+
+                    if (animator != null)
+                    {
+                        animator.SetBool(parameterName, !animator.GetBool(parameterName));
+                    }
+                    
                 }
                 
             }

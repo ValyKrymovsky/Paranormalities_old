@@ -1,18 +1,18 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using MyBox;
 
 public class GradeChanger : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+    [Separator("Grade", true)]
+    [SerializeField]
+    private SubjectController gradeController;
+    [SerializeField]
+    private SubjectObject grade;
 
-    // Update is called once per frame
-    void Update()
+    private void Awake()
     {
-        
+        gameObject.tag = "GradeChanger";
     }
 }

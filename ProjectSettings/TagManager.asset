@@ -11,7 +11,7 @@ TagManager:
   - Noise
   - Parent Patrol Point
   - Child Patrol Point
-  - Computer
+  - GradeChanger
   layers:
   - Default
   - TransparentFX
