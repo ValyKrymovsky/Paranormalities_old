@@ -10578,7 +10578,7 @@ PrefabInstance:
     - target: {fileID: -3379783884614435532, guid: 454757667ca1fdc4a8a0fbdc4b5feb3c,
         type: 3}
       propertyPath: m_TagString
-      value: interact
+      value: Untagged
       objectReference: {fileID: 0}
     - target: {fileID: -3288070352637647270, guid: 454757667ca1fdc4a8a0fbdc4b5feb3c,
         type: 3}
@@ -10753,7 +10753,7 @@ PrefabInstance:
     - target: {fileID: 4679483106071006749, guid: 454757667ca1fdc4a8a0fbdc4b5feb3c,
         type: 3}
       propertyPath: m_TagString
-      value: interact
+      value: Untagged
       objectReference: {fileID: 0}
     - target: {fileID: 4745785834820892757, guid: 454757667ca1fdc4a8a0fbdc4b5feb3c,
         type: 3}
@@ -15541,27 +15541,14 @@ GameObject:
   - component: {fileID: 771311575}
   - component: {fileID: 771311574}
   - component: {fileID: 771311573}
-  - component: {fileID: 771311572}
   - component: {fileID: 771311577}
   m_Layer: 6
   m_Name: Cube
-  m_TagString: Computer
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &771311572
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 771311571}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 44588cb5f3196a14db5c249c7063ea9b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!65 &771311573
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -15659,6 +15646,7 @@ MonoBehaviour:
   locked: 0
   itemForUnlock: {fileID: 0}
   interactible: 1
+  highlightType: 1
   highlight: {fileID: 0}
   highlightRenderer: {fileID: 0}
   highlightLocation: {fileID: 0}
@@ -15683,7 +15671,6 @@ GameObject:
   - component: {fileID: 778495979}
   - component: {fileID: 778495978}
   - component: {fileID: 778495977}
-  - component: {fileID: 778495976}
   m_Layer: 0
   m_Name: Teacher
   m_TagString: Untagged
@@ -15706,20 +15693,6 @@ Transform:
   m_Father: {fileID: 592042362}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &778495976
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 778495974}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ec2eb39cd68a00c4287629f135ca87be, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  damage: 25
-  p_health: {fileID: 0}
 --- !u!114 &778495977
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -15758,6 +15731,8 @@ MonoBehaviour:
   obstacleMask:
     serializedVersion: 2
     m_Bits: 256
+  damage: 25
+  p_health: {fileID: 0}
 --- !u!195 &778495978
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -17028,27 +17003,14 @@ GameObject:
   - component: {fileID: 894368319}
   - component: {fileID: 894368318}
   - component: {fileID: 894368317}
-  - component: {fileID: 894368316}
   - component: {fileID: 894368321}
   m_Layer: 6
   m_Name: Cube (1)
-  m_TagString: Computer
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &894368316
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 894368315}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 44588cb5f3196a14db5c249c7063ea9b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!65 &894368317
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -17146,6 +17108,7 @@ MonoBehaviour:
   locked: 0
   itemForUnlock: {fileID: 0}
   interactible: 1
+  highlightType: 1
   highlight: {fileID: 0}
   highlightRenderer: {fileID: 0}
   highlightLocation: {fileID: 0}
@@ -17681,6 +17644,7 @@ MonoBehaviour:
   locked: 1
   itemForUnlock: {fileID: 11400000, guid: 97ff08004d7716641b7a60dca335031e, type: 2}
   interactible: 1
+  highlightType: 1
   highlight: {fileID: 0}
   highlightRenderer: {fileID: 0}
   highlightLocation: {fileID: 1343271298}
@@ -18054,7 +18018,7 @@ PrefabInstance:
     - target: {fileID: 919132149155446097, guid: 045627907661c8341a47e2025a9afbd3,
         type: 3}
       propertyPath: m_TagString
-      value: pickup
+      value: Untagged
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 045627907661c8341a47e2025a9afbd3, type: 3}
@@ -18083,6 +18047,7 @@ MonoBehaviour:
   locked: 0
   itemForUnlock: {fileID: 0}
   interactible: 1
+  highlightType: 0
   highlight: {fileID: 0}
   highlightRenderer: {fileID: 0}
   highlightLocation: {fileID: 0}
@@ -33028,6 +32993,7 @@ MonoBehaviour:
   locked: 1
   itemForUnlock: {fileID: 11400000, guid: 97ff08004d7716641b7a60dca335031e, type: 2}
   interactible: 1
+  highlightType: 1
   highlight: {fileID: 0}
   highlightRenderer: {fileID: 0}
   highlightLocation: {fileID: 1860178887}
@@ -36523,11 +36489,11 @@ GameObject:
   - component: {fileID: 2027426174}
   - component: {fileID: 2027426173}
   - component: {fileID: 2027426172}
-  - component: {fileID: 2027426176}
   - component: {fileID: 2027426177}
+  - component: {fileID: 2027426178}
   m_Layer: 6
   m_Name: Cube (2)
-  m_TagString: interact
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -36610,19 +36576,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 9
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &2027426176
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2027426171}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1cfdde052fd827f4e9fad20fd22c4d68, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  computers: []
 --- !u!114 &2027426177
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -36642,6 +36595,7 @@ MonoBehaviour:
   locked: 0
   itemForUnlock: {fileID: 0}
   interactible: 1
+  highlightType: 1
   highlight: {fileID: 0}
   highlightRenderer: {fileID: 0}
   highlightLocation: {fileID: 0}
@@ -36652,6 +36606,29 @@ MonoBehaviour:
   inventory: {fileID: 0}
   placeholderParent: {fileID: 0}
   itemPlaceholders: []
+--- !u!114 &2027426178
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2027426171}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cdf7f46b49be7a042a03e6acf1133030, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  grades:
+  - {fileID: 11400000, guid: f19b05f8df780e74c9fa05aba960bf44, type: 2}
+  - {fileID: 11400000, guid: c727795c0859bde47a06f35efdf9e582, type: 2}
+  - {fileID: 11400000, guid: 8c51cf9c5e1dce041a659da1715fe463, type: 2}
+  - {fileID: 11400000, guid: 38e271b0563b08d4b9c88c8c4bfe3dbe, type: 2}
+  - {fileID: 11400000, guid: 18bff750f35197041a7e77a9d3b2192a, type: 2}
+  - {fileID: 11400000, guid: 63bd37c118313394ebd22a8f3323f647, type: 2}
+  - {fileID: 11400000, guid: 50521fbd7b497b8469297d0d6532705e, type: 2}
+  - {fileID: 11400000, guid: a3563903749bdcc4481a7014efff4d57, type: 2}
+  - {fileID: 11400000, guid: 3a4c8f66bf10560459c8f640fd65d2de, type: 2}
+  - {fileID: 11400000, guid: 530e6ec4f635fce4f94abe3b8b54620d, type: 2}
 --- !u!1 &2028273257 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 1046950208915754871, guid: 454757667ca1fdc4a8a0fbdc4b5feb3c,

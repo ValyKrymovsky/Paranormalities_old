@@ -146,19 +146,20 @@ public class P_Interactor : MonoBehaviour
                     {
                         if (!nearestItem.GetComponent<InteractionController>().highlightActive)
                         {
-                            switch (nearestItem.tag)
+                            
+                            switch (interactor.highlightType)
                             {
-                                case "pickup":
+                                case HighlightType.PickUp:
                                     highlightObj.SpawnHighlight(highlights["pickup"], "pick up");
                                     activeHighlight = nearestItem;
                                     break;
                                 
-                                case "destroy":
+                                case HighlightType.Destroy:
                                     highlightObj.SpawnHighlight(highlights["destroy"], "destroy");
                                     activeHighlight = nearestItem;
                                     break;
                                 
-                                case "interact":
+                                case HighlightType.Interact:
                                     highlightObj.SpawnHighlight(highlights["interact"], "interact");
                                     activeHighlight = nearestItem;
                                     break;
@@ -206,19 +207,19 @@ public class P_Interactor : MonoBehaviour
                     {
                         if (!nearestItem.GetComponent<InteractionController>().highlightActive)
                         {
-                            switch (nearestItem.tag)
+                            switch (interactor.highlightType)
                             {
-                                case "pickup":
+                                case HighlightType.PickUp:
                                     highlightObj.SpawnHighlight(highlights["pickup"], "pick up");
                                     activeHighlight = nearestItem;
                                     break;
                                 
-                                case "destroy":
+                                case HighlightType.Destroy:
                                     highlightObj.SpawnHighlight(highlights["destroy"], "destroy");
                                     activeHighlight = nearestItem;
                                     break;
                                 
-                                case "interact":
+                                case HighlightType.Interact:
                                     highlightObj.SpawnHighlight(highlights["interact"], "interact");
                                     activeHighlight = nearestItem;
                                     break;

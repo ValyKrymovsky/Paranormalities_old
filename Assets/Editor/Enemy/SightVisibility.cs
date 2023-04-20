@@ -1,12 +1,12 @@
 using UnityEngine;
 using UnityEditor;
 
-[CustomEditor(typeof(E_TeacherController))]
+[CustomEditor(typeof(E_Teacher))]
 public class SightVisibility : Editor
 {
     private void OnSceneGUI()
     {
-        E_TeacherController teacher = (E_TeacherController)target;
+        E_Teacher teacher = (E_Teacher)target;
         Handles.color = Color.white;
         Handles.DrawWireArc(teacher.transform.position, Vector3.up, Vector3.forward, 360, teacher.sightDistance);
 
