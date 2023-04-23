@@ -12,6 +12,7 @@ TagManager:
   - Parent Patrol Point
   - Child Patrol Point
   - GradeChanger
+  - GradeController
   layers:
   - Default
   - TransparentFX

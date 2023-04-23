@@ -1,11 +1,12 @@
 using System.Collections.Generic;
+using System.Collections;
 using System.IO;
 using System.Linq;
 using UnityEngine;
 using UnityEditor;
 using MyBox;
 
-public class SubjectController : MonoBehaviour
+public class SubjectController : MonoBehaviour, IInteractable
 {
 
     private string subjectObjectsPath = "Assets" + Path.AltDirectorySeparatorChar + "Scripts" +
@@ -15,17 +16,19 @@ public class SubjectController : MonoBehaviour
         Path.AltDirectorySeparatorChar;
 
     [Separator("Subject", true)]
-    public List<(SubjectObject subjectType, int subject)> subjects = new List<(SubjectObject, int)>();
+    public List<(SubjectObject subject, int grade)> subjects = new List<(SubjectObject, int)>();
     [SerializeField]
-    private int maxAcceptedsubject = 3;
+    private int maxAcceptedGrade = 3;
 
     [Separator("Grade Changers", true)]
     [SerializeField]
     List<GameObject> gradeChangers = new List<GameObject>();
+    [SerializeField]
+    private float gradeStatusCheckInterval = .5f;
 
     private void Awake()
     {
-        LoadAllsubjectObjects(subjectObjectsPath);
+        LoadAllSubjectObjects(subjectObjectsPath);
     }
 
     private void Start()
@@ -34,20 +37,20 @@ public class SubjectController : MonoBehaviour
         GenerateSubject();
     }
 
-    private List<(SubjectObject subjectType, int subject)> GetWorstSubject()
+    private List<(SubjectObject subject, int grade)> GetWorstSubject()
     {
-        List<(SubjectObject subjectType, int subject)> worstSubject = new List<(SubjectObject subjectType, int subject)>();
+        List<(SubjectObject subject, int grade)> worstSubject = new List<(SubjectObject subject, int grade)>();
 
-        foreach ((SubjectObject subjectType, int subject) subject in subjects)
+        foreach ((SubjectObject subject, int grade) subject in subjects)
         {
-            if (subject.subject > maxAcceptedsubject)
+            if (subject.grade > maxAcceptedGrade)
                 worstSubject.Add(subject);
         }
 
         return worstSubject;
     }
 
-    private void LoadAllsubjectObjects(string _path)
+    private void LoadAllSubjectObjects(string _path)
     {
         List<Object> subjectObjects = new List<Object>();
         string[] temp = Directory.GetFiles(_path, "*.asset");
@@ -82,19 +85,19 @@ public class SubjectController : MonoBehaviour
             {
                 generatedsubject = Random.Range(1, 6);
             }
-            else if (worstsubjectGroup != SubjectGroup.Nothing && subjects[i].subjectType.subjectGroup != worstsubjectGroup)
+            else if (worstsubjectGroup != SubjectGroup.Nothing && subjects[i].subject.subjectGroup != worstsubjectGroup)
             {
                 generatedsubject = Random.Range(1, 4);
             }
-            else if (worstsubjectGroup != SubjectGroup.Nothing && subjects[i].subjectType.subjectGroup == worstsubjectGroup)
+            else if (worstsubjectGroup != SubjectGroup.Nothing && subjects[i].subject.subjectGroup == worstsubjectGroup)
             {
                 generatedsubject = Random.Range(4, 6);
             }
 
-            subjects[i] = (subjects[i].subjectType, generatedsubject);
+            subjects[i] = (subjects[i].subject, generatedsubject);
             if (generatedsubject > worstsubject)
             {
-                worstsubjectGroup = subjects[i].subjectType.subjectGroup;
+                worstsubjectGroup = subjects[i].subject.subjectGroup;
                 worstsubject = generatedsubject;
             }
                 
@@ -104,9 +107,9 @@ public class SubjectController : MonoBehaviour
 
     private void PrintAllSubject()
     {
-        foreach ((SubjectObject subjectType, int subject) subject in subjects)
+        foreach ((SubjectObject subject, int grade) grade in subjects)
         {
-            Debug.Log(subject);
+            Debug.Log(grade);
         }
     }
 
@@ -115,4 +118,56 @@ public class SubjectController : MonoBehaviour
         return GameObject.FindGameObjectsWithTag("GradeChanger").ToList();
     }
 
+    public int GetGrade(SubjectObject _subject)
+    {
+        if (HasSubject(_subject))
+        {
+            foreach ((SubjectObject subject, int grade) subject in subjects)
+            {
+                if (_subject.Equals(subject))
+                    return subject.grade;
+            }
+        }
+        return 0;
+    }
+
+    public int SetGrade(SubjectObject _subject, int _grade)
+    {
+        if (HasSubject(_subject))
+        {
+            for (int i = 0; i < subjects.Count; i++)
+            {
+                if (_subject.Equals(subjects[i]))
+                    subjects.Insert(i, (subjects[i].subject, _grade));
+            }
+        }
+        return 0;
+    }
+
+    public bool HasSubject(SubjectObject _subject)
+    {
+        return subjects.Any(s => s.subject == _subject);
+    }
+
+    private IEnumerator CheckGradeChangers()
+    {
+        while (true)
+        {
+            foreach (GameObject gradeChangerObject in gradeChangers)
+            {
+                GradeChanger gradeChanger = gradeChangerObject.GetComponent<GradeChanger>();
+                if (gradeChanger.GradeChanged())
+                {
+                    SetGrade(gradeChanger.GetSubject(), gradeChanger.GetGrade());
+                }
+            }
+
+            yield return new WaitForSeconds(gradeStatusCheckInterval);
+        }
+    }
+
+    public void Interact()
+    {
+        throw new System.NotImplementedException();
+    }
 }

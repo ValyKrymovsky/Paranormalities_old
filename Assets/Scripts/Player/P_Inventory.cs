@@ -103,11 +103,10 @@ public class P_Inventory : MonoBehaviour
                     inventory.RemoveItem(selectedItem.Key, selectedItem.Value);
                     droppedItem.name = selectedItem.Value.name;
                     InteractionController interactionController = droppedItem.GetComponent<InteractionController>();
+                    HighlightController highlightController = droppedItem.GetComponent<HighlightController>();
                     Collider itemCollider = droppedItem.GetComponent<Collider>();
                     itemCollider.enabled = true;
-                    interactionController.highlightActive = false;
-                    interactionController.highlight = null;
-                    interactionController.highlightRenderer = null;
+                    highlightController.TurnOffHighlight();
                     interactionController.interactible = true;
                     Rigidbody rigidbody = droppedItem.GetComponent<Rigidbody>();
                     RigidbodyConstraints constraints = RigidbodyConstraints.FreezePositionX | RigidbodyConstraints.FreezePositionY | RigidbodyConstraints.FreezePositionZ;

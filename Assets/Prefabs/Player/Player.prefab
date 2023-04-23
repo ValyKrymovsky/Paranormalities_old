@@ -157,8 +157,8 @@ Light:
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_Intensity: 2
   m_Range: 10
-  m_SpotAngle: 30
-  m_InnerSpotAngle: 21.80208
+  m_SpotAngle: 96.42876
+  m_InnerSpotAngle: 51.43953
   m_CookieSize: 10
   m_Shadows:
     m_Type: 0
@@ -1015,6 +1015,7 @@ MonoBehaviour:
   maxHealth: 100
   health: 0
   dead: 0
+  deathScreen: {fileID: 0}
 --- !u!95 &9151140705511611232
 Animator:
   serializedVersion: 5
