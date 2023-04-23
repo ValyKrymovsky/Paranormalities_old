@@ -86,6 +86,38 @@ public class P_Inventory : MonoBehaviour
     }
 
     /// <summary>
+    /// Tries to add item to inventory.
+    /// </summary>
+    public void 
+    PickUp(ItemObject _item, GameObject _model)
+    {
+        if (inventory.AddItem(_item, _model))
+        {
+            if (_model.TryGetComponent(out HighlightController highlightController))
+                highlightController.TurnOffHighlight();
+            
+            if (transform.childCount == 1)
+            {
+                Transform childHighlight = transform.Find(string.Format("{0} highlight", name));
+                Object.Destroy(childHighlight.gameObject);
+            }
+
+            if (_model.TryGetComponent(out InteractionController interactionController))
+                interactionController.interactible = false;
+
+        _model.gameObject.SetActive(false);
+        }
+        else if (!inventory.AddItem(_item, _model) && inventory.IsFull())
+        {
+            Debug.Log("Inventory full");
+        }
+        else
+        {
+            Debug.Log("Already has the item");
+        }
+    }
+    
+    /// <summary>
     /// Drops item. Casts ray from camera and spawns the item on hitInfo.point location.
     /// </summary>
     /// <param name="context"></param>
@@ -104,14 +136,10 @@ public class P_Inventory : MonoBehaviour
                     droppedItem.name = selectedItem.Value.name;
                     InteractionController interactionController = droppedItem.GetComponent<InteractionController>();
                     HighlightController highlightController = droppedItem.GetComponent<HighlightController>();
-                    Collider itemCollider = droppedItem.GetComponent<Collider>();
-                    itemCollider.enabled = true;
                     highlightController.TurnOffHighlight();
                     interactionController.interactible = true;
-                    Rigidbody rigidbody = droppedItem.GetComponent<Rigidbody>();
-                    RigidbodyConstraints constraints = RigidbodyConstraints.FreezePositionX | RigidbodyConstraints.FreezePositionY | RigidbodyConstraints.FreezePositionZ;
-                    rigidbody.ToggleConstraints(constraints, false);
                     droppedItem.SetActive(true);
+                    highlightController.TurnOffHighlight();
                     Object.Destroy(selectedItem.Value);
                 }
                 

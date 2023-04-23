@@ -12,7 +12,7 @@ public enum HighlightType
 }
 
 [RequireComponent(typeof(HighlightController))]
-public class InteractionController : MonoBehaviour, IInteractable, IInventory
+public class InteractionController : MonoBehaviour, IInteractable
 {
     [SerializeField]
     private GameObject playerCamera;
@@ -49,10 +49,6 @@ public class InteractionController : MonoBehaviour, IInteractable, IInventory
     public GameObject model;
     [SerializeField, ConditionalField("isItem")]
     private P_Inventory inventory;
-    [SerializeField]
-    private GameObject placeholderParent;
-    [SerializeField]
-    private GameObject[] itemPlaceholders;
     
     private void Awake()
     {
@@ -63,15 +59,6 @@ public class InteractionController : MonoBehaviour, IInteractable, IInventory
         playerBody = GameObject.FindGameObjectWithTag("Player");
         inventory = playerBody.GetComponent<P_Inventory>();
         animator = GetComponent<Animator>();
-
-        itemPlaceholders = new GameObject[inventory.inventory.GetSize()];
-
-        placeholderParent = GameObject.Find("Item Placeholders");
-
-        for (int i = 0; i < placeholderParent.transform.childCount; i++)
-        {
-            itemPlaceholders[i] = placeholderParent.transform.GetChild(i).gameObject;
-        }
     }
 
     /// <summary>
@@ -83,7 +70,7 @@ public class InteractionController : MonoBehaviour, IInteractable, IInventory
         {
             if (isItem)
             {
-                PickUp();
+                inventory.PickUp(item, model);
             }
             else
             {
@@ -110,55 +97,5 @@ public class InteractionController : MonoBehaviour, IInteractable, IInventory
             }
         }
         
-    }
-
-    /// <summary>
-    /// Tries to add item to inventory.
-    /// </summary>
-    public void PickUp()
-    {
-        if (inventory.Get().AddItem(item, model))
-        {
-            highlightController.TurnOffHighlight();
-            if (transform.childCount == 1)
-            {
-                Transform childHighlight = transform.Find(string.Format("{0} highlight", name));
-                Object.Destroy(childHighlight.gameObject);
-            }
-            
-            int placeholderIndex = inventory.Get().GetIndexOfItem(new KeyValuePair<ItemObject, GameObject>(item, model));
-
-            Rigidbody itemRigidbody = GetComponent<Rigidbody>();
-
-            itemRigidbody.constraints = RigidbodyConstraints.FreezePositionX | RigidbodyConstraints.FreezePositionY | RigidbodyConstraints.FreezePositionZ;
-            transform.parent = itemPlaceholders[placeholderIndex].transform;
-            transform.position = itemPlaceholders[placeholderIndex].transform.position;
-
-            interactible = false;
-        }
-        else if (!inventory.Get().AddItem(item, model) && inventory.Get().IsFull())
-        {
-            Debug.Log("Inventory full");
-        }
-        else
-        {
-            Debug.Log("Already has the item");
-        }
-    }
-
-    /// <summary>
-    /// Teleports picked up item to empty item placeholder.
-    /// </summary>
-    /// <returns></returns>
-    private GameObject TeleportToPlaceholder()
-    {
-        foreach (GameObject placeholder in itemPlaceholders)
-        {
-            if (placeholder.transform.childCount == 0)
-            {
-                return placeholder;
-            }
-        }
-        return null;
     }
 }

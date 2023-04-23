@@ -54,6 +54,7 @@ public class HighlightController : MonoBehaviour, IHighlight
 
     public void TurnOffHighlight()
     {
+        GameObject.Destroy(highlight);
         highlight = null;
         highlightRenderer = null;
         highlightActive = false;

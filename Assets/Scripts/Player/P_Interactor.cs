@@ -248,7 +248,6 @@ public class P_Interactor : MonoBehaviour
                 }
                 catch(NullReferenceException)
                 {
-                    Debug.Log("Highlight already null");
                 }
                 
                 UnityEngine.Object.Destroy(activeHighlight);
