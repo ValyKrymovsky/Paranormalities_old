@@ -16,6 +16,8 @@ public class SubjectController : MonoBehaviour, IInteractable
         Path.AltDirectorySeparatorChar;
 
     [Separator("Subject", true)]
+    [SerializeField]
+    private List<SubjectObject> subjectObjects = new List<SubjectObject>();
     public List<(SubjectObject subject, int grade)> subjects = new List<(SubjectObject, int)>();
     [SerializeField]
     private int maxAcceptedGrade = 3;
@@ -28,13 +30,14 @@ public class SubjectController : MonoBehaviour, IInteractable
 
     private void Awake()
     {
-        LoadAllSubjectObjects(subjectObjectsPath);
+        LoadAllSubjectObjects();
+        gradeChangers = GetAllGradeChangers();
+        GenerateSubject();
     }
 
     private void Start()
     {
-        gradeChangers = GetAllGradeChangers();
-        GenerateSubject();
+
     }
 
     private List<(SubjectObject subject, int grade)> GetWorstSubject()
@@ -50,26 +53,11 @@ public class SubjectController : MonoBehaviour, IInteractable
         return worstSubject;
     }
 
-    private void LoadAllSubjectObjects(string _path)
+    private void LoadAllSubjectObjects()
     {
-        List<Object> subjectObjects = new List<Object>();
-        string[] temp = Directory.GetFiles(_path, "*.asset");
-
-
-        foreach (string subjectName in temp)
+        foreach (SubjectObject subjectObject in subjectObjects)
         {
-            int index = subjectName.LastIndexOf(Path.AltDirectorySeparatorChar);
-            string localPath = _path;
-           
-            if (index > 0)
-                localPath += subjectName.Substring(index + 1);
-
-            subjectObjects.Add(AssetDatabase.LoadAssetAtPath(localPath, typeof(SubjectObject)));
-        }
-
-        foreach (Object subjectObject in subjectObjects)
-        {
-            subjects.Add(((SubjectObject)subjectObject, 0));
+            subjects.Add((subjectObject, 0));
         }
     }
 
@@ -95,6 +83,7 @@ public class SubjectController : MonoBehaviour, IInteractable
             }
 
             subjects[i] = (subjects[i].subject, generatedsubject);
+            Debug.Log(subjects[i].subject + ", " + generatedsubject);
             if (generatedsubject > worstsubject)
             {
                 worstsubjectGroup = subjects[i].subject.subjectGroup;
@@ -105,7 +94,7 @@ public class SubjectController : MonoBehaviour, IInteractable
         }
     }
 
-    private void PrintAllSubject()
+    public void PrintAllSubject()
     {
         foreach ((SubjectObject subject, int grade) grade in subjects)
         {
@@ -124,29 +113,33 @@ public class SubjectController : MonoBehaviour, IInteractable
         {
             foreach ((SubjectObject subject, int grade) subject in subjects)
             {
-                if (_subject.Equals(subject))
+                if (_subject.Equals(subject.subject))
                     return subject.grade;
             }
         }
         return 0;
     }
 
-    public int SetGrade(SubjectObject _subject, int _grade)
+    public void SetGrade(SubjectObject _subject, int _grade)
     {
         if (HasSubject(_subject))
         {
             for (int i = 0; i < subjects.Count; i++)
             {
-                if (_subject.Equals(subjects[i]))
-                    subjects.Insert(i, (subjects[i].subject, _grade));
+                if (subjects[i].subject == _subject)
+                    subjects[i] = (subjects[i].subject, _grade);
             }
         }
-        return 0;
     }
 
     public bool HasSubject(SubjectObject _subject)
     {
-        return subjects.Any(s => s.subject == _subject);
+        foreach ((SubjectObject subject, int grade) subject in subjects)
+        {
+            if (subject.subject == _subject)
+                return true;
+        }
+        return false;
     }
 
     private IEnumerator CheckGradeChangers()
@@ -169,5 +162,13 @@ public class SubjectController : MonoBehaviour, IInteractable
     public void Interact()
     {
         throw new System.NotImplementedException();
+    }
+
+    private void CanEndGame()
+    {
+        foreach (GameObject gradeChanger in gradeChangers)
+        {
+            
+        }
     }
 }

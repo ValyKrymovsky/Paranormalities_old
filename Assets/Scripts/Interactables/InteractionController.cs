@@ -12,7 +12,7 @@ public enum HighlightType
 }
 
 [RequireComponent(typeof(HighlightController))]
-public class InteractionController : MonoBehaviour, IInteractable
+public class InteractionController : MonoBehaviour
 {
     [SerializeField]
     private GameObject playerCamera;
@@ -61,41 +61,41 @@ public class InteractionController : MonoBehaviour, IInteractable
         animator = GetComponent<Animator>();
     }
 
-    /// <summary>
-    /// Checks if gameObject is item. Calls PicUp() if yes, otherwise playes animation if gameObject is not locked. In that case must be unlocked by given ItemObject.
-    /// </summary>
-    public void Interact()
-    {
-        if (interactible)
-        {
-            if (isItem)
-            {
-                inventory.PickUp(item, model);
-            }
-            else
-            {
-                if (locked)
-                {
-                    Debug.Log("Object locked");
-                    locked = !inventory.inventory.HasItem(itemForUnlock);
-                }
-                else
-                {   
-                    Debug.Log("Interacted");
-                    if (gameObject.TryGetComponent(out SubjectController subjectController))
-                    {
-                        Debug.Log("Is computer");
-                    }
+    // /// <summary>
+    // /// Checks if gameObject is item. Calls PicUp() if yes, otherwise playes animation if gameObject is not locked. In that case must be unlocked by given ItemObject.
+    // /// </summary>
+    // public void Interact()
+    // {
+    //     if (interactible)
+    //     {
+    //         if (isItem)
+    //         {
+    //             inventory.PickUp(item, model);
+    //         }
+    //         else
+    //         {
+    //             if (locked)
+    //             {
+    //                 Debug.Log("Object locked");
+    //                 locked = !inventory.inventory.HasItem(itemForUnlock);
+    //             }
+    //             else
+    //             {   
+    //                 Debug.Log("Interacted");
+    //                 if (gameObject.TryGetComponent(out SubjectController subjectController))
+    //                 {
+    //                     Debug.Log("Is computer");
+    //                 }
 
-                    if (animator != null)
-                    {
-                        animator.SetBool(parameterName, !animator.GetBool(parameterName));
-                    }
+    //                 if (animator != null)
+    //                 {
+    //                     animator.SetBool(parameterName, !animator.GetBool(parameterName));
+    //                 }
                     
-                }
+    //             }
                 
-            }
-        }
+    //         }
+    //     }
         
-    }
+    // }
 }

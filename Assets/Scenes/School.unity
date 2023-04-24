@@ -21355,7 +21355,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d8ca9ee60a02ef64bb014c3eaf00e1db, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  subjectControllerTag: GradeController
+  subjectControllerTag: SubjectController
+  subjectController: {fileID: 0}
   subject: {fileID: 11400000, guid: 38e271b0563b08d4b9c88c8c4bfe3dbe, type: 2}
   grade: 0
 --- !u!114 &805158649
@@ -40811,7 +40812,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d8ca9ee60a02ef64bb014c3eaf00e1db, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  subjectControllerTag: GradeController
+  subjectControllerTag: SubjectController
+  subjectController: {fileID: 0}
   subject: {fileID: 11400000, guid: 530e6ec4f635fce4f94abe3b8b54620d, type: 2}
   grade: 0
 --- !u!114 &1615451607
@@ -50968,7 +50970,7 @@ GameObject:
   - component: {fileID: 2027426179}
   m_Layer: 6
   m_Name: Main Computer
-  m_TagString: GradeController
+  m_TagString: SubjectController
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -51087,6 +51089,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cdf7f46b49be7a042a03e6acf1133030, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  subjectObjects:
+  - {fileID: 11400000, guid: c727795c0859bde47a06f35efdf9e582, type: 2}
+  - {fileID: 11400000, guid: 8c51cf9c5e1dce041a659da1715fe463, type: 2}
+  - {fileID: 11400000, guid: f19b05f8df780e74c9fa05aba960bf44, type: 2}
+  - {fileID: 11400000, guid: 38e271b0563b08d4b9c88c8c4bfe3dbe, type: 2}
+  - {fileID: 11400000, guid: 18bff750f35197041a7e77a9d3b2192a, type: 2}
+  - {fileID: 11400000, guid: 50521fbd7b497b8469297d0d6532705e, type: 2}
+  - {fileID: 11400000, guid: a3563903749bdcc4481a7014efff4d57, type: 2}
+  - {fileID: 11400000, guid: 3a4c8f66bf10560459c8f640fd65d2de, type: 2}
+  - {fileID: 11400000, guid: 530e6ec4f635fce4f94abe3b8b54620d, type: 2}
+  - {fileID: 11400000, guid: 63bd37c118313394ebd22a8f3323f647, type: 2}
   maxAcceptedGrade: 3
   gradeChangers: []
   gradeStatusCheckInterval: 0.5

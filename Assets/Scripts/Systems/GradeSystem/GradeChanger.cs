@@ -8,6 +8,7 @@ public class GradeChanger : MonoBehaviour, IInteractable
     [Separator("Grade", true)]
     [SerializeField]
     private string subjectControllerTag = "";
+    [SerializeField]
     private SubjectController subjectController;
     [SerializeField]
     private SubjectObject subject;
@@ -23,15 +24,22 @@ public class GradeChanger : MonoBehaviour, IInteractable
         gradeChanged = false;
     }
 
+    private void Start()
+    {
+        grade = subjectController.GetGrade(subject);
+        Debug.Log(subjectController.GetGrade(subject));
+    }
+
     public void Interact()
     {
         if (!gradeChanged)
         {
             grade = 1;
             gradeChanged = true;
-            
+            subjectController.SetGrade(subject, grade);
+            Debug.Log("Grade changed");
         }
-        Debug.Log("Grade changed");
+        subjectController.PrintAllSubject();
     }
 
     public bool GradeChanged()
