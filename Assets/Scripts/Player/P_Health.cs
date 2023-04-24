@@ -12,24 +12,25 @@ public class P_Health : MonoBehaviour
     private float health;
     [SerializeField]
     private bool dead = false;
-    
-    [SerializeField, Separator("Death Screen", true)]
-    private UIDocument deathScreen;
-    private VisualElement root;
-    private Coroutine deathScreenCoroutine;
+
+    private Coroutine deathScreen;
+
+    private EndGame endGame;
     
     private void Awake() {
         health = maxHealth;
-        deathScreen = GameObject.Find("DeathScreen").GetComponent<UIDocument>();
-        root = deathScreen.rootVisualElement;
-        root.style.display = DisplayStyle.None;
+        endGame = new EndGame("MainMenu");
     }
 
     private void Update() {
         if (health <= 0)
         {
             dead = true;
-            deathScreenCoroutine = StartCoroutine(StartDeathScreen());
+            if (deathScreen == null)
+            {
+                deathScreen = StartCoroutine(endGame.StartDeathScreen());
+            }
+            
         }
             
     }
@@ -115,13 +116,5 @@ public class P_Health : MonoBehaviour
         {
             health = maxHealth;
         }
-    }
-
-    private IEnumerator StartDeathScreen()
-    {
-        root.style.display = DisplayStyle.Flex;
-        yield return new WaitForSeconds(3f);
-        SceneManager.LoadScene("MainMenu", LoadSceneMode.Single);
-        UnityEngine.Cursor.lockState = CursorLockMode.None;
     }
 }

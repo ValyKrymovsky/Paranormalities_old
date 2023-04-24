@@ -28,16 +28,14 @@ public class SubjectController : MonoBehaviour, IInteractable
     [SerializeField]
     private float gradeStatusCheckInterval = .5f;
 
+    private EndGame endGame;
+
     private void Awake()
     {
+        endGame = new EndGame("MainMenu");
         LoadAllSubjectObjects();
         gradeChangers = GetAllGradeChangers();
         GenerateSubject();
-    }
-
-    private void Start()
-    {
-
     }
 
     private List<(SubjectObject subject, int grade)> GetWorstSubject()
@@ -161,14 +159,23 @@ public class SubjectController : MonoBehaviour, IInteractable
 
     public void Interact()
     {
-        throw new System.NotImplementedException();
+        if (CanEndGame())
+        {
+            endGame.LoadMainMenu();
+        }
     }
 
-    private void CanEndGame()
+    private bool CanEndGame()
     {
-        foreach (GameObject gradeChanger in gradeChangers)
+        bool canEndGame = true;
+        foreach ((SubjectObject subject, int grade) subject in subjects)
         {
-            
+            if (subject.grade > maxAcceptedGrade)
+            {
+                canEndGame = false;
+            }
         }
+
+        return canEndGame;
     }
 }
