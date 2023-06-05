@@ -10,9 +10,9 @@ GameObject:
   m_Component:
   - component: {fileID: 4487684100833012068}
   - component: {fileID: 4758829244429101316}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: NoiseObject
-  m_TagString: Untagged
+  m_TagString: Noise
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -44,3 +44,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bb3eeb41f8e60b2409c15908d971314b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  noise: 0
+  age: 0
+  maxAge: 100
+  parentObject: {fileID: 0}

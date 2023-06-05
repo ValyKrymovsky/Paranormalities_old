@@ -806,10 +806,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d31eb7102ae6dba48aa4c0b4812c7fce, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  directionSphere: {fileID: 0}
   speed: 1.6
   sprintMultiplier: 1.75
   sneakMultiplier: 0.5
-  action: 0
+  movementAction: 0
+  movementDirection: 0
   smoothTime: 0.2
   useStaminaSystem: 0
   depletionValue: 0.1
@@ -887,7 +889,6 @@ MonoBehaviour:
   maxHealth: 100
   health: 0
   dead: 0
-  deathScreen: {fileID: 0}
 --- !u!95 &9151140705511611232
 Animator:
   serializedVersion: 5
