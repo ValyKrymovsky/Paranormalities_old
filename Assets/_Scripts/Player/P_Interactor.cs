@@ -19,7 +19,6 @@ interface IHighlight
 public class P_Interactor : MonoBehaviour
 {
     [Separator("Interaction", true)]
-    private Transform interactorSource;
     [SerializeField]
     private float interactRange;
     [SerializeField]
@@ -28,14 +27,47 @@ public class P_Interactor : MonoBehaviour
     [Separator("Highlights", true)]
     [SerializeField] private float visibleHighlightRange;
     [SerializeField] private float highlightRangeRadius;
+    [Space]
+    [Header("Highlights")]
+    [Space]
     public GameObject pickItemHighlight;
     public GameObject destroyHighlight;
     public GameObject interactHighlight;
     private Dictionary<string, GameObject> highlights = new Dictionary<string, GameObject>();
+    [Space]
     [SerializeField]
     private Collider activeHighlight;
     private Collider nearestItem;
     private Collider[] hitColliders;
+
+    [Separator("Pickup", true)]
+    [SerializeField] private GameObject pickupPoint;
+    [Space]
+    [Header("Distances")]
+    [Space]
+    [SerializeField] private float maxPickupDistance;
+    [SerializeField] private float maxPickupPointDistance;
+    [SerializeField] private float minPickupPointDistance;
+    [Tooltip("Defines the maximum distance between object and pickup point before dropping the object")]
+    [SerializeField] private float maxDistanceFromPoint;
+    [SerializeField, ReadOnly] private float pickupPointDistance;
+    [Space]
+    [SerializeField] private LayerMask pickupLayer;
+    [Space]
+    [Tooltip("Reduces the velocity be a multiplier. (Useful for adding more weight to objects)")]
+    [SerializeField, MinValue(1)] private float dropVelocityReduction;
+    [Space]
+    [Header("Throw")]
+    [Space]
+    [SerializeField] private float throwStrength;
+    
+    private Quaternion objectRotation;
+    private Rigidbody pickupObjectRigidbody;
+    private float objectMass = 0;
+    private float objectDrag = 0;
+    private float objectAngularDrag = 0;
+
+    private float zoomInterval;
 
     // Components //
     private P_Controls p_input;
@@ -57,7 +89,6 @@ public class P_Interactor : MonoBehaviour
         p_input = new P_Controls();
         ac_interact = p_input.Player.Interact;
         p_camera = GetComponent<Camera>();
-        interactorSource = transform;
 
         hitColliders = new Collider[0];
 
@@ -68,6 +99,19 @@ public class P_Interactor : MonoBehaviour
         highlights.Add("pickup", pickItemHighlight);
         highlights.Add("destroy", destroyHighlight);
         highlights.Add("interact", interactHighlight);
+
+        pickupPointDistance = Vector3.Distance(transform.position, pickupPoint.transform.position);
+
+        if (pickupPointDistance > maxPickupPointDistance)
+        {
+            pickupPoint.transform.position = transform.position + transform.forward * maxPickupPointDistance;
+        }
+        else if (pickupPointDistance < minPickupPointDistance)
+        {
+            pickupPoint.transform.position = transform.position + transform.forward * minPickupPointDistance;
+        }
+
+        zoomInterval = (maxPickupPointDistance - minPickupPointDistance) / 50;
     }
 
     void OnEnable()
@@ -83,15 +127,61 @@ public class P_Interactor : MonoBehaviour
     private void Update() 
     {
         CheckInteractibles();
+        pickupPointDistance = Vector3.Distance(transform.position, pickupPoint.transform.position);
+    }
+
+    private void FixedUpdate()
+    {
+
+        if (pickupPointDistance > maxPickupPointDistance)
+        {
+            pickupPoint.transform.position = transform.position + transform.forward * maxPickupPointDistance;
+        }
+        else if (pickupPointDistance < minPickupPointDistance)
+        {
+            pickupPoint.transform.position = transform.position + transform.forward * minPickupPointDistance;
+        }
+
+
+        if (pickupObjectRigidbody)
+        {
+            if (Vector3.Distance(pickupObjectRigidbody.transform.position, pickupPoint.transform.position) > maxDistanceFromPoint)
+            {
+                pickupObjectRigidbody.useGravity = true;
+                pickupObjectRigidbody.angularDrag = objectAngularDrag;
+                pickupObjectRigidbody.drag = objectDrag;
+                pickupObjectRigidbody.mass = objectMass;
+                pickupObjectRigidbody = null;
+
+                objectAngularDrag = 0;
+                objectDrag = 0;
+                objectMass = 0;
+                return;
+            }
+
+            // Object movement
+            pickupObjectRigidbody.angularVelocity = Vector3.zero;
+            Vector3 DirectionToPoint = pickupPoint.transform.position - pickupObjectRigidbody.transform.position;
+            pickupObjectRigidbody.AddForce(DirectionToPoint * pickupPointDistance * 500f, ForceMode.Acceleration);
+
+            pickupObjectRigidbody.velocity = Vector3.zero;
+
+            // Object rotation
+            objectRotation = Quaternion.LookRotation(transform.position - pickupObjectRigidbody.transform.position);
+            objectRotation = Quaternion.Slerp(transform.rotation, objectRotation, 1 * Time.fixedDeltaTime);
+            pickupObjectRigidbody.MoveRotation(objectRotation);
+
+            
+        }
     }
 
     /// <summary>
     /// Checks if activeHighlight game object has interface IInteractible, then calls Interact() method if the interface was found.
     /// </summary>
     /// <param name="context"></param>
-    public void Interact(InputAction.CallbackContext context)
+    public void Interact(InputAction.CallbackContext _context)
     {
-        if ((int)context.phase == 3)
+        if (_context.phase == InputActionPhase.Performed)
         {
             try
             {
@@ -102,7 +192,11 @@ public class P_Interactor : MonoBehaviour
             }
             catch(NullReferenceException)
             {
-                Debug.Log("Not interactible");
+                Debug.Log("Interaction script not found");
+            }
+            catch(UnassignedReferenceException)
+            {
+                Debug.Log("Object cannot be interacted with");
             }
         }
     }
@@ -112,7 +206,7 @@ public class P_Interactor : MonoBehaviour
     /// </summary>
     public void CheckInteractibles()
     {
-        Ray r = new Ray(interactorSource.position, interactorSource.forward);
+        Ray r = new Ray(transform.position, transform.forward);
 
         if (Physics.Raycast(r, out RaycastHit hitInfo, visibleHighlightRange))
         {
@@ -278,6 +372,99 @@ public class P_Interactor : MonoBehaviour
         }
     }
 
+    public void PickUp(InputAction.CallbackContext _context)
+    {
+        if (_context.phase == InputActionPhase.Performed)
+        {
+            Ray r = new Ray(transform.position, transform.forward);
+
+            if (Physics.SphereCast(transform.position, .25f, transform.forward, out RaycastHit hitInfo, maxPickupDistance, pickupLayer))
+            {
+                float objectWeight = Physics.gravity.y * hitInfo.rigidbody.mass;
+                if (objectWeight <= 10)
+                {
+                    pickupObjectRigidbody = hitInfo.rigidbody;
+
+                    objectMass = pickupObjectRigidbody.mass;
+                    objectDrag = pickupObjectRigidbody.drag;
+                    objectAngularDrag = pickupObjectRigidbody.angularDrag;
+
+                    pickupObjectRigidbody.useGravity = false;
+                    pickupObjectRigidbody.angularDrag = 200f;
+                    float distanceToObject = Vector2.Distance(new Vector2(transform.position.x, transform.position.z), new Vector2(pickupObjectRigidbody.transform.position.x, pickupObjectRigidbody.transform.position.z));
+                    pickupPoint.transform.position = transform.position + transform.forward * distanceToObject;
+                }
+                else
+                {
+                    Debug.Log("Object too heavy!");
+                }
+                
+                
+            }
+        }
+        else if(_context.phase == InputActionPhase.Canceled)
+        {
+            if (pickupObjectRigidbody)
+            {
+                pickupObjectRigidbody.useGravity = true;
+                pickupObjectRigidbody.angularDrag = objectAngularDrag;
+                pickupObjectRigidbody.drag = objectDrag;
+                pickupObjectRigidbody.mass = objectMass;
+
+                pickupObjectRigidbody.velocity /= dropVelocityReduction;
+                pickupObjectRigidbody = null;
+
+                objectAngularDrag = 0;
+                objectDrag = 0;
+                objectMass = 0;
+                return;
+            }
+        }
+    }
+
+    public void Zoom(InputAction.CallbackContext _context)
+    {
+        if(_context.ReadValue<float>() > 0)
+        {
+            if (pickupPointDistance < maxPickupPointDistance)
+            {
+                pickupPoint.transform.position = transform.position + transform.forward * (pickupPointDistance + zoomInterval);
+            }
+        }
+        else if (_context.ReadValue<float>() < 0)
+        {
+           if (pickupPointDistance > minPickupPointDistance)
+            {
+                pickupPoint.transform.position = transform.position + transform.forward * (pickupPointDistance - zoomInterval);
+            }
+        }
+    }
+
+    public void Throw(InputAction.CallbackContext _context)
+    {
+        if (pickupObjectRigidbody)
+        {
+            if (_context.phase == InputActionPhase.Performed)
+            {
+                pickupObjectRigidbody.AddForce(transform.position + transform.forward * (throwStrength * 100), ForceMode.Acceleration);
+
+                pickupObjectRigidbody.useGravity = true;
+                pickupObjectRigidbody.angularDrag = objectAngularDrag;
+                pickupObjectRigidbody.drag = objectDrag;
+                pickupObjectRigidbody.mass = objectMass;
+
+                pickupObjectRigidbody.velocity /= dropVelocityReduction;
+
+                pickupObjectRigidbody = null;
+
+                objectAngularDrag = 0;
+                objectDrag = 0;
+                objectMass = 0;
+                return;
+            }
+        }
+    }
+
     private void OnDrawGizmos() 
     {
         if (hittingAir)
@@ -290,6 +477,8 @@ public class P_Interactor : MonoBehaviour
             Gizmos.color = Color.yellow;
             Gizmos.DrawWireSphere(hitPosition, highlightRangeRadius);
         }
+
+        Gizmos.DrawWireSphere(transform.position + transform.forward * maxPickupDistance, .25f);
         
     }
 }

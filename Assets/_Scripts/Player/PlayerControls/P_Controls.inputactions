@@ -51,6 +51,33 @@
                     "initialStateCheck": false
                 },
                 {
+                    "name": "Pickup",
+                    "type": "Button",
+                    "id": "8ac733ae-9c3e-4a15-b9b4-023ed3361c37",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "Hold(duration=0.01)",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Pickup Zoom",
+                    "type": "PassThrough",
+                    "id": "2895fa5f-9e30-405e-9cb0-522052bdda54",
+                    "expectedControlType": "Axis",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Throw",
+                    "type": "Button",
+                    "id": "ebc1772f-f559-4e2d-ab9c-7f1322cdeb25",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
                     "name": "Select item",
                     "type": "Button",
                     "id": "2b4c15e6-90db-41d5-8011-f4547cc09c1c",
@@ -69,27 +96,9 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "Stats",
-                    "type": "Button",
-                    "id": "f980ada6-fcf8-431d-b567-55f42ba4b8e6",
-                    "expectedControlType": "Button",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": false
-                },
-                {
                     "name": "Menu",
                     "type": "Button",
                     "id": "214a6c92-6730-4576-9264-8692045c4ccf",
-                    "expectedControlType": "Button",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": false
-                },
-                {
-                    "name": "Enemy MoveTo Location",
-                    "type": "Button",
-                    "id": "102f1d5b-a318-4b2d-a006-e3d61df92d3c",
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": "",
@@ -298,7 +307,7 @@
                 {
                     "name": "",
                     "id": "f7dd00a3-070b-43ef-bb03-9ea743635b6b",
-                    "path": "<Keyboard>/e",
+                    "path": "<Mouse>/leftButton",
                     "interactions": "",
                     "processors": "",
                     "groups": "Keyboard&Mouse",
@@ -336,17 +345,6 @@
                     "processors": "",
                     "groups": "Gamepad",
                     "action": "Drop item",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "42159758-5511-4e4b-b605-8f50a8ab4ec7",
-                    "path": "<Keyboard>/backquote",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "Keyboard&Mouse",
-                    "action": "Stats",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -539,12 +537,45 @@
                 },
                 {
                     "name": "",
-                    "id": "7cc6120b-d885-4fb9-a79c-ce2322bf4810",
-                    "path": "<Keyboard>/m",
+                    "id": "d58794af-6771-4e2a-97ba-bff2c59409c1",
+                    "path": "<Mouse>/leftButton",
                     "interactions": "",
                     "processors": "",
                     "groups": "Keyboard&Mouse",
-                    "action": "Enemy MoveTo Location",
+                    "action": "Pickup",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "8ac0d66d-b763-41a3-bafc-0107838ac493",
+                    "path": "<Gamepad>/buttonWest",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Gamepad",
+                    "action": "Pickup",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "2e073e32-ec26-44d7-b491-fb8aa38148be",
+                    "path": "<Mouse>/scroll/y",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Keyboard&Mouse",
+                    "action": "Pickup Zoom",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "2918f844-4444-48cd-bf6c-ae2b6b8daca9",
+                    "path": "<Mouse>/rightButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Keyboard&Mouse",
+                    "action": "Throw",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

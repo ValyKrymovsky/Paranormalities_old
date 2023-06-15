@@ -1,2 +1,2 @@
-cloc-1.96.exe Assets/Scripts/ -by-file-by-lang *cs
+cloc-1.96.exe Assets/_Scripts/ -by-file-by-lang *cs
 PAUSE
