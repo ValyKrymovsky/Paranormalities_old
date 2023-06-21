@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using MyBox;
 
-public class Door : MonoBehaviour, IInteractable
+public class Door : MonoBehaviour
 {
     private GameObject playerBody;
 
@@ -35,7 +35,7 @@ public class Door : MonoBehaviour, IInteractable
     /// </summary>
     public void Interact()
     {
-        if (interactionController.interactible)
+        if (interactionController.IsInteractible())
         {
             if (locked)
             {

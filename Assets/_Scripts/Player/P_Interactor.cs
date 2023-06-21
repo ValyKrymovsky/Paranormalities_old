@@ -5,44 +5,50 @@ using System.Linq;
 using System;
 using MyBox;
 
-interface IInteractable
+public interface IInteractionPopup
+{
+    public void SpawnPopup(GameObject _popupObject);
+    public void TurnOffPopup();
+    public void TurnOnPopup();
+    public void DestroyPopup();
+}
+
+public interface IInteraction
 {
     public void Interact();
 }
 
-interface IHighlight
-{
-    public void SpawnHighlight(GameObject _target, string _name);
-    public void DestroyHighlight();
-}
 
 public class P_Interactor : MonoBehaviour
 {
     [Separator("Interaction", true)]
-    [SerializeField]
-    private float interactRange;
-    [SerializeField]
-    private LayerMask interactiblesMask;
 
-    [Separator("Highlights", true)]
-    [SerializeField] private float visibleHighlightRange;
-    [SerializeField] private float highlightRangeRadius;
+    [Header("Interaction")]
     [Space]
-    [Header("Highlights")]
+    [SerializeField] private float interactRange;
+    [SerializeField] private float interactiblesCheckRange;
+    [SerializeField] private Vector3 hitPosition;
+    [SerializeField] private LayerMask interactiblesMask;
+    [SerializeField] private Collider markedCollider;
+    private InteractionController interactionController;
     [Space]
-    public GameObject pickItemHighlight;
-    public GameObject destroyHighlight;
-    public GameObject interactHighlight;
-    private Dictionary<string, GameObject> highlights = new Dictionary<string, GameObject>();
+
+    [Header("Interaction Popup")]
     [Space]
-    [SerializeField]
-    private Collider activeHighlight;
-    private Collider nearestItem;
-    private Collider[] hitColliders;
+    [SerializeField] private GameObject interactionPopup;
+    [SerializeField] private GameObject activePopup;
+    [Space]
+
+    [Header("Text parameters")]
+    [Space]
+    [SerializeField] private float maxTextSize;
+    [SerializeField] private float minTextSize;
 
     [Separator("Pickup", true)]
+
     [SerializeField] private GameObject pickupPoint;
     [Space]
+
     [Header("Distances")]
     [Space]
     [SerializeField] private float maxPickupDistance;
@@ -54,20 +60,26 @@ public class P_Interactor : MonoBehaviour
     [Space]
     [SerializeField] private LayerMask pickupLayer;
     [Space]
-    [Tooltip("Reduces the velocity be a multiplier. (Useful for adding more weight to objects)")]
+    [Tooltip("Reduces the velocity by a multiplier. (Useful for adding more weight to objects)")]
     [SerializeField, MinValue(1)] private float dropVelocityReduction;
     [Space]
+
     [Header("Throw")]
     [Space]
     [SerializeField] private float throwStrength;
-    
-    private Quaternion objectRotation;
+    [Space]
+
+    [Header("Zoom")]
+    [Space]
+    private float zoomInterval;
+
+
+
+
     private Rigidbody pickupObjectRigidbody;
     private float objectMass = 0;
     private float objectDrag = 0;
     private float objectAngularDrag = 0;
-
-    private float zoomInterval;
 
     // Components //
     private P_Controls p_input;
@@ -78,9 +90,6 @@ public class P_Interactor : MonoBehaviour
 
     // Input Actions //
     private InputAction ac_interact;  // input action for interacting
-
-
-    private Vector3 hitPosition;
     private Vector3 pointInAir;
 
 
@@ -89,16 +98,6 @@ public class P_Interactor : MonoBehaviour
         p_input = new P_Controls();
         ac_interact = p_input.Player.Interact;
         p_camera = GetComponent<Camera>();
-
-        hitColliders = new Collider[0];
-
-        pickItemHighlight.tag = "Highlight";
-        destroyHighlight.tag = "Highlight";
-        interactHighlight.tag = "Highlight";
-
-        highlights.Add("pickup", pickItemHighlight);
-        highlights.Add("destroy", destroyHighlight);
-        highlights.Add("interact", interactHighlight);
 
         pickupPointDistance = Vector3.Distance(transform.position, pickupPoint.transform.position);
 
@@ -126,13 +125,16 @@ public class P_Interactor : MonoBehaviour
 
     private void Update() 
     {
-        CheckInteractibles();
-        pickupPointDistance = Vector3.Distance(transform.position, pickupPoint.transform.position);
+        if (!pickupObjectRigidbody)
+        {
+            CheckInteractibles();
+        }
     }
 
     private void FixedUpdate()
     {
-
+        pickupPointDistance = Vector3.Distance(transform.position, pickupPoint.transform.position);
+        
         if (pickupPointDistance > maxPickupPointDistance)
         {
             pickupPoint.transform.position = transform.position + transform.forward * maxPickupPointDistance;
@@ -141,7 +143,6 @@ public class P_Interactor : MonoBehaviour
         {
             pickupPoint.transform.position = transform.position + transform.forward * minPickupPointDistance;
         }
-
 
         if (pickupObjectRigidbody)
         {
@@ -165,13 +166,6 @@ public class P_Interactor : MonoBehaviour
             pickupObjectRigidbody.AddForce(DirectionToPoint * pickupPointDistance * 500f, ForceMode.Acceleration);
 
             pickupObjectRigidbody.velocity = Vector3.zero;
-
-            // Object rotation
-            objectRotation = Quaternion.LookRotation(transform.position - pickupObjectRigidbody.transform.position);
-            objectRotation = Quaternion.Slerp(transform.rotation, objectRotation, 1 * Time.fixedDeltaTime);
-            pickupObjectRigidbody.MoveRotation(objectRotation);
-
-            
         }
     }
 
@@ -181,24 +175,24 @@ public class P_Interactor : MonoBehaviour
     /// <param name="context"></param>
     public void Interact(InputAction.CallbackContext _context)
     {
-        if (_context.phase == InputActionPhase.Performed)
-        {
-            try
-            {
-                if (activeHighlight.gameObject.TryGetComponent(out IInteractable interactObj))
-                {
-                    interactObj.Interact();
-                }
-            }
-            catch(NullReferenceException)
-            {
-                Debug.Log("Interaction script not found");
-            }
-            catch(UnassignedReferenceException)
-            {
-                Debug.Log("Object cannot be interacted with");
-            }
-        }
+        // if (_context.phase == InputActionPhase.Performed)
+        // {
+        //     try
+        //     {
+        //         if (markedCollider.gameObject.TryGetComponent(out IInteraction interactObj))
+        //         {
+        //             interactObj.Interact();
+        //         }
+        //     }
+        //     catch(NullReferenceException)
+        //     {
+        //         Debug.Log("Interaction script not found");
+        //     }
+        //     catch(UnassignedReferenceException)
+        //     {
+        //         Debug.Log("Object cannot be interacted with");
+        //     }
+        // }
     }
 
     /// <summary>
@@ -207,169 +201,107 @@ public class P_Interactor : MonoBehaviour
     public void CheckInteractibles()
     {
         Ray r = new Ray(transform.position, transform.forward);
+        RaycastHit hit;
 
-        if (Physics.Raycast(r, out RaycastHit hitInfo, visibleHighlightRange))
+        Physics.Raycast(r, out hit, interactRange);
+
+        Debug.DrawLine(transform.position, transform.position + transform.forward * interactRange, Color.red);
+
+        hitPosition = hit.collider != null ? hit.point : transform.position + transform.forward * interactRange;
+
+        Collider[] hitColliders = Physics.OverlapSphere(hitPosition, interactiblesCheckRange, interactiblesMask);
+
+        List<Collider> interactibleColliders = new List<Collider>();
+
+        Collider nearestInteractibleCollider = null;
+
+        if (hitColliders.Length != 0)
         {
-            hittingAir = false;
-
-            hitPosition = hitInfo.point;
-
-            hitColliders = Physics.OverlapSphere(hitInfo.point, highlightRangeRadius, interactiblesMask);
-            List<float> hitItemsDistance = new List<float>();
-            Collider nearestItem = null;
-            if (hitColliders.Length != 0)
+            foreach(Collider collider in hitColliders)
             {
-                foreach (Collider hitItem in hitColliders)
+                if (collider.TryGetComponent(out InteractionController tempIntController))
                 {
-                    if (hitItem.TryGetComponent(out InteractionController interactorObject))
+                    if (tempIntController.IsInteractible()) interactibleColliders.Add(collider);
+                }
+            }
+
+            if (interactibleColliders.Count != 0)
+            {
+                float minDistance = -1;
+                foreach(Collider collider in interactibleColliders)
+                {
+                    if (minDistance == -1)
                     {
-                        if (!interactorObject.interactible)
+                        minDistance = Vector3.Distance(hitPosition, collider.transform.position);
+                        nearestInteractibleCollider = collider;
+                        continue;
+                    }
+                    else
+                    {
+                        float distance = Vector3.Distance(hitPosition, collider.transform.position);
+
+                        if (distance < minDistance)
                         {
+                            minDistance = distance;
+                            nearestInteractibleCollider = collider;
                             continue;
                         }
-                        HighlightController highlightController = hitItem.GetComponent<HighlightController>();
-                        hitItemsDistance.Add(Vector3.Distance(hitInfo.transform.position, highlightController.highlightLocation.transform.position));
                     }
+
                 }
-                if (hitItemsDistance.Count != 0)
+
+                if (markedCollider != nearestInteractibleCollider)
                 {
-                    nearestItem = hitColliders[hitItemsDistance.IndexOf(hitItemsDistance.Min())];
-                    InteractionController interactor = nearestItem.GetComponent<InteractionController>();
-                    Debug.DrawLine(hitInfo.point, nearestItem.transform.position);
-                    if (nearestItem.TryGetComponent(out HighlightController highlightController))
+                    InteractionController tempIntController;
+
+                    if (markedCollider)
                     {
-                        if (!highlightController.highlightActive)
+                        markedCollider.gameObject.TryGetComponent(out tempIntController);
+
+                        if (tempIntController.HasInteractionPopup())
                         {
-                            
-                            switch (highlightController.highlightType)
-                            {
-                                case HighlightType.PickUp:
-                                    highlightController.SpawnHighlight(highlights["pickup"], "pick up");
-                                    activeHighlight = nearestItem;
-                                    break;
-                                
-                                case HighlightType.Destroy:
-                                    highlightController.SpawnHighlight(highlights["destroy"], "destroy");
-                                    activeHighlight = nearestItem;
-                                    break;
-                                
-                                case HighlightType.Interact:
-                                    highlightController.SpawnHighlight(highlights["interact"], "interact");
-                                    activeHighlight = nearestItem;
-                                    break;
-                            }
+                            IInteractionPopup interactionPopupInterface = tempIntController.GetComponent<IInteractionPopup>();
+                            interactionController = null;
+                            interactionPopupInterface.DestroyPopup();
                         }
                     }
-                    if (highlightController.highlight != null)
+                    
+                    nearestInteractibleCollider.gameObject.TryGetComponent(out tempIntController);
+
+                    if (!tempIntController.HasInteractionPopup())
                     {
-                        highlightController.highlight.transform.LookAt(transform);
-                        highlightController.highlightRenderer.color = new Color(255, 255, 255, Mathf.InverseLerp(highlightRangeRadius, 0, Vector3.Distance(hitInfo.point, highlightController.highlightLocation.transform.position)));
+                        IInteractionPopup interactionPopupInterface = tempIntController.GetComponent<IInteractionPopup>();
+                        interactionController = tempIntController;
+                        interactionPopupInterface.SpawnPopup(interactionPopup);
+                        activePopup = interactionController.GetInteractionPopup();
                     }
+
+                    markedCollider = nearestInteractibleCollider;
                 }
-                
-                
-            } 
+
+                if (interactionController)
+                {
+                    activePopup.transform.LookAt(transform, transform.up);
+
+                    float proximityTextOpacity = Mathf.InverseLerp(interactiblesCheckRange, 0, Vector3.Distance(hitPosition, activePopup.transform.position));
+                    interactionController.SetTextOpacity(proximityTextOpacity);
+
+                    Vector2 playerPosition = new Vector2(transform.position.x, transform.position.z);
+                    Vector2 popupPosition = new Vector2(activePopup.transform.position.x, activePopup.transform.position.z);
+                    float proximityTextSize = Mathf.InverseLerp(interactRange + interactiblesCheckRange, 0, Vector2.Distance(playerPosition, popupPosition)) * maxTextSize;
+                    if (proximityTextSize < minTextSize) proximityTextSize = minTextSize;
+                    Debug.Log(proximityTextSize);
+                    interactionController.SetTextSize(proximityTextSize);
+                }
+
+            }
+
         }
         else
         {
-            hittingAir = true;
-            pointInAir = transform.position + (transform.forward * (visibleHighlightRange));
-
-            hitColliders = Physics.OverlapSphere(pointInAir, highlightRangeRadius, interactiblesMask);
-            List<float> hitItemsDistance = new List<float>();
-            Collider nearestItem = null;
-            if (hitColliders.Length != 0)
-            {
-                foreach (Collider hitItem in hitColliders)
-                {
-                    if (hitItem.TryGetComponent(out InteractionController interactorObject))
-                    {
-                        if (!interactorObject.interactible)
-                        {
-                            continue;
-                        }
-                        HighlightController highlightController = hitItem.GetComponent<HighlightController>();
-                        hitItemsDistance.Add(Vector3.Distance(pointInAir, highlightController.highlightLocation.transform.position));
-                    }
-                }
-                if (hitItemsDistance.Count != 0)
-                {
-                    nearestItem = hitColliders[hitItemsDistance.IndexOf(hitItemsDistance.Min())];
-                    InteractionController interactor = nearestItem.GetComponent<InteractionController>();
-                    Debug.DrawLine(pointInAir, nearestItem.transform.position);
-                    if (nearestItem.TryGetComponent(out HighlightController highlightController))
-                    {
-                        if (!highlightController.highlightActive)
-                        {
-                            switch (highlightController.highlightType)
-                            {
-                                case HighlightType.PickUp:
-                                    highlightController.SpawnHighlight(highlights["pickup"], "pick up");
-                                    activeHighlight = nearestItem;
-                                    break;
-                                
-                                case HighlightType.Destroy:
-                                    highlightController.SpawnHighlight(highlights["destroy"], "destroy");
-                                    activeHighlight = nearestItem;
-                                    break;
-                                
-                                case HighlightType.Interact:
-                                    highlightController.SpawnHighlight(highlights["interact"], "interact");
-                                    activeHighlight = nearestItem;
-                                    break;
-                            }
-                        }
-                    }
-                    if (highlightController.highlight != null)
-                    {
-                        highlightController.highlight.transform.LookAt(transform);
-                        highlightController.highlightRenderer.color = new Color(255, 255, 255, Mathf.InverseLerp(highlightRangeRadius, 0, Vector3.Distance(pointInAir, highlightController.highlightLocation.transform.position)));
-                    }
-                }
-            } 
+            if (markedCollider) markedCollider = null;
         }
 
-        if (hitColliders.Length == 0)
-        {
-            activeHighlight = null;
-            GameObject[] allHighlights = GameObject.FindGameObjectsWithTag("Highlight");
-            foreach(GameObject activeHighlight in allHighlights)
-            {
-                try
-                {
-                    HighlightController highlightController = activeHighlight.GetComponent<HighlightParent>().parent.GetComponent<HighlightController>();
-                    highlightController.TurnOffHighlight();
-                }
-                catch(NullReferenceException)
-                {
-                }
-                
-                UnityEngine.Object.Destroy(activeHighlight);
-            }
-            
-        }
-        
-        if (activeHighlight != null)
-        {
-            try
-            {
-                foreach (Collider hitCollider in hitColliders)
-                {
-                    if (activeHighlight != hitCollider)
-                    {
-                        if (hitCollider.TryGetComponent(out HighlightController highlightObject))
-                        {
-                            highlightObject.DestroyHighlight();
-                        }
-                    }
-                }
-            }
-            catch (InvalidOperationException)
-            {
-
-            }
-            
-        }
     }
 
     public void PickUp(InputAction.CallbackContext _context)
@@ -384,6 +316,8 @@ public class P_Interactor : MonoBehaviour
                 if (objectWeight <= 10)
                 {
                     pickupObjectRigidbody = hitInfo.rigidbody;
+
+                    interactionController.TurnOffPopup();
 
                     objectMass = pickupObjectRigidbody.mass;
                     objectDrag = pickupObjectRigidbody.drag;
@@ -406,6 +340,8 @@ public class P_Interactor : MonoBehaviour
         {
             if (pickupObjectRigidbody)
             {
+                interactionController.TurnOnPopup();
+
                 pickupObjectRigidbody.useGravity = true;
                 pickupObjectRigidbody.angularDrag = objectAngularDrag;
                 pickupObjectRigidbody.drag = objectDrag;
@@ -448,6 +384,8 @@ public class P_Interactor : MonoBehaviour
             {
                 pickupObjectRigidbody.AddForce(transform.position + transform.forward * (throwStrength * 100), ForceMode.Acceleration);
 
+                interactionController.TurnOnPopup();
+
                 pickupObjectRigidbody.useGravity = true;
                 pickupObjectRigidbody.angularDrag = objectAngularDrag;
                 pickupObjectRigidbody.drag = objectDrag;
@@ -467,18 +405,17 @@ public class P_Interactor : MonoBehaviour
 
     private void OnDrawGizmos() 
     {
-        if (hittingAir)
-        {
-            Gizmos.color = Color.red;
-            Gizmos.DrawWireSphere(pointInAir, highlightRangeRadius / 2);
-        }
-        else
-        {
-            Gizmos.color = Color.yellow;
-            Gizmos.DrawWireSphere(hitPosition, highlightRangeRadius);
-        }
+        // if (hittingAir)
+        // {
+        //     Gizmos.color = Color.red;
+        //     Gizmos.DrawWireSphere(pointInAir, highlightRangeRadius / 2);
+        // }
+        // else
+        // {
+        //     Gizmos.color = Color.yellow;
+        //     Gizmos.DrawWireSphere(hitPosition, highlightRangeRadius);
+        // }
 
-        Gizmos.DrawWireSphere(transform.position + transform.forward * maxPickupDistance, .25f);
-        
+        // Gizmos.DrawWireSphere(transform.position + transform.forward * maxPickupDistance, .25f);     
     }
 }

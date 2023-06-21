@@ -4,7 +4,7 @@ using System.Linq;
 using UnityEngine;
 using MyBox;
 
-public class PickupItem : MonoBehaviour, IInteractable
+public class PickupItem : MonoBehaviour
 {
     [Separator("Player", true)]
     [SerializeField]
@@ -40,7 +40,7 @@ public class PickupItem : MonoBehaviour, IInteractable
     /// </summary>
     public void Interact()
     {
-        if (interactionController.interactible)
+        if (interactionController.IsInteractible())
         {
             if (isItem)
             {

@@ -149,10 +149,10 @@ public class P_SoundSystem : MonoBehaviour
                     }
                 }
 
-                if (GetMovementAction() == movementState.walk || GetMovementAction() == movementState.sprint)
-                {
-                    SpawnNoiseObject(NoiseObjectGlobalClass.noiseObject, gameObject, GameObject.Find("Noise Objects"), gameObject.transform.position, noise);
-                }  
+                // if (GetMovementAction() == movementState.walk || GetMovementAction() == movementState.sprint)
+                // {
+                //     SpawnNoiseObject(NoiseObjectGlobalClass.noiseObject, gameObject, GameObject.Find("Noise Objects"), gameObject.transform.position, noise);
+                // }  
             }
         }
     }

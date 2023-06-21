@@ -91,30 +91,30 @@ public class P_Inventory : MonoBehaviour
     public void 
     PickUp(ItemObject _item, GameObject _model)
     {
-        if (inventory.AddItem(_item, _model))
-        {
-            if (_model.TryGetComponent(out HighlightController highlightController))
-                highlightController.TurnOffHighlight();
+        // if (inventory.AddItem(_item, _model))
+        // {
+        //     if (_model.TryGetComponent(out HighlightController highlightController))
+        //         highlightController.TurnOffHighlight();
             
-            if (transform.childCount == 1)
-            {
-                Transform childHighlight = transform.Find(string.Format("{0} highlight", name));
-                Object.Destroy(childHighlight.gameObject);
-            }
+        //     if (transform.childCount == 1)
+        //     {
+        //         Transform childHighlight = transform.Find(string.Format("{0} highlight", name));
+        //         Object.Destroy(childHighlight.gameObject);
+        //     }
 
-            if (_model.TryGetComponent(out InteractionController interactionController))
-                interactionController.interactible = false;
+        //     if (_model.TryGetComponent(out InteractionController interactionController))
+        //         interactionController.SetInteractible(false);
 
-        _model.gameObject.SetActive(false);
-        }
-        else if (!inventory.AddItem(_item, _model) && inventory.IsFull())
-        {
-            Debug.Log("Inventory full");
-        }
-        else
-        {
-            Debug.Log("Already has the item");
-        }
+        // _model.gameObject.SetActive(false);
+        // }
+        // else if (!inventory.AddItem(_item, _model) && inventory.IsFull())
+        // {
+        //     Debug.Log("Inventory full");
+        // }
+        // else
+        // {
+        //     Debug.Log("Already has the item");
+        // }
     }
     
     /// <summary>
@@ -123,29 +123,29 @@ public class P_Inventory : MonoBehaviour
     /// <param name="context"></param>
     public void DropItem(InputAction.CallbackContext context)
     {
-        if ((int)context.phase == 3)
-        {
-            if (inventory.HasItem(selectedItem.Key))
-            {
-                if (Physics.Raycast(p_camera.transform.position, p_camera.transform.forward, out RaycastHit hitInfo, dropRange))
-                {
-                    Vector3 dropPosition = new Vector3(hitInfo.point.x, hitInfo.point.y + .1f, hitInfo.point.z);
-                    string currentRoom = GetCurrentRoomName();
-                    GameObject droppedItem = Instantiate(placeholderModel, dropPosition, transform.rotation, GameObject.Find(currentRoom).transform);
-                    inventory.RemoveItem(selectedItem.Key, selectedItem.Value);
-                    droppedItem.name = selectedItem.Value.name;
-                    InteractionController interactionController = droppedItem.GetComponent<InteractionController>();
-                    HighlightController highlightController = droppedItem.GetComponent<HighlightController>();
-                    highlightController.TurnOffHighlight();
-                    interactionController.interactible = true;
-                    droppedItem.SetActive(true);
-                    highlightController.TurnOffHighlight();
-                    Object.Destroy(selectedItem.Value);
-                }
+        // if ((int)context.phase == 3)
+        // {
+        //     if (inventory.HasItem(selectedItem.Key))
+        //     {
+        //         if (Physics.Raycast(p_camera.transform.position, p_camera.transform.forward, out RaycastHit hitInfo, dropRange))
+        //         {
+        //             Vector3 dropPosition = new Vector3(hitInfo.point.x, hitInfo.point.y + .1f, hitInfo.point.z);
+        //             string currentRoom = GetCurrentRoomName();
+        //             GameObject droppedItem = Instantiate(placeholderModel, dropPosition, transform.rotation, GameObject.Find(currentRoom).transform);
+        //             inventory.RemoveItem(selectedItem.Key, selectedItem.Value);
+        //             droppedItem.name = selectedItem.Value.name;
+        //             InteractionController interactionController = droppedItem.GetComponent<InteractionController>();
+        //             HighlightController highlightController = droppedItem.GetComponent<HighlightController>();
+        //             highlightController.TurnOffHighlight();
+        //             interactionController.SetInteractible(true);
+        //             droppedItem.SetActive(true);
+        //             highlightController.TurnOffHighlight();
+        //             Object.Destroy(selectedItem.Value);
+        //         }
                 
-            }
+        //     }
             
-        }
+        // }
     }
 
     /// <summary>
