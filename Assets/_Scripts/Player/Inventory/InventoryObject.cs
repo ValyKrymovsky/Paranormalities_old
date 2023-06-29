@@ -4,23 +4,13 @@ using UnityEngine.InputSystem;
 using System;
 using System.Linq;
 
-interface IInventory
-{
-    public void PickUp();
-}
-
 [CreateAssetMenu(fileName = "NewInventory", menuName = "Inventory System/Inventory")]
 public class InventoryObject : ScriptableObject
 {
-    public List<KeyValuePair<ItemObject, GameObject>> inventory = new List<KeyValuePair<ItemObject, GameObject>>();
-    public KeyValuePair<ItemObject, GameObject> selectedItem = new KeyValuePair<ItemObject, GameObject>();
-    public static KeyValuePair<ItemObject, GameObject> nullItem = new KeyValuePair<ItemObject, GameObject>(null, null);
-    public int size;
+    public List<(ItemObject item, GameObject model)> inventory = new List<(ItemObject item, GameObject model)>();
+    public (ItemObject item, GameObject model) selectedItem;
+    public int size = 15;
     public bool inventoryFull;
-    private P_Controls p_input;
-
-    private InputAction ac_pickUp;
-    private InputAction ac_selection;
 
     /// <summary>
     /// Checks if ItemObject is in inventory. Adds the item with mesh model if not.
@@ -32,22 +22,9 @@ public class InventoryObject : ScriptableObject
     {
         if (IsFull() == false)
         {
-            bool hasItem = false;
-            for (int i = 0; i < inventory.Count; i++)
+            if (!HasItem(_item))
             {
-                if (inventory[i].Key == _item)
-                {
-                    hasItem = true;
-                    break;
-                }
-            }
-
-            if (!hasItem)
-            {
-                var itemToAdd = new KeyValuePair<ItemObject, GameObject>(_item, _model);
-                int itemToReplace = inventory.IndexOf(inventory.Where(index => index.Equals(nullItem)).First());
-                inventory[itemToReplace] = itemToAdd;
-                PrintInventory();
+                inventory.Append((_item, _model));
                 return true;
             }
             else
@@ -68,24 +45,9 @@ public class InventoryObject : ScriptableObject
     /// <param name="_model"></param>
     public void RemoveItem(ItemObject _item, GameObject _model)
     {
-        bool hasItem = false;
-        for (int i = 0; i < inventory.Count; i++)
+        if (HasItem(_item))
         {
-            if (inventory[i].Key == _item && inventory[i].Value == _model)
-            {
-                hasItem = true;
-                break;
-            }
-        }
-
-        if (hasItem)
-        {
-            var item = new KeyValuePair<ItemObject, GameObject>(_item, _model);
-            var temp2 = new KeyValuePair<ItemObject, GameObject>(null, null);
-            int itemIndex = inventory.IndexOf(item);
-            inventory.RemoveAt(itemIndex);
-            inventory.Insert(itemIndex, temp2);
-            PrintInventory();
+            inventory.Remove((_item, _model));
         }
     }
 
@@ -97,10 +59,6 @@ public class InventoryObject : ScriptableObject
         return size;
     }
 
-    /// <summary>
-    /// Sets inventory size to _size.
-    /// </summary>
-    /// <param name="_size"></param>
     public void SetSize(int _size)
     {
         size = _size;
@@ -111,63 +69,17 @@ public class InventoryObject : ScriptableObject
     /// </summary>
     /// <param name="_index"></param>
     /// <returns></returns>
-    public KeyValuePair<ItemObject, GameObject> GetItem(int _index)
+    public (ItemObject item, GameObject model) GetItemAsIndex(int _index)
     {
         try
         {
-            KeyValuePair<ItemObject, GameObject> item = new KeyValuePair<ItemObject, GameObject>(inventory.ElementAt(_index).Key, inventory.ElementAt(_index).Value);
-            selectedItem = item;
+            (ItemObject item, GameObject model) item = inventory.ElementAt(_index);
             return item;
         }
         catch (ArgumentOutOfRangeException)
         {
-            KeyValuePair<ItemObject, GameObject> item = new KeyValuePair<ItemObject, GameObject>(null, null);
-            return item;
+            return (null, null);
         }  
-    }
-
-    /// <summary>
-    /// Returns next KeyValuePair from inventory at given index.
-    /// </summary>
-    /// <param name="_index"></param>
-    /// <returns></returns>
-    public KeyValuePair<ItemObject, GameObject> GetNextItem(int _index)
-    {
-        try
-        {
-            KeyValuePair<ItemObject, GameObject> item = new KeyValuePair<ItemObject, GameObject>(inventory.ElementAt(_index + 1).Key, inventory.ElementAt(_index + 1).Value);
-            selectedItem = item;
-            return item;
-        }
-        catch (ArgumentOutOfRangeException)
-        {
-            //KeyValuePair<ItemObject, GameObject> item = new KeyValuePair<ItemObject, GameObject>(null, null);
-            KeyValuePair<ItemObject, GameObject> item = new KeyValuePair<ItemObject, GameObject>(inventory.ElementAt(0).Key, inventory.ElementAt(0).Value);
-            selectedItem = item;
-            return item;
-        }
-    }
-
-    /// <summary>
-    /// Returns previout KeyPairValue from inventory at given
-    /// </summary>
-    /// <param name="_index"></param>
-    /// <returns></returns>
-    public KeyValuePair<ItemObject, GameObject> GetPreviousItem(int _index)
-    {
-        try
-        {
-            KeyValuePair<ItemObject, GameObject> item = new KeyValuePair<ItemObject, GameObject>(inventory.ElementAt(_index - 1).Key, inventory.ElementAt(_index - 1).Value);
-            selectedItem = item;
-            return item;
-        }
-        catch (ArgumentOutOfRangeException)
-        {
-            //KeyValuePair<ItemObject, GameObject> item = new KeyValuePair<ItemObject, GameObject>(null, null);
-            KeyValuePair<ItemObject, GameObject> item = new KeyValuePair<ItemObject, GameObject>(inventory.ElementAt(GetSize() - 1).Key, inventory.ElementAt(GetSize() - 1).Value);
-            selectedItem = item;
-            return item;
-        }
     }
 
     /// <summary>
@@ -175,7 +87,7 @@ public class InventoryObject : ScriptableObject
     /// </summary>
     /// <param name="_item"></param>
     /// <returns></returns>
-    public int GetIndexOfItem(KeyValuePair<ItemObject, GameObject> _item)
+    public int GetIndexOfItem((ItemObject item, GameObject model) _item)
     {
         return inventory.IndexOf(_item);
     }
@@ -184,7 +96,7 @@ public class InventoryObject : ScriptableObject
     /// Returns current selected item.
     /// </summary>
     /// <returns></returns>
-    public KeyValuePair<ItemObject, GameObject> GetSelectedItem()
+    public (ItemObject item, GameObject model) GetSelectedItem()
     {
         return selectedItem;
     }
@@ -202,26 +114,15 @@ public class InventoryObject : ScriptableObject
         }
         else
         {
-            foreach (var item in inventory)
+            foreach ((ItemObject item, GameObject model) item in inventory)
             {
-                if (item.Key == _item)
+                if (item.item.Equals(_item))
                 {
                     return true;
                 }
             }
             return false;
         }      
-    }
-
-    /// <summary>
-    /// Fills inventory with null items
-    /// </summary>
-    public void Fill()
-    {
-        for (int i = 0; i < GetSize(); i++)
-        {
-            inventory.Add(nullItem);
-        }
     }
 
     /// <summary>
@@ -238,28 +139,12 @@ public class InventoryObject : ScriptableObject
     /// <returns></returns>
     public bool IsFull()
     {
-        int nullItems = 0;
-        for (int i = 0; i < GetSize(); i++)
-        {
-            if (inventory[i].Key == null && inventory[i].Value == null)
-            {
-                nullItems += 1;
-                continue;
-            }
-            else
-            {
-                continue;
-            }
-        }
-
-        if (nullItems == 0)
+        if (inventory.Count >= size)
         {
             return true;
         }
-        else
-        {
-            return false;
-        }
+
+        return false;
     }
 
     /// <summary>
@@ -268,9 +153,9 @@ public class InventoryObject : ScriptableObject
     public void PrintInventory()
     {
         int index = 0;
-        foreach (var item in inventory)
+        foreach ((ItemObject item, GameObject model) item in inventory)
         {
-            Debug.Log(string.Format("Id: {0}, Item: {1}, model : {2}", index, item.Key, item.Value));
+            Debug.Log(string.Format("Id: {0}, Item: {1}, model : {2}", index, item.item, item.model));
             index++;
         }
     }

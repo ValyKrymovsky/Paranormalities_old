@@ -118,6 +118,15 @@ public partial class @P_Controls: IInputActionCollection2, IDisposable
                     ""initialStateCheck"": false
                 },
                 {
+                    ""name"": ""Inventory"",
+                    ""type"": ""Button"",
+                    ""id"": ""cb8e12dd-74b0-4dbf-b64b-0b29d4e23cb9"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
                     ""name"": ""Menu"",
                     ""type"": ""Button"",
                     ""id"": ""214a6c92-6730-4576-9264-8692045c4ccf"",
@@ -600,6 +609,17 @@ public partial class @P_Controls: IInputActionCollection2, IDisposable
                     ""action"": ""Throw"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""b65d85eb-7c29-4c1e-9a6f-041c2e04b695"",
+                    ""path"": ""<Keyboard>/tab"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard&Mouse"",
+                    ""action"": ""Inventory"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -657,6 +677,7 @@ public partial class @P_Controls: IInputActionCollection2, IDisposable
         m_Player_Throw = m_Player.FindAction("Throw", throwIfNotFound: true);
         m_Player_Selectitem = m_Player.FindAction("Select item", throwIfNotFound: true);
         m_Player_Dropitem = m_Player.FindAction("Drop item", throwIfNotFound: true);
+        m_Player_Inventory = m_Player.FindAction("Inventory", throwIfNotFound: true);
         m_Player_Menu = m_Player.FindAction("Menu", throwIfNotFound: true);
     }
 
@@ -729,6 +750,7 @@ public partial class @P_Controls: IInputActionCollection2, IDisposable
     private readonly InputAction m_Player_Throw;
     private readonly InputAction m_Player_Selectitem;
     private readonly InputAction m_Player_Dropitem;
+    private readonly InputAction m_Player_Inventory;
     private readonly InputAction m_Player_Menu;
     public struct PlayerActions
     {
@@ -744,6 +766,7 @@ public partial class @P_Controls: IInputActionCollection2, IDisposable
         public InputAction @Throw => m_Wrapper.m_Player_Throw;
         public InputAction @Selectitem => m_Wrapper.m_Player_Selectitem;
         public InputAction @Dropitem => m_Wrapper.m_Player_Dropitem;
+        public InputAction @Inventory => m_Wrapper.m_Player_Inventory;
         public InputAction @Menu => m_Wrapper.m_Player_Menu;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
@@ -784,6 +807,9 @@ public partial class @P_Controls: IInputActionCollection2, IDisposable
             @Dropitem.started += instance.OnDropitem;
             @Dropitem.performed += instance.OnDropitem;
             @Dropitem.canceled += instance.OnDropitem;
+            @Inventory.started += instance.OnInventory;
+            @Inventory.performed += instance.OnInventory;
+            @Inventory.canceled += instance.OnInventory;
             @Menu.started += instance.OnMenu;
             @Menu.performed += instance.OnMenu;
             @Menu.canceled += instance.OnMenu;
@@ -821,6 +847,9 @@ public partial class @P_Controls: IInputActionCollection2, IDisposable
             @Dropitem.started -= instance.OnDropitem;
             @Dropitem.performed -= instance.OnDropitem;
             @Dropitem.canceled -= instance.OnDropitem;
+            @Inventory.started -= instance.OnInventory;
+            @Inventory.performed -= instance.OnInventory;
+            @Inventory.canceled -= instance.OnInventory;
             @Menu.started -= instance.OnMenu;
             @Menu.performed -= instance.OnMenu;
             @Menu.canceled -= instance.OnMenu;
@@ -880,6 +909,7 @@ public partial class @P_Controls: IInputActionCollection2, IDisposable
         void OnThrow(InputAction.CallbackContext context);
         void OnSelectitem(InputAction.CallbackContext context);
         void OnDropitem(InputAction.CallbackContext context);
+        void OnInventory(InputAction.CallbackContext context);
         void OnMenu(InputAction.CallbackContext context);
     }
 }

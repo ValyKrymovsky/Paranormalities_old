@@ -31,6 +31,7 @@ public class P_Interactor : MonoBehaviour
     [SerializeField] private LayerMask interactiblesMask;
     [SerializeField] private Collider markedCollider;
     private InteractionController interactionController;
+    private LayerMask excludeCollisionMask;
     [Space]
 
     [Header("Interaction Popup")]
@@ -47,6 +48,12 @@ public class P_Interactor : MonoBehaviour
     [Separator("Pickup", true)]
 
     [SerializeField] private GameObject pickupPoint;
+    [SerializeField, ReadOnly] private Rigidbody objectRigidbody;
+    [SerializeField] private Collider objectCollider;
+    private float objectMass = 0;
+    private float objectDrag = 0;
+    private float objectAngularDrag = 0;
+
     [Space]
 
     [Header("Distances")]
@@ -59,6 +66,8 @@ public class P_Interactor : MonoBehaviour
     [SerializeField, ReadOnly] private float pickupPointDistance;
     [Space]
     [SerializeField] private LayerMask pickupLayer;
+    [Space]
+    [SerializeField] private float maxObjectWeight;
     [Space]
     [Tooltip("Reduces the velocity by a multiplier. (Useful for adding more weight to objects)")]
     [SerializeField, MinValue(1)] private float dropVelocityReduction;
@@ -74,30 +83,19 @@ public class P_Interactor : MonoBehaviour
     private float zoomInterval;
 
 
-
-
-    private Rigidbody pickupObjectRigidbody;
-    private float objectMass = 0;
-    private float objectDrag = 0;
-    private float objectAngularDrag = 0;
-
     // Components //
     private P_Controls p_input;
-    private Camera p_camera;
-
-    private bool hittingAir;
-
-
-    // Input Actions //
-    private InputAction ac_interact;  // input action for interacting
-    private Vector3 pointInAir;
+    private GameObject player;
+    public LayerMask playerLayerMask;
+    private Collider playerCollider;
 
 
     void Awake()
     {
         p_input = new P_Controls();
-        ac_interact = p_input.Player.Interact;
-        p_camera = GetComponent<Camera>();
+
+        player = GameObject.FindGameObjectWithTag("Player");
+        playerCollider = player.GetComponent<Collider>();
 
         pickupPointDistance = Vector3.Distance(transform.position, pickupPoint.transform.position);
 
@@ -125,10 +123,10 @@ public class P_Interactor : MonoBehaviour
 
     private void Update() 
     {
-        if (!pickupObjectRigidbody)
+        if (!objectRigidbody)
         {
             CheckInteractibles();
-        }
+        } 
     }
 
     private void FixedUpdate()
@@ -144,28 +142,21 @@ public class P_Interactor : MonoBehaviour
             pickupPoint.transform.position = transform.position + transform.forward * minPickupPointDistance;
         }
 
-        if (pickupObjectRigidbody)
+        if (objectRigidbody)
         {
-            if (Vector3.Distance(pickupObjectRigidbody.transform.position, pickupPoint.transform.position) > maxDistanceFromPoint)
+            if (Vector3.Distance(objectRigidbody.transform.position, pickupPoint.transform.position) > maxDistanceFromPoint)
             {
-                pickupObjectRigidbody.useGravity = true;
-                pickupObjectRigidbody.angularDrag = objectAngularDrag;
-                pickupObjectRigidbody.drag = objectDrag;
-                pickupObjectRigidbody.mass = objectMass;
-                pickupObjectRigidbody = null;
-
-                objectAngularDrag = 0;
-                objectDrag = 0;
-                objectMass = 0;
-                return;
+                objectCollider.excludeLayers = excludeCollisionMask;
+                ResetRigidbodyParameters(objectRigidbody);
+                objectCollider = null;
             }
 
             // Object movement
-            pickupObjectRigidbody.angularVelocity = Vector3.zero;
-            Vector3 DirectionToPoint = pickupPoint.transform.position - pickupObjectRigidbody.transform.position;
-            pickupObjectRigidbody.AddForce(DirectionToPoint * pickupPointDistance * 500f, ForceMode.Acceleration);
+            objectRigidbody.angularVelocity = Vector3.zero;
+            Vector3 DirectionToPoint = pickupPoint.transform.position - objectRigidbody.transform.position;
+            objectRigidbody.AddForce(DirectionToPoint * pickupPointDistance * 500f, ForceMode.Acceleration);
 
-            pickupObjectRigidbody.velocity = Vector3.zero;
+            objectRigidbody.velocity = Vector3.zero;
         }
     }
 
@@ -175,24 +166,24 @@ public class P_Interactor : MonoBehaviour
     /// <param name="context"></param>
     public void Interact(InputAction.CallbackContext _context)
     {
-        // if (_context.phase == InputActionPhase.Performed)
-        // {
-        //     try
-        //     {
-        //         if (markedCollider.gameObject.TryGetComponent(out IInteraction interactObj))
-        //         {
-        //             interactObj.Interact();
-        //         }
-        //     }
-        //     catch(NullReferenceException)
-        //     {
-        //         Debug.Log("Interaction script not found");
-        //     }
-        //     catch(UnassignedReferenceException)
-        //     {
-        //         Debug.Log("Object cannot be interacted with");
-        //     }
-        // }
+        if (_context.phase == InputActionPhase.Performed)
+        {
+            try
+            {
+                if (markedCollider.gameObject.TryGetComponent(out IInteraction interactObj))
+                {
+                    interactObj.Interact();
+                }
+            }
+            catch(NullReferenceException)
+            {
+                Debug.Log("Interaction script not found");
+            }
+            catch(UnassignedReferenceException)
+            {
+                Debug.Log("Object cannot be interacted with");
+            }
+        }
     }
 
     /// <summary>
@@ -290,7 +281,6 @@ public class P_Interactor : MonoBehaviour
                     Vector2 popupPosition = new Vector2(activePopup.transform.position.x, activePopup.transform.position.z);
                     float proximityTextSize = Mathf.InverseLerp(interactRange + interactiblesCheckRange, 0, Vector2.Distance(playerPosition, popupPosition)) * maxTextSize;
                     if (proximityTextSize < minTextSize) proximityTextSize = minTextSize;
-                    Debug.Log(proximityTextSize);
                     interactionController.SetTextSize(proximityTextSize);
                 }
 
@@ -312,20 +302,31 @@ public class P_Interactor : MonoBehaviour
 
             if (Physics.SphereCast(transform.position, .25f, transform.forward, out RaycastHit hitInfo, maxPickupDistance, pickupLayer))
             {
-                float objectWeight = Physics.gravity.y * hitInfo.rigidbody.mass;
-                if (objectWeight <= 10)
+                float objectWeight = -Physics.gravity.y * hitInfo.rigidbody.mass;
+
+                if (objectWeight <= maxObjectWeight)
                 {
-                    pickupObjectRigidbody = hitInfo.rigidbody;
+                    objectRigidbody = hitInfo.rigidbody;
 
                     interactionController.TurnOffPopup();
 
-                    objectMass = pickupObjectRigidbody.mass;
-                    objectDrag = pickupObjectRigidbody.drag;
-                    objectAngularDrag = pickupObjectRigidbody.angularDrag;
+                    objectCollider = objectRigidbody.GetComponent<Collider>();
 
-                    pickupObjectRigidbody.useGravity = false;
-                    pickupObjectRigidbody.angularDrag = 200f;
-                    float distanceToObject = Vector2.Distance(new Vector2(transform.position.x, transform.position.z), new Vector2(pickupObjectRigidbody.transform.position.x, pickupObjectRigidbody.transform.position.z));
+                    excludeCollisionMask = objectCollider.excludeLayers;
+
+                    objectCollider.excludeLayers = playerLayerMask;
+
+                    Debug.Log(objectCollider.excludeLayers);
+
+                    Debug.Log("Done");
+
+                    objectMass = objectRigidbody.mass;
+                    objectDrag = objectRigidbody.drag;
+                    objectAngularDrag = objectRigidbody.angularDrag;
+
+                    objectRigidbody.useGravity = false;
+                    objectRigidbody.angularDrag = 200f;
+                    float distanceToObject = Vector2.Distance(new Vector2(transform.position.x, transform.position.z), new Vector2(objectRigidbody.transform.position.x, objectRigidbody.transform.position.z));
                     pickupPoint.transform.position = transform.position + transform.forward * distanceToObject;
                 }
                 else
@@ -338,22 +339,14 @@ public class P_Interactor : MonoBehaviour
         }
         else if(_context.phase == InputActionPhase.Canceled)
         {
-            if (pickupObjectRigidbody)
+            if (objectRigidbody)
             {
                 interactionController.TurnOnPopup();
 
-                pickupObjectRigidbody.useGravity = true;
-                pickupObjectRigidbody.angularDrag = objectAngularDrag;
-                pickupObjectRigidbody.drag = objectDrag;
-                pickupObjectRigidbody.mass = objectMass;
+                objectCollider.excludeLayers = excludeCollisionMask;
 
-                pickupObjectRigidbody.velocity /= dropVelocityReduction;
-                pickupObjectRigidbody = null;
-
-                objectAngularDrag = 0;
-                objectDrag = 0;
-                objectMass = 0;
-                return;
+                ResetRigidbodyParameters(objectRigidbody);
+                objectCollider = null;
             }
         }
     }
@@ -378,29 +371,37 @@ public class P_Interactor : MonoBehaviour
 
     public void Throw(InputAction.CallbackContext _context)
     {
-        if (pickupObjectRigidbody)
+        if (objectRigidbody)
         {
             if (_context.phase == InputActionPhase.Performed)
             {
-                pickupObjectRigidbody.AddForce(transform.position + transform.forward * (throwStrength * 100), ForceMode.Acceleration);
+                objectRigidbody.AddForce(transform.position + transform.forward * (throwStrength * 100), ForceMode.Acceleration);
 
                 interactionController.TurnOnPopup();
 
-                pickupObjectRigidbody.useGravity = true;
-                pickupObjectRigidbody.angularDrag = objectAngularDrag;
-                pickupObjectRigidbody.drag = objectDrag;
-                pickupObjectRigidbody.mass = objectMass;
+                objectCollider.excludeLayers = excludeCollisionMask;
 
-                pickupObjectRigidbody.velocity /= dropVelocityReduction;
-
-                pickupObjectRigidbody = null;
-
-                objectAngularDrag = 0;
-                objectDrag = 0;
-                objectMass = 0;
-                return;
+                ResetRigidbodyParameters(objectRigidbody);
             }
         }
+    }
+
+    public void ResetRigidbodyParameters(Rigidbody _rigidbody)
+    {
+        objectRigidbody.excludeLayers = excludeCollisionMask;
+
+        objectRigidbody.useGravity = true;
+        objectRigidbody.angularDrag = objectAngularDrag;
+        objectRigidbody.drag = objectDrag;
+        objectRigidbody.mass = objectMass;
+
+        objectRigidbody.velocity /= dropVelocityReduction;
+        objectRigidbody = null;
+
+        objectAngularDrag = 0;
+        objectDrag = 0;
+        objectMass = 0;
+        return;
     }
 
     private void OnDrawGizmos() 

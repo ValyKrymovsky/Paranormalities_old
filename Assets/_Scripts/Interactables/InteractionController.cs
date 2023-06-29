@@ -21,8 +21,6 @@ public class InteractionController : MonoBehaviour, IInteractionPopup
 
     private void Awake()
     {
-        // highlightActive = false;
-
         popupLocation = customPopupLocation ? customPopupLocationObject.transform.position : transform.position;
         
     }

@@ -14,10 +14,10 @@ public class P_Inventory : MonoBehaviour
     [SerializeField, Separator("Drop", true)]
     private float dropRange;
 
-    private P_Controls p_input;
+    [Separator("Inventory UI", true)]
+    [SerializeField] private GameObject inventoryUI;
 
-    private InputAction ac_pickUp;
-    private InputAction ac_selection;
+    private P_Controls p_input;
 
     private GameObject placeholderModel;
 
@@ -35,14 +35,11 @@ public class P_Inventory : MonoBehaviour
         }
 
         inventory.Clear();
-        inventory.Fill();
 
         p_input = new P_Controls();
         ch_controller = GetComponent<CharacterController>();
         cameraObject = GameObject.FindGameObjectWithTag("MainCamera");
         p_camera = cameraObject.GetComponent<Camera>();
-        ac_selection = p_input.Player.Selectitem;
-        ac_pickUp = p_input.Player.Interact;
 
     }
 
@@ -52,69 +49,15 @@ public class P_Inventory : MonoBehaviour
     /// <param name="context"></param>
     public void SelectItem(InputAction.CallbackContext context)
     {
-        if ((int)context.phase == 3)
-        {
-            if (context.control.displayName == "D-Pad Right")
-            {
-                selectedItem = inventory.GetNextItem(inventory.GetIndexOfItem(inventory.GetSelectedItem()));
-                if (selectedItem.Key != null && selectedItem.Value != null)
-                {
-                    placeholderModel = selectedItem.Value;
-                    print(selectedItem);
-                }
-            }
-            else if (context.control.displayName == "D-Pad Left")
-            {
-                selectedItem = inventory.GetPreviousItem(inventory.GetIndexOfItem(inventory.GetSelectedItem()));
-                if (selectedItem.Key != null && selectedItem.Value != null)
-                {
-                    placeholderModel = selectedItem.Value;
-                    print(selectedItem);
-                }
-            }
-            else
-            {
-                selectedItem = inventory.GetItem(int.Parse(context.control.displayName) - 1);
-                if (selectedItem.Key != null && selectedItem.Value != null)
-                {
-                    placeholderModel = selectedItem.Value;
-                    print(selectedItem);
-                    Debug.Log(placeholderModel);
-                }
-            }
-        }
+        
     }
 
     /// <summary>
     /// Tries to add item to inventory.
     /// </summary>
-    public void 
-    PickUp(ItemObject _item, GameObject _model)
+    public void PickUp(ItemObject _item, GameObject _model)
     {
-        // if (inventory.AddItem(_item, _model))
-        // {
-        //     if (_model.TryGetComponent(out HighlightController highlightController))
-        //         highlightController.TurnOffHighlight();
-            
-        //     if (transform.childCount == 1)
-        //     {
-        //         Transform childHighlight = transform.Find(string.Format("{0} highlight", name));
-        //         Object.Destroy(childHighlight.gameObject);
-        //     }
-
-        //     if (_model.TryGetComponent(out InteractionController interactionController))
-        //         interactionController.SetInteractible(false);
-
-        // _model.gameObject.SetActive(false);
-        // }
-        // else if (!inventory.AddItem(_item, _model) && inventory.IsFull())
-        // {
-        //     Debug.Log("Inventory full");
-        // }
-        // else
-        // {
-        //     Debug.Log("Already has the item");
-        // }
+        
     }
     
     /// <summary>
@@ -123,29 +66,7 @@ public class P_Inventory : MonoBehaviour
     /// <param name="context"></param>
     public void DropItem(InputAction.CallbackContext context)
     {
-        // if ((int)context.phase == 3)
-        // {
-        //     if (inventory.HasItem(selectedItem.Key))
-        //     {
-        //         if (Physics.Raycast(p_camera.transform.position, p_camera.transform.forward, out RaycastHit hitInfo, dropRange))
-        //         {
-        //             Vector3 dropPosition = new Vector3(hitInfo.point.x, hitInfo.point.y + .1f, hitInfo.point.z);
-        //             string currentRoom = GetCurrentRoomName();
-        //             GameObject droppedItem = Instantiate(placeholderModel, dropPosition, transform.rotation, GameObject.Find(currentRoom).transform);
-        //             inventory.RemoveItem(selectedItem.Key, selectedItem.Value);
-        //             droppedItem.name = selectedItem.Value.name;
-        //             InteractionController interactionController = droppedItem.GetComponent<InteractionController>();
-        //             HighlightController highlightController = droppedItem.GetComponent<HighlightController>();
-        //             highlightController.TurnOffHighlight();
-        //             interactionController.SetInteractible(true);
-        //             droppedItem.SetActive(true);
-        //             highlightController.TurnOffHighlight();
-        //             Object.Destroy(selectedItem.Value);
-        //         }
-                
-        //     }
-            
-        // }
+        
     }
 
     /// <summary>
@@ -183,6 +104,18 @@ public class P_Inventory : MonoBehaviour
     public void Set(InventoryObject _inventory)
     {
         inventory = _inventory;
+    }
+
+    public void OpenInventory(InputAction.CallbackContext _context)
+    {
+        if (!inventoryUI.activeSelf)
+        {
+            inventoryUI.SetActive(true);
+        }
+        else
+        {
+            inventoryUI.SetActive(false);
+        }
     }
 
     void OnEnable()
