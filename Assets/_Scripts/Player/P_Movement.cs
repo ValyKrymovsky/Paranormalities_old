@@ -29,7 +29,10 @@ public class P_Movement : MonoBehaviour
     public GameObject directionSphere;
 
     [Separator("Player movement", true)]
+    [Space]
     [Header("General parameters")]
+    [Space]
+    private bool canMove;
     [SerializeField]
     private float speed;
     [SerializeField]
@@ -47,11 +50,15 @@ public class P_Movement : MonoBehaviour
     private Vector3 playerMoveDirection;
     private Vector2 smoothMoveValue;
     private Vector2 currentVelocity;
+    [Space]
     [ Header("Movement Smoothening")]
+    [Space]
     [SerializeField, Tooltip("Time before reaching full speed")]
     private float smoothTime;
 
+    [Space]
     [Separator("Stamina", true)]
+    [Space]
     [SerializeField]
     private bool useStaminaSystem;
     [SerializeField, ConditionalField("useStaminaSystem")]
@@ -59,7 +66,9 @@ public class P_Movement : MonoBehaviour
     [SerializeField, ConditionalField("useStaminaSystem")]
     private float regenValue;
 
+    [Space]
     [Separator("Gravity", true)]
+    [Space]
     [SerializeField]
     private float gravityForce;
     [SerializeField]
@@ -69,9 +78,8 @@ public class P_Movement : MonoBehaviour
     private static float gravity = -9.8f;
     private float velocity;
 
-    [Separator("Rigidbody manipulation")]
-    [SerializeField]
-    private float forceAmount = 1;
+
+
     // Coroutines //
     private Coroutine regenCoroutine;
     private Coroutine depleteCoroutine;
@@ -116,6 +124,8 @@ public class P_Movement : MonoBehaviour
 
         regenCoroutine = null;
         depleteCoroutine = null;
+
+        canMove = true;
     }
 
     void OnEnable()
@@ -128,9 +138,27 @@ public class P_Movement : MonoBehaviour
         p_input.Disable();
     }
 
+    public bool GetCanMove()
+    {
+        return canMove;
+    }
+
+    public void SetCanMove(bool _canMove)
+    {
+        canMove = _canMove;
+    }
+
     private void Update()
     {
-        PlayerMove();
+        if (canMove)
+        {
+            PlayerMove();
+        }
+        else
+        {
+            smoothMoveValue = Vector2.SmoothDamp(smoothMoveValue, Vector2.zero, ref currentVelocity, smoothTime);
+        }
+        
     }
 
     /// <summary>
@@ -214,8 +242,6 @@ public class P_Movement : MonoBehaviour
 
         // Only for other classes
         playerMoveDirection = directionToMove;
-
-        Debug.DrawLine(transform.position, transform.position + directionToMove * 10, Color.green);
 
         isMoving = IsPlayerMoving();
 

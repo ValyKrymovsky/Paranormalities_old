@@ -15,7 +15,7 @@ public class InventorySlot : VisualElement
 
         VisualElement slotImage = new VisualElement();
         slotImage.name = "image";
-        slot.hierarchy.Add(slotImage);
+        slot.Add(slotImage);
         
     }
 }

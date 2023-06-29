@@ -23,8 +23,11 @@ public class P_Inventory : MonoBehaviour
 
     private CharacterController ch_controller;
 
+    private P_Movement p_movement;
+    private P_Camera p_camera;
+
     private GameObject cameraObject;
-    private Camera p_camera;
+    private Camera playerCamera;
     
 
     public void Awake()
@@ -39,8 +42,10 @@ public class P_Inventory : MonoBehaviour
         p_input = new P_Controls();
         ch_controller = GetComponent<CharacterController>();
         cameraObject = GameObject.FindGameObjectWithTag("MainCamera");
-        p_camera = cameraObject.GetComponent<Camera>();
+        playerCamera = cameraObject.GetComponent<Camera>();
 
+        p_movement = GetComponent<P_Movement>();
+        p_camera = cameraObject.GetComponent<P_Camera>();
     }
 
     /// <summary>
@@ -61,7 +66,7 @@ public class P_Inventory : MonoBehaviour
     }
     
     /// <summary>
-    /// Drops item. Casts ray from camera and spawns the item on hitInfo.point location.
+    /// Drops item. Casts ray from playerCamera and spawns the item on hitInfo.point location.
     /// </summary>
     /// <param name="context"></param>
     public void DropItem(InputAction.CallbackContext context)
@@ -110,11 +115,19 @@ public class P_Inventory : MonoBehaviour
     {
         if (!inventoryUI.activeSelf)
         {
+            p_movement.SetCanMove(false);
+            p_camera.SetCanLook(false);
             inventoryUI.SetActive(true);
+            Cursor.lockState = CursorLockMode.None;
+            
         }
         else
         {
+            p_movement.SetCanMove(true);
+            p_camera.SetCanLook(true);
             inventoryUI.SetActive(false);
+            Cursor.lockState = CursorLockMode.Locked;
+            
         }
     }
 

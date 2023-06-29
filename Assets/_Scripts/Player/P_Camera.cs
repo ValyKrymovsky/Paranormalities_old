@@ -32,13 +32,14 @@ public class P_Camera : MonoBehaviour
     private Vector2 input_value;
 
     private P_Controls p_input;
-    private InputAction ac_look;
 
     private GameObject playerBody;
     private Transform playerBodyPosition;
 
     private Camera cam;
     private Transform camPosition;
+
+    private bool canLook;
 
     private void Awake()
     {
@@ -49,7 +50,8 @@ public class P_Camera : MonoBehaviour
         cam = GetComponent<Camera>();
         camPosition = cam.transform;
 
-        ac_look = p_input.Player.Look;
+        canLook = true;
+
     }
 
     void OnEnable()
@@ -62,10 +64,23 @@ public class P_Camera : MonoBehaviour
         p_input.Disable();
     }
 
+    public bool GetCanLook()
+    {
+        return canLook;
+    }
+
+    public void SetCanLook(bool _canLook)
+    {
+        canLook = _canLook;
+    }
 
     void Update()
     {
-        Look();
+        if (canLook)
+        {
+            Look();
+        }
+        
     }
 
     /// <summary>

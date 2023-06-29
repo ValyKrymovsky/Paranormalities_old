@@ -316,10 +316,6 @@ public class P_Interactor : MonoBehaviour
 
                     objectCollider.excludeLayers = playerLayerMask;
 
-                    Debug.Log(objectCollider.excludeLayers);
-
-                    Debug.Log("Done");
-
                     objectMass = objectRigidbody.mass;
                     objectDrag = objectRigidbody.drag;
                     objectAngularDrag = objectRigidbody.angularDrag;
