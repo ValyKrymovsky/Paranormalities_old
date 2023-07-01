@@ -20,6 +20,7 @@ public class P_Inventory : MonoBehaviour
     [Separator("Inventory UI", true)]
     [SerializeField] private GameObject inventoryUI;
     [SerializeField, ReadOnly] private int slotCount;
+    private bool inventoryOpen;
 
     [Space]
     [Header("Visual Eelements")]
@@ -67,7 +68,7 @@ public class P_Inventory : MonoBehaviour
         //                    //
 
         root = inventoryUI.GetComponent<UIDocument>().rootVisualElement;
-        inventoryGrid = root.Q<VisualElement>("inventoryGrid");
+        inventoryGrid = root.Q<VisualElement>("InventoryGrid");
 
         inventorySlots = new List<InventorySlot>();
         foreach(InventorySlot inventorySlot in inventoryGrid.Children().Where(slot => slot.GetType().Equals(typeof(InventorySlot))))
@@ -94,22 +95,25 @@ public class P_Inventory : MonoBehaviour
 
     public void PickUp(ItemObject _item, GameObject _model, Sprite _itemImage)
     {
-        if (!(_item, _model).Equals((null, null)))
+        if (!inventoryOpen)
         {
-            if (inventory.AddItem(_item, _model))
+            if (!(_item, _model).Equals((null, null)))
             {
-                InventorySlot tmp = GetFirstEmptySlot();
+                if (inventory.AddItem(_item, _model))
+                {
+                    InventorySlot tmp = GetFirstEmptySlot();
 
-                Debug.Log(tmp.SlotIndex);
+                    Debug.Log(tmp.SlotIndex);
 
-                tmp.SetItemParameters(_item, _model, _itemImage);
-                Debug.Log(tmp.item);
+                    tmp.SetItemParameters(_item, _model, _itemImage);
+                    Debug.Log(tmp.item);
+                }
+                else
+                {
+                    Debug.Log("Item already in inventory");
+                }
+                
             }
-            else
-            {
-                Debug.Log("Item already in inventory");
-            }
-            
         }
     }
     
@@ -147,7 +151,7 @@ public class P_Inventory : MonoBehaviour
     {
         if (root.style.display == DisplayStyle.None)
         {
-            Time.timeScale = 0f;
+            inventoryOpen = true;
             p_movement.SetCanMove(false);
             p_camera.SetCanLook(false);
             root.style.display = DisplayStyle.Flex;
@@ -156,7 +160,7 @@ public class P_Inventory : MonoBehaviour
         }
         else
         {
-            Time.timeScale = 1;
+            inventoryOpen = false;
             p_movement.SetCanMove(true);
             p_camera.SetCanLook(true);
             root.style.display = DisplayStyle.None;

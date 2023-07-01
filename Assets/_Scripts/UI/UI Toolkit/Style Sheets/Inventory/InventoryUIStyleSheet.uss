@@ -6,8 +6,8 @@ VisualElement {
     flex-wrap: wrap;
     flex-grow: 1;
     align-items: center;
-    justify-content: center;
-    align-self: center;
+    justify-content: space-around;
+    align-self: stretch;
     width: 100%;
     height: 100%;
     flex-shrink: 1;
@@ -19,19 +19,20 @@ VisualElement {
 }
 
 .inventorySlotBoundary {
-    margin-left: 0;
-    margin-right: 0;
-    margin-top: 0;
-    margin-bottom: 0;
-    background-color: rgb(0, 0, 0);
-    height: 178.5px;
-    width: 188.7px;
+    margin-left: 1px;
+    margin-right: 1px;
+    margin-top: 1px;
+    margin-bottom: 1px;
+    background-color: rgb(255, 255, 255);
+    height: 175px;
+    width: 175px;
     flex-shrink: 1;
     align-items: center;
     justify-content: center;
     align-self: center;
-    flex-grow: 1;
+    flex-grow: 0;
     flex-basis: auto;
+    color: rgba(0, 0, 0, 0);
 }
 
 .inventorySlot {
@@ -39,7 +40,7 @@ VisualElement {
     height: 100%;
     align-items: center;
     justify-content: center;
-    background-color: rgba(202, 52, 52, 0.86);
+    background-color: rgb(255, 255, 255);
     align-self: auto;
 }
 
@@ -49,7 +50,7 @@ VisualElement {
     flex-grow: 1;
     justify-content: center;
     align-items: center;
-    background-color: rgba(187, 192, 103, 0.75);
+    background-color: rgb(241, 255, 0);
     align-self: center;
     background-image: none;
 }

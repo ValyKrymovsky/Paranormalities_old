@@ -83,10 +83,6 @@ public class P_Camera : MonoBehaviour
         
     }
 
-    /// <summary>
-    /// Gets mouse input from InputAction and puts it in input_value.
-    /// </summary>
-    /// <param name="_ctx"></param>
     public void GetLookValue(InputAction.CallbackContext _ctx)
     {
         input_value = _ctx.ReadValue<Vector2>();
@@ -97,9 +93,6 @@ public class P_Camera : MonoBehaviour
         return input_value;
     }
 
-    /// <summary>
-    /// Rotates camera based on mouse input value. If useStabilization is true, calls camera stabilization methods.
-    /// </summary>
     private void Look()
     {
         mouseX = input_value.x * sensetivity * Time.deltaTime;
@@ -119,15 +112,8 @@ public class P_Camera : MonoBehaviour
         {
             transform.position = FollowHeadJoint(headJoint, eyeJoint, .2f);
         }
-
-        Debug.DrawLine(transform.position, transform.position + transform.forward * 50);
-        
     }
 
-    /// <summary>
-    /// Finds point in space in front of camera based on given focusPointStabilizationDistance.
-    /// </summary>
-    /// <returns>Point in space position</returns>
     private Vector3 FocusTarget()
     {
         focusPointStabilizationDistance = focusPointStabilizationDistance <= 0 ? 1f : focusPointStabilizationDistance;
@@ -135,24 +121,11 @@ public class P_Camera : MonoBehaviour
         return pos;
     }
 
-    /// <summary>
-    /// Returns position of head joint position with eye joint y position with given offset.
-    /// </summary>
-    /// <param name="_headJoint"></param>
-    /// <param name="_eyeJoint"></param>
-    /// <param name="_offset"></param>
     private Vector3 FollowHeadJoint(GameObject _headJoint, GameObject _eyeJoint, float _offset)
     {
         return new Vector3(_headJoint.transform.position.x, _eyeJoint.transform.position.y, _headJoint.transform.position.z) + _headJoint.transform.forward * _offset;
     }
 
-    /// <summary>
-    /// Returns position of head joint position with eye joint y position with given offset and stabilizes position with smoothDamp.
-    /// </summary>
-    /// <param name="_headJoint"></param>
-    /// <param name="_eyeJoint"></param>
-    /// <param name="_offset"></param>
-    /// <param name="_stabilizationAmount"></param>
     private Vector3 FollowHeadJoint(GameObject _headJoint, GameObject _eyeJoint, float _offset, float _stabilizationAmount)
     {
         return Vector3.SmoothDamp(transform.position, new Vector3(_headJoint.transform.position.x, _eyeJoint.transform.position.y, _headJoint.transform.position.z) + _headJoint.transform.forward * _offset, ref smootheningVelocity, _stabilizationAmount);

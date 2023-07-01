@@ -41,20 +41,22 @@ public class InventorySlot : VisualElement
     public InventorySlot()
     {
         slot = new VisualElement();
-        slot.name = "inventorySlot";
+        slot.name = "InventorySlot";
         slot.AddToClassList("inventorySlot");
         hierarchy.Add(slot);
 
         slotCollider = new Button();
         slotCollider.focusable = false;
-        slotCollider.name = "slotCollision";
+        slotCollider.name = "SlotCollision";
         slotCollider.AddToClassList("inventorySlotCollider");
         slot.Add(slotCollider);
 
         slotImage = new VisualElement();
-        slotImage.name = "image";
+        slotImage.name = "Image";
         slotImage.AddToClassList("inventorySlotImage");
         slotCollider.Add(slotImage);
+
+        RegisterCallback<PointerDownEvent>(OnPointerDown, TrickleDown.TrickleDown);
     }
 
     public void SetItemParameters(ItemObject _item, GameObject _model, Sprite _itemImage)
@@ -63,8 +65,32 @@ public class InventorySlot : VisualElement
         slotImage.style.backgroundImage = new StyleBackground(_itemImage);
     }
 
+    public void ResetParameters()
+    {
+        item = (null, null);
+        slotImage.style.backgroundImage = null;
+    }
+
     public Button GetSlotButton()
     {
         return slotCollider;
+    }
+
+    public Sprite GetItemImage()
+    {
+        return slotImage.style.backgroundImage.value.sprite;
+    }
+
+    public void SetSlotImage(Sprite _image)
+    {
+        slotImage.style.backgroundImage = new StyleBackground(_image);
+    }
+    
+    private void OnPointerDown(PointerDownEvent _event)
+    {
+        if (_event.button != 0 || item.Equals((null, null))) return;
+
+        InventoryEventHandler.StartDrag(_event.position, this);
+        slotImage.style.backgroundImage = null;
     }
 }
