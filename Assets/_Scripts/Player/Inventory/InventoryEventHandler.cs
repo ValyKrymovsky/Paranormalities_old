@@ -46,7 +46,7 @@ public class InventoryEventHandler : MonoBehaviour {
 
         foreach(InventorySlot inventorySlot in inventorySlots)
         {
-            inventorySlot.GetSlotButton().RegisterCallback<MouseOverEvent>((type) =>
+            inventorySlot.RegisterCallback<MouseOverEvent>((type) =>
             {
                 if (!inventorySlot.item.Equals((null, null)) && inventorySlot.slotImage.style.backgroundImage.value.sprite != null)
                 {
@@ -54,7 +54,7 @@ public class InventoryEventHandler : MonoBehaviour {
                 }
             });
 
-            inventorySlot.GetSlotButton().RegisterCallback<MouseOutEvent>((type) =>
+            inventorySlot.RegisterCallback<MouseOutEvent>((type) =>
             {
                 ResetDescription();
             });
@@ -101,11 +101,20 @@ public class InventoryEventHandler : MonoBehaviour {
     {
         if (!isDragging) return;
 
-        IEnumerable<InventorySlot> overlapingSlots = inventorySlots.Where(x => x.worldBound.Overlaps(ghostIcon.worldBound) && x.item.Equals((null, null)));
+        IEnumerable<InventorySlot> overlapingSlots = inventorySlots.Where(x => x.worldBound.Overlaps(ghostIcon.worldBound));
 
         if (overlapingSlots.Count() != 0)
         {
             InventorySlot closestSlot = overlapingSlots.OrderBy(x => Vector2.Distance(x.worldBound.position, ghostIcon.worldBound.position)).First();
+
+            if (!closestSlot.item.Equals((null, null)))
+            {
+                originalSlot.SetSlotImage(ghostIcon.style.backgroundImage.value.sprite);
+                isDragging = false;
+                originalSlot = null;
+                ghostIcon.style.visibility = Visibility.Hidden;
+                return;
+            }
 
             closestSlot.SetItemParameters(originalSlot.item.item, originalSlot.item.model, ghostIcon.style.backgroundImage.value.sprite);
 
@@ -114,7 +123,6 @@ public class InventoryEventHandler : MonoBehaviour {
         else
         {
             originalSlot.SetSlotImage(ghostIcon.style.backgroundImage.value.sprite);
-            Debug.Log("Returned to original slot");
         }
 
         isDragging = false;

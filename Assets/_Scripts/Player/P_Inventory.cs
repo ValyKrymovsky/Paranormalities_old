@@ -103,10 +103,7 @@ public class P_Inventory : MonoBehaviour
                 {
                     InventorySlot tmp = GetFirstEmptySlot();
 
-                    Debug.Log(tmp.SlotIndex);
-
                     tmp.SetItemParameters(_item, _model, _itemImage);
-                    Debug.Log(tmp.item);
                 }
                 else
                 {

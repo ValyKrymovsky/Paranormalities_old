@@ -30,7 +30,6 @@ public class InventorySlot : VisualElement
 
     [Separator("Slot Element", true)]
     public VisualElement slot;
-    public Button slotCollider;
     public VisualElement slotImage;
 
     [Separator("Description Element", true)]
@@ -45,16 +44,10 @@ public class InventorySlot : VisualElement
         slot.AddToClassList("inventorySlot");
         hierarchy.Add(slot);
 
-        slotCollider = new Button();
-        slotCollider.focusable = false;
-        slotCollider.name = "SlotCollision";
-        slotCollider.AddToClassList("inventorySlotCollider");
-        slot.Add(slotCollider);
-
         slotImage = new VisualElement();
         slotImage.name = "Image";
         slotImage.AddToClassList("inventorySlotImage");
-        slotCollider.Add(slotImage);
+        slot.Add(slotImage);
 
         RegisterCallback<PointerDownEvent>(OnPointerDown, TrickleDown.TrickleDown);
     }
@@ -69,11 +62,6 @@ public class InventorySlot : VisualElement
     {
         item = (null, null);
         slotImage.style.backgroundImage = null;
-    }
-
-    public Button GetSlotButton()
-    {
-        return slotCollider;
     }
 
     public Sprite GetItemImage()
