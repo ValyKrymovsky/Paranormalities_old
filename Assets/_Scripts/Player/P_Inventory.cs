@@ -170,7 +170,7 @@ public class P_Inventory : MonoBehaviour
     {
         foreach(InventorySlot inventorySlot in inventorySlots)
         {
-            if (inventorySlot.item.Equals((null, null)))
+            if (inventorySlot.item.Equals((null, null)) && inventorySlot.AutomaticFill)
             {
                 return inventorySlot;
             }

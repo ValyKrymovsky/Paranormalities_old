@@ -21,6 +21,13 @@ public class InventoryEventHandler : MonoBehaviour {
     private List<InventorySlot> inventorySlots = new List<InventorySlot>();
 
     [Space]
+    [Header("Equipment Slots")]
+    private VisualElement equipment;
+    private VisualElement equipmentImage;
+    private InventorySlot primarySlot;
+    private InventorySlot secondarySlot;
+
+    [Space]
     [Header("Ghost Icon")]
     private static VisualElement ghostIcon;
     private static bool isDragging;
@@ -37,12 +44,20 @@ public class InventoryEventHandler : MonoBehaviour {
 
         inventoryGrid = root.Q<VisualElement>("InventoryGrid");
 
+        equipment = root.Q<VisualElement>("Equipment");
+        equipmentImage = equipment.Q<VisualElement>("EquipmentImage");
+        primarySlot = equipment.Q<InventorySlot>("PrimarySlot");
+        secondarySlot = equipment.Q<InventorySlot>("SecondarySlot");
+
         ghostIcon = root.Q<VisualElement>("GhostIcon");
 
         foreach(InventorySlot inventorySlot in inventoryGrid.Children())
         {
             inventorySlots.Add(inventorySlot);
         }
+
+        inventorySlots.Add(primarySlot);
+        inventorySlots.Add(secondarySlot);
 
         foreach(InventorySlot inventorySlot in inventorySlots)
         {
@@ -76,15 +91,15 @@ public class InventoryEventHandler : MonoBehaviour {
         descriptionText.text = null;
     }
 
-    public static void StartDrag(Vector2 _position, InventorySlot _originalSlot)
+    public static void StartDrag(Vector2 _position, InventorySlot _originalInventorySlot)
     {
         isDragging = true;
-        originalSlot = _originalSlot;
+        originalSlot = _originalInventorySlot;
 
         ghostIcon.style.top = _position.y - ghostIcon.layout.height / 2;
         ghostIcon.style.left = _position.x - ghostIcon.layout.width / 2;
 
-        ghostIcon.style.backgroundImage = new StyleBackground(_originalSlot.GetItemImage());
+        ghostIcon.style.backgroundImage = new StyleBackground(_originalInventorySlot.GetItemImage());
 
         ghostIcon.style.visibility = Visibility.Visible;
     }
@@ -107,7 +122,20 @@ public class InventoryEventHandler : MonoBehaviour {
         {
             InventorySlot closestSlot = overlapingSlots.OrderBy(x => Vector2.Distance(x.worldBound.position, ghostIcon.worldBound.position)).First();
 
-            if (!closestSlot.item.Equals((null, null)))
+            if ((originalSlot.name == "SecondarySlot" && closestSlot.name == "PrimarySlot") || (originalSlot.name == "PrimarySlot" && closestSlot.name == "SecondarySlot"))
+            {
+                Debug.Log("Switching equipment slots");
+                (ItemObject item, GameObject model, Sprite image) tempSlot = (closestSlot.item.item, closestSlot.item.model, closestSlot.GetItemImage());
+
+                closestSlot.SetItemParameters(originalSlot.item.item, originalSlot.item.model, ghostIcon.style.backgroundImage.value.sprite);
+                originalSlot.SetItemParameters(tempSlot.item, tempSlot.model, tempSlot.image);
+
+                isDragging = false;
+                originalSlot = null;
+                ghostIcon.style.visibility = Visibility.Hidden;
+                return;
+            }
+            else if (!closestSlot.item.Equals((null, null)))
             {
                 originalSlot.SetSlotImage(ghostIcon.style.backgroundImage.value.sprite);
                 isDragging = false;
