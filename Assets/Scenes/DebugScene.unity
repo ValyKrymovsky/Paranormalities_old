@@ -1262,7 +1262,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerCamera: {fileID: 0}
   player: {fileID: 0}
-  item: {fileID: 11400000, guid: 1169366dedf583143983aaa65d41973c, type: 2}
+  item: {fileID: 11400000, guid: 141b010bfcd318f4f999b49343ede8da, type: 2}
   model: {fileID: 0}
   itemImage: {fileID: 21300000, guid: afc2205ba67e97c49ad0461353480465, type: 3}
   inventory: {fileID: 0}
@@ -3303,7 +3303,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerCamera: {fileID: 0}
   player: {fileID: 0}
-  item: {fileID: 11400000, guid: 7c4cabd8cc4b5b24282bd8854ec1cd9c, type: 2}
+  item: {fileID: 11400000, guid: 9e12b11b33e7c5c4e845c691e11423c6, type: 2}
   model: {fileID: 0}
   itemImage: {fileID: 10913, guid: 0000000000000000f000000000000000, type: 0}
   inventory: {fileID: 0}

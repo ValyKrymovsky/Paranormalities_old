@@ -14,21 +14,16 @@ public class InventorySlot : VisualElement
         UxmlIntAttributeDescription slotIndex = 
             new UxmlIntAttributeDescription { name = "slot-index", defaultValue = 0};
 
-        UxmlBoolAttributeDescription automaticFill = 
-            new UxmlBoolAttributeDescription { name = "automatic-fill", defaultValue = true};
-
         public override void Init(VisualElement ve, IUxmlAttributes bag, CreationContext cc)
         {
             base.Init(ve, bag, cc);
             var ate = ve as InventorySlot;
 
             ate.SlotIndex = slotIndex.GetValueFromBag(bag, cc);
-            ate.AutomaticFill = automaticFill.GetValueFromBag(bag, cc);
         }
     }
 
     public int SlotIndex { get; set; }
-    public bool AutomaticFill { get; set; }
 
     public InventoryObject inventory;
     public (ItemObject item, GameObject model) item = (null, null);

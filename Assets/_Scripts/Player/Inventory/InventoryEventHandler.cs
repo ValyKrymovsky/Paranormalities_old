@@ -17,15 +17,15 @@ public class InventoryEventHandler : MonoBehaviour {
 
     [Space]
     [Header("Inventory Slots")]
-    private VisualElement inventoryGrid;
-    private List<InventorySlot> inventorySlots = new List<InventorySlot>();
+    public VisualElement inventoryGrid;
+    public List<InventorySlot> inventorySlots = new List<InventorySlot>();
 
     [Space]
     [Header("Equipment Slots")]
     private VisualElement equipment;
     private VisualElement equipmentImage;
-    private InventorySlot primarySlot;
-    private InventorySlot secondarySlot;
+    public InventorySlot primarySlot;
+    public InventorySlot secondarySlot;
 
     [Space]
     [Header("Ghost Icon")]
@@ -122,9 +122,29 @@ public class InventoryEventHandler : MonoBehaviour {
         {
             InventorySlot closestSlot = overlapingSlots.OrderBy(x => Vector2.Distance(x.worldBound.position, ghostIcon.worldBound.position)).First();
 
-            if ((originalSlot.name == "SecondarySlot" && closestSlot.name == "PrimarySlot") || (originalSlot.name == "PrimarySlot" && closestSlot.name == "SecondarySlot"))
+            if (originalSlot.item.item.itemType != ItemObject.ItemType.Equipment &&
+            (closestSlot.name == "SecondarySlot" || closestSlot.name == "PrimarySlot"))
             {
-                Debug.Log("Switching equipment slots");
+                ReturnToOriginalSlot(originalSlot);
+                return;
+            }
+            else if ((originalSlot.name == "SecondarySlot" && closestSlot.name == "PrimarySlot") ||
+            (originalSlot.name == "PrimarySlot" && closestSlot.name == "SecondarySlot"))
+            {
+                (ItemObject item, GameObject model, Sprite image) tempSlot = (closestSlot.item.item, closestSlot.item.model, closestSlot.GetItemImage());
+
+                closestSlot.SetItemParameters(originalSlot.item.item, originalSlot.item.model, ghostIcon.style.backgroundImage.value.sprite);
+                originalSlot.SetItemParameters(tempSlot.item, tempSlot.model, tempSlot.image);
+
+                isDragging = false;
+                originalSlot = null;
+                ghostIcon.style.visibility = Visibility.Hidden;
+                return;
+            }
+            else if (originalSlot.item.item.itemType == ItemObject.ItemType.Equipment &&
+            (closestSlot.name == "SecondarySlot" || closestSlot.name == "PrimarySlot") &&
+            !closestSlot.item.Equals((null, null)))
+            {
                 (ItemObject item, GameObject model, Sprite image) tempSlot = (closestSlot.item.item, closestSlot.item.model, closestSlot.GetItemImage());
 
                 closestSlot.SetItemParameters(originalSlot.item.item, originalSlot.item.model, ghostIcon.style.backgroundImage.value.sprite);
@@ -137,10 +157,7 @@ public class InventoryEventHandler : MonoBehaviour {
             }
             else if (!closestSlot.item.Equals((null, null)))
             {
-                originalSlot.SetSlotImage(ghostIcon.style.backgroundImage.value.sprite);
-                isDragging = false;
-                originalSlot = null;
-                ghostIcon.style.visibility = Visibility.Hidden;
+                ReturnToOriginalSlot(originalSlot);
                 return;
             }
 
@@ -157,5 +174,13 @@ public class InventoryEventHandler : MonoBehaviour {
         originalSlot = null;
         ghostIcon.style.visibility = Visibility.Hidden;
 
+    }
+
+    private void ReturnToOriginalSlot(InventorySlot _originalSlot)
+    {
+        _originalSlot.SetSlotImage(ghostIcon.style.backgroundImage.value.sprite);
+        isDragging = false;
+        originalSlot = null;
+        ghostIcon.style.visibility = Visibility.Hidden;
     }
 }

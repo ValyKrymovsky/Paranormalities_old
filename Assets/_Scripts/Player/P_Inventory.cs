@@ -20,13 +20,8 @@ public class P_Inventory : MonoBehaviour
     [Separator("Inventory UI", true)]
     [SerializeField] private GameObject inventoryUI;
     [SerializeField, ReadOnly] private int slotCount;
+    private InventoryEventHandler inventoryEventHandler;
     private bool inventoryOpen;
-
-    [Space]
-    [Header("Visual Eelements")]
-    public VisualElement root;
-    public VisualElement inventoryGrid;
-    public List<InventorySlot> inventorySlots;
 
     private P_Controls p_input;
 
@@ -67,18 +62,13 @@ public class P_Inventory : MonoBehaviour
         // Inventory UI stuff //
         //                    //
 
-        root = inventoryUI.GetComponent<UIDocument>().rootVisualElement;
-        inventoryGrid = root.Q<VisualElement>("InventoryGrid");
+        
+        inventoryEventHandler = inventoryUI.GetComponent<InventoryEventHandler>();
+    }
 
-        inventorySlots = new List<InventorySlot>();
-        foreach(InventorySlot inventorySlot in inventoryGrid.Children().Where(slot => slot.GetType().Equals(typeof(InventorySlot))))
-        {
-            inventorySlots.Add(inventorySlot);
-        }
-        slotCount = inventoryGrid.childCount;
-
-        root.style.display = DisplayStyle.None;
-
+    private void Start()
+    {
+        inventoryEventHandler.root.style.display = DisplayStyle.None;
     }
 
     void OnEnable()
@@ -101,9 +91,15 @@ public class P_Inventory : MonoBehaviour
             {
                 if (inventory.AddItem(_item, _model))
                 {
-                    InventorySlot tmp = GetFirstEmptySlot();
-
-                    tmp.SetItemParameters(_item, _model, _itemImage);
+                    try
+                    {
+                        InventorySlot tmp = _item.itemType == ItemObject.ItemType.Equipment ? GetEmptyEquipmentSlot() : GetFirstEmptySlot();
+                        tmp.SetItemParameters(_item, _model, _itemImage);
+                    }
+                    catch(NullReferenceException)
+                    {
+                        Debug.Log("Inventory Full");
+                    }
                 }
                 else
                 {
@@ -146,12 +142,12 @@ public class P_Inventory : MonoBehaviour
 
     public void OpenInventory(InputAction.CallbackContext _context)
     {
-        if (root.style.display == DisplayStyle.None)
+        if (inventoryEventHandler.root.style.display == DisplayStyle.None)
         {
             inventoryOpen = true;
             p_movement.SetCanMove(false);
             p_camera.SetCanLook(false);
-            root.style.display = DisplayStyle.Flex;
+            inventoryEventHandler.root.style.display = DisplayStyle.Flex;
             UnityEngine.Cursor.lockState = CursorLockMode.None;
             
         }
@@ -160,7 +156,7 @@ public class P_Inventory : MonoBehaviour
             inventoryOpen = false;
             p_movement.SetCanMove(true);
             p_camera.SetCanLook(true);
-            root.style.display = DisplayStyle.None;
+            inventoryEventHandler.root.style.display = DisplayStyle.None;
             UnityEngine.Cursor.lockState = CursorLockMode.Locked;
             
         }
@@ -168,14 +164,28 @@ public class P_Inventory : MonoBehaviour
 
     public InventorySlot GetFirstEmptySlot()
     {
-        foreach(InventorySlot inventorySlot in inventorySlots)
+        foreach(InventorySlot inventorySlot in inventoryEventHandler.inventorySlots)
         {
-            if (inventorySlot.item.Equals((null, null)) && inventorySlot.AutomaticFill)
+            if (inventorySlot.item.Equals((null, null)))
             {
                 return inventorySlot;
             }
             continue;
         }
         return null;
+    }
+
+    public InventorySlot GetEmptyEquipmentSlot()
+    {
+        if (inventoryEventHandler.primarySlot.item.Equals((null, null)))
+        {
+            return inventoryEventHandler.primarySlot;
+        }
+        else if (inventoryEventHandler.secondarySlot.item.Equals((null, null)))
+        {
+            return inventoryEventHandler.secondarySlot;
+        }
+
+        return GetFirstEmptySlot();
     }
 }

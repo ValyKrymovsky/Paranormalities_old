@@ -10,6 +10,7 @@ public abstract class ItemObject : ScriptableObject
         Key,
         Health,
         Usable,
+        Equipment
     }
 
     public string objectName;
