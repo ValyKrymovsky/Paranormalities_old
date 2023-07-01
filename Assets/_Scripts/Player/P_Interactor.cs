@@ -29,7 +29,7 @@ public class P_Interactor : MonoBehaviour
     [SerializeField] private float interactiblesCheckRange;
     [SerializeField] private Vector3 hitPosition;
     [SerializeField] private LayerMask interactiblesMask;
-    [SerializeField] private Collider markedCollider;
+    [SerializeField] private Collider selectedCollider;
     private InteractionController interactionController;
     private LayerMask excludeCollisionMask;
     [Space]
@@ -170,7 +170,7 @@ public class P_Interactor : MonoBehaviour
         {
             try
             {
-                if (markedCollider.gameObject.TryGetComponent(out IInteraction interactObj))
+                if (selectedCollider.gameObject.TryGetComponent(out IInteraction interactObj))
                 {
                     interactObj.Interact();
                 }
@@ -241,13 +241,13 @@ public class P_Interactor : MonoBehaviour
 
                 }
 
-                if (markedCollider != nearestInteractibleCollider)
+                if (selectedCollider != nearestInteractibleCollider)
                 {
                     InteractionController tempIntController;
 
-                    if (markedCollider)
+                    if (selectedCollider)
                     {
-                        markedCollider.gameObject.TryGetComponent(out tempIntController);
+                        selectedCollider.gameObject.TryGetComponent(out tempIntController);
 
                         if (tempIntController.HasInteractionPopup())
                         {
@@ -267,7 +267,7 @@ public class P_Interactor : MonoBehaviour
                         activePopup = interactionController.GetInteractionPopup();
                     }
 
-                    markedCollider = nearestInteractibleCollider;
+                    selectedCollider = nearestInteractibleCollider;
                 }
 
                 if (interactionController)
@@ -289,7 +289,7 @@ public class P_Interactor : MonoBehaviour
         }
         else
         {
-            if (markedCollider) markedCollider = null;
+            if (selectedCollider) selectedCollider = null;
         }
 
     }

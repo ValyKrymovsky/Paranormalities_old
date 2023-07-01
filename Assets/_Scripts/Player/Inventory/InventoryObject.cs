@@ -9,7 +9,7 @@ public class InventoryObject : ScriptableObject
 {
     public List<(ItemObject item, GameObject model)> inventory = new List<(ItemObject item, GameObject model)>();
     public (ItemObject item, GameObject model) selectedItem;
-    public int size = 15;
+    public int size = 16;
     public bool inventoryFull;
 
     /// <summary>
@@ -24,7 +24,7 @@ public class InventoryObject : ScriptableObject
         {
             if (!HasItem(_item))
             {
-                inventory.Append((_item, _model));
+                inventory.Add((_item, _model));
                 return true;
             }
             else
@@ -120,6 +120,7 @@ public class InventoryObject : ScriptableObject
                 {
                     return true;
                 }
+                continue;
             }
             return false;
         }      

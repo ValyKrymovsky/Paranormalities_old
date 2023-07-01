@@ -11,8 +11,6 @@ TagManager:
   - Noise
   - Parent Patrol Point
   - Child Patrol Point
-  - GradeChanger
-  - SubjectController
   layers:
   - Default
   - TransparentFX

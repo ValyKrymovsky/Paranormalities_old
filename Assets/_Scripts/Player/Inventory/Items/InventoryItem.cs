@@ -16,8 +16,9 @@ public class InventoryItem : MonoBehaviour, IInteraction
     [Separator("Inventory")]
     [SerializeField]
     private ItemObject item;
-    [ConditionalField("isItem")]
     public GameObject model;
+    public Sprite itemImage;
+
     [SerializeField]
     private P_Inventory inventory;
 
@@ -38,7 +39,7 @@ public class InventoryItem : MonoBehaviour, IInteraction
     {
         if (interactionController.IsInteractible())
         {
-            inventory.PickUp(item, model);
+            inventory.PickUp(item, model, itemImage);
         }
         
     }

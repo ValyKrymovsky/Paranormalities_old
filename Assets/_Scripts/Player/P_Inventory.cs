@@ -1,6 +1,9 @@
 using UnityEngine;
-using System.Collections.Generic;
+using UnityEngine.UIElements;
 using UnityEngine.InputSystem;
+using System;
+using System.Collections;
+using System.Collections.Generic;
 using System.Linq;
 using MyBox;
 
@@ -9,13 +12,20 @@ public class P_Inventory : MonoBehaviour
 
     [Separator("Inventory", true)]
     public InventoryObject inventory;
-    public KeyValuePair<ItemObject, GameObject> selectedItem;
+    public (ItemObject item, GameObject model) selectedItem;
 
     [SerializeField, Separator("Drop", true)]
     private float dropRange;
 
     [Separator("Inventory UI", true)]
     [SerializeField] private GameObject inventoryUI;
+    [SerializeField, ReadOnly] private int slotCount;
+
+    [Space]
+    [Header("Visual Eelements")]
+    public VisualElement root;
+    public VisualElement inventoryGrid;
+    public List<InventorySlot> inventorySlots;
 
     private P_Controls p_input;
 
@@ -32,13 +42,18 @@ public class P_Inventory : MonoBehaviour
 
     public void Awake()
     {
+        //                 //
+        // Inventory stuff //
+        //                 //
         if (inventory.GetSize() <= 0)
         {
             inventory.SetSize(1);
         }
-
         inventory.Clear();
 
+        //            //
+        // Components //
+        //            //
         p_input = new P_Controls();
         ch_controller = GetComponent<CharacterController>();
         cameraObject = GameObject.FindGameObjectWithTag("MainCamera");
@@ -46,38 +61,63 @@ public class P_Inventory : MonoBehaviour
 
         p_movement = GetComponent<P_Movement>();
         p_camera = cameraObject.GetComponent<P_Camera>();
+
+        //                    //
+        // Inventory UI stuff //
+        //                    //
+
+        root = inventoryUI.GetComponent<UIDocument>().rootVisualElement;
+        inventoryGrid = root.Q<VisualElement>("inventoryGrid");
+
+        inventorySlots = new List<InventorySlot>();
+        foreach(InventorySlot inventorySlot in inventoryGrid.Children().Where(slot => slot.GetType().Equals(typeof(InventorySlot))))
+        {
+            inventorySlots.Add(inventorySlot);
+        }
+        slotCount = inventoryGrid.childCount;
+
+        root.style.display = DisplayStyle.None;
+
     }
 
-    /// <summary>
-    /// Selects item from inventory based on pressed keyboard or controller button.
-    /// </summary>
-    /// <param name="context"></param>
-    public void SelectItem(InputAction.CallbackContext context)
+    void OnEnable()
     {
-        
+        p_input.Enable();
     }
 
-    /// <summary>
-    /// Tries to add item to inventory.
-    /// </summary>
-    public void PickUp(ItemObject _item, GameObject _model)
+    void OnDisable()
     {
-        
+        p_input.Disable();
+    }
+
+    public InventoryObject Inventory { get; set; }
+
+    public void PickUp(ItemObject _item, GameObject _model, Sprite _itemImage)
+    {
+        if (!(_item, _model).Equals((null, null)))
+        {
+            if (inventory.AddItem(_item, _model))
+            {
+                InventorySlot tmp = GetFirstEmptySlot();
+
+                Debug.Log(tmp.SlotIndex);
+
+                tmp.SetItemParameters(_item, _model, _itemImage);
+                Debug.Log(tmp.item);
+            }
+            else
+            {
+                Debug.Log("Item already in inventory");
+            }
+            
+        }
     }
     
-    /// <summary>
-    /// Drops item. Casts ray from playerCamera and spawns the item on hitInfo.point location.
-    /// </summary>
-    /// <param name="context"></param>
     public void DropItem(InputAction.CallbackContext context)
     {
         
     }
 
-    /// <summary>
-    /// Casts ray from player position down to the ground. Returns parents name to which the ground mesh belongs to.
-    /// </summary>
-    /// <returns>string roomName</returns>
     private string GetCurrentRoomName()
     {
         Ray ray = new Ray(transform.position, transform.up * -1);
@@ -93,51 +133,48 @@ public class P_Inventory : MonoBehaviour
         return roomName;
     }
 
-    /// <summary>
-    /// Returns inventory object that is currently used.
-    /// </summary>
-    /// <returns>Active InventoryObject object</returns>
-    public InventoryObject Get()
-    {
-        return inventory;
-    }
-
-    /// <summary>
-    /// Sets active inventory object to specified _inventory.
-    /// </summary>
-    /// <param name="_inventory"></param>
-    public void Set(InventoryObject _inventory)
-    {
-        inventory = _inventory;
-    }
+    //              //
+    //              //
+    //              //
+    //              //
+    // Inventory UI //
+    //              //
+    //              //
+    //              //
+    //              //
 
     public void OpenInventory(InputAction.CallbackContext _context)
     {
-        if (!inventoryUI.activeSelf)
+        if (root.style.display == DisplayStyle.None)
         {
+            Time.timeScale = 0f;
             p_movement.SetCanMove(false);
             p_camera.SetCanLook(false);
-            inventoryUI.SetActive(true);
-            Cursor.lockState = CursorLockMode.None;
+            root.style.display = DisplayStyle.Flex;
+            UnityEngine.Cursor.lockState = CursorLockMode.None;
             
         }
         else
         {
+            Time.timeScale = 1;
             p_movement.SetCanMove(true);
             p_camera.SetCanLook(true);
-            inventoryUI.SetActive(false);
-            Cursor.lockState = CursorLockMode.Locked;
+            root.style.display = DisplayStyle.None;
+            UnityEngine.Cursor.lockState = CursorLockMode.Locked;
             
         }
     }
 
-    void OnEnable()
+    public InventorySlot GetFirstEmptySlot()
     {
-        p_input.Enable();
-    }
-
-    void OnDisable()
-    {
-        p_input.Disable();
+        foreach(InventorySlot inventorySlot in inventorySlots)
+        {
+            if (inventorySlot.item.Equals((null, null)))
+            {
+                return inventorySlot;
+            }
+            continue;
+        }
+        return null;
     }
 }
