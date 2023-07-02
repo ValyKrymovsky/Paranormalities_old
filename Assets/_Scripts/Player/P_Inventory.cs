@@ -146,7 +146,6 @@ public class P_Inventory : MonoBehaviour
         {
             inventoryOpen = true;
             p_movement.SetCanMove(false);
-            p_camera.SetCanLook(false);
             inventoryEventHandler.root.style.display = DisplayStyle.Flex;
             UnityEngine.Cursor.lockState = CursorLockMode.None;
             
@@ -155,7 +154,6 @@ public class P_Inventory : MonoBehaviour
         {
             inventoryOpen = false;
             p_movement.SetCanMove(true);
-            p_camera.SetCanLook(true);
             inventoryEventHandler.root.style.display = DisplayStyle.None;
             UnityEngine.Cursor.lockState = CursorLockMode.Locked;
             

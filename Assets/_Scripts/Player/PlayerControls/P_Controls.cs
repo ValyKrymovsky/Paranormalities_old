@@ -100,15 +100,6 @@ public partial class @P_Controls: IInputActionCollection2, IDisposable
                     ""initialStateCheck"": false
                 },
                 {
-                    ""name"": ""Select item"",
-                    ""type"": ""Button"",
-                    ""id"": ""2b4c15e6-90db-41d5-8011-f4547cc09c1c"",
-                    ""expectedControlType"": ""Button"",
-                    ""processors"": """",
-                    ""interactions"": """",
-                    ""initialStateCheck"": false
-                },
-                {
                     ""name"": ""Drop item"",
                     ""type"": ""Button"",
                     ""id"": ""a9948610-de7f-48f7-8b98-71e7a92bd98f"",
@@ -118,7 +109,7 @@ public partial class @P_Controls: IInputActionCollection2, IDisposable
                     ""initialStateCheck"": false
                 },
                 {
-                    ""name"": ""Inventory"",
+                    ""name"": ""Open/Close Inventory"",
                     ""type"": ""Button"",
                     ""id"": ""cb8e12dd-74b0-4dbf-b64b-0b29d4e23cb9"",
                     ""expectedControlType"": ""Button"",
@@ -127,7 +118,7 @@ public partial class @P_Controls: IInputActionCollection2, IDisposable
                     ""initialStateCheck"": false
                 },
                 {
-                    ""name"": ""Menu"",
+                    ""name"": ""Open/Close Main Menu"",
                     ""type"": ""Button"",
                     ""id"": ""214a6c92-6730-4576-9264-8692045c4ccf"",
                     ""expectedControlType"": ""Button"",
@@ -386,7 +377,7 @@ public partial class @P_Controls: IInputActionCollection2, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Keyboard&Mouse"",
-                    ""action"": ""Menu"",
+                    ""action"": ""Open/Close Main Menu"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -397,7 +388,7 @@ public partial class @P_Controls: IInputActionCollection2, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Gamepad"",
-                    ""action"": ""Menu"",
+                    ""action"": ""Open/Close Main Menu"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -408,128 +399,7 @@ public partial class @P_Controls: IInputActionCollection2, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Keyboard&Mouse"",
-                    ""action"": ""Menu"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""98dc3192-2b11-4f52-9a05-3e6e1733cbb3"",
-                    ""path"": ""<Keyboard>/1"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": ""Keyboard&Mouse"",
-                    ""action"": ""Select item"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""c3c2d00e-1b40-45ca-9387-eda1d10af3ea"",
-                    ""path"": ""<Keyboard>/2"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": ""Keyboard&Mouse"",
-                    ""action"": ""Select item"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""3a3d8755-fa2a-4eaf-882b-ffbeb45908fc"",
-                    ""path"": ""<Keyboard>/3"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": ""Keyboard&Mouse"",
-                    ""action"": ""Select item"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""5ad04099-d361-42b3-b7f6-95a2b88b84ed"",
-                    ""path"": ""<Keyboard>/4"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": ""Keyboard&Mouse"",
-                    ""action"": ""Select item"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""7c541708-81c8-493e-8d3d-3226eaad37f0"",
-                    ""path"": ""<Keyboard>/5"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": ""Keyboard&Mouse"",
-                    ""action"": ""Select item"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""9098347f-6363-465c-89f1-8f9836d54385"",
-                    ""path"": ""<Keyboard>/6"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": ""Keyboard&Mouse"",
-                    ""action"": ""Select item"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""de72bf49-9c5e-4f98-b856-af1bd5b366cb"",
-                    ""path"": ""<Keyboard>/7"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": ""Keyboard&Mouse"",
-                    ""action"": ""Select item"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""1340353e-3b3a-42be-b20d-69f1891724e1"",
-                    ""path"": ""<Keyboard>/8"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": ""Keyboard&Mouse"",
-                    ""action"": ""Select item"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""ca123da1-6c3d-406d-9793-cbc984adcc75"",
-                    ""path"": ""<Keyboard>/9"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": ""Keyboard&Mouse"",
-                    ""action"": ""Select item"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""335a21fc-bc42-45aa-8727-86c74fba0b0d"",
-                    ""path"": ""<Gamepad>/dpad/right"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": ""Gamepad"",
-                    ""action"": ""Select item"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""062767b2-f8ac-46c7-8a84-7029caccdc6f"",
-                    ""path"": ""<Gamepad>/dpad/left"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": ""Gamepad"",
-                    ""action"": ""Select item"",
+                    ""action"": ""Open/Close Main Menu"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -617,7 +487,7 @@ public partial class @P_Controls: IInputActionCollection2, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Keyboard&Mouse"",
-                    ""action"": ""Inventory"",
+                    ""action"": ""Open/Close Inventory"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -675,10 +545,9 @@ public partial class @P_Controls: IInputActionCollection2, IDisposable
         m_Player_Pickup = m_Player.FindAction("Pickup", throwIfNotFound: true);
         m_Player_PickupZoom = m_Player.FindAction("Pickup Zoom", throwIfNotFound: true);
         m_Player_Throw = m_Player.FindAction("Throw", throwIfNotFound: true);
-        m_Player_Selectitem = m_Player.FindAction("Select item", throwIfNotFound: true);
         m_Player_Dropitem = m_Player.FindAction("Drop item", throwIfNotFound: true);
-        m_Player_Inventory = m_Player.FindAction("Inventory", throwIfNotFound: true);
-        m_Player_Menu = m_Player.FindAction("Menu", throwIfNotFound: true);
+        m_Player_OpenCloseInventory = m_Player.FindAction("Open/Close Inventory", throwIfNotFound: true);
+        m_Player_OpenCloseMainMenu = m_Player.FindAction("Open/Close Main Menu", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -748,10 +617,9 @@ public partial class @P_Controls: IInputActionCollection2, IDisposable
     private readonly InputAction m_Player_Pickup;
     private readonly InputAction m_Player_PickupZoom;
     private readonly InputAction m_Player_Throw;
-    private readonly InputAction m_Player_Selectitem;
     private readonly InputAction m_Player_Dropitem;
-    private readonly InputAction m_Player_Inventory;
-    private readonly InputAction m_Player_Menu;
+    private readonly InputAction m_Player_OpenCloseInventory;
+    private readonly InputAction m_Player_OpenCloseMainMenu;
     public struct PlayerActions
     {
         private @P_Controls m_Wrapper;
@@ -764,10 +632,9 @@ public partial class @P_Controls: IInputActionCollection2, IDisposable
         public InputAction @Pickup => m_Wrapper.m_Player_Pickup;
         public InputAction @PickupZoom => m_Wrapper.m_Player_PickupZoom;
         public InputAction @Throw => m_Wrapper.m_Player_Throw;
-        public InputAction @Selectitem => m_Wrapper.m_Player_Selectitem;
         public InputAction @Dropitem => m_Wrapper.m_Player_Dropitem;
-        public InputAction @Inventory => m_Wrapper.m_Player_Inventory;
-        public InputAction @Menu => m_Wrapper.m_Player_Menu;
+        public InputAction @OpenCloseInventory => m_Wrapper.m_Player_OpenCloseInventory;
+        public InputAction @OpenCloseMainMenu => m_Wrapper.m_Player_OpenCloseMainMenu;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -801,18 +668,15 @@ public partial class @P_Controls: IInputActionCollection2, IDisposable
             @Throw.started += instance.OnThrow;
             @Throw.performed += instance.OnThrow;
             @Throw.canceled += instance.OnThrow;
-            @Selectitem.started += instance.OnSelectitem;
-            @Selectitem.performed += instance.OnSelectitem;
-            @Selectitem.canceled += instance.OnSelectitem;
             @Dropitem.started += instance.OnDropitem;
             @Dropitem.performed += instance.OnDropitem;
             @Dropitem.canceled += instance.OnDropitem;
-            @Inventory.started += instance.OnInventory;
-            @Inventory.performed += instance.OnInventory;
-            @Inventory.canceled += instance.OnInventory;
-            @Menu.started += instance.OnMenu;
-            @Menu.performed += instance.OnMenu;
-            @Menu.canceled += instance.OnMenu;
+            @OpenCloseInventory.started += instance.OnOpenCloseInventory;
+            @OpenCloseInventory.performed += instance.OnOpenCloseInventory;
+            @OpenCloseInventory.canceled += instance.OnOpenCloseInventory;
+            @OpenCloseMainMenu.started += instance.OnOpenCloseMainMenu;
+            @OpenCloseMainMenu.performed += instance.OnOpenCloseMainMenu;
+            @OpenCloseMainMenu.canceled += instance.OnOpenCloseMainMenu;
         }
 
         private void UnregisterCallbacks(IPlayerActions instance)
@@ -841,18 +705,15 @@ public partial class @P_Controls: IInputActionCollection2, IDisposable
             @Throw.started -= instance.OnThrow;
             @Throw.performed -= instance.OnThrow;
             @Throw.canceled -= instance.OnThrow;
-            @Selectitem.started -= instance.OnSelectitem;
-            @Selectitem.performed -= instance.OnSelectitem;
-            @Selectitem.canceled -= instance.OnSelectitem;
             @Dropitem.started -= instance.OnDropitem;
             @Dropitem.performed -= instance.OnDropitem;
             @Dropitem.canceled -= instance.OnDropitem;
-            @Inventory.started -= instance.OnInventory;
-            @Inventory.performed -= instance.OnInventory;
-            @Inventory.canceled -= instance.OnInventory;
-            @Menu.started -= instance.OnMenu;
-            @Menu.performed -= instance.OnMenu;
-            @Menu.canceled -= instance.OnMenu;
+            @OpenCloseInventory.started -= instance.OnOpenCloseInventory;
+            @OpenCloseInventory.performed -= instance.OnOpenCloseInventory;
+            @OpenCloseInventory.canceled -= instance.OnOpenCloseInventory;
+            @OpenCloseMainMenu.started -= instance.OnOpenCloseMainMenu;
+            @OpenCloseMainMenu.performed -= instance.OnOpenCloseMainMenu;
+            @OpenCloseMainMenu.canceled -= instance.OnOpenCloseMainMenu;
         }
 
         public void RemoveCallbacks(IPlayerActions instance)
@@ -907,9 +768,8 @@ public partial class @P_Controls: IInputActionCollection2, IDisposable
         void OnPickup(InputAction.CallbackContext context);
         void OnPickupZoom(InputAction.CallbackContext context);
         void OnThrow(InputAction.CallbackContext context);
-        void OnSelectitem(InputAction.CallbackContext context);
         void OnDropitem(InputAction.CallbackContext context);
-        void OnInventory(InputAction.CallbackContext context);
-        void OnMenu(InputAction.CallbackContext context);
+        void OnOpenCloseInventory(InputAction.CallbackContext context);
+        void OnOpenCloseMainMenu(InputAction.CallbackContext context);
     }
 }

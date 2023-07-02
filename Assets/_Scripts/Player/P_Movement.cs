@@ -2,27 +2,6 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using MyBox;
 
-public enum movementState
-{
-    none,
-    walk,
-    sprint,
-    sneak
-}
-
-public enum movementDirection
-{
-    none,
-    forward,
-    forward_right,
-    forward_left,
-    right,
-    left,
-    backward,
-    backward_right,
-    backward_left
-}
-
 public class P_Movement : MonoBehaviour
 {
 
