@@ -5,8 +5,9 @@ using UnityEngine;
 using MyBox;
 
 [RequireComponent(typeof(InteractionController))]
-public class InventoryItem : MonoBehaviour, IInteraction
+public class InventoryItem : MonoBehaviour /*IInteraction*/
 {
+    /*
     [Separator("Player", true)]
     [SerializeField]
     private GameObject playerCamera;
@@ -20,7 +21,7 @@ public class InventoryItem : MonoBehaviour, IInteraction
     public Sprite itemImage;
 
     [SerializeField]
-    private P_Inventory inventory;
+    private MyCode.Player.P_Inventory inventory;
 
     [Separator("Interaction")]
     [SerializeField]
@@ -31,7 +32,7 @@ public class InventoryItem : MonoBehaviour, IInteraction
         model = this.gameObject;
         playerCamera = GameObject.FindGameObjectWithTag("MainCamera");
         player = GameObject.FindGameObjectWithTag("Player");
-        inventory = player.GetComponent<P_Inventory>();
+        inventory = player.GetComponent<MyCode.Player.P_Inventory>();
         interactionController = GetComponent<InteractionController>();
     }
 
@@ -41,6 +42,7 @@ public class InventoryItem : MonoBehaviour, IInteraction
         {
             inventory.PickUp(item, model, itemImage);
         }
-        
+
     }
+    */
 }

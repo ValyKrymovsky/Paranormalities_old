@@ -2,7 +2,6 @@ using UnityEngine;
 using UnityEditor;
 using UnityEngine.UIElements;
 using UnityEngine.EventSystems;
-using MyBox;
 
 public class InventorySlot : VisualElement
 {
@@ -28,11 +27,11 @@ public class InventorySlot : VisualElement
     public InventoryObject inventory;
     public (ItemObject item, GameObject model) item = (null, null);
 
-    [Separator("Slot Element", true)]
+
     public VisualElement slot;
     public VisualElement slotImage;
 
-    [Separator("Description Element", true)]
+
     public VisualElement descriptionElement;
     public VisualElement descriptionImage;
     public Label descriptionText;

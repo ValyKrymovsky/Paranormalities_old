@@ -67,14 +67,14 @@ public class E_Teacher : MonoBehaviour
     [SerializeField]
     private float damage = 25f;
     [SerializeField]
-    P_Health p_health;
+    MyCode.Player.P_Health p_health;
     private Coroutine dealDamageCoroutine = null;
     
     private void Awake()
     {
         navigationAgent = GetComponent<NavMeshAgent>();
         player = GameObject.FindGameObjectWithTag("Player");
-        p_health = player.GetComponent<P_Health>();
+        p_health = player.GetComponent<MyCode.Player.P_Health>();
     }
 
     private void Start()

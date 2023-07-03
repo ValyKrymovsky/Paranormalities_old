@@ -1,0 +1,14 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <Style src="project://database/Assets/_Scripts/UI/UI%20Toolkit/Style%20Sheets/MainMenu/MainMenuStyleSheet.uss?fileID=7433441132597879392&amp;guid=4f6a3ad7e5fbbf9408733fc773a9e965&amp;type=3#MainMenuStyleSheet" />
+    <ui:VisualElement name="Screen" style="flex-grow: 1; background-color: rgb(51, 51, 51); justify-content: flex-start; align-items: center; align-self: center; width: 100%; height: 100%;">
+        <ui:VisualElement name="Title" style="flex-grow: 0; background-color: rgba(0, 0, 0, 0); justify-content: center; align-items: center; width: 100%; height: 125px; align-self: auto; min-height: 0; margin-top: 25px; display: flex;">
+            <ui:Label tabindex="-1" text="Paranormalities" display-tooltip-when-elided="true" style="-unity-font: url(&apos;project://database/Assets/Fonts/RobotoMono-VariableFont_wght.ttf?fileID=12800000&amp;guid=fb7448ff68bb17c469ece491fc477749&amp;type=3#RobotoMono-VariableFont_wght&apos;); -unity-font-definition: url(&apos;project://database/Assets/Fonts/RobotoMono-VariableFont_wght%20SDF.asset?fileID=11400000&amp;guid=ef00b26ddf4e40f4495363dda20223bb&amp;type=2#RobotoMono-VariableFont_wght SDF&apos;); font-size: 64px;" />
+        </ui:VisualElement>
+        <ui:VisualElement name="Menu" style="flex-grow: 0; background-color: rgba(0, 0, 0, 0); align-items: center; align-self: center; justify-content: space-around; width: 1000px; height: 750px; margin-top: 50px; display: flex;">
+            <ui:Button text="Play" display-tooltip-when-elided="true" name="Play" class="mainButton" />
+            <ui:Button text="Options" display-tooltip-when-elided="true" name="Options" class="mainButton" />
+            <ui:Button text="Exit" display-tooltip-when-elided="true" name="Exit" class="mainButton" />
+        </ui:VisualElement>
+        <ui:VisualElement name="DifficultySelection" style="flex-grow: 1; background-color: rgba(0, 0, 0, 0); width: 1000px; height: 750px; margin-top: 250px; margin-bottom: 250px; justify-content: center; align-items: center; align-self: center; display: none;" />
+    </ui:VisualElement>
+</ui:UXML>

@@ -41,8 +41,6 @@ public class PlayerCameraData : ScriptableObject
     [Space]
     [SerializeField] private InputActionReference input_CameraValue;
 
-    private Vector2 input_value;
-
 
     public float Sensetivity { get => sensetivity; set => sensetivity = value; }
     public float TopRotationLimit { get => topRotationLimit; set => topRotationLimit = value; }

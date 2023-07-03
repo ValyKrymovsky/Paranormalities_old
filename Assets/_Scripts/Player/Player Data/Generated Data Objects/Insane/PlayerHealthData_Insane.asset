@@ -1,0 +1,18 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6071b7856cd2d374a8b3f33a2dc096d2, type: 3}
+  m_Name: PlayerHealthData_Insane
+  m_EditorClassIdentifier: 
+  originalMaxHealth: 100
+  temporaryMaxHealth: 100
+  currentHealth: 0
+  dead: 0

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine.InputSystem;
 using UnityEngine;
 using MyBox;
+using MyCode.Player;
 
 public enum movementState
 {
@@ -30,6 +31,7 @@ public enum movementDirection
 [CreateAssetMenu(fileName = "NewMovementData", menuName = "DataObjects/Player/Movement")]
 public class PlayerMovementData : ScriptableObject
 {
+
     [Space]
     [Separator("Player movement", true)]
     [Space]
@@ -42,13 +44,11 @@ public class PlayerMovementData : ScriptableObject
     [SerializeField] private movementState movementState;
     [SerializeField] private movementDirection movementDirection;
     private bool isMoving, isMovingForward = false;
-    private float internalSpeedMultiplier;
-    private float movementSensetivity;
     private Vector3 directionToMove;
     private Vector3 finalDirectionToMove;
     private Vector3 playerMoveDirection;
     private Vector2 smoothMoveValue;
-    private Vector2 currentVelocity;
+    
     [Space]
 
     [Header("Movement Smoothening")]
@@ -67,7 +67,49 @@ public class PlayerMovementData : ScriptableObject
     private float gravityForce;
     private float velocity;
 
-    private Vector2 move_value;
-    private float sprint_value;
-    private float sneak_value;
+    [Space]
+    [Separator("Inputs")]
+    [Space]
+
+    [Header("Input Action")]
+    [Space]
+    [SerializeField] private InputActionReference input_WalkValue;
+    [SerializeField] private InputActionReference input_SprintValue;
+    [SerializeField] private InputActionReference input_SneakValue;
+
+
+    public float WalkSpeed { get => walkSpeed; set => walkSpeed = value; }
+    public float SprintMultiplier { get => sprintMultiplier; private set => sprintMultiplier = value; }
+    public float SneakMultiplier { get => sneakMultiplier; private set => sneakMultiplier = value; }
+    public movementState MovementState { get => movementState; set => movementState = value; }
+    public movementDirection MovementDirection { get => movementDirection; set => movementDirection = value; }
+    public bool IsMoving { get => isMoving; set => isMoving = value; }
+    public bool IsMovingForward { get => isMovingForward; set => isMovingForward = value; }
+    public Vector3 DirectionToMove { get => directionToMove; set => directionToMove = value; }
+    public Vector3 FinalDirectionToMove { get => finalDirectionToMove; set => finalDirectionToMove = value; }
+    public Vector3 PlayerMoveDirection { get => playerMoveDirection; set => playerMoveDirection = value; }
+    public Vector2 SmoothMoveValue { get => smoothMoveValue; set => smoothMoveValue = value; }
+    public float SmoothTime { get => smoothTime; set => smoothTime = value; }
+    public float GravityMultiplier { get => gravityMultiplier; set => gravityMultiplier = value; }
+    public bool IsGrounded { get => isGrounded; set => isGrounded = value; }
+
+    public static float CustomGravity => customGravity;
+
+    public InputActionReference WalkValueInput { get => input_WalkValue; }
+    public InputActionReference SprintValueInput { get => input_SprintValue; }
+    public InputActionReference SneakValueInput { get => input_SneakValue; }
+
+    private void OnEnable()
+    {
+        input_WalkValue.action.Enable();
+        input_SprintValue.action.Enable();
+        input_SneakValue.action.Enable();
+    }
+
+    private void OnDisable()
+    {
+        input_WalkValue.action.Disable();
+        input_SprintValue.action.Disable();
+        input_SneakValue.action.Disable();
+    }
 }

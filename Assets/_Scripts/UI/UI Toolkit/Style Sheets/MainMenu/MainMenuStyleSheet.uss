@@ -1,0 +1,17 @@
+.mainButton {
+    width: 250px;
+    height: 125px;
+    flex-shrink: 1;
+    flex-grow: 0;
+    padding-left: 0;
+    padding-right: 0;
+    padding-top: 0;
+    padding-bottom: 0;
+    margin-left: 0;
+    margin-right: 0;
+    margin-top: 15px;
+    margin-bottom: 15px;
+    align-self: auto;
+    justify-content: space-around;
+    align-items: stretch;
+}
