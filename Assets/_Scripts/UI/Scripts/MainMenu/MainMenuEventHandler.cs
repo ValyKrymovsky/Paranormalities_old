@@ -69,7 +69,6 @@ public class MainMenuEventHandler : MonoBehaviour
     {
         foreach (Difficulty diff in Enum.GetValues(typeof(Difficulty)))
         {
-            Debug.Log("Spawning button for " + diff);
             DifficultyButton buttonElement = new DifficultyButton();
             buttonElement.Difficulty = diff;
             buttonElement.name = diff.ToString();

@@ -66,6 +66,11 @@ namespace MyCode.Player
                 {
                     Debug.Log("Succesfully created PlayerManager");
                     _instance = Instantiate((GameObject)managerHandle.Result).GetComponent<PlayerManager>();
+                    _instance.Camera = _properties.playerCameraData;
+                    _instance.Movement = _properties.playerMovementData;
+                    _instance.Stamina = _properties.playerStaminaData;
+                    _instance.Health = _properties.playerHealthData;
+                    _instance.Inventory = _properties.playerInventoryData;
                     return _instance;
                 }
                 return null;
