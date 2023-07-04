@@ -43,11 +43,9 @@ public class PlayerMovementData : ScriptableObject
     [SerializeField] private float sprintMultiplier, sneakMultiplier;
     [SerializeField] private movementState movementState;
     [SerializeField] private movementDirection movementDirection;
-    private bool isMoving, isMovingForward = false;
-    private Vector3 directionToMove;
-    private Vector3 finalDirectionToMove;
-    private Vector3 playerMoveDirection;
-    private Vector2 smoothMoveValue;
+    [SerializeField, ReadOnly] private bool isMoving, isMovingForward = false;
+    [SerializeField, ReadOnly] private Vector3 directionToMove;
+    [SerializeField, ReadOnly] private Vector2 smoothMoveValue;
     
     [Space]
 
@@ -63,6 +61,7 @@ public class PlayerMovementData : ScriptableObject
     [Space]
     [SerializeField] private float gravityMultiplier = .5f;
     [SerializeField] private bool isGrounded;
+    [SerializeField] private bool useCustomGravity;
     private const float customGravity = -9.8f;
     private float gravityForce;
     private float velocity;
@@ -78,6 +77,7 @@ public class PlayerMovementData : ScriptableObject
     [SerializeField] private InputActionReference input_SneakValue;
 
 
+    // Movement
     public float WalkSpeed { get => walkSpeed; set => walkSpeed = value; }
     public float SprintMultiplier { get => sprintMultiplier; private set => sprintMultiplier = value; }
     public float SneakMultiplier { get => sneakMultiplier; private set => sneakMultiplier = value; }
@@ -86,18 +86,20 @@ public class PlayerMovementData : ScriptableObject
     public bool IsMoving { get => isMoving; set => isMoving = value; }
     public bool IsMovingForward { get => isMovingForward; set => isMovingForward = value; }
     public Vector3 DirectionToMove { get => directionToMove; set => directionToMove = value; }
-    public Vector3 FinalDirectionToMove { get => finalDirectionToMove; set => finalDirectionToMove = value; }
-    public Vector3 PlayerMoveDirection { get => playerMoveDirection; set => playerMoveDirection = value; }
     public Vector2 SmoothMoveValue { get => smoothMoveValue; set => smoothMoveValue = value; }
     public float SmoothTime { get => smoothTime; set => smoothTime = value; }
+
+    // Gravity
     public float GravityMultiplier { get => gravityMultiplier; set => gravityMultiplier = value; }
     public bool IsGrounded { get => isGrounded; set => isGrounded = value; }
+    public bool UseCustomGravity { get => useCustomGravity; set => useCustomGravity = value; }
+    public float CustomGravity { get => customGravity; }
 
-    public static float CustomGravity => customGravity;
-
+    // Inputs
     public InputActionReference WalkValueInput { get => input_WalkValue; }
     public InputActionReference SprintValueInput { get => input_SprintValue; }
     public InputActionReference SneakValueInput { get => input_SneakValue; }
+    
 
     private void OnEnable()
     {
