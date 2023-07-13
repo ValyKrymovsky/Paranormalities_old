@@ -1,5 +1,4 @@
 using MyCode.Player;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -14,7 +13,8 @@ public class ManagerLoader : MonoBehaviour
     public async static void LoadManagers(DifficultyProperties _difficultyProp)
     {
         await PlayerManager.LoadManager(_difficultyProp);
-        SceneManager.LoadSceneAsync("DebugScene", LoadSceneMode.Single);
+        await PopupManager.LoadManager();
+        await SceneLoader.LoadScene(Scene.DebugScene);
     }
 
 }

@@ -1,9 +1,9 @@
 {
   "dependencies": {
-    "com.atteneder.gltfast": "https://github.com/atteneder/glTFast.git",
+    "com.cysharp.unitask": "https://github.com/Cysharp/UniTask.git?path=src/UniTask/Assets/Plugins/UniTask",
     "com.domybest.mybox": "https://github.com/Deadcows/MyBox.git",
     "com.unity.2d.sprite": "1.0.0",
-    "com.unity.addressables": "1.21.12",
+    "com.unity.addressables": "1.21.14",
     "com.unity.ai.navigation": "1.1.4",
     "com.unity.collab-proxy": "2.0.4",
     "com.unity.feature.characters-animation": "1.0.0",

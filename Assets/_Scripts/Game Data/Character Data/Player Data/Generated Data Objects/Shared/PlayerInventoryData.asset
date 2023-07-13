@@ -1,0 +1,20 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 92943daca2b894c4a86e4778acb21a0d, type: 3}
+  m_Name: PlayerInventoryData
+  m_EditorClassIdentifier: 
+  inventory: {fileID: 11400000, guid: 0e997334215066a4bb6b75a208a603b4, type: 2}
+  dropRange: 3
+  input_DropItem: {fileID: -9145582709734601172, guid: 5cbe42c2b73edc740bbce0ae6343c7c0,
+    type: 3}
+  input_ToggleInventory: {fileID: 4972659999699303859, guid: 5cbe42c2b73edc740bbce0ae6343c7c0,
+    type: 3}

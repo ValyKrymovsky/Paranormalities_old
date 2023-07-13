@@ -1,0 +1,34 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6caa4fecf1f67eb4aa8c0862fc4a5ddd, type: 3}
+  m_Name: PlayerMovementData_Easy
+  m_EditorClassIdentifier: 
+  _walkSpeed: 1.75
+  _sprintMultiplier: 1.75
+  _sneakMultiplier: 0.5
+  _movementState: 0
+  _movementDirection: 0
+  _isMoving: 0
+  _isMovingForward: 0
+  _directionToMove: {x: -0.000039537157, y: -1, z: -0.000044532655}
+  _smoothMoveValue: {x: 0, y: 0.00014887795}
+  _smoothTime: 0.2
+  _gravityMultiplier: 0.5
+  _isGrounded: 1
+  _useCustomGravity: 0
+  freezeOnInventory: 1
+  _input_WalkValue: {fileID: -3387201930974474098, guid: 5cbe42c2b73edc740bbce0ae6343c7c0,
+    type: 3}
+  _input_SprintValue: {fileID: -6067321428764384243, guid: 5cbe42c2b73edc740bbce0ae6343c7c0,
+    type: 3}
+  _input_SneakValue: {fileID: -5786487062162588242, guid: 5cbe42c2b73edc740bbce0ae6343c7c0,
+    type: 3}

@@ -97,7 +97,8 @@ LightmapSettings:
     m_ExportTrainingData: 0
     m_TrainingDataDestination: TrainingData
     m_LightProbeSampleCountMultiplier: 4
-  m_LightingDataAsset: {fileID: 0}
+  m_LightingDataAsset: {fileID: 112000000, guid: 986b937d4b8a4c24b9dbd8fbb7a72118,
+    type: 2}
   m_LightingSettings: {fileID: 0}
 --- !u!196 &4
 NavMeshSettings:
@@ -123,6 +124,133 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 23800000, guid: 7527d12d738802d4fa58a202740ffd1e, type: 2}
+--- !u!1 &163926857
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 163926858}
+  - component: {fileID: 163926862}
+  - component: {fileID: 163926861}
+  - component: {fileID: 163926860}
+  - component: {fileID: 163926859}
+  m_Layer: 0
+  m_Name: Cube
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &163926858
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 163926857}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 2.01, z: -6.88}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1216132805}
+  m_RootOrder: -1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!95 &163926859
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 163926857}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: b8b390764b790b044b18ffc0306494af, type: 2}
+  m_CullingMode: 1
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
+--- !u!65 &163926860
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 163926857}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 1, y: 1, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!23 &163926861
+MeshRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 163926857}
+  m_Enabled: 1
+  m_CastShadows: 1
+  m_ReceiveShadows: 1
+  m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
+  m_RayTraceProcedural: 0
+  m_RenderingLayerMask: 1
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 2100000, guid: 31321ba15b8f8eb4c954353edc038b1d, type: 2}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 1
+  m_SelectedEditorRenderState: 3
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+  m_AdditionalVertexStreams: {fileID: 0}
+--- !u!33 &163926862
+MeshFilter:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 163926857}
+  m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
 --- !u!1 &168098455
 GameObject:
   m_ObjectHideFlags: 0
@@ -289,7 +417,7 @@ GameObject:
   - component: {fileID: 369072588}
   - component: {fileID: 369072587}
   - component: {fileID: 369072586}
-  m_Layer: 10
+  m_Layer: 6
   m_Name: Sphere (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -335,11 +463,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: da187eb0cbdddb1479c02f631205ecc8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  interactible: 1
-  popupText: Play with
-  customPopupLocation: 0
+  _interactible: 1
+  _interactionType: 1
+  _popupText: Pick Up
+  _customPopupLocation: 0
   customPopupLocationObject: {fileID: 0}
-  popupLocation: {x: 0, y: 0, z: 0}
 --- !u!135 &369072588
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -574,7 +702,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 439410707}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 2.661, y: 1.228, z: -9.491}
+  m_LocalPosition: {x: 4.027, y: 1.228, z: -9.491}
   m_LocalScale: {x: 0.25, y: 0.25, z: 0.25}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -620,6 +748,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fbc1e39a5ee3f1d44bae7b54a0bebaec, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _item: {fileID: 11400000, guid: 9e12b11b33e7c5c4e845c691e11423c6, type: 2}
+  model: {fileID: 0}
+  itemImage: {fileID: 21300084, guid: 5e7ed4c8ec8de2743b9bd93130790085, type: 3}
+  _interactionController: {fileID: 0}
 --- !u!114 &439410711
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -632,11 +764,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: da187eb0cbdddb1479c02f631205ecc8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  interactible: 1
-  popupText: PickUp
-  customPopupLocation: 0
+  _interactible: 1
+  _interactionType: 0
+  _popupText: Interact
+  _customPopupLocation: 0
   customPopupLocationObject: {fileID: 0}
-  popupLocation: {x: 0, y: 0, z: 0}
 --- !u!65 &439410712
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -1162,6 +1294,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fbc1e39a5ee3f1d44bae7b54a0bebaec, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _item: {fileID: 11400000, guid: 97ff08004d7716641b7a60dca335031e, type: 2}
+  model: {fileID: 0}
+  itemImage: {fileID: 21300000, guid: c0200dff3fb72bf46bd627fa1a84fa64, type: 3}
+  _interactionController: {fileID: 0}
 --- !u!114 &653503926
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1174,11 +1310,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: da187eb0cbdddb1479c02f631205ecc8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  interactible: 1
-  popupText: PickUp
-  customPopupLocation: 0
+  _interactible: 1
+  _interactionType: 0
+  _popupText: Interact
+  _customPopupLocation: 0
   customPopupLocationObject: {fileID: 0}
-  popupLocation: {x: 0, y: 0, z: 0}
 --- !u!65 &653503927
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -1297,7 +1433,7 @@ GameObject:
   - component: {fileID: 737633413}
   - component: {fileID: 737633411}
   - component: {fileID: 737633410}
-  m_Layer: 10
+  m_Layer: 6
   m_Name: Interactible Test (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1343,11 +1479,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: da187eb0cbdddb1479c02f631205ecc8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  interactible: 1
-  popupText: Pick up
-  customPopupLocation: 0
+  _interactible: 1
+  _interactionType: 1
+  _popupText: Pick Up
+  _customPopupLocation: 0
   customPopupLocationObject: {fileID: 0}
-  popupLocation: {x: 0, y: 0, z: 0}
 --- !u!65 &737633413
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -2103,6 +2239,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 740799826}
+  - {fileID: 163926858}
   m_Father: {fileID: 0}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -2865,37 +3002,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &1551639637
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1551639638}
-  m_Layer: 0
-  m_Name: TempLocation
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1551639638
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1551639637}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 5000, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 7
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1571127174
 GameObject:
   m_ObjectHideFlags: 0
@@ -3064,7 +3170,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1659061231}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.216, y: 1.228, z: -10.159}
+  m_LocalPosition: {x: 3.832, y: 1.228, z: -10.159}
   m_LocalScale: {x: 0.25, y: 0.25, z: 0.25}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -3110,6 +3216,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fbc1e39a5ee3f1d44bae7b54a0bebaec, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _item: {fileID: 11400000, guid: 141b010bfcd318f4f999b49343ede8da, type: 2}
+  model: {fileID: 0}
+  itemImage: {fileID: 21300104, guid: 5e7ed4c8ec8de2743b9bd93130790085, type: 3}
+  _interactionController: {fileID: 0}
 --- !u!114 &1659061235
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3122,11 +3232,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: da187eb0cbdddb1479c02f631205ecc8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  interactible: 1
-  popupText: PickUp
-  customPopupLocation: 0
+  _interactible: 1
+  _interactionType: 0
+  _popupText: Interact
+  _customPopupLocation: 0
   customPopupLocationObject: {fileID: 0}
-  popupLocation: {x: 0, y: 0, z: 0}
 --- !u!65 &1659061236
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -3228,7 +3338,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1832469751}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 6.28, y: 1.542, z: -9.76}
+  m_LocalPosition: {x: 5.151, y: 1.072, z: -9.76}
   m_LocalScale: {x: 0.25, y: 0.25, z: 0.25}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -3247,6 +3357,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fbc1e39a5ee3f1d44bae7b54a0bebaec, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _item: {fileID: 11400000, guid: 7c4cabd8cc4b5b24282bd8854ec1cd9c, type: 2}
+  model: {fileID: 0}
+  itemImage: {fileID: 21300000, guid: 6bf0e4fff89ab0e44ae43e8b3e8ef4fe, type: 3}
+  _interactionController: {fileID: 0}
 --- !u!114 &1832469754
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3259,11 +3373,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: da187eb0cbdddb1479c02f631205ecc8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  interactible: 1
-  popupText: PickUp
-  customPopupLocation: 0
+  _interactible: 1
+  _interactionType: 0
+  _popupText: Interact
+  _customPopupLocation: 0
   customPopupLocationObject: {fileID: 0}
-  popupLocation: {x: 0, y: 0, z: 0}
 --- !u!65 &1832469755
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -3412,7 +3526,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &1847672330
 Transform:
   m_ObjectHideFlags: 0
@@ -3443,7 +3557,7 @@ GameObject:
   - component: {fileID: 1892286267}
   - component: {fileID: 1892286265}
   - component: {fileID: 1892286271}
-  m_Layer: 10
+  m_Layer: 6
   m_Name: Interactible Test
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3462,11 +3576,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: da187eb0cbdddb1479c02f631205ecc8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  interactible: 1
-  popupText: Open
-  customPopupLocation: 0
+  _interactible: 1
+  _interactionType: 1
+  _popupText: Pick Up
+  _customPopupLocation: 0
   customPopupLocationObject: {fileID: 0}
-  popupLocation: {x: 0, y: 0, z: 0}
 --- !u!65 &1892286267
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -3594,7 +3708,7 @@ GameObject:
   - component: {fileID: 1903408603}
   - component: {fileID: 1903408601}
   - component: {fileID: 1903408600}
-  m_Layer: 10
+  m_Layer: 6
   m_Name: Interactible Test (2)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3640,11 +3754,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: da187eb0cbdddb1479c02f631205ecc8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  interactible: 1
-  popupText: Throw
-  customPopupLocation: 0
+  _interactible: 1
+  _interactionType: 1
+  _popupText: Pick Up
+  _customPopupLocation: 0
   customPopupLocationObject: {fileID: 0}
-  popupLocation: {x: 0, y: 0, z: 0}
 --- !u!65 &1903408603
 BoxCollider:
   m_ObjectHideFlags: 0

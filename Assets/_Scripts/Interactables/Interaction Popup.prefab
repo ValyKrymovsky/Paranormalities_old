@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 8872957852176835631}
   - component: {fileID: 6268603538245527566}
   - component: {fileID: 7277311337955568215}
+  - component: {fileID: 5492922239483504576}
   m_Layer: 7
   m_Name: Interaction Popup
   m_TagString: Highlight
@@ -27,7 +28,7 @@ RectTransform:
   m_GameObject: {fileID: 4703598568949048109}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: -1, y: 1, z: 1}
+  m_LocalScale: {x: -0.25, y: 0.25, z: 0.25}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -172,3 +173,17 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_renderer: {fileID: 6268603538245527566}
   m_maskType: 0
+--- !u!114 &5492922239483504576
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4703598568949048109}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d6810649cfc46404f82adfb5758d2c8c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _text: {fileID: 0}
+  _renderer: {fileID: 0}

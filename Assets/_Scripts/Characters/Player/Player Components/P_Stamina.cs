@@ -16,9 +16,9 @@ namespace MyCode.Player
 
         void Start()
         {
-            instanceRef.Stamina.CurrentStamina = instanceRef.Stamina.MaxStamina;
-            instanceRef.Stamina.ReachedLimit = false;
-            instanceRef.Stamina.CanSprint = true;
+            instanceRef.StaminaData.CurrentStamina = instanceRef.StaminaData.MaxStamina;
+            instanceRef.StaminaData.ReachedLimit = false;
+            instanceRef.StaminaData.CanSprint = true;
         }
 
         private void OnEnable()
@@ -37,15 +37,15 @@ namespace MyCode.Player
         {
             if (!IsStaminaDepleted())
             {
-                if (instanceRef.Stamina.RegenCoroutine != null && !instanceRef.Stamina.ReachedLimit)
+                if (instanceRef.StaminaData.RegenCoroutine != null && !instanceRef.StaminaData.ReachedLimit)
                 {
-                    StopCoroutine(instanceRef.Stamina.RegenCoroutine);
-                    instanceRef.Stamina.RegenCoroutine = null;
+                    StopCoroutine(instanceRef.StaminaData.RegenCoroutine);
+                    instanceRef.StaminaData.RegenCoroutine = null;
                 }
 
-                if (instanceRef.Stamina.DrainCoroutine == null)
+                if (instanceRef.StaminaData.DrainCoroutine == null)
                 {
-                    instanceRef.Stamina.DrainCoroutine = StartCoroutine(DrainStamina());
+                    instanceRef.StaminaData.DrainCoroutine = StartCoroutine(DrainStamina());
                 }
             }
         }
@@ -54,36 +54,36 @@ namespace MyCode.Player
         {
             if (!IsStaminaFull())
             {
-                if (instanceRef.Stamina.DrainCoroutine != null)
+                if (instanceRef.StaminaData.DrainCoroutine != null)
                 {
-                    StopCoroutine(instanceRef.Stamina.DrainCoroutine);
-                    instanceRef.Stamina.DrainCoroutine = null;
+                    StopCoroutine(instanceRef.StaminaData.DrainCoroutine);
+                    instanceRef.StaminaData.DrainCoroutine = null;
                 }
 
-                if (instanceRef.Stamina.RegenCoroutine == null)
+                if (instanceRef.StaminaData.RegenCoroutine == null)
                 {
-                    instanceRef.Stamina.RegenCoroutine = StartCoroutine(RegenStamina(instanceRef.Stamina.RegenDelay));
+                    instanceRef.StaminaData.RegenCoroutine = StartCoroutine(RegenStamina(instanceRef.StaminaData.RegenDelay));
                 }
             }
         }
 
         private IEnumerator DrainStamina()
         {
-            if (!instanceRef.Stamina.ReachedLimit)
+            if (!instanceRef.StaminaData.ReachedLimit)
             {
                 while (!IsStaminaDepleted())
                 {
-                    instanceRef.Stamina.CurrentStamina -= instanceRef.Stamina.DepletionValue;
+                    instanceRef.StaminaData.CurrentStamina -= instanceRef.StaminaData.DepletionValue;
 
-                    if (instanceRef.Stamina.CurrentStamina < instanceRef.Stamina.Limit)
+                    if (instanceRef.StaminaData.CurrentStamina < instanceRef.StaminaData.Limit)
                     {
-                        instanceRef.Stamina.ReachedLimit = true;
-                        instanceRef.Stamina.CanSprint = false;
+                        instanceRef.StaminaData.ReachedLimit = true;
+                        instanceRef.StaminaData.CanSprint = false;
                     }
 
                     yield return null;
                 }
-                instanceRef.Stamina.CurrentStamina = 0;
+                instanceRef.StaminaData.CurrentStamina = 0;
                 yield break;
             }
         }
@@ -94,18 +94,18 @@ namespace MyCode.Player
 
             while (!IsStaminaFull())
             {
-                instanceRef.Stamina.CurrentStamina += instanceRef.Stamina.RegenValue;
+                instanceRef.StaminaData.CurrentStamina += instanceRef.StaminaData.RegenValue;
                 yield return null;
             }
-            instanceRef.Stamina.CurrentStamina = instanceRef.Stamina.MaxStamina;
-            instanceRef.Stamina.ReachedLimit = false;
-            instanceRef.Stamina.CanSprint = true;
+            instanceRef.StaminaData.CurrentStamina = instanceRef.StaminaData.MaxStamina;
+            instanceRef.StaminaData.ReachedLimit = false;
+            instanceRef.StaminaData.CanSprint = true;
             yield break;
         }
 
         private bool IsStaminaDepleted()
         {
-            if (instanceRef.Stamina.CurrentStamina <= 0)
+            if (instanceRef.StaminaData.CurrentStamina <= 0)
                 return true;
 
             return false;
@@ -113,7 +113,7 @@ namespace MyCode.Player
 
         private bool IsStaminaFull()
         {
-            if (instanceRef.Stamina.CurrentStamina >= instanceRef.Stamina.MaxStamina)
+            if (instanceRef.StaminaData.CurrentStamina >= instanceRef.StaminaData.MaxStamina)
                 return true;
 
             return false;

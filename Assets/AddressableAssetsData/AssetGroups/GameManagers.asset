@@ -23,6 +23,12 @@ MonoBehaviour:
     m_SerializedLabels:
     - PlayerManager
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 6982fb0d2acef6d47bcd087f8094594b
+    m_Address: Assets/_Scripts/Managers/Popup/PopupManager.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - PopupManager
+    FlaggedDuringContentUpdateRestriction: 0
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: 05725dfde3bb9b84d9f5556a03d1a5bb, type: 2}
   m_SchemaSet:

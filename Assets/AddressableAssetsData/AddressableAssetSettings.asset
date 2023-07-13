@@ -15,7 +15,7 @@ MonoBehaviour:
   m_DefaultGroup: ae2f978a2c4fea74494c308719cbf961
   m_currentHash:
     serializedVersion: 2
-    Hash: 00000000000000000000000000000000
+    Hash: 1163962383359561db4f156f05707778
   m_OptimizeCatalogSize: 0
   m_BuildRemoteCatalog: 0
   m_BundleLocalCatalog: 0
@@ -90,6 +90,7 @@ MonoBehaviour:
     m_LabelNames:
     - default
     - PlayerManager
+    - PopupManager
     - InteractionPopup
   m_SchemaTemplates: []
   m_GroupTemplateObjects:

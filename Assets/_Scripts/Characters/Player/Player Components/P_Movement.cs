@@ -18,7 +18,7 @@ namespace MyCode.Player
         private PlayerManager _pm;
         [Space]
 
-        // Movement
+        // MovementData
         private Vector2 _moveValue;
         private float _sprintValue;
         private float _sneakValue;
@@ -36,6 +36,8 @@ namespace MyCode.Player
         public static event Action startedRunning;
         public static event Action stoppedRunning;
 
+        private bool canMove = true;
+
         private void Awake()
         {
             _characterController = GetComponent<CharacterController>();
@@ -44,22 +46,28 @@ namespace MyCode.Player
 
         private void OnEnable()
         {
-            _pm.Movement.WalkValueInput.action.performed += OnWalkAction;
-            _pm.Movement.SprintValueInput.action.performed += OnSprintAction;
-            _pm.Movement.SneakValueInput.action.performed += OnSneakAction;
-            _pm.Movement.WalkValueInput.action.canceled += StopWalkAction;
-            _pm.Movement.SprintValueInput.action.canceled += StopSprintAction;
-            _pm.Movement.SneakValueInput.action.canceled += StopSneakAction;
+            _pm.MovementData.WalkValueInput.action.performed += OnWalkAction;
+            _pm.MovementData.SprintValueInput.action.performed += OnSprintAction;
+            _pm.MovementData.SneakValueInput.action.performed += OnSneakAction;
+            _pm.MovementData.WalkValueInput.action.canceled += StopWalkAction;
+            _pm.MovementData.SprintValueInput.action.canceled += StopSprintAction;
+            _pm.MovementData.SneakValueInput.action.canceled += StopSneakAction;
+
+            InventoryHandler.OnInventoryOpen += () => canMove = false;
+            InventoryHandler.OnInventoryClose += () => canMove = true;
         }
 
         private void OnDisable()
         {
-            _pm.Movement.WalkValueInput.action.performed -= OnWalkAction;
-            _pm.Movement.SprintValueInput.action.performed -= OnSprintAction;
-            _pm.Movement.SneakValueInput.action.performed -= OnSneakAction;
-            _pm.Movement.WalkValueInput.action.canceled -=StopWalkAction;
-            _pm.Movement.SprintValueInput.action.canceled -= StopSprintAction;
-            _pm.Movement.SneakValueInput.action.canceled -= StopSneakAction;
+            _pm.MovementData.WalkValueInput.action.performed -= OnWalkAction;
+            _pm.MovementData.SprintValueInput.action.performed -= OnSprintAction;
+            _pm.MovementData.SneakValueInput.action.performed -= OnSneakAction;
+            _pm.MovementData.WalkValueInput.action.canceled -=StopWalkAction;
+            _pm.MovementData.SprintValueInput.action.canceled -= StopSprintAction;
+            _pm.MovementData.SneakValueInput.action.canceled -= StopSneakAction;
+
+            InventoryHandler.OnInventoryOpen -= () => canMove = false;
+            InventoryHandler.OnInventoryClose -= () => canMove = true;
         }
 
         void Start()
@@ -67,30 +75,33 @@ namespace MyCode.Player
             _internalSpeedMultiplier = 1;
             _currentVelocity = Vector2.zero;
 
-            _pm.Movement.MovementState = MovementState.none;
-            _pm.Movement.DirectionToMove = Vector3.zero;
+            _pm.MovementData.MovementState = MovementState.none;
+            _pm.MovementData.DirectionToMove = Vector3.zero;
 
-            _pm.Movement.IsMoving = false;
-            _pm.Movement.IsMovingForward = false;
-            _pm.Movement.SmoothMoveValue = Vector2.zero;
+            _pm.MovementData.IsMoving = false;
+            _pm.MovementData.IsMovingForward = false;
+            _pm.MovementData.SmoothMoveValue = Vector2.zero;
 
-            _pm.Movement.IsGrounded = false;
+            _pm.MovementData.IsGrounded = false;
         }
 
         private void Update()
         {
+            if (!canMove)
+                return;
+
             PlayerMove();
             ApplyGravity();
             CorrectMovement();
 
-            _characterController.Move(_pm.Movement.DirectionToMove * _pm.Movement.WalkSpeed * _internalSpeedMultiplier * Time.deltaTime);
+            _characterController.Move(_pm.MovementData.DirectionToMove * _pm.MovementData.WalkSpeed * _internalSpeedMultiplier * Time.deltaTime);
         }
 
         private void PlayerMove()
         {
-            _pm.Movement.IsMoving = IsPlayerMoving();
-            _pm.Movement.IsMovingForward = IsPlayerMovingForward();
-            _pm.Movement.IsGrounded = IsGrounded();
+            _pm.MovementData.IsMoving = IsPlayerMoving();
+            _pm.MovementData.IsMovingForward = IsPlayerMovingForward();
+            _pm.MovementData.IsGrounded = IsGrounded();
             UpdateMovementDirection();
 
             // sets movement sensetivity from controller stick biggest value
@@ -98,13 +109,13 @@ namespace MyCode.Player
             _movementSensetivity = _movementSensetivity < .4f ? .4f : _movementSensetivity;
 
             // increases initial speed over time for smooth movement start
-            _pm.Movement.SmoothMoveValue = Vector2.SmoothDamp(_pm.Movement.SmoothMoveValue, _moveValue, ref _currentVelocity, _pm.Movement.SmoothTime);
+            _pm.MovementData.SmoothMoveValue = Vector2.SmoothDamp(_pm.MovementData.SmoothMoveValue, _moveValue, ref _currentVelocity, _pm.MovementData.SmoothTime);
 
 
-            _pm.Movement.DirectionToMove = (_pm.Movement.SmoothMoveValue.x * transform.right + _pm.Movement.SmoothMoveValue.y * transform.forward) * _movementSensetivity;
+            _pm.MovementData.DirectionToMove = (_pm.MovementData.SmoothMoveValue.x * transform.right + _pm.MovementData.SmoothMoveValue.y * transform.forward) * _movementSensetivity;
 
             // clamps player movement to magnitude of 1
-            _pm.Movement.DirectionToMove = Vector3.ClampMagnitude(_pm.Movement.DirectionToMove, 1);
+            _pm.MovementData.DirectionToMove = Vector3.ClampMagnitude(_pm.MovementData.DirectionToMove, 1);
 
             
         }
@@ -114,11 +125,11 @@ namespace MyCode.Player
             _moveValue = value.ReadValue<Vector2>();
             if (_sneakValue != 0)
             {
-                _pm.Movement.MovementState = MovementState.sneak;
+                _pm.MovementData.MovementState = MovementState.sneak;
             }
             else
             {
-                _pm.Movement.MovementState = MovementState.walk;
+                _pm.MovementData.MovementState = MovementState.walk;
             }
         }
 
@@ -126,14 +137,14 @@ namespace MyCode.Player
         {
             if (IsPlayerMovingForward())
             {
-                if (_pm.Stamina.UseStaminaSystem)
+                if (_pm.StaminaData.UseStaminaSystem)
                     startedRunning?.Invoke();
 
                 if (CanSprint())
                 {
                     _sprintValue = value.ReadValue<float>();
-                    _internalSpeedMultiplier = _pm.Movement.SprintMultiplier;
-                    _pm.Movement.MovementState = MovementState.sprint;
+                    _internalSpeedMultiplier = _pm.MovementData.SprintMultiplier;
+                    _pm.MovementData.MovementState = MovementState.sprint;
                 }
                 
             }
@@ -141,11 +152,11 @@ namespace MyCode.Player
 
         private void OnSneakAction(InputAction.CallbackContext value)
         {
-            if (_pm.Movement.MovementState != MovementState.sprint)
+            if (_pm.MovementData.MovementState != MovementState.sprint)
             {
                 _sneakValue = value.ReadValue<float>();
-                _internalSpeedMultiplier = _pm.Movement.SneakMultiplier;
-                _pm.Movement.MovementState = MovementState.sneak;
+                _internalSpeedMultiplier = _pm.MovementData.SneakMultiplier;
+                _pm.MovementData.MovementState = MovementState.sneak;
             }
         }
 
@@ -154,31 +165,31 @@ namespace MyCode.Player
             _moveValue = Vector2.zero;
             _sprintValue = 0;
             _sneakValue = 0;
-            _pm.Movement.MovementState = MovementState.none;
+            _pm.MovementData.MovementState = MovementState.none;
         }
 
         private void StopSprintAction(InputAction.CallbackContext value)
         {
             _sprintValue = 0;
 
-            if (_pm.Stamina.UseStaminaSystem)
+            if (_pm.StaminaData.UseStaminaSystem)
                 stoppedRunning?.Invoke();
             
             if (_sneakValue != 0)
             {
-                _internalSpeedMultiplier = _pm.Movement.SneakMultiplier;
-                _pm.Movement.MovementState = MovementState.sneak;
+                _internalSpeedMultiplier = _pm.MovementData.SneakMultiplier;
+                _pm.MovementData.MovementState = MovementState.sneak;
                 return;
             }
             else if (_moveValue != Vector2.zero)
             {
                 _internalSpeedMultiplier = 1;
-                _pm.Movement.MovementState = MovementState.walk;
+                _pm.MovementData.MovementState = MovementState.walk;
                 return;
             }
 
             _internalSpeedMultiplier = 1;
-            _pm.Movement.MovementState = MovementState.none;
+            _pm.MovementData.MovementState = MovementState.none;
             return;
         }
 
@@ -187,25 +198,25 @@ namespace MyCode.Player
             _sneakValue = 0;
             if (_sprintValue != 0)
             {
-                _internalSpeedMultiplier = _pm.Movement.SprintMultiplier;
-                _pm.Movement.MovementState = MovementState.sprint;
+                _internalSpeedMultiplier = _pm.MovementData.SprintMultiplier;
+                _pm.MovementData.MovementState = MovementState.sprint;
                 return;
             }
             else if (_moveValue != Vector2.zero)
             {
                 _internalSpeedMultiplier = 1;
-                _pm.Movement.MovementState = MovementState.walk;
+                _pm.MovementData.MovementState = MovementState.walk;
                 return;
             }
 
             _internalSpeedMultiplier = 1;
-            _pm.Movement.MovementState = MovementState.none;
+            _pm.MovementData.MovementState = MovementState.none;
             return;
         }
 
         private bool CanSprint()
         {
-            if (IsPlayerMovingForward() && _pm.Stamina.CanSprint)
+            if (IsPlayerMovingForward() && _pm.StaminaData.CanSprint)
             {
                 return true;
             }
@@ -220,15 +231,15 @@ namespace MyCode.Player
             }
             else
             {
-                if (_pm.Movement.UseCustomGravity)
-                    _currentGravityVelocity += (_pm.Movement.CustomGravity * _pm.Movement.GravityMultiplier) * Time.deltaTime;
+                if (_pm.MovementData.UseCustomGravity)
+                    _currentGravityVelocity += (_pm.MovementData.CustomGravity * _pm.MovementData.GravityMultiplier) * Time.deltaTime;
                 else
-                    _currentGravityVelocity += (Physics.gravity.y * _pm.Movement.GravityMultiplier) * Time.deltaTime;
+                    _currentGravityVelocity += (Physics.gravity.y * _pm.MovementData.GravityMultiplier) * Time.deltaTime;
             }   
                     
 
             _gravityForce = _currentGravityVelocity;
-            _pm.Movement.DirectionToMove = new Vector3(_pm.Movement.DirectionToMove.x, _gravityForce, _pm.Movement.DirectionToMove.z);
+            _pm.MovementData.DirectionToMove = new Vector3(_pm.MovementData.DirectionToMove.x, _gravityForce, _pm.MovementData.DirectionToMove.z);
         }
 
         public bool IsGrounded()
@@ -269,39 +280,39 @@ namespace MyCode.Player
         {
             if (_moveValue == Vector2.zero)
             {
-                _pm.Movement.MovementDirection = MovementDirection.none;
+                _pm.MovementData.MovementDirection = MovementDirection.none;
             }
             else if (_moveValue.y > 0 && (_moveValue.x < .5 && _moveValue.x > -.5))
             {
-                _pm.Movement.MovementDirection = MovementDirection.forward;
+                _pm.MovementData.MovementDirection = MovementDirection.forward;
             }
             else if (_moveValue.y < 0 && (_moveValue.x < .5 && _moveValue.x > -.5))
             {
-                _pm.Movement.MovementDirection = MovementDirection.backward;
+                _pm.MovementData.MovementDirection = MovementDirection.backward;
             }
             else if ((_moveValue.y > .5) && (_moveValue.x > .5))
             {
-                _pm.Movement.MovementDirection = MovementDirection.forward_right;
+                _pm.MovementData.MovementDirection = MovementDirection.forward_right;
             }
             else if ((_moveValue.y > .5) && (_moveValue.x < -.5))
             {
-                _pm.Movement.MovementDirection = MovementDirection.forward_left;
+                _pm.MovementData.MovementDirection = MovementDirection.forward_left;
             }
             else if (_moveValue.x > 0 && (_moveValue.y < .5 && _moveValue.y > -.5))
             {
-                _pm.Movement.MovementDirection = MovementDirection.right;
+                _pm.MovementData.MovementDirection = MovementDirection.right;
             }
             else if (_moveValue.x < 0 && (_moveValue.y < .5 && _moveValue.y > -.5))
             {
-                _pm.Movement.MovementDirection = MovementDirection.left;
+                _pm.MovementData.MovementDirection = MovementDirection.left;
             }
             else if ((_moveValue.y < -.5) && (_moveValue.x > .5))
             {
-                _pm.Movement.MovementDirection = MovementDirection.backward_right;
+                _pm.MovementData.MovementDirection = MovementDirection.backward_right;
             }
             else if ((_moveValue.y < -.5) && (_moveValue.x < -.5))
             {
-                _pm.Movement.MovementDirection = MovementDirection.backward_left;
+                _pm.MovementData.MovementDirection = MovementDirection.backward_left;
             }
         }
 
@@ -311,21 +322,21 @@ namespace MyCode.Player
             {
                 if (_sneakValue != 0)
                 {
-                    _internalSpeedMultiplier = _pm.Movement.SneakMultiplier;
-                    _pm.Movement.MovementState = MovementState.sneak;
+                    _internalSpeedMultiplier = _pm.MovementData.SneakMultiplier;
+                    _pm.MovementData.MovementState = MovementState.sneak;
                     stoppedRunning?.Invoke();
                 }
                 else
                 {
                     _internalSpeedMultiplier = 1;
-                    _pm.Movement.MovementState = MovementState.walk;
+                    _pm.MovementData.MovementState = MovementState.walk;
                     stoppedRunning?.Invoke();
                 }
             }
             else if (CanSprint() && _sprintValue != 0)
             {
-                _internalSpeedMultiplier = _pm.Movement.SprintMultiplier;
-                _pm.Movement.MovementState = MovementState.sprint;
+                _internalSpeedMultiplier = _pm.MovementData.SprintMultiplier;
+                _pm.MovementData.MovementState = MovementState.sprint;
                 startedRunning?.Invoke();
             }
         }

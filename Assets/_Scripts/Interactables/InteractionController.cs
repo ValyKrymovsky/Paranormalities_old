@@ -3,60 +3,35 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 using MyBox;
+using System;
 
 public class InteractionController : MonoBehaviour
 {
 
     [Separator("Interaction", true)]
-    [SerializeField] private bool interactible = true;
+    [SerializeField] private bool _interactible = true;
+    [SerializeField] private InteractionType _interactionType;
 
     [Separator("Highlight", true)]
-    [SerializeField] private string popupText;
-    [SerializeField] private bool customPopupLocation;
-    [SerializeField, ConditionalField("customPopupLocation")] public GameObject customPopupLocationObject;
-    [ReadOnly] public Vector3 popupLocation;
-    private TextMeshPro textComponent;
+    [SerializeField] private string _popupText;
+    [SerializeField] private bool _customPopupLocation;
+    [SerializeField, ConditionalField("_customPopupLocation")] public GameObject customPopupLocationObject;
+    [ReadOnly] private Vector3 popupLocation;
 
-    private GameObject activePopup;
+    public event Action OnInteract;
 
     private void Awake()
     {
-        popupLocation = customPopupLocation ? customPopupLocationObject.transform.position : transform.position;
-        
+        PopupLocation = _customPopupLocation ? customPopupLocationObject.transform.position : transform.position;
     }
 
-    public bool IsInteractible()
-    {
-        return interactible;
-    }
+    public bool Interactible { get => _interactible; set => _interactible = value; }
+    public InteractionType InteractionType { get => _interactionType; private set => _interactionType = value; }
+    public string PopupText { get => _popupText; set => _popupText = value; }
+    public Vector3 PopupLocation { get => popupLocation; private set => popupLocation = value; }
 
-    public void SetInteractible(bool _interactible)
+    public void Interact()
     {
-        interactible = _interactible;
-    }
-
-    public bool HasInteractionPopup()
-    {
-        if (activePopup)
-        {
-            return true;
-        }
-
-        return false;
-    }
-
-    public GameObject GetInteractionPopup()
-    {
-        return activePopup;
-    }
-
-    public void SetTextOpacity(float _opacity)
-    {
-        textComponent.color = new Color(textComponent.color.r, textComponent.color.g, textComponent.color.b, _opacity);
-    }
-
-    public void SetTextSize(float _size)
-    {
-        textComponent.fontSize = _size;
+        OnInteract?.Invoke();
     }
 }

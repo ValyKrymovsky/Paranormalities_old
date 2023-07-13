@@ -1,23 +1,18 @@
 {
   "dependencies": {
-    "com.atteneder.gltfast": {
-      "version": "https://github.com/atteneder/glTFast.git",
-      "depth": 0,
-      "source": "git",
-      "dependencies": {
-        "com.unity.modules.jsonserialize": "1.0.0",
-        "com.unity.modules.unitywebrequest": "1.0.0",
-        "com.unity.mathematics": "1.2.6",
-        "com.unity.burst": "1.6.6"
-      },
-      "hash": "197f3b7e32ed733890935324f41c32d6599fc0cd"
-    },
     "com.autodesk.fbx": {
       "version": "4.2.1",
       "depth": 2,
       "source": "registry",
       "dependencies": {},
       "url": "https://packages.unity.com"
+    },
+    "com.cysharp.unitask": {
+      "version": "https://github.com/Cysharp/UniTask.git?path=src/UniTask/Assets/Plugins/UniTask",
+      "depth": 0,
+      "source": "git",
+      "dependencies": {},
+      "hash": "d210e3d76adc0cce77f4ad2af1ade88dad6b1d5a"
     },
     "com.domybest.mybox": {
       "version": "https://github.com/Deadcows/MyBox.git",
@@ -35,11 +30,11 @@
       "dependencies": {}
     },
     "com.unity.addressables": {
-      "version": "1.21.12",
+      "version": "1.21.14",
       "depth": 0,
       "source": "registry",
       "dependencies": {
-        "com.unity.scriptablebuildpipeline": "1.21.5",
+        "com.unity.scriptablebuildpipeline": "1.21.7",
         "com.unity.modules.assetbundle": "1.0.0",
         "com.unity.modules.imageconversion": "1.0.0",
         "com.unity.modules.jsonserialize": "1.0.0",
@@ -222,7 +217,7 @@
       }
     },
     "com.unity.scriptablebuildpipeline": {
-      "version": "1.21.5",
+      "version": "1.21.7",
       "depth": 1,
       "source": "registry",
       "dependencies": {},

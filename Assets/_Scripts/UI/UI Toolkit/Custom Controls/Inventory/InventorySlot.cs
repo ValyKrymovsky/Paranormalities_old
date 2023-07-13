@@ -51,10 +51,10 @@ public class InventorySlot : VisualElement
         RegisterCallback<PointerDownEvent>(OnPointerDown);
     }
 
-    public void SetItemParameters(ItemObject _item, GameObject _model, Sprite _itemImage)
+    public void SetItemParameters(InventorySlotItem slotItem)
     {
-        item = (_item, _model);
-        slotImage.style.backgroundImage = new StyleBackground(_itemImage);
+        item = (slotItem._itemObject, slotItem._model);
+        slotImage.style.backgroundImage = new StyleBackground(slotItem._sprite);
     }
 
     public void ResetParameters()
@@ -77,7 +77,7 @@ public class InventorySlot : VisualElement
     {
         if (_event.button != 0 || item.Equals((null, null))) return;
 
-        InventoryEventHandler.StartDrag(_event.position, this);
+        InventoryHandler.StartDrag(_event.position, this);
         slotImage.style.backgroundImage = null;
     }
 }

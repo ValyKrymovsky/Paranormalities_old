@@ -3,46 +3,50 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using MyBox;
+using MyCode.Player;
+using System;
 
 [RequireComponent(typeof(InteractionController))]
-public class InventoryItem : MonoBehaviour /*IInteraction*/
+public class InventoryItem : MonoBehaviour
 {
-    /*
-    [Separator("Player", true)]
-    [SerializeField]
-    private GameObject playerCamera;
-    [SerializeField]
-    private GameObject player;
-
+    [Space]
     [Separator("Inventory")]
-    [SerializeField]
-    private ItemObject item;
+    [Space]
+
+    [Header("Inventory Item")]
+    [Space]
+    [SerializeField] private ItemObject _item;
     public GameObject model;
     public Sprite itemImage;
 
-    [SerializeField]
-    private MyCode.Player.P_Inventory inventory;
-
     [Separator("Interaction")]
     [SerializeField]
-    private InteractionController interactionController;
+    private InteractionController _interactionController;
+
+    public static event Action<ItemObject, GameObject, Sprite> AddedItem;
 
     private void Awake()
     {
         model = this.gameObject;
-        playerCamera = GameObject.FindGameObjectWithTag("MainCamera");
-        player = GameObject.FindGameObjectWithTag("Player");
-        inventory = player.GetComponent<MyCode.Player.P_Inventory>();
-        interactionController = GetComponent<InteractionController>();
+        _interactionController = GetComponent<InteractionController>();
     }
 
-    public void Interact()
+    private void OnEnable()
     {
-        if (interactionController.IsInteractible())
-        {
-            inventory.PickUp(item, model, itemImage);
-        }
-
+        _interactionController.OnInteract += AddToInventory;
     }
-    */
+
+    private void OnDisable()
+    {
+        _interactionController.OnInteract -= AddToInventory;
+    }
+
+    public void AddToInventory()
+    {
+        if (PlayerManager.Instance.InventoryData.Inventory.AddItem(_item, model))
+        {
+            AddedItem?.Invoke(_item, model, itemImage);
+        }
+    }
+    
 }

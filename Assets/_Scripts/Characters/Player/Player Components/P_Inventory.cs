@@ -25,8 +25,6 @@ namespace MyCode.Player
         private InventoryEventHandler inventoryEventHandler;
         private bool inventoryOpen;
 
-        private P_Controls p_input;
-
         private GameObject placeholderModel;
 
         private CharacterController ch_controller;
@@ -52,7 +50,6 @@ namespace MyCode.Player
             //            //
             // Components //
             //            //
-            p_input = new P_Controls();
             ch_controller = GetComponent<CharacterController>();
             cameraObject = GameObject.FindGameObjectWithTag("MainCamera");
             playerCamera = cameraObject.GetComponent<Camera>();
@@ -71,16 +68,6 @@ namespace MyCode.Player
         private void Start()
         {
             inventoryEventHandler.root.style.display = DisplayStyle.None;
-        }
-
-        void OnEnable()
-        {
-            p_input.Enable();
-        }
-
-        void OnDisable()
-        {
-            p_input.Disable();
         }
 
         public InventoryObject Inventory { get; set; }
@@ -147,7 +134,6 @@ namespace MyCode.Player
             if (inventoryEventHandler.root.style.display == DisplayStyle.None)
             {
                 inventoryOpen = true;
-                p_movement.SetCanMove(false);
                 inventoryEventHandler.root.style.display = DisplayStyle.Flex;
                 UnityEngine.Cursor.lockState = CursorLockMode.None;
                 
@@ -155,7 +141,6 @@ namespace MyCode.Player
             else
             {
                 inventoryOpen = false;
-                p_movement.SetCanMove(true);
                 inventoryEventHandler.root.style.display = DisplayStyle.None;
                 UnityEngine.Cursor.lockState = CursorLockMode.Locked;
                 
