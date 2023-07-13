@@ -97,7 +97,8 @@ LightmapSettings:
     m_ExportTrainingData: 0
     m_TrainingDataDestination: TrainingData
     m_LightProbeSampleCountMultiplier: 4
-  m_LightingDataAsset: {fileID: 0}
+  m_LightingDataAsset: {fileID: 112000000, guid: daaf3370004b4304fb3ff3605cc6a51a,
+    type: 2}
   m_LightingSettings: {fileID: 0}
 --- !u!196 &4
 NavMeshSettings:
@@ -253,12 +254,44 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 992712813}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -435.38126, y: -474.78897, z: -339.3416}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1049677345
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1049677346}
+  m_Layer: 0
+  m_Name: ---------- UI ----------
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1049677346
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1049677345}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 1907280422}
+  m_Father: {fileID: 0}
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1907280419
 GameObject:
@@ -301,6 +334,8 @@ MonoBehaviour:
       type: 2}
     playerStaminaData: {fileID: 11400000, guid: 188bff70435e13f478be584cb2873d73,
       type: 2}
+    playerInteractionData: {fileID: 11400000, guid: 9692a72364f9e69438007987150268d7,
+      type: 2}
   - difficulty: 1
     playerCameraData: {fileID: 11400000, guid: a24e943685a02b14da8e3d8b40fc9577, type: 2}
     playerHealthData: {fileID: 11400000, guid: 66876b9ad60ba2445acd9361a50735f1, type: 2}
@@ -309,6 +344,8 @@ MonoBehaviour:
     playerMovementData: {fileID: 11400000, guid: aec8ec4bcca421e45a8ba42b6ed7bfd4,
       type: 2}
     playerStaminaData: {fileID: 11400000, guid: eb7b07d8110978f44886780a9757427c,
+      type: 2}
+    playerInteractionData: {fileID: 11400000, guid: 9692a72364f9e69438007987150268d7,
       type: 2}
   - difficulty: 2
     playerCameraData: {fileID: 11400000, guid: a24e943685a02b14da8e3d8b40fc9577, type: 2}
@@ -319,6 +356,8 @@ MonoBehaviour:
       type: 2}
     playerStaminaData: {fileID: 11400000, guid: 6f6bb2b07b8ad9d41a1bd67a05dad944,
       type: 2}
+    playerInteractionData: {fileID: 11400000, guid: 9692a72364f9e69438007987150268d7,
+      type: 2}
   - difficulty: 3
     playerCameraData: {fileID: 11400000, guid: a24e943685a02b14da8e3d8b40fc9577, type: 2}
     playerHealthData: {fileID: 11400000, guid: e618972b6b32d3b4fa9f05c27bdba849, type: 2}
@@ -328,6 +367,8 @@ MonoBehaviour:
       type: 2}
     playerStaminaData: {fileID: 11400000, guid: 0b8a64881ed4c314db07fd47140ac551,
       type: 2}
+    playerInteractionData: {fileID: 11400000, guid: 9692a72364f9e69438007987150268d7,
+      type: 2}
   - difficulty: 4
     playerCameraData: {fileID: 11400000, guid: a24e943685a02b14da8e3d8b40fc9577, type: 2}
     playerHealthData: {fileID: 11400000, guid: 913e97caecd6a1741a0e4b9c6fa1907b, type: 2}
@@ -336,6 +377,8 @@ MonoBehaviour:
     playerMovementData: {fileID: 11400000, guid: 7e9c0c84fe3000541b6808c5ad5b391b,
       type: 2}
     playerStaminaData: {fileID: 11400000, guid: fe0a1fdbbec317349b32f25f3096b14f,
+      type: 2}
+    playerInteractionData: {fileID: 11400000, guid: 9692a72364f9e69438007987150268d7,
       type: 2}
 --- !u!114 &1907280421
 MonoBehaviour:
@@ -361,13 +404,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1907280419}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 1
+  m_Father: {fileID: 1049677346}
+  m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1907280423
 MonoBehaviour:

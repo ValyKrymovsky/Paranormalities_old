@@ -11,4 +11,5 @@ public struct DifficultyProperties
     public PlayerInventoryData playerInventoryData;
     public PlayerMovementData playerMovementData;
     public PlayerStaminaData playerStaminaData;
+    public PlayerInteractionData playerInteractionData;
 }

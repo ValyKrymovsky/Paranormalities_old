@@ -1,0 +1,47 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0268848dfedbe364097a377cc442f396, type: 3}
+  m_Name: PlayerInteractionData
+  m_EditorClassIdentifier: 
+  _playerLayerMask:
+    serializedVersion: 2
+    m_Bits: 8
+  _interactRange: 1.5
+  _sphereCheckRange: 1
+  _hitPosition: {x: 3.680695, y: 2.575231, z: 0.16854429}
+  _interactiblesMask:
+    serializedVersion: 2
+    m_Bits: 1088
+  _selectedCollider: {fileID: 0}
+  _interactionPopup: {fileID: 4703598568949048109, guid: 1531f1f6ce2c27f46b0a84e1377aa7f1,
+    type: 3}
+  _activePopup: {fileID: 0}
+  _maxTextSize: 1
+  _minTextSize: 2
+  _pickupPoint: {fileID: 0}
+  _objectRigidbody: {fileID: 0}
+  _objectCollider: {fileID: 0}
+  _maxPickupDistance: 1.5
+  _maxPickupPointDistance: 2.5
+  _minPickupPointDistance: 0.5
+  _maxDistanceFromPoint: 2
+  _pickupPointDistance: 1.2871606
+  _pickupLayer:
+    serializedVersion: 2
+    m_Bits: 1024
+  _maxObjectWeight: 100
+  _dropVelocityReduction: 2
+  _throwStrength: 3
+  _input_InteractValue: {fileID: -4784122219073580990, guid: 5cbe42c2b73edc740bbce0ae6343c7c0,
+    type: 3}
+  _input_PickupValue: {fileID: 6779692350503769681, guid: 5cbe42c2b73edc740bbce0ae6343c7c0,
+    type: 3}

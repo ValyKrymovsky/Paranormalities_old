@@ -4,7 +4,7 @@ using UnityEngine;
 using TMPro;
 using MyBox;
 
-public class InteractionController : MonoBehaviour, IInteractionPopup
+public class InteractionController : MonoBehaviour
 {
 
     [Separator("Interaction", true)]
@@ -58,36 +58,5 @@ public class InteractionController : MonoBehaviour, IInteractionPopup
     public void SetTextSize(float _size)
     {
         textComponent.fontSize = _size;
-    }
-
-    public void SpawnPopup(GameObject _popupObject)
-    {
-        if (!activePopup)
-        {
-            popupLocation = customPopupLocation ? customPopupLocationObject.transform.position : transform.position;
-            activePopup = Instantiate(_popupObject, popupLocation, Quaternion.identity, transform);
-
-            textComponent = activePopup.GetComponent<TextMeshPro>();
-            textComponent.text = popupText;
-        }
-    }
-
-    public void TurnOffPopup()
-    {
-        MeshRenderer renderer = activePopup.GetComponent<MeshRenderer>();
-
-        renderer.enabled = false;
-    }
-
-    public void TurnOnPopup()
-    {
-        MeshRenderer renderer = activePopup.GetComponent<MeshRenderer>();
-
-        renderer.enabled = true;
-    }
-
-    public void DestroyPopup()
-    {
-        Destroy(activePopup);
     }
 }

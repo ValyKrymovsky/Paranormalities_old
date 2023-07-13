@@ -15,7 +15,7 @@ MonoBehaviour:
   m_DefaultGroup: ae2f978a2c4fea74494c308719cbf961
   m_currentHash:
     serializedVersion: 2
-    Hash: 1fa7ed966251c747aa1d39c9bbf1eadd
+    Hash: 00000000000000000000000000000000
   m_OptimizeCatalogSize: 0
   m_BuildRemoteCatalog: 0
   m_BundleLocalCatalog: 0
@@ -47,6 +47,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 16d1879da0435c7479502c4a36ccbd90, type: 2}
   - {fileID: 11400000, guid: eb067a4d8c152524b82a6e632e3df67c, type: 2}
   - {fileID: 11400000, guid: 40fc964ddeedf1044885dfce976d604b, type: 2}
+  - {fileID: 11400000, guid: 260907e6b917f39439ae5559602c5d61, type: 2}
   m_BuildSettings:
     m_CompileScriptsInVirtualMode: 0
     m_CleanupStreamingAssetsAfterBuilds: 1
@@ -89,6 +90,7 @@ MonoBehaviour:
     m_LabelNames:
     - default
     - PlayerManager
+    - InteractionPopup
   m_SchemaTemplates: []
   m_GroupTemplateObjects:
   - {fileID: 11400000, guid: 24339c45f0efb1347a8da48ff1b27f0f, type: 2}

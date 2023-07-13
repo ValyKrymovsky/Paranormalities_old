@@ -1,0 +1,31 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bbb281ee3bf0b054c82ac2347e9e782c, type: 3}
+  m_Name: Global Prefabs
+  m_EditorClassIdentifier: 
+  m_GroupName: Global Prefabs
+  m_Data:
+    m_SerializedData: []
+  m_GUID: 4dd8e2a431f991a499b60c73079c21cb
+  m_SerializeEntries:
+  - m_GUID: 1531f1f6ce2c27f46b0a84e1377aa7f1
+    m_Address: Assets/_Scripts/Interactables/Interaction Popup.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - InteractionPopup
+    FlaggedDuringContentUpdateRestriction: 0
+  m_ReadOnly: 0
+  m_Settings: {fileID: 11400000, guid: 05725dfde3bb9b84d9f5556a03d1a5bb, type: 2}
+  m_SchemaSet:
+    m_Schemas:
+    - {fileID: 11400000, guid: a8639b426352de9489d822a0f78b9464, type: 2}
+    - {fileID: 11400000, guid: ecac8fd4cb656124bba71392aa1ab236, type: 2}
