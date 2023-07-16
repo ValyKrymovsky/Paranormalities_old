@@ -12,12 +12,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0c7684d5f3a19274b8f21463697646fb, type: 3}
   m_Name: PlayerStaminaData_Easy
   m_EditorClassIdentifier: 
-  _useStaminaSystem: 1
+  _useStaminaSystem: 0
   _currentStamina: 0
   _maxStamina: 100
   _depletionValue: 0.2
   _regenValue: 0.3
   _limit: 20
-  _reachedLimit: 0
+  _reachedLimit: 1
   _canSprint: 0
   _regenDelay: 1.5

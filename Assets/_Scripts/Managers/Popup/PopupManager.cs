@@ -21,16 +21,11 @@ namespace MyCode.Player
 
                 if (_instance == null)
                 {
-                    Time.timeScale = 0;
                     Addressables.LoadAssetAsync<GameObject>("PopupManager").Completed += (handle) =>
                     {
                         if (handle.Status == AsyncOperationStatus.Succeeded)
                         {
                             _instance = Instantiate(handle.Result).GetComponent<PopupManager>();
-                            Time.timeScale = 1;
-                        }
-                        else
-                        {
                         }
                     };
                 }

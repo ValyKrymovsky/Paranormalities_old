@@ -79,7 +79,6 @@ public class PlayerInteractionData : ScriptableObject
     [Header("Input Action")]
     [Space]
     [SerializeField] private InputActionReference _input_InteractValue;
-    [SerializeField] private InputActionReference _input_PickupValue;
     [SerializeField] private InputActionReference _input_ThrowValue;
     [SerializeField] private InputActionReference _input_ZoomValue;
 
@@ -128,19 +127,20 @@ public class PlayerInteractionData : ScriptableObject
 
     // Inputs
     public InputActionReference Input_InteractValue { get => _input_InteractValue; set => _input_InteractValue = value; }
-    public InputActionReference Input_PickupValue { get => _input_PickupValue; set => _input_PickupValue = value; }
     public InputActionReference Input_ThrowValue { get => _input_ThrowValue; set => _input_ThrowValue = value; }
     public InputActionReference Input_ZoomValue { get => _input_ZoomValue; set => _input_ZoomValue = value; }
 
     private void OnEnable()
     {
         _input_InteractValue.action.Enable();
-        _input_PickupValue.action.Enable();
+        _input_ThrowValue.action.Enable();
+        _input_ZoomValue.action.Enable();
     }
 
     private void OnDisable()
     {
         _input_InteractValue.action.Disable();
-        _input_PickupValue.action.Disable();
+        _input_ThrowValue.action.Disable();
+        _input_ZoomValue.action.Disable();
     }
 }

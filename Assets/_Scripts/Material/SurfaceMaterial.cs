@@ -2,13 +2,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using MyBox;
 
-public enum SurfaceIdentity
-{
-    stone,
-    wood,
-    grass
-}
-
 [System.Serializable, CreateAssetMenu(fileName = "NewSurfaceMaterial", menuName = "SurfaceMaterial")]
 public class SurfaceMaterial : ScriptableObject
 {

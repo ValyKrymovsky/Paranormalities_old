@@ -5,12 +5,6 @@ using UnityEngine;
 using UnityEditor;
 using MyBox;
 
-enum currentFoot
-{
-    left,
-    right
-}
-
 namespace MyCode.Player
 {
     public class P_SoundSystem : MonoBehaviour

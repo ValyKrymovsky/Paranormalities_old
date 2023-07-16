@@ -32,3 +32,5 @@ MonoBehaviour:
     type: 3}
   _input_SneakValue: {fileID: -5786487062162588242, guid: 5cbe42c2b73edc740bbce0ae6343c7c0,
     type: 3}
+  _input_TestSoundValue: {fileID: -5338674759058608560, guid: 5cbe42c2b73edc740bbce0ae6343c7c0,
+    type: 3}

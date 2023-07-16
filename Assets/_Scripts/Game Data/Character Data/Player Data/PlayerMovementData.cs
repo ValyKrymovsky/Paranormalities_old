@@ -80,6 +80,8 @@ public class PlayerMovementData : ScriptableObject
     [SerializeField] private InputActionReference _input_SprintValue;
     [SerializeField] private InputActionReference _input_SneakValue;
 
+    [SerializeField] private InputActionReference _input_TestSoundValue;
+
 
     // Movement
     public float WalkSpeed { get => _walkSpeed; set => _walkSpeed = value; }
@@ -106,13 +108,14 @@ public class PlayerMovementData : ScriptableObject
     public InputActionReference WalkValueInput { get => _input_WalkValue; }
     public InputActionReference SprintValueInput { get => _input_SprintValue; }
     public InputActionReference SneakValueInput { get => _input_SneakValue; }
-    
+    public InputActionReference TestSoundValueInput { get => _input_TestSoundValue; }
 
     private void OnEnable()
     {
         _input_WalkValue.action.Enable();
         _input_SprintValue.action.Enable();
         _input_SneakValue.action.Enable();
+        _input_TestSoundValue.action.Enable();
     }
 
     private void OnDisable()
@@ -120,5 +123,6 @@ public class PlayerMovementData : ScriptableObject
         _input_WalkValue.action.Disable();
         _input_SprintValue.action.Disable();
         _input_SneakValue.action.Disable();
+        _input_TestSoundValue.action.Disable();
     }
 }

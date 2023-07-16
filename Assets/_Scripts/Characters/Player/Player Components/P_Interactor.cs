@@ -45,18 +45,16 @@ namespace MyCode.Player
 
         private void OnEnable()
         {
-            _playerManager.InteractionData.Input_InteractValue.action.performed += Interact;
-            _playerManager.InteractionData.Input_PickupValue.action.performed += PickUp;
-            _playerManager.InteractionData.Input_PickupValue.action.canceled +=  Drop;
+            _playerManager.InteractionData.Input_InteractValue.action.started += Interact;
+            _playerManager.InteractionData.Input_InteractValue.action.canceled += Drop;
             _playerManager.InteractionData.Input_ThrowValue.action.performed += Throw;
             _playerManager.InteractionData.Input_ZoomValue.action.performed += _ctx => Zoom(_ctx);
         }
 
         private void OnDisable()
         {
-            _playerManager.InteractionData.Input_InteractValue.action.performed -= Interact;
-            _playerManager.InteractionData.Input_PickupValue.action.performed -= PickUp;
-            _playerManager.InteractionData.Input_PickupValue.action.canceled -= Drop;
+            _playerManager.InteractionData.Input_InteractValue.action.started -= Interact;
+            _playerManager.InteractionData.Input_InteractValue.action.canceled -= Drop;
             _playerManager.InteractionData.Input_ThrowValue.action.performed -= Throw;
             _playerManager.InteractionData.Input_ZoomValue.action.performed -= _ctx => Zoom(_ctx);
         }
@@ -100,10 +98,19 @@ namespace MyCode.Player
                 if (_interactionController == null)
                     return;
 
-                if (_interactionController.InteractionType != InteractionType.Interact)
+                if (_interactionController.InteractionType == InteractionType.Interact)
+                {
+                    _interactionController.Interact();
                     return;
+                }
+                else if (_interactionController.InteractionType == InteractionType.PickUp)
+                {
+                    PickUp();
+                    return;
+                }
                 
-                _interactionController.Interact();
+                
+                
             }
             catch(NullReferenceException)
             {
@@ -206,11 +213,11 @@ namespace MyCode.Player
             interactibleColliders.Clear();
         }
 
-        public void PickUp(InputAction.CallbackContext _value)
+        public void PickUp()
         {
             Ray r = new Ray(transform.position, transform.forward);
 
-            if (Physics.SphereCast(transform.position, .25f, transform.forward, out RaycastHit hitInfo, _playerManager.InteractionData.MaxPickupDistance, _playerManager.InteractionData.PickupLayer))
+            if (Physics.SphereCast(transform.position, .25f, transform.forward, out RaycastHit hitInfo, _playerManager.InteractionData.MaxPickupDistance, _playerManager.InteractionData.InteractiblesMask))
             {
                 if (_interactionController.InteractionType != InteractionType.PickUp)
                     return;

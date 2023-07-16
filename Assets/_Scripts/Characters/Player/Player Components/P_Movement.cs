@@ -52,6 +52,7 @@ namespace MyCode.Player
             _pm.MovementData.WalkValueInput.action.canceled += StopWalkAction;
             _pm.MovementData.SprintValueInput.action.canceled += StopSprintAction;
             _pm.MovementData.SneakValueInput.action.canceled += StopSneakAction;
+            _pm.MovementData.TestSoundValueInput.action.performed += SpawnSound;
 
             InventoryHandler.OnInventoryOpen += () => canMove = false;
             InventoryHandler.OnInventoryClose += () => canMove = true;
@@ -65,6 +66,7 @@ namespace MyCode.Player
             _pm.MovementData.WalkValueInput.action.canceled -=StopWalkAction;
             _pm.MovementData.SprintValueInput.action.canceled -= StopSprintAction;
             _pm.MovementData.SneakValueInput.action.canceled -= StopSneakAction;
+            _pm.MovementData.TestSoundValueInput.action.performed -= SpawnSound;
 
             InventoryHandler.OnInventoryOpen -= () => canMove = false;
             InventoryHandler.OnInventoryClose -= () => canMove = true;
@@ -138,8 +140,11 @@ namespace MyCode.Player
             if (IsPlayerMovingForward())
             {
                 if (_pm.StaminaData.UseStaminaSystem)
+                {
                     startedRunning?.Invoke();
-
+                    Debug.Log("Stamina system on");
+                }
+                    
                 if (CanSprint())
                 {
                     _sprintValue = value.ReadValue<float>();
@@ -154,6 +159,12 @@ namespace MyCode.Player
         {
             if (_pm.MovementData.MovementState != MovementState.sprint)
             {
+                if (_pm.StaminaData.UseStaminaSystem)
+                {
+                    startedRunning?.Invoke();
+                    Debug.Log("Stamina system on");
+                }
+                    
                 _sneakValue = value.ReadValue<float>();
                 _internalSpeedMultiplier = _pm.MovementData.SneakMultiplier;
                 _pm.MovementData.MovementState = MovementState.sneak;
@@ -173,7 +184,10 @@ namespace MyCode.Player
             _sprintValue = 0;
 
             if (_pm.StaminaData.UseStaminaSystem)
-                stoppedRunning?.Invoke();
+                {
+                    stoppedRunning?.Invoke();
+                    Debug.Log("Stamina system on");
+                }
             
             if (_sneakValue != 0)
             {
@@ -198,6 +212,12 @@ namespace MyCode.Player
             _sneakValue = 0;
             if (_sprintValue != 0)
             {
+                if (_pm.StaminaData.UseStaminaSystem)
+                {
+                    startedRunning?.Invoke();
+                    Debug.Log("Stamina system on");
+                }
+
                 _internalSpeedMultiplier = _pm.MovementData.SprintMultiplier;
                 _pm.MovementData.MovementState = MovementState.sprint;
                 return;
@@ -322,25 +342,49 @@ namespace MyCode.Player
             {
                 if (_sneakValue != 0)
                 {
+                    if (_pm.StaminaData.UseStaminaSystem)
+                    {
+                        stoppedRunning?.Invoke();
+                        Debug.Log("Stamina system on");
+                    }
+
                     _internalSpeedMultiplier = _pm.MovementData.SneakMultiplier;
                     _pm.MovementData.MovementState = MovementState.sneak;
-                    stoppedRunning?.Invoke();
                 }
                 else
                 {
+                    if (_pm.StaminaData.UseStaminaSystem)
+                    {
+                        stoppedRunning?.Invoke();
+                        Debug.Log("Stamina system on");
+                    }
+
                     _internalSpeedMultiplier = 1;
                     _pm.MovementData.MovementState = MovementState.walk;
-                    stoppedRunning?.Invoke();
                 }
             }
             else if (CanSprint() && _sprintValue != 0)
             {
+                if (_pm.StaminaData.UseStaminaSystem)
+                {
+                    startedRunning?.Invoke();
+                    Debug.Log("Stamina system on");
+                }
+
                 _internalSpeedMultiplier = _pm.MovementData.SprintMultiplier;
                 _pm.MovementData.MovementState = MovementState.sprint;
-                startedRunning?.Invoke();
             }
         }
     
+        private void SpawnSound(InputAction.CallbackContext _ctx)
+        {
+            Debug.Log(PlayerSoundManager.Instance.SoundData.SoundObjects.Count);
 
+            SoundObject sound = PlayerSoundManager.Instance.UseSoundObject();
+            sound.MaxAge = 10;
+            sound.AgingCoroutine = StartCoroutine(sound.Aging());
+
+            Debug.Log(PlayerSoundManager.Instance.SoundData.SoundObjects.Count);
+        }
     }
 }

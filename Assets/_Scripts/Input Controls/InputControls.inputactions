@@ -47,16 +47,7 @@
                     "id": "6641576a-5a57-41b2-9bce-c20c8cd4c757",
                     "expectedControlType": "Button",
                     "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": false
-                },
-                {
-                    "name": "Pickup",
-                    "type": "Button",
-                    "id": "db5f2bb4-88f7-4c49-939f-b1315d375ce4",
-                    "expectedControlType": "Button",
-                    "processors": "",
-                    "interactions": "Hold(duration=0.01)",
+                    "interactions": "Hold(duration=0.1)",
                     "initialStateCheck": false
                 },
                 {
@@ -99,6 +90,15 @@
                     "name": "Toggle Main Menu",
                     "type": "Button",
                     "id": "1bab3e9e-5c91-4fc9-b945-4652cdbdc24b",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Test Sound",
+                    "type": "Button",
+                    "id": "9030733b-04b2-420b-ac46-387748918686",
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": "",
@@ -416,28 +416,6 @@
                 },
                 {
                     "name": "",
-                    "id": "9d63b493-6719-48d1-b428-9d2fb7e37832",
-                    "path": "<Mouse>/leftButton",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "Keyboard&Mouse",
-                    "action": "Pickup",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "725dbe6e-93a3-4260-b154-b28c19194cf5",
-                    "path": "<Gamepad>/buttonWest",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "Gamepad",
-                    "action": "Pickup",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
                     "id": "c31309af-55bd-45bf-99b5-6c84e05e508e",
                     "path": "<Mouse>/scroll/y",
                     "interactions": "",
@@ -477,6 +455,17 @@
                     "processors": "",
                     "groups": "Keyboard&Mouse",
                     "action": "Toggle Inventory",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "c9cd71d4-385b-4776-8493-8508dcc4c95d",
+                    "path": "<Keyboard>/z",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Keyboard&Mouse",
+                    "action": "Test Sound",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

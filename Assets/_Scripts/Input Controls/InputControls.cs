@@ -69,16 +69,7 @@ public partial class @InputControls: IInputActionCollection2, IDisposable
                     ""id"": ""6641576a-5a57-41b2-9bce-c20c8cd4c757"",
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
-                    ""interactions"": """",
-                    ""initialStateCheck"": false
-                },
-                {
-                    ""name"": ""Pickup"",
-                    ""type"": ""Button"",
-                    ""id"": ""db5f2bb4-88f7-4c49-939f-b1315d375ce4"",
-                    ""expectedControlType"": ""Button"",
-                    ""processors"": """",
-                    ""interactions"": ""Hold(duration=0.01)"",
+                    ""interactions"": ""Hold(duration=0.1)"",
                     ""initialStateCheck"": false
                 },
                 {
@@ -121,6 +112,15 @@ public partial class @InputControls: IInputActionCollection2, IDisposable
                     ""name"": ""Toggle Main Menu"",
                     ""type"": ""Button"",
                     ""id"": ""1bab3e9e-5c91-4fc9-b945-4652cdbdc24b"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Test Sound"",
+                    ""type"": ""Button"",
+                    ""id"": ""9030733b-04b2-420b-ac46-387748918686"",
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """",
@@ -438,28 +438,6 @@ public partial class @InputControls: IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": """",
-                    ""id"": ""9d63b493-6719-48d1-b428-9d2fb7e37832"",
-                    ""path"": ""<Mouse>/leftButton"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": ""Keyboard&Mouse"",
-                    ""action"": ""Pickup"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""725dbe6e-93a3-4260-b154-b28c19194cf5"",
-                    ""path"": ""<Gamepad>/buttonWest"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": ""Gamepad"",
-                    ""action"": ""Pickup"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
                     ""id"": ""c31309af-55bd-45bf-99b5-6c84e05e508e"",
                     ""path"": ""<Mouse>/scroll/y"",
                     ""interactions"": """",
@@ -499,6 +477,17 @@ public partial class @InputControls: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""groups"": ""Keyboard&Mouse"",
                     ""action"": ""Toggle Inventory"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""c9cd71d4-385b-4776-8493-8508dcc4c95d"",
+                    ""path"": ""<Keyboard>/z"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard&Mouse"",
+                    ""action"": ""Test Sound"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -559,12 +548,12 @@ public partial class @InputControls: IInputActionCollection2, IDisposable
         m_Gameplay_Sneak = m_Gameplay.FindAction("Sneak", throwIfNotFound: true);
         m_Gameplay_Sprint = m_Gameplay.FindAction("Sprint", throwIfNotFound: true);
         m_Gameplay_Interact = m_Gameplay.FindAction("Interact", throwIfNotFound: true);
-        m_Gameplay_Pickup = m_Gameplay.FindAction("Pickup", throwIfNotFound: true);
         m_Gameplay_PickupZoom = m_Gameplay.FindAction("Pickup Zoom", throwIfNotFound: true);
         m_Gameplay_Throw = m_Gameplay.FindAction("Throw", throwIfNotFound: true);
         m_Gameplay_Dropitem = m_Gameplay.FindAction("Drop item", throwIfNotFound: true);
         m_Gameplay_ToggleInventory = m_Gameplay.FindAction("Toggle Inventory", throwIfNotFound: true);
         m_Gameplay_ToggleMainMenu = m_Gameplay.FindAction("Toggle Main Menu", throwIfNotFound: true);
+        m_Gameplay_TestSound = m_Gameplay.FindAction("Test Sound", throwIfNotFound: true);
         // UI
         m_UI = asset.FindActionMap("UI", throwIfNotFound: true);
     }
@@ -633,12 +622,12 @@ public partial class @InputControls: IInputActionCollection2, IDisposable
     private readonly InputAction m_Gameplay_Sneak;
     private readonly InputAction m_Gameplay_Sprint;
     private readonly InputAction m_Gameplay_Interact;
-    private readonly InputAction m_Gameplay_Pickup;
     private readonly InputAction m_Gameplay_PickupZoom;
     private readonly InputAction m_Gameplay_Throw;
     private readonly InputAction m_Gameplay_Dropitem;
     private readonly InputAction m_Gameplay_ToggleInventory;
     private readonly InputAction m_Gameplay_ToggleMainMenu;
+    private readonly InputAction m_Gameplay_TestSound;
     public struct GameplayActions
     {
         private @InputControls m_Wrapper;
@@ -648,12 +637,12 @@ public partial class @InputControls: IInputActionCollection2, IDisposable
         public InputAction @Sneak => m_Wrapper.m_Gameplay_Sneak;
         public InputAction @Sprint => m_Wrapper.m_Gameplay_Sprint;
         public InputAction @Interact => m_Wrapper.m_Gameplay_Interact;
-        public InputAction @Pickup => m_Wrapper.m_Gameplay_Pickup;
         public InputAction @PickupZoom => m_Wrapper.m_Gameplay_PickupZoom;
         public InputAction @Throw => m_Wrapper.m_Gameplay_Throw;
         public InputAction @Dropitem => m_Wrapper.m_Gameplay_Dropitem;
         public InputAction @ToggleInventory => m_Wrapper.m_Gameplay_ToggleInventory;
         public InputAction @ToggleMainMenu => m_Wrapper.m_Gameplay_ToggleMainMenu;
+        public InputAction @TestSound => m_Wrapper.m_Gameplay_TestSound;
         public InputActionMap Get() { return m_Wrapper.m_Gameplay; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -678,9 +667,6 @@ public partial class @InputControls: IInputActionCollection2, IDisposable
             @Interact.started += instance.OnInteract;
             @Interact.performed += instance.OnInteract;
             @Interact.canceled += instance.OnInteract;
-            @Pickup.started += instance.OnPickup;
-            @Pickup.performed += instance.OnPickup;
-            @Pickup.canceled += instance.OnPickup;
             @PickupZoom.started += instance.OnPickupZoom;
             @PickupZoom.performed += instance.OnPickupZoom;
             @PickupZoom.canceled += instance.OnPickupZoom;
@@ -696,6 +682,9 @@ public partial class @InputControls: IInputActionCollection2, IDisposable
             @ToggleMainMenu.started += instance.OnToggleMainMenu;
             @ToggleMainMenu.performed += instance.OnToggleMainMenu;
             @ToggleMainMenu.canceled += instance.OnToggleMainMenu;
+            @TestSound.started += instance.OnTestSound;
+            @TestSound.performed += instance.OnTestSound;
+            @TestSound.canceled += instance.OnTestSound;
         }
 
         private void UnregisterCallbacks(IGameplayActions instance)
@@ -715,9 +704,6 @@ public partial class @InputControls: IInputActionCollection2, IDisposable
             @Interact.started -= instance.OnInteract;
             @Interact.performed -= instance.OnInteract;
             @Interact.canceled -= instance.OnInteract;
-            @Pickup.started -= instance.OnPickup;
-            @Pickup.performed -= instance.OnPickup;
-            @Pickup.canceled -= instance.OnPickup;
             @PickupZoom.started -= instance.OnPickupZoom;
             @PickupZoom.performed -= instance.OnPickupZoom;
             @PickupZoom.canceled -= instance.OnPickupZoom;
@@ -733,6 +719,9 @@ public partial class @InputControls: IInputActionCollection2, IDisposable
             @ToggleMainMenu.started -= instance.OnToggleMainMenu;
             @ToggleMainMenu.performed -= instance.OnToggleMainMenu;
             @ToggleMainMenu.canceled -= instance.OnToggleMainMenu;
+            @TestSound.started -= instance.OnTestSound;
+            @TestSound.performed -= instance.OnTestSound;
+            @TestSound.canceled -= instance.OnTestSound;
         }
 
         public void RemoveCallbacks(IGameplayActions instance)
@@ -822,12 +811,12 @@ public partial class @InputControls: IInputActionCollection2, IDisposable
         void OnSneak(InputAction.CallbackContext context);
         void OnSprint(InputAction.CallbackContext context);
         void OnInteract(InputAction.CallbackContext context);
-        void OnPickup(InputAction.CallbackContext context);
         void OnPickupZoom(InputAction.CallbackContext context);
         void OnThrow(InputAction.CallbackContext context);
         void OnDropitem(InputAction.CallbackContext context);
         void OnToggleInventory(InputAction.CallbackContext context);
         void OnToggleMainMenu(InputAction.CallbackContext context);
+        void OnTestSound(InputAction.CallbackContext context);
     }
     public interface IUIActions
     {

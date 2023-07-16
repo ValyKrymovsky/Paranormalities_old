@@ -25,9 +25,12 @@ MonoBehaviour:
   _gravityMultiplier: 0.5
   _isGrounded: 0
   _useCustomGravity: 0
+  freezeOnInventory: 0
   _input_WalkValue: {fileID: -3387201930974474098, guid: 5cbe42c2b73edc740bbce0ae6343c7c0,
     type: 3}
   _input_SprintValue: {fileID: -6067321428764384243, guid: 5cbe42c2b73edc740bbce0ae6343c7c0,
     type: 3}
   _input_SneakValue: {fileID: -5786487062162588242, guid: 5cbe42c2b73edc740bbce0ae6343c7c0,
+    type: 3}
+  _input_TestSoundValue: {fileID: -5338674759058608560, guid: 5cbe42c2b73edc740bbce0ae6343c7c0,
     type: 3}
