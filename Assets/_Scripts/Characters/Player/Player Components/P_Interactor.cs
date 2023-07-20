@@ -18,8 +18,7 @@ namespace MyCode.Player
 
         private InteractionController _interactionController;
 
-        public static event Action pickedUpObject;
-        public static event Action droppedObject;
+        
 
         List<Collider> interactibleColliders = new List<Collider>();
         void Awake()
@@ -247,7 +246,7 @@ namespace MyCode.Player
                 float distanceToObject = Vector2.Distance(new Vector2(transform.position.x, transform.position.z), new Vector2(_playerManager.InteractionData.ObjectRigidbody.transform.position.x, _playerManager.InteractionData.ObjectRigidbody.transform.position.z));
                 _playerManager.InteractionData.PickupPoint.transform.position = transform.position + transform.forward * distanceToObject;
 
-                pickedUpObject?.Invoke();
+                _playerManager.InteractionData.InvokePickUpObject();
             }
         }
 
@@ -262,7 +261,7 @@ namespace MyCode.Player
 
             ResetRigidbodyParameters();
             _playerManager.InteractionData.ObjectCollider = null;
-            droppedObject?.Invoke();
+            _playerManager.InteractionData.InvokeDropObject();
         }
 
         public void Throw(InputAction.CallbackContext _context)
@@ -281,7 +280,7 @@ namespace MyCode.Player
 
                 ResetRigidbodyParameters();
 
-                droppedObject?.Invoke();
+                _playerManager.InteractionData.InvokeDropObject();
             }
         }
 

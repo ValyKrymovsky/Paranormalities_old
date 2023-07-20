@@ -4,6 +4,7 @@ using UnityEngine;
 using TMPro;
 using MyBox;
 using System;
+using MyCode.Player;
 
 public class InteractionController : MonoBehaviour
 {
@@ -18,7 +19,7 @@ public class InteractionController : MonoBehaviour
     [SerializeField, ConditionalField("_customPopupLocation")] public GameObject customPopupLocationObject;
     [ReadOnly] private Vector3 popupLocation;
 
-    public event Action OnInteract;
+    
 
     private void Awake()
     {
@@ -32,6 +33,6 @@ public class InteractionController : MonoBehaviour
 
     public void Interact()
     {
-        OnInteract?.Invoke();
+        PlayerManager.Instance.InteractionData.InvokeOnInteract();
     }
 }

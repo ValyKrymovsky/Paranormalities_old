@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine.InputSystem;
 using UnityEngine;
+using System;
 using MyBox;
 
 
@@ -34,8 +35,10 @@ public class PlayerInventoryData : ScriptableObject
     [SerializeField] private InputActionReference input_ToggleInventory;
 
     private GameObject inventoryUI;
-    private InventoryHandler inventoryHandler;
     private bool inventoryOpen;
+
+    public event Action<bool> OnInventoryStatusChange;
+    public event Action<ItemObject, GameObject, Sprite> OnAddItem;
 
 
     public InventoryObject Inventory { get => inventory; set => inventory = value; }
@@ -43,9 +46,18 @@ public class PlayerInventoryData : ScriptableObject
     public InputActionReference DropItemInput { get => input_DropItem; }
     public InputActionReference ToggleInventoryInput { get => input_ToggleInventory; }
     public GameObject InventoryUI { get => inventoryUI; set => inventoryUI = value; }
-    public InventoryHandler InventoryEventHandler { get => inventoryHandler; set => inventoryHandler = value; }
     public bool InventoryOpen { get => inventoryOpen; set => inventoryOpen = value; }
     
+
+    public void InvokeOnInventoryStatusChange(bool _newState)
+    {
+        OnInventoryStatusChange?.Invoke(_newState);
+    }
+
+    public void InvokeOnAddItem(ItemObject _item, GameObject _model, Sprite _image)
+    {
+        OnAddItem?.Invoke(_item, _model, _image);
+    }
 
     private void OnEnable()
     {

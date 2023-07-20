@@ -32,9 +32,7 @@ namespace MyCode.Player
         private float _currentGravityVelocity;
         private float _gravityForce;
 
-        // Events
-        public static event Action startedRunning;
-        public static event Action stoppedRunning;
+        
 
         private bool canMove = true;
 
@@ -52,10 +50,8 @@ namespace MyCode.Player
             _pm.MovementData.WalkValueInput.action.canceled += StopWalkAction;
             _pm.MovementData.SprintValueInput.action.canceled += StopSprintAction;
             _pm.MovementData.SneakValueInput.action.canceled += StopSneakAction;
-            _pm.MovementData.TestSoundValueInput.action.performed += SpawnSound;
 
-            InventoryHandler.OnInventoryOpen += () => canMove = false;
-            InventoryHandler.OnInventoryClose += () => canMove = true;
+            _pm.InventoryData.OnInventoryStatusChange += value => canMove = value;
         }
 
         private void OnDisable()
@@ -66,10 +62,8 @@ namespace MyCode.Player
             _pm.MovementData.WalkValueInput.action.canceled -=StopWalkAction;
             _pm.MovementData.SprintValueInput.action.canceled -= StopSprintAction;
             _pm.MovementData.SneakValueInput.action.canceled -= StopSneakAction;
-            _pm.MovementData.TestSoundValueInput.action.performed -= SpawnSound;
 
-            InventoryHandler.OnInventoryOpen -= () => canMove = false;
-            InventoryHandler.OnInventoryClose -= () => canMove = true;
+            _pm.InventoryData.OnInventoryStatusChange -= value => canMove = value;
         }
 
         void Start()
@@ -141,8 +135,7 @@ namespace MyCode.Player
             {
                 if (_pm.StaminaData.UseStaminaSystem)
                 {
-                    startedRunning?.Invoke();
-                    Debug.Log("Stamina system on");
+                    _pm.MovementData.InvokeStartedRunning();
                 }
                     
                 if (CanSprint())
@@ -161,7 +154,7 @@ namespace MyCode.Player
             {
                 if (_pm.StaminaData.UseStaminaSystem)
                 {
-                    startedRunning?.Invoke();
+                    _pm.MovementData.InvokeStartedRunning();
                     Debug.Log("Stamina system on");
                 }
                     
@@ -185,7 +178,7 @@ namespace MyCode.Player
 
             if (_pm.StaminaData.UseStaminaSystem)
                 {
-                    stoppedRunning?.Invoke();
+                    _pm.MovementData.InvokeStoppedRunning();
                     Debug.Log("Stamina system on");
                 }
             
@@ -214,7 +207,7 @@ namespace MyCode.Player
             {
                 if (_pm.StaminaData.UseStaminaSystem)
                 {
-                    startedRunning?.Invoke();
+                    _pm.MovementData.InvokeStartedRunning();
                     Debug.Log("Stamina system on");
                 }
 
@@ -344,7 +337,7 @@ namespace MyCode.Player
                 {
                     if (_pm.StaminaData.UseStaminaSystem)
                     {
-                        stoppedRunning?.Invoke();
+                        _pm.MovementData.InvokeStoppedRunning();
                         Debug.Log("Stamina system on");
                     }
 
@@ -355,7 +348,7 @@ namespace MyCode.Player
                 {
                     if (_pm.StaminaData.UseStaminaSystem)
                     {
-                        stoppedRunning?.Invoke();
+                        _pm.MovementData.InvokeStoppedRunning();
                         Debug.Log("Stamina system on");
                     }
 
@@ -367,24 +360,13 @@ namespace MyCode.Player
             {
                 if (_pm.StaminaData.UseStaminaSystem)
                 {
-                    startedRunning?.Invoke();
+                    _pm.MovementData.InvokeStartedRunning();
                     Debug.Log("Stamina system on");
                 }
 
                 _internalSpeedMultiplier = _pm.MovementData.SprintMultiplier;
                 _pm.MovementData.MovementState = MovementState.sprint;
             }
-        }
-    
-        private void SpawnSound(InputAction.CallbackContext _ctx)
-        {
-            Debug.Log(PlayerSoundManager.Instance.SoundData.SoundObjects.Count);
-
-            SoundObject sound = PlayerSoundManager.Instance.UseSoundObject();
-            sound.MaxAge = 10;
-            sound.AgingCoroutine = StartCoroutine(sound.Aging());
-
-            Debug.Log(PlayerSoundManager.Instance.SoundData.SoundObjects.Count);
         }
     }
 }

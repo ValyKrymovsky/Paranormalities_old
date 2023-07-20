@@ -7,45 +7,45 @@ namespace MyCode.Player
 {
     public class P_Stamina : MonoBehaviour
     {
-        private PlayerManager instanceRef;
+        private PlayerManager _pm;
 
         private void Awake()
         {
-            instanceRef = PlayerManager.Instance;
+            _pm = PlayerManager.Instance;
         }
 
         void Start()
         {
-            instanceRef.StaminaData.CurrentStamina = instanceRef.StaminaData.MaxStamina;
-            instanceRef.StaminaData.ReachedLimit = false;
-            instanceRef.StaminaData.CanSprint = true;
+            _pm.StaminaData.CurrentStamina = _pm.StaminaData.MaxStamina;
+            _pm.StaminaData.ReachedLimit = false;
+            _pm.StaminaData.CanSprint = true;
         }
 
         private void OnEnable()
         {
-            P_Movement.startedRunning += DrainStaminaEvent;
-            P_Movement.stoppedRunning += RegenStaminaEvent;
+            _pm.MovementData.StartedRunning += DrainStaminaEvent;
+            _pm.MovementData.StoppedRunning += RegenStaminaEvent;
         }
 
         private void OnDisable()
         {
-            P_Movement.startedRunning -= DrainStaminaEvent;
-            P_Movement.stoppedRunning -= RegenStaminaEvent;
+            _pm.MovementData.StartedRunning -= DrainStaminaEvent;
+            _pm.MovementData.StoppedRunning -= RegenStaminaEvent;
         }
 
         private void DrainStaminaEvent()
         {
             if (!IsStaminaDepleted())
             {
-                if (instanceRef.StaminaData.RegenCoroutine != null && !instanceRef.StaminaData.ReachedLimit)
+                if (_pm.StaminaData.RegenCoroutine != null && !_pm.StaminaData.ReachedLimit)
                 {
-                    StopCoroutine(instanceRef.StaminaData.RegenCoroutine);
-                    instanceRef.StaminaData.RegenCoroutine = null;
+                    StopCoroutine(_pm.StaminaData.RegenCoroutine);
+                    _pm.StaminaData.RegenCoroutine = null;
                 }
 
-                if (instanceRef.StaminaData.DrainCoroutine == null)
+                if (_pm.StaminaData.DrainCoroutine == null)
                 {
-                    instanceRef.StaminaData.DrainCoroutine = StartCoroutine(DrainStamina());
+                    _pm.StaminaData.DrainCoroutine = StartCoroutine(DrainStamina());
                 }
             }
         }
@@ -54,36 +54,36 @@ namespace MyCode.Player
         {
             if (!IsStaminaFull())
             {
-                if (instanceRef.StaminaData.DrainCoroutine != null)
+                if (_pm.StaminaData.DrainCoroutine != null)
                 {
-                    StopCoroutine(instanceRef.StaminaData.DrainCoroutine);
-                    instanceRef.StaminaData.DrainCoroutine = null;
+                    StopCoroutine(_pm.StaminaData.DrainCoroutine);
+                    _pm.StaminaData.DrainCoroutine = null;
                 }
 
-                if (instanceRef.StaminaData.RegenCoroutine == null)
+                if (_pm.StaminaData.RegenCoroutine == null)
                 {
-                    instanceRef.StaminaData.RegenCoroutine = StartCoroutine(RegenStamina(instanceRef.StaminaData.RegenDelay));
+                    _pm.StaminaData.RegenCoroutine = StartCoroutine(RegenStamina(_pm.StaminaData.RegenDelay));
                 }
             }
         }
 
         private IEnumerator DrainStamina()
         {
-            if (!instanceRef.StaminaData.ReachedLimit)
+            if (!_pm.StaminaData.ReachedLimit)
             {
                 while (!IsStaminaDepleted())
                 {
-                    instanceRef.StaminaData.CurrentStamina -= instanceRef.StaminaData.DepletionValue;
+                    _pm.StaminaData.CurrentStamina -= _pm.StaminaData.DepletionValue;
 
-                    if (instanceRef.StaminaData.CurrentStamina < instanceRef.StaminaData.Limit)
+                    if (_pm.StaminaData.CurrentStamina < _pm.StaminaData.Limit)
                     {
-                        instanceRef.StaminaData.ReachedLimit = true;
-                        instanceRef.StaminaData.CanSprint = false;
+                        _pm.StaminaData.ReachedLimit = true;
+                        _pm.StaminaData.CanSprint = false;
                     }
 
                     yield return null;
                 }
-                instanceRef.StaminaData.CurrentStamina = 0;
+                _pm.StaminaData.CurrentStamina = 0;
                 yield break;
             }
         }
@@ -94,18 +94,18 @@ namespace MyCode.Player
 
             while (!IsStaminaFull())
             {
-                instanceRef.StaminaData.CurrentStamina += instanceRef.StaminaData.RegenValue;
+                _pm.StaminaData.CurrentStamina += _pm.StaminaData.RegenValue;
                 yield return null;
             }
-            instanceRef.StaminaData.CurrentStamina = instanceRef.StaminaData.MaxStamina;
-            instanceRef.StaminaData.ReachedLimit = false;
-            instanceRef.StaminaData.CanSprint = true;
+            _pm.StaminaData.CurrentStamina = _pm.StaminaData.MaxStamina;
+            _pm.StaminaData.ReachedLimit = false;
+            _pm.StaminaData.CanSprint = true;
             yield break;
         }
 
         private bool IsStaminaDepleted()
         {
-            if (instanceRef.StaminaData.CurrentStamina <= 0)
+            if (_pm.StaminaData.CurrentStamina <= 0)
                 return true;
 
             return false;
@@ -113,7 +113,7 @@ namespace MyCode.Player
 
         private bool IsStaminaFull()
         {
-            if (instanceRef.StaminaData.CurrentStamina >= instanceRef.StaminaData.MaxStamina)
+            if (_pm.StaminaData.CurrentStamina >= _pm.StaminaData.MaxStamina)
                 return true;
 
             return false;

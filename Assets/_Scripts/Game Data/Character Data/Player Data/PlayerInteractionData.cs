@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine.InputSystem;
 using UnityEngine;
+using System;
 using MyBox;
 
 
@@ -82,6 +83,10 @@ public class PlayerInteractionData : ScriptableObject
     [SerializeField] private InputActionReference _input_ThrowValue;
     [SerializeField] private InputActionReference _input_ZoomValue;
 
+    public event Action OnPickUpObject;
+    public event Action OnDropObject;
+    public event Action OnInteract;
+
     // Player
     public LayerMask PlayerLayerMask { get => _playerLayerMask; set => _playerLayerMask = value; }
 
@@ -129,6 +134,21 @@ public class PlayerInteractionData : ScriptableObject
     public InputActionReference Input_InteractValue { get => _input_InteractValue; set => _input_InteractValue = value; }
     public InputActionReference Input_ThrowValue { get => _input_ThrowValue; set => _input_ThrowValue = value; }
     public InputActionReference Input_ZoomValue { get => _input_ZoomValue; set => _input_ZoomValue = value; }
+
+    public void InvokePickUpObject()
+    {
+        OnPickUpObject?.Invoke();
+    }
+
+    public void InvokeDropObject()
+    {
+        OnDropObject?.Invoke();
+    }
+
+    public void InvokeOnInteract()
+    {
+        OnInteract?.Invoke();
+    }
 
     private void OnEnable()
     {

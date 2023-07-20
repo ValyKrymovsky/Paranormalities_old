@@ -19,33 +19,26 @@ public class InventoryItem : MonoBehaviour
     public GameObject model;
     public Sprite itemImage;
 
-    [Separator("Interaction")]
-    [SerializeField]
-    private InteractionController _interactionController;
-
-    public static event Action<ItemObject, GameObject, Sprite> AddedItem;
-
     private void Awake()
     {
         model = this.gameObject;
-        _interactionController = GetComponent<InteractionController>();
     }
 
     private void OnEnable()
     {
-        _interactionController.OnInteract += AddToInventory;
+        PlayerManager.Instance.InteractionData.OnInteract += AddToInventory;
     }
 
     private void OnDisable()
     {
-        _interactionController.OnInteract -= AddToInventory;
+        PlayerManager.Instance.InteractionData.OnInteract -= AddToInventory;
     }
 
     public void AddToInventory()
     {
         if (PlayerManager.Instance.InventoryData.Inventory.AddItem(_item, model))
         {
-            AddedItem?.Invoke(_item, model, itemImage);
+            PlayerManager.Instance.InventoryData.InvokeOnAddItem(_item, model, itemImage);
         }
     }
     

@@ -20,14 +20,14 @@ public class InteractionPopup : MonoBehaviour
 
     private void OnEnable()
     {
-        P_Interactor.pickedUpObject += () => SetVisibility(false);
-        P_Interactor.droppedObject += () => SetVisibility(true);
+        PlayerManager.Instance.InteractionData.OnPickUpObject += () => SetVisibility(false);
+        PlayerManager.Instance.InteractionData.OnDropObject += () => SetVisibility(true);
     }
 
     private void OnDisable()
     {
-        P_Interactor.pickedUpObject -= () => SetVisibility(false);
-        P_Interactor.droppedObject -= () => SetVisibility(true);
+        PlayerManager.Instance.InteractionData.OnPickUpObject -= () => SetVisibility(false);
+        PlayerManager.Instance.InteractionData.OnDropObject -= () => SetVisibility(true);
     }
 
     public void ChangeTransform(Transform _transform)

@@ -116,13 +116,13 @@ public class InventoryHandler : MonoBehaviour {
     private void OnEnable()
     {
         _pm.InventoryData.ToggleInventoryInput.action.performed += ToggleInventoryUI;
-        InventoryItem.AddedItem += AddItemToUI;
+        _pm.InventoryData.OnAddItem += AddItemToUI;
     }
 
     private void OnDisable()
     {
         _pm.InventoryData.ToggleInventoryInput.action.performed -= ToggleInventoryUI;
-        InventoryItem.AddedItem -= AddItemToUI;
+        _pm.InventoryData.OnAddItem -= AddItemToUI;
     }
 
     private void SetDescription(string _description, Sprite _itemImage)
