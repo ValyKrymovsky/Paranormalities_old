@@ -30,10 +30,16 @@ MonoBehaviour:
     - PopupManager
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 80771b6c6461dd849aec184ff631d326
-    m_Address: Assets/_Scripts/Managers/System Managers/Sound System/SoundManager.prefab
+    m_Address: Assets/_Scripts/Managers/Character Managers/Player/PlayerSoundManager.prefab
     m_ReadOnly: 0
     m_SerializedLabels:
     - PlayerSoundManager
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 3f13ff80b9af26f46ad71ca7240e856a
+    m_Address: Assets/_Scripts/Managers/GameSettings Manager/SettingsManager.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - SettingsManager
     FlaggedDuringContentUpdateRestriction: 0
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: 05725dfde3bb9b84d9f5556a03d1a5bb, type: 2}

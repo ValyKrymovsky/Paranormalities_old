@@ -406,11 +406,9 @@ GameObject:
   - component: {fileID: 3291882108270107738}
   - component: {fileID: 1936277374354919567}
   - component: {fileID: 4658391508624660943}
-  - component: {fileID: 1139031742669373569}
   - component: {fileID: 7788709692059068805}
   - component: {fileID: 8278223283906203810}
   - component: {fileID: 7960209895511488273}
-  - component: {fileID: 3775176178616710980}
   - component: {fileID: 3918605364139024248}
   - component: {fileID: 9151140705511611232}
   m_Layer: 3
@@ -436,7 +434,7 @@ Transform:
   - {fileID: 7744861861942806116}
   - {fileID: 4034706488148676899}
   m_Father: {fileID: 0}
-  m_RootOrder: -1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!136 &3291882108270107738
 CapsuleCollider:
@@ -514,154 +512,54 @@ MonoBehaviour:
       m_Calls: []
   m_ActionEvents:
   - m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 7788709692059068805}
-        m_TargetAssemblyTypeName: P_Movement, Assembly-CSharp
-        m_MethodName: GetMoveValue
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-    m_ActionId: 582abaf2-8025-4bd1-9da3-dcd551aae871
-    m_ActionName: Player/Move[/Keyboard/w,/Keyboard/upArrow,/Keyboard/s,/Keyboard/downArrow,/Keyboard/a,/Keyboard/leftArrow,/Keyboard/d,/Keyboard/rightArrow,/XInputControllerWindows/leftStick]
-  - m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 396981982379732695}
-        m_TargetAssemblyTypeName: P_Camera, Assembly-CSharp
-        m_MethodName: GetLookValue
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-    m_ActionId: 969335d8-7e43-47f4-b0fe-156ebd6e91dd
-    m_ActionName: Player/Look[/XInputControllerWindows/rightStick,/Mouse/delta]
-  - m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 7788709692059068805}
-        m_TargetAssemblyTypeName: P_Movement, Assembly-CSharp
-        m_MethodName: GetSprintValue
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-    m_ActionId: 17f16284-f353-4b56-84f3-880deb65b5a1
-    m_ActionName: Player/Sprint[/Keyboard/shift]
-  - m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 1014441539299005514}
-        m_TargetAssemblyTypeName: P_Interactor, Assembly-CSharp
-        m_MethodName: Interact
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-    m_ActionId: 06ce6974-db0d-4dba-b7d5-5c70de623b83
-    m_ActionName: Player/Interact[/Keyboard/e]
-  - m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 1139031742669373569}
-        m_TargetAssemblyTypeName: P_Inventory, Assembly-CSharp
-        m_MethodName: SelectItem
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-    m_ActionId: 2b4c15e6-90db-41d5-8011-f4547cc09c1c
-    m_ActionName: Player/Hotbar
-  - m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 1139031742669373569}
-        m_TargetAssemblyTypeName: P_Inventory, Assembly-CSharp
-        m_MethodName: DropItem
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-    m_ActionId: a9948610-de7f-48f7-8b98-71e7a92bd98f
-    m_ActionName: Player/Drop item[/Keyboard/q]
+      m_Calls: []
+    m_ActionId: 139c8294-1cfe-4071-aceb-1692b723461a
+    m_ActionName: Gameplay/Move[/Keyboard/w,/Keyboard/upArrow,/Keyboard/s,/Keyboard/downArrow,/Keyboard/a,/Keyboard/leftArrow,/Keyboard/d,/Keyboard/rightArrow]
   - m_PersistentCalls:
       m_Calls: []
-    m_ActionId: f980ada6-fcf8-431d-b567-55f42ba4b8e6
-    m_ActionName: Player/Stats[/Keyboard/backquote]
+    m_ActionId: c0fc7b39-46e7-4c0f-8913-3308add7720a
+    m_ActionName: Gameplay/Look[/Mouse/delta]
   - m_PersistentCalls:
       m_Calls: []
-    m_ActionId: 214a6c92-6730-4576-9264-8692045c4ccf
-    m_ActionName: Player/Menu[/Keyboard/escape]
-  - m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 7788709692059068805}
-        m_TargetAssemblyTypeName: P_Movement, Assembly-CSharp
-        m_MethodName: GetSneakValue
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-    m_ActionId: 1faa6030-21c8-4dc4-8084-d63a971fb34b
-    m_ActionName: Player/Sneak[/Keyboard/c,/Keyboard/ctrl]
+    m_ActionId: 5da064af-d488-4b60-a2e8-35a98326aa4b
+    m_ActionName: Gameplay/Sneak[/Keyboard/c,/Keyboard/ctrl]
   - m_PersistentCalls:
       m_Calls: []
-    m_ActionId: 
-    m_ActionName: 
+    m_ActionId: 2d018f5e-edb8-4e02-8e86-87cbe36d5fb0
+    m_ActionName: Gameplay/Sprint[/Keyboard/shift]
   - m_PersistentCalls:
       m_Calls: []
-    m_ActionId: 
-    m_ActionName: 
+    m_ActionId: 6641576a-5a57-41b2-9bce-c20c8cd4c757
+    m_ActionName: Gameplay/Interact[/Mouse/leftButton]
   - m_PersistentCalls:
       m_Calls: []
-    m_ActionId: 
-    m_ActionName: 
+    m_ActionId: 44fc24b0-8562-49d0-adaf-703fb011b5e6
+    m_ActionName: Gameplay/Pickup Zoom[/Mouse/scroll/y]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 161ec41a-9050-4f1c-9384-0102ceaec7e5
+    m_ActionName: Gameplay/Throw[/Mouse/rightButton]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 9a1c23c0-1bfb-40b3-9236-42a4b0f4c07c
+    m_ActionName: Gameplay/Drop item[/Keyboard/q]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 23ce93c8-d12a-4f78-8cf9-e2fc287b6502
+    m_ActionName: Gameplay/Toggle Inventory[/Keyboard/tab,/Keyboard/x]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 1bab3e9e-5c91-4fc9-b945-4652cdbdc24b
+    m_ActionName: Gameplay/Toggle Main Menu[/Keyboard/escape,/Keyboard/r]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 9030733b-04b2-420b-ac46-387748918686
+    m_ActionName: Gameplay/Test Sound[/Keyboard/z]
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
-  m_DefaultActionMap: Player
+  m_DefaultActionMap: Gameplay
   m_SplitScreenIndex: -1
   m_Camera: {fileID: 0}
---- !u!114 &1139031742669373569
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8074515666999579833}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ca5c5b8fcc6548f438d22d8ac797a08f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &7788709692059068805
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -696,18 +594,6 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 2a92efc6c4063844d9ba3c48eca6e31b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &3775176178616710980
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8074515666999579833}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2ccb6a303527d7546b960a946189c3ab, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!114 &3918605364139024248

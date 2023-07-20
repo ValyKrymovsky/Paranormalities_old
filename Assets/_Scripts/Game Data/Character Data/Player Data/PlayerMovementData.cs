@@ -4,29 +4,6 @@ using UnityEngine;
 using MyBox;
 
 
-public enum MovementState
-{
-    none,
-    walk,
-    sprint,
-    sneak
-}
-
-public enum MovementDirection
-{
-    none,
-    forward,
-    forward_right,
-    forward_left,
-    right,
-    left,
-    backward,
-    backward_right,
-    backward_left
-}
-
-
-
 [CreateAssetMenu(fileName = "NewMovementData", menuName = "DataObjects/Player/Movement")]
 public class PlayerMovementData : ScriptableObject
 {

@@ -2,7 +2,7 @@ using UnityEngine;
 using UnityEngine.AddressableAssets;
 using UnityEngine.ResourceManagement.AsyncOperations;
 using Cysharp.Threading.Tasks;
-
+using System;
 
 namespace MyCode.Player
 {
@@ -26,6 +26,17 @@ namespace MyCode.Player
                         if (handle.Status == AsyncOperationStatus.Succeeded)
                         {
                             _instance = Instantiate(handle.Result).GetComponent<PopupManager>();
+
+                            if (_popupObject == null)
+                            {
+                                _popupObject = GameObject.FindObjectOfType<InteractionPopup>();
+                            }
+
+                            if (_popupObject == null)
+                            {
+                                LoadPopup();
+                                Debug.Log("Called pop loader");
+                            }
                         }
                     };
                 }
@@ -60,7 +71,8 @@ namespace MyCode.Player
 
                     if (_popupObject == null)
                     {
-                        LoadInteractionPopup();
+                        LoadPopup();
+                        Debug.Log("Called pop loader");
                     }
 
                     return _instance;
@@ -86,16 +98,18 @@ namespace MyCode.Player
             }
         }
 
-        private static async void LoadInteractionPopup()
+        private static async void LoadPopup()
         {
-            AsyncOperationHandle managerHandle = Addressables.LoadAssetAsync<GameObject>("InteractionPopup");
+            Debug.Log("Activated pop loader");
+            AsyncOperationHandle handle = Addressables.LoadAssetAsync<GameObject>("InteractionPopup");
 
-            await managerHandle.Task;
+            await handle.Task;
 
-            if (managerHandle.Status.Equals(AsyncOperationStatus.Succeeded))
+            if (handle.Status.Equals(AsyncOperationStatus.Succeeded))
             {
-                _popupObject = Instantiate((GameObject)managerHandle.Result).GetComponent<InteractionPopup>();
-                DontDestroyOnLoad(_popupObject.gameObject);
+                _popupObject = Instantiate((GameObject)handle.Result).GetComponent<InteractionPopup>();
+                DontDestroyOnLoad(_popupObject);
+                Debug.Log("Spawned interaction popup");
             }
         }
 
@@ -104,7 +118,7 @@ namespace MyCode.Player
         [SerializeField] private static InteractionPopup _popupObject;
         [field: SerializeField] private InteractionPopupData _popupData;
         public InteractionPopup PopupObject { get => _popupObject; set => _popupObject = value; }
-        public InteractionPopupData Popup { get => _popupData; set => _popupData = value; }
+        public InteractionPopupData PopupData { get => _popupData; set => _popupData = value; }
     }
 }
 

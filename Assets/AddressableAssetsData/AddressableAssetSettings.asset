@@ -15,7 +15,7 @@ MonoBehaviour:
   m_DefaultGroup: ae2f978a2c4fea74494c308719cbf961
   m_currentHash:
     serializedVersion: 2
-    Hash: b61d243fb8fc545073675a2f0e9435a0
+    Hash: 00000000000000000000000000000000
   m_OptimizeCatalogSize: 0
   m_BuildRemoteCatalog: 0
   m_BundleLocalCatalog: 0
@@ -93,6 +93,7 @@ MonoBehaviour:
     - PopupManager
     - InteractionPopup
     - PlayerSoundManager
+    - SettingsManager
   m_SchemaTemplates: []
   m_GroupTemplateObjects:
   - {fileID: 11400000, guid: 24339c45f0efb1347a8da48ff1b27f0f, type: 2}

@@ -1,9 +1,10 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 using System.Collections.Generic;
-using System.Linq;
 using System;
 using MyBox;
+using UnityEngine.AddressableAssets;
+using UnityEngine.ResourceManagement.AsyncOperations;
 
 namespace MyCode.Player
 {
@@ -13,6 +14,8 @@ namespace MyCode.Player
         private PopupManager _popupManager;
         private GameObject _player;
         private Collider _playerCollider;
+
+        private bool canInteract = true;
 
         public GameObject pickupPoint;
 
@@ -48,6 +51,8 @@ namespace MyCode.Player
             _playerManager.InteractionData.Input_InteractValue.action.canceled += Drop;
             _playerManager.InteractionData.Input_ThrowValue.action.performed += Throw;
             _playerManager.InteractionData.Input_ZoomValue.action.performed += _ctx => Zoom(_ctx);
+
+            _playerManager.InventoryData.OnInventoryStatusChange += value => canInteract = !value;
         }
 
         private void OnDisable()
@@ -56,6 +61,8 @@ namespace MyCode.Player
             _playerManager.InteractionData.Input_InteractValue.action.canceled -= Drop;
             _playerManager.InteractionData.Input_ThrowValue.action.performed -= Throw;
             _playerManager.InteractionData.Input_ZoomValue.action.performed -= _ctx => Zoom(_ctx);
+
+            _playerManager.InventoryData.OnInventoryStatusChange -= value => canInteract = !value;
         }
 
         private void Update() 
@@ -92,6 +99,8 @@ namespace MyCode.Player
 
         public void Interact(InputAction.CallbackContext _value)
         {
+            if (!canInteract) return;
+
             try
             {
                 if (_interactionController == null)
@@ -123,6 +132,8 @@ namespace MyCode.Player
 
         public void CheckInteractibles()
         {
+            if (!canInteract) return;
+
             Ray r = new Ray(transform.position, transform.forward);
             RaycastHit hit;
 
@@ -136,8 +147,8 @@ namespace MyCode.Player
 
             if (results <= 0)
             {
-                if (_popupManager.PopupObject.IsVisible())
-                    _popupManager.PopupObject.SetVisibility(false);
+                if (_popupManager.PopupData.IsVisible)
+                    _popupManager.PopupData.IsVisible = false;
 
                 interactibleColliders.Clear();
                 _interactionController = null;
@@ -191,29 +202,31 @@ namespace MyCode.Player
             {
                 _playerManager.InteractionData.SelectedCollider = nearestInteractibleCollider;
                 _interactionController = nearestInteractibleCollider.GetComponent<InteractionController>();
-                _popupManager.PopupObject.ChangeTransform(nearestInteractibleCollider.transform);
+                _popupManager.PopupData.InvokeOnParentChange(nearestInteractibleCollider.transform);
                 _popupManager.PopupObject.Text.text = _interactionController.PopupText;
             }
 
-            if (!_popupManager.PopupObject.IsVisible())
-                _popupManager.PopupObject.SetVisibility(true);
+            if (!_popupManager.PopupData.IsVisible)
+                _popupManager.PopupData.IsVisible = true;
 
             _popupManager.PopupObject.transform.LookAt(transform, transform.up);
 
             float proximityTextOpacity = Mathf.InverseLerp(_playerManager.InteractionData.SphereCheckRange, 0, Vector3.Distance(_playerManager.InteractionData.HitPosition, _popupManager.PopupObject.transform.position));
-            _popupManager.PopupObject.SetTextOpacity(proximityTextOpacity);
+            _popupManager.PopupData.InvokeOnOpacityChange(proximityTextOpacity);
 
             Vector2 playerPosition = new Vector2(transform.position.x, transform.position.z);
             Vector2 popupPosition = new Vector2(_popupManager.PopupObject.transform.position.x, _popupManager.PopupObject.transform.position.z);
-            float proximityTextSize = Mathf.InverseLerp(_playerManager.InteractionData.InteractRange + _playerManager.InteractionData.SphereCheckRange, 0, Vector2.Distance(playerPosition, popupPosition)) * _popupManager.Popup.MaxTextSize;
-            if (proximityTextSize < _popupManager.Popup.MinTextSize) proximityTextSize = _popupManager.Popup.MinTextSize;
-            _popupManager.PopupObject.SetTextSize(proximityTextSize);
+            float proximityTextSize = Mathf.InverseLerp(_playerManager.InteractionData.InteractRange + _playerManager.InteractionData.SphereCheckRange, 0, Vector2.Distance(playerPosition, popupPosition)) * _popupManager.PopupData.MaxTextSize;
+            if (proximityTextSize < _popupManager.PopupData.MinTextSize) proximityTextSize = _popupManager.PopupData.MinTextSize;
+            _popupManager.PopupData.InvokeOnSizeChange(proximityTextSize);
 
             interactibleColliders.Clear();
         }
 
         public void PickUp()
         {
+            if (!canInteract) return;
+
             Ray r = new Ray(transform.position, transform.forward);
 
             if (Physics.SphereCast(transform.position, .25f, transform.forward, out RaycastHit hitInfo, _playerManager.InteractionData.MaxPickupDistance, _playerManager.InteractionData.InteractiblesMask))
@@ -318,6 +331,5 @@ namespace MyCode.Player
             _playerManager.InteractionData.ObjectMass = 0;
             return;
         }
-
     }
 }

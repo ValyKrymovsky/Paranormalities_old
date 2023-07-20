@@ -25,7 +25,6 @@ public class PlayerInteractionData : ScriptableObject
     [SerializeField] private LayerMask _interactiblesMask;
     [SerializeField, ReadOnly] private Collider _selectedCollider;
     private Collider[] colliderArray;
-    private InteractionController _interactionController;
     private LayerMask _excludeCollisionMask;
     [Space]
 
@@ -97,7 +96,6 @@ public class PlayerInteractionData : ScriptableObject
     public LayerMask InteractiblesMask { get => _interactiblesMask; set => _interactiblesMask = value; }
     public Collider SelectedCollider { get => _selectedCollider; set => _selectedCollider = value; }
     public Collider[] ColliderArray { get => colliderArray; set => colliderArray = value; }
-    public InteractionController InteractionController { get => _interactionController; set => _interactionController = value; }
     public LayerMask ExcludeCollisionMask { get => _excludeCollisionMask; set => _excludeCollisionMask = value; }
 
 

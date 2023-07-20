@@ -12,12 +12,6 @@ public class InventoryObject : ScriptableObject
     public int size = 16;
     public bool inventoryFull;
 
-    /// <summary>
-    /// Checks if ItemObject is in inventory. Adds the item with mesh model if not.
-    /// </summary>
-    /// <param name="_item"></param>
-    /// <param name="_model"></param>
-    /// <returns>True if item was successfully added</returns>
     public bool AddItem(ItemObject _item, GameObject _model)
     {
         if (IsFull() == false)
@@ -38,11 +32,6 @@ public class InventoryObject : ScriptableObject
         }
     }
 
-    /// <summary>
-    /// Checks if ItemObject is in inventory. Removes the item with mesh model if yes.
-    /// </summary>
-    /// <param name="_item"></param>
-    /// <param name="_model"></param>
     public void RemoveItem(ItemObject _item, GameObject _model)
     {
         if (HasItem(_item))
@@ -51,9 +40,6 @@ public class InventoryObject : ScriptableObject
         }
     }
 
-    /// <summary>
-    /// </summary>
-    /// <returns>Inventory size</returns>
     public int GetSize()
     {
         return size;
@@ -64,11 +50,6 @@ public class InventoryObject : ScriptableObject
         size = _size;
     }
 
-    /// <summary>
-    /// Returns KeyValuePair from inventory at given index.
-    /// </summary>
-    /// <param name="_index"></param>
-    /// <returns></returns>
     public (ItemObject item, GameObject model) GetItemAsIndex(int _index)
     {
         try
@@ -82,30 +63,17 @@ public class InventoryObject : ScriptableObject
         }  
     }
 
-    /// <summary>
-    /// Returns index of given KeyValuePair in inventory.
-    /// </summary>
-    /// <param name="_item"></param>
-    /// <returns></returns>
     public int GetIndexOfItem((ItemObject item, GameObject model) _item)
     {
         return inventory.IndexOf(_item);
     }
 
-    /// <summary>
-    /// Returns current selected item.
-    /// </summary>
     /// <returns></returns>
     public (ItemObject item, GameObject model) GetSelectedItem()
     {
         return selectedItem;
     }
 
-    /// <summary>
-    /// Check if given ItemObject is in inventory. Returns true if inventory contains the item.
-    /// </summary>
-    /// <param name="_item"></param>
-    /// <returns></returns>
     public bool HasItem(ItemObject _item)
     {
         if (_item == null)
@@ -126,18 +94,11 @@ public class InventoryObject : ScriptableObject
         }      
     }
 
-    /// <summary>
-    /// Deletes all items from inventory
-    /// </summary>
     public void Clear()
     {
         inventory.Clear();
     }
 
-    /// <summary>
-    /// Checks if inventory is full.
-    /// </summary>
-    /// <returns></returns>
     public bool IsFull()
     {
         if (inventory.Count >= size)
@@ -148,9 +109,6 @@ public class InventoryObject : ScriptableObject
         return false;
     }
 
-    /// <summary>
-    /// Writes to console every item in inventory.
-    /// </summary>
     public void PrintInventory()
     {
         int index = 0;

@@ -41,12 +41,6 @@ public class InventoryHandler : MonoBehaviour {
     private static bool isDragging;
     private static InventorySlot originalSlot;
 
-    //               //
-    // Event Actions //
-    //               //
-    public static event Action OnInventoryOpen;
-    public static event Action OnInventoryClose;
-
     //                  //
     // Input Controller //
     //                  //
@@ -271,7 +265,7 @@ public class InventoryHandler : MonoBehaviour {
 
             root.style.display = DisplayStyle.None;
             UnityEngine.Cursor.lockState = CursorLockMode.Locked;
-            OnInventoryClose?.Invoke();
+            PlayerManager.Instance.InventoryData.InvokeOnInventoryStatusChange(false);
             return;
         }
 
@@ -280,6 +274,6 @@ public class InventoryHandler : MonoBehaviour {
 
         root.style.display = DisplayStyle.Flex;
         UnityEngine.Cursor.lockState = CursorLockMode.Confined;
-        OnInventoryOpen?.Invoke();
+        PlayerManager.Instance.InventoryData.InvokeOnInventoryStatusChange(true);
     }
 }

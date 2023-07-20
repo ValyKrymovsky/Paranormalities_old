@@ -1,9 +1,11 @@
 using MyCode.Player;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 
+[Serializable]
 public class InteractionPopup : MonoBehaviour
 {
     [SerializeField] private TextMeshPro _text;
@@ -22,38 +24,42 @@ public class InteractionPopup : MonoBehaviour
     {
         PlayerManager.Instance.InteractionData.OnPickUpObject += () => SetVisibility(false);
         PlayerManager.Instance.InteractionData.OnDropObject += () => SetVisibility(true);
+
+        PopupManager.Instance.PopupData.OnParentChange += value => ChangeParent(value);
+        PopupManager.Instance.PopupData.OnOpacityChange += value => SetTextOpacity(value);
+        PopupManager.Instance.PopupData.OnSizeChange += value => SetTextSize(value);
     }
 
     private void OnDisable()
     {
         PlayerManager.Instance.InteractionData.OnPickUpObject -= () => SetVisibility(false);
         PlayerManager.Instance.InteractionData.OnDropObject -= () => SetVisibility(true);
+
+        PopupManager.Instance.PopupData.OnParentChange -= value => ChangeParent(value);
+        PopupManager.Instance.PopupData.OnOpacityChange -= value => SetTextOpacity(value);
+        PopupManager.Instance.PopupData.OnSizeChange -= value => SetTextSize(value);
     }
 
-    public void ChangeTransform(Transform _transform)
+    private void ChangeParent(Transform _transform)
     {
         gameObject.transform.SetParent(_transform);
         gameObject.transform.position = _transform.position;
     }
 
-    public void SetTextOpacity(float _opacity)
+    private void SetTextOpacity(float _opacity)
     {
         _text.alpha = _opacity;
     }
 
-    public void SetTextSize(float _size)
+    private void SetTextSize(float _size)
     {
         _text.fontSize = _size;
     }
 
-    public void SetVisibility(bool _state)
+    private void SetVisibility(bool _state)
     {
         _renderer.enabled = _state;
-    }
-
-    public bool IsVisible()
-    {
-        return _renderer.enabled;
+        PopupManager.Instance.PopupData.IsVisible = _state;
     }
 
 }

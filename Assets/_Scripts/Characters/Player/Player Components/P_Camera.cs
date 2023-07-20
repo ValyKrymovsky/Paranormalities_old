@@ -50,12 +50,12 @@ namespace MyCode.Player
 
         private void OnEnable()
         {
-            PlayerManager.Instance.InventoryData.OnInventoryStatusChange += value => canLook = value;
+            PlayerManager.Instance.InventoryData.OnInventoryStatusChange += value => canLook = !value;
         }
 
         private void OnDisable()
         {
-            PlayerManager.Instance.InventoryData.OnInventoryStatusChange -= value => canLook = value;
+            PlayerManager.Instance.InventoryData.OnInventoryStatusChange -= value => canLook = !value;
         }
 
         private void Look(Vector2 _valueXY)

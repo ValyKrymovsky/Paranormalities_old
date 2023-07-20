@@ -15,7 +15,6 @@ public class PlayerSoundData : ScriptableObject
     [SerializeField] private float footstepMinPitch = .8f;
     [SerializeField] private float footstepMaxPitch = 1.2f;
     [SerializeField, Range(0, 10)] private float footstepVolume = 1f;
-    [SerializeField] private SurfaceIdentity ground;
     private List<AudioClip> walkClips;
     private List<AudioClip> sprintClips;
     private List<AudioClip> usedFootsteps;

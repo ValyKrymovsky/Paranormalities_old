@@ -51,7 +51,7 @@ namespace MyCode.Player
             _pm.MovementData.SprintValueInput.action.canceled += StopSprintAction;
             _pm.MovementData.SneakValueInput.action.canceled += StopSneakAction;
 
-            _pm.InventoryData.OnInventoryStatusChange += value => canMove = value;
+            _pm.InventoryData.OnInventoryStatusChange += value => canMove = !value;
         }
 
         private void OnDisable()
@@ -63,7 +63,7 @@ namespace MyCode.Player
             _pm.MovementData.SprintValueInput.action.canceled -= StopSprintAction;
             _pm.MovementData.SneakValueInput.action.canceled -= StopSneakAction;
 
-            _pm.InventoryData.OnInventoryStatusChange -= value => canMove = value;
+            _pm.InventoryData.OnInventoryStatusChange -= value => canMove = !value;
         }
 
         void Start()
@@ -361,7 +361,6 @@ namespace MyCode.Player
                 if (_pm.StaminaData.UseStaminaSystem)
                 {
                     _pm.MovementData.InvokeStartedRunning();
-                    Debug.Log("Stamina system on");
                 }
 
                 _internalSpeedMultiplier = _pm.MovementData.SprintMultiplier;

@@ -16,25 +16,27 @@ namespace MyCode.Player
                 {
                     _instance = FindObjectOfType<PlayerManager>();
                 }
-                    
+
 
                 if (_instance == null)
                 {
-                    Time.timeScale = 0;
-                    Addressables.LoadAssetAsync<GameObject>("Assets/_Scripts/Managers/PlayerManager.prefab").Completed += (handle) =>
+                    Addressables.LoadAssetAsync<GameObject>("PlayerManager").Completed += (handle) =>
                     {
-                        if (handle.Status == AsyncOperationStatus.Succeeded)
+                        if (handle.Status.Equals(AsyncOperationStatus.Succeeded))
                         {
-                            _instance = Instantiate(handle.Result).GetComponent<PlayerManager>();
-                            Time.timeScale = 1;
-                        }
-                        else
-                        {
+                            _instance = Instantiate((GameObject)handle.Result).GetComponent<PlayerManager>();
+                            _instance.CameraData = SettingsManager.Instance.SettingsData.DifficultyProperties.playerCameraData;
+                            _instance.MovementData = SettingsManager.Instance.SettingsData.DifficultyProperties.playerMovementData;
+                            _instance.StaminaData = SettingsManager.Instance.SettingsData.DifficultyProperties.playerStaminaData;
+                            _instance.HealthData = SettingsManager.Instance.SettingsData.DifficultyProperties.playerHealthData;
+                            _instance.InventoryData = SettingsManager.Instance.SettingsData.DifficultyProperties.playerInventoryData;
+                            _instance.InteractionData = SettingsManager.Instance.SettingsData.DifficultyProperties.playerInteractionData;
                         }
                     };
-                }
 
                     
+                }
+
                 return _instance;
             }
         }
