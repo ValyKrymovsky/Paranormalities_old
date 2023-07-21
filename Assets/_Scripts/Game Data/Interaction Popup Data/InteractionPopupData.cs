@@ -12,11 +12,12 @@ namespace MyCode.Data.Interaction
         [SerializeField] private float _maxTextSize;
         [SerializeField] private float _minTextSize;
 
-        private bool isVisible;
+        private bool isVisible = true;
 
         public event Action<Transform> OnParentChange;
         public event Action<float> OnOpacityChange;
         public event Action<float> OnSizeChange;
+        public event Action<bool> OnVisibilityChange;
 
         public float MaxTextSize { get => _maxTextSize; set => _maxTextSize = value; }
         public float MinTextSize { get => _minTextSize; set => _minTextSize = value; }
@@ -35,6 +36,11 @@ namespace MyCode.Data.Interaction
         public void InvokeOnSizeChange(float _size)
         {
             OnSizeChange?.Invoke(_size);
+        }
+
+        public void InvokeOnVisibilityChange(bool _visibility)
+        {
+            OnVisibilityChange?.Invoke(_visibility);
         }
     }
 

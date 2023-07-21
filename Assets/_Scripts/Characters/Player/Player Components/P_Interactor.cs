@@ -15,6 +15,7 @@ namespace MyCode.Player.Components
         private Collider _playerCollider;
 
         private bool canInteract = true;
+        private bool canCheckInteractibles = true;
 
         public GameObject pickupPoint;
 
@@ -52,6 +53,8 @@ namespace MyCode.Player.Components
             _playerManager.InteractionData.Input_ZoomValue.action.performed += _ctx => Zoom(_ctx);
 
             _playerManager.InventoryData.OnInventoryStatusChange += value => canInteract = !value;
+            _playerManager.InteractionData.OnPickUpObject += () => canCheckInteractibles = false;
+            _playerManager.InteractionData.OnDropObject += () => canCheckInteractibles = true;
         }
 
         private void OnDisable()
@@ -62,6 +65,8 @@ namespace MyCode.Player.Components
             _playerManager.InteractionData.Input_ZoomValue.action.performed -= _ctx => Zoom(_ctx);
 
             _playerManager.InventoryData.OnInventoryStatusChange -= value => canInteract = !value;
+            _playerManager.InteractionData.OnPickUpObject -= () => canCheckInteractibles = false;
+            _playerManager.InteractionData.OnDropObject -= () => canCheckInteractibles = true;
         }
 
         private void Update() 
@@ -132,6 +137,7 @@ namespace MyCode.Player.Components
         public void CheckInteractibles()
         {
             if (!canInteract) return;
+            if (!canCheckInteractibles) return;
 
             Ray r = new Ray(transform.position, transform.forward);
 
@@ -151,7 +157,7 @@ namespace MyCode.Player.Components
                 }
 
                 if (!_popupManager.PopupData.IsVisible)
-                    _popupManager.PopupData.IsVisible = true;
+                    _popupManager.PopupData.InvokeOnVisibilityChange(true);
 
                 Vector2 playerPosition = new Vector2(transform.position.x, transform.position.z);
                 Vector2 popupPosition = new Vector2(_popupManager.PopupObject.transform.position.x, _popupManager.PopupObject.transform.position.z);
@@ -170,16 +176,19 @@ namespace MyCode.Player.Components
 
             Collider nearestInteractibleCollider = null;
 
-            if (results <= 0)
+            if (results == 0)
             {
                 if (_popupManager.PopupData.IsVisible)
-                    _popupManager.PopupData.IsVisible = false;
+                    _popupManager.PopupData.InvokeOnVisibilityChange(false);
 
                 interactibleColliders.Clear();
                 _interactionController = null;
                 _playerManager.InteractionData.SelectedCollider = null;
                 return;
             }
+
+            if (!_popupManager.PopupData.IsVisible)
+                _popupManager.PopupData.InvokeOnVisibilityChange(true);
 
             // Checks if all colliders are interactible and adding them to a separate list if they are
             for (int i = 0; i < results; i++)
@@ -287,7 +296,7 @@ namespace MyCode.Player.Components
                 if (_interactionController.InteractionType != InteractionType.PickUp)
                     return;
 
-                float objectWeight = -Physics.gravity.y * hitInfo.rigidbody.mass;
+                float objectWeight = hitInfo.rigidbody.mass;
 
                 if (objectWeight >= _playerManager.InteractionData.MaxObjectWeight)
                 {
