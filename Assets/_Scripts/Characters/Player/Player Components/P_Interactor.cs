@@ -40,7 +40,7 @@ namespace MyCode.Player.Components
             _playerManager.InteractionData.PickupPointDistance = Vector3.Distance(transform.position, _playerManager.InteractionData.PickupPoint.transform.position);
             PickupPointDistanceCorrection();
 
-            _playerManager.InteractionData.ZoomInterval = (_playerManager.InteractionData.MaxPickupPointDistance - _playerManager.InteractionData.MinPickupPointDistance) / 50;
+            _playerManager.InteractionData.ZoomInterval = (_playerManager.InteractionData.MaxPickupPointDistance - _playerManager.InteractionData.MinPickupPointDistance) / _playerManager.InteractionData.IntervalCount;
 
             _playerManager.InteractionData.ColliderArray = new Collider[5];
         }
@@ -90,6 +90,8 @@ namespace MyCode.Player.Components
                     _playerManager.InteractionData.ObjectCollider.excludeLayers = _playerManager.InteractionData.ExcludeCollisionMask;
                     ResetRigidbodyParameters();
                     _playerManager.InteractionData.ObjectCollider = null;
+                    _playerManager.InteractionData.InvokeDropObject();
+                    return;
                 }
 
                 // Object movement
@@ -361,7 +363,12 @@ namespace MyCode.Player.Components
 
         public void Zoom(InputAction.CallbackContext _context)
         {
+            float zoomValue = _context.ReadValue<float>() / 120;
 
+            if (zoomValue == 0) return;
+
+            _playerManager.InteractionData.PickupPoint.transform.position = transform.position + transform.forward * (_playerManager.InteractionData.PickupPointDistance + _playerManager.InteractionData.ZoomInterval * zoomValue);
+            PickupPointDistanceCorrection();
         }
 
         private void PickupPointDistanceCorrection()
@@ -369,10 +376,12 @@ namespace MyCode.Player.Components
             if (_playerManager.InteractionData.PickupPointDistance > _playerManager.InteractionData.MaxPickupPointDistance)
             {
                 _playerManager.InteractionData.PickupPoint.transform.position = transform.position + transform.forward * _playerManager.InteractionData.MaxPickupPointDistance;
+                _playerManager.InteractionData.PickupPointDistance = _playerManager.InteractionData.MaxPickupPointDistance;
             }
             else if (_playerManager.InteractionData.PickupPointDistance < _playerManager.InteractionData.MinPickupPointDistance)
             {
                 _playerManager.InteractionData.PickupPoint.transform.position = transform.position + transform.forward * _playerManager.InteractionData.MinPickupPointDistance;
+                _playerManager.InteractionData.PickupPointDistance = _playerManager.InteractionData.MinPickupPointDistance;
             }
         }
 

@@ -73,7 +73,9 @@ namespace MyCode.Data.Player
 
         [Header("Zoom")]
         [Space]
+        [SerializeField] private int _intervalCount;
         private float _zoomInterval;
+        
 
         [Space]
         [Separator("Inputs", true)]
@@ -131,11 +133,13 @@ namespace MyCode.Data.Player
 
         // Picked up object zoom parameters
         public float ZoomInterval { get => _zoomInterval; set => _zoomInterval = value; }
+        public int IntervalCount { get => _intervalCount; set => _intervalCount = value; }
 
         // Inputs
         public InputActionReference Input_InteractValue { get => _input_InteractValue; set => _input_InteractValue = value; }
         public InputActionReference Input_ThrowValue { get => _input_ThrowValue; set => _input_ThrowValue = value; }
         public InputActionReference Input_ZoomValue { get => _input_ZoomValue; set => _input_ZoomValue = value; }
+        
 
         public void InvokePickUpObject()
         {
