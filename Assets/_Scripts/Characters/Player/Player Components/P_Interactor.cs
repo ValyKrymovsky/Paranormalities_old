@@ -11,13 +11,18 @@ namespace MyCode.Player.Components
     {
         private PlayerManager _playerManager;
         private PopupManager _popupManager;
-        private GameObject _player;
-        private Collider _playerCollider;
 
         private bool canInteract = true;
         private bool canCheckInteractibles = true;
 
-        public GameObject pickupPoint;
+        [SerializeField] private GameObject _pickupPoint;
+
+        [SerializeField] private Rigidbody _rb;
+        [SerializeField] private Collider _selectedCollider;
+
+        private float _mass;
+        private float _drag;
+        private float _angularDrag;
 
         private InteractionController _interactionController;
 
@@ -28,16 +33,11 @@ namespace MyCode.Player.Components
         {
             _playerManager = PlayerManager.Instance;
             _popupManager = PopupManager.Instance;
-
-            _playerManager.InteractionData.PickupPoint = pickupPoint;
-
-            _player = GameObject.FindGameObjectWithTag("Player");
-            _playerCollider = _player.GetComponent<Collider>();
         }
 
         private void Start()
         {
-            _playerManager.InteractionData.PickupPointDistance = Vector3.Distance(transform.position, _playerManager.InteractionData.PickupPoint.transform.position);
+            _playerManager.InteractionData.PickupPointDistance = Vector3.Distance(transform.position, _pickupPoint.transform.position);
             PickupPointDistanceCorrection();
 
             _playerManager.InteractionData.ZoomInterval = (_playerManager.InteractionData.MaxPickupPointDistance - _playerManager.InteractionData.MinPickupPointDistance) / _playerManager.InteractionData.IntervalCount;
@@ -71,35 +71,32 @@ namespace MyCode.Player.Components
 
         private void Update() 
         {
-            if (!_playerManager.InteractionData.ObjectRigidbody)
-            {
-                CheckInteractibles();
-            } 
+            CheckInteractibles();
         }
 
         private void FixedUpdate()
         {
-            _playerManager.InteractionData.PickupPointDistance = Vector3.Distance(transform.position, _playerManager.InteractionData.PickupPoint.transform.position);
+            _playerManager.InteractionData.PickupPointDistance = Vector3.Distance(transform.position, _pickupPoint.transform.position);
 
             PickupPointDistanceCorrection();
 
-            if (_playerManager.InteractionData.ObjectRigidbody)
+            if (_rb)
             {
-                if (Vector3.Distance(_playerManager.InteractionData.ObjectRigidbody.transform.position, _playerManager.InteractionData.PickupPoint.transform.position) > _playerManager.InteractionData.MaxDistanceFromPoint)
+                if (Vector3.Distance(_rb.transform.position, _pickupPoint.transform.position) > _playerManager.InteractionData.MaxDistanceFromPoint)
                 {
-                    _playerManager.InteractionData.ObjectCollider.excludeLayers = _playerManager.InteractionData.ExcludeCollisionMask;
+                    _selectedCollider.excludeLayers = _playerManager.InteractionData.ExcludeCollisionMask;
                     ResetRigidbodyParameters();
-                    _playerManager.InteractionData.ObjectCollider = null;
+                    _selectedCollider = null;
                     _playerManager.InteractionData.InvokeDropObject();
                     return;
                 }
 
                 // Object movement
-                _playerManager.InteractionData.ObjectRigidbody.angularVelocity = Vector3.zero;
-                Vector3 DirectionToPoint = _playerManager.InteractionData.PickupPoint.transform.position - _playerManager.InteractionData.ObjectRigidbody.transform.position;
-                _playerManager.InteractionData.ObjectRigidbody.AddForce(DirectionToPoint * _playerManager.InteractionData.PickupPointDistance * 500f, ForceMode.Acceleration);
+                _rb.angularVelocity = Vector3.zero;
+                Vector3 DirectionToPoint = _pickupPoint.transform.position - _rb.transform.position;
+                _rb.AddForce(DirectionToPoint * _playerManager.InteractionData.PickupPointDistance * 500f, ForceMode.Acceleration);
 
-                _playerManager.InteractionData.ObjectRigidbody.velocity = Vector3.zero;
+                _rb.velocity = Vector3.zero;
             }
         }
 
@@ -153,7 +150,7 @@ namespace MyCode.Player.Components
 
                 if (!controller.Interactible) return;
 
-                if (_playerManager.InteractionData.SelectedCollider != hitInfo.collider)
+                if (_selectedCollider != hitInfo.collider)
                 {
                     UpdateSelectedCollider(hitInfo.collider, controller);
                 }
@@ -185,7 +182,8 @@ namespace MyCode.Player.Components
 
                 interactibleColliders.Clear();
                 _interactionController = null;
-                _playerManager.InteractionData.SelectedCollider = null;
+                _selectedCollider = null;
+                _playerManager.InteractionData.PerColliderHitPosition = Vector3.zero;
                 return;
             }
 
@@ -204,8 +202,9 @@ namespace MyCode.Player.Components
             if (interactibleColliders.Count <= 0)
             {
                 interactibleColliders.Clear();
-                _playerManager.InteractionData.SelectedCollider = null;
+                _selectedCollider = null;
                 _interactionController = null;
+                _playerManager.InteractionData.PerColliderHitPosition = Vector3.zero;
                 return;
             }
 
@@ -238,7 +237,7 @@ namespace MyCode.Player.Components
             }
 
 
-            if (_playerManager.InteractionData.SelectedCollider != nearestInteractibleCollider)
+            if (_selectedCollider != nearestInteractibleCollider)
             {
                 UpdateSelectedCollider(nearestInteractibleCollider);
             }
@@ -254,7 +253,7 @@ namespace MyCode.Player.Components
 
         private void UpdateSelectedCollider(Collider _newCollider)
         {
-            _playerManager.InteractionData.SelectedCollider = _newCollider;
+            _selectedCollider = _newCollider;
             _interactionController = _newCollider.GetComponent<InteractionController>();
             _popupManager.PopupData.InvokeOnParentChange(_newCollider.transform);
             _popupManager.PopupObject.Text.text = _interactionController.PopupText;
@@ -262,7 +261,7 @@ namespace MyCode.Player.Components
 
         private void UpdateSelectedCollider(Collider _newCollider, InteractionController _newController)
         {
-            _playerManager.InteractionData.SelectedCollider = _newCollider;
+            _selectedCollider = _newCollider;
             _interactionController = _newController;
             _popupManager.PopupData.InvokeOnParentChange(_newCollider.transform);
             _popupManager.PopupObject.Text.text = _interactionController.PopupText;
@@ -270,11 +269,11 @@ namespace MyCode.Player.Components
 
         private void UpdateText()
         {
-            float proximityTextOpacity = Mathf.InverseLerp(_playerManager.InteractionData.SphereCheckRange, 0, Vector3.Distance(_playerManager.InteractionData.HitPosition, _popupManager.PopupObject.transform.position));
+            float proximityTextOpacity = Mathf.InverseLerp(_playerManager.InteractionData.SphereCheckRange, 0, Vector3.Distance(_playerManager.InteractionData.HitPosition, _playerManager.InteractionData.PerColliderHitPosition));
             _popupManager.PopupData.InvokeOnOpacityChange(proximityTextOpacity);
 
             Vector2 playerPosition = new Vector2(transform.position.x, transform.position.z);
-            Vector2 popupPosition = new Vector2(_popupManager.PopupObject.transform.position.x, _popupManager.PopupObject.transform.position.z);
+            Vector2 popupPosition = new Vector2(_playerManager.InteractionData.PerColliderHitPosition.x, _playerManager.InteractionData.PerColliderHitPosition.z);
             float proximityTextSize = Mathf.InverseLerp(_playerManager.InteractionData.InteractRange + _playerManager.InteractionData.SphereCheckRange, 0, Vector2.Distance(playerPosition, popupPosition)) * _popupManager.PopupData.MaxTextSize;
             if (proximityTextSize < _popupManager.PopupData.MinTextSize) proximityTextSize = _popupManager.PopupData.MinTextSize;
             _popupManager.PopupData.InvokeOnSizeChange(proximityTextSize);
@@ -291,69 +290,63 @@ namespace MyCode.Player.Components
         {
             if (!canInteract) return;
 
-            Ray r = new Ray(transform.position, transform.forward);
+            if (!_selectedCollider) return;
 
-            if (Physics.SphereCast(transform.position, .25f, transform.forward, out RaycastHit hitInfo, _playerManager.InteractionData.MaxPickupDistance, _playerManager.InteractionData.InteractiblesMask))
+            if (_interactionController.InteractionType != InteractionType.PickUp) return;
+
+            _rb = _selectedCollider.GetComponent<Rigidbody>();
+            float objectWeight =_rb.mass;
+
+            if (objectWeight >= _playerManager.InteractionData.MaxObjectWeight)
             {
-                if (_interactionController.InteractionType != InteractionType.PickUp)
-                    return;
-
-                float objectWeight = hitInfo.rigidbody.mass;
-
-                if (objectWeight >= _playerManager.InteractionData.MaxObjectWeight)
-                {
-                    Debug.Log("Object too heavy!");
-                    return;
-                }
-
-                _playerManager.InteractionData.ObjectRigidbody = hitInfo.rigidbody;
-
-                _playerManager.InteractionData.ObjectCollider = _playerManager.InteractionData.ObjectRigidbody.GetComponent<Collider>();
-
-                _playerManager.InteractionData.ExcludeCollisionMask = _playerManager.InteractionData.ObjectCollider.excludeLayers;
-
-                _playerManager.InteractionData.ObjectCollider.excludeLayers = _playerManager.InteractionData.PlayerLayerMask;
-
-                _playerManager.InteractionData.ObjectMass = _playerManager.InteractionData.ObjectRigidbody.mass;
-                _playerManager.InteractionData.ObjectDrag = _playerManager.InteractionData.ObjectRigidbody.drag;
-                _playerManager.InteractionData.ObjectAngularDrag = _playerManager.InteractionData.ObjectRigidbody.angularDrag;
-
-                _playerManager.InteractionData.ObjectRigidbody.useGravity = false;
-                _playerManager.InteractionData.ObjectRigidbody.angularDrag = 200f;
-                float distanceToObject = Vector2.Distance(new Vector2(transform.position.x, transform.position.z), new Vector2(_playerManager.InteractionData.ObjectRigidbody.transform.position.x, _playerManager.InteractionData.ObjectRigidbody.transform.position.z));
-                _playerManager.InteractionData.PickupPoint.transform.position = transform.position + transform.forward * distanceToObject;
-
-                _playerManager.InteractionData.InvokePickUpObject();
+                Debug.Log("Object too heavy!");
+                _rb = null;
+                return;
             }
+
+            _playerManager.InteractionData.ExcludeCollisionMask = _selectedCollider.excludeLayers;
+
+            _selectedCollider.excludeLayers = _playerManager.InteractionData.PlayerLayerMask;
+
+            _mass = _rb.mass;
+            _drag = _rb.drag;
+            _angularDrag = _rb.angularDrag;
+
+            _rb.useGravity = false;
+            _rb.angularDrag = 200f;
+            float distanceToObject = Vector2.Distance(new Vector2(transform.position.x, transform.position.z), new Vector2(_rb.transform.position.x, _rb.transform.position.z));
+            _pickupPoint.transform.position = transform.position + transform.forward * distanceToObject;
+
+            _playerManager.InteractionData.InvokePickUpObject();
         }
 
         public void Drop(InputAction.CallbackContext _context)
         {
-            if (!_playerManager.InteractionData.ObjectRigidbody)
+            if (!_rb)
             {
                 return;
             }
 
-            _playerManager.InteractionData.ObjectCollider.excludeLayers = _playerManager.InteractionData.ExcludeCollisionMask;
+            _selectedCollider.excludeLayers = _playerManager.InteractionData.ExcludeCollisionMask;
 
             ResetRigidbodyParameters();
-            _playerManager.InteractionData.ObjectCollider = null;
+            _selectedCollider = null;
             _playerManager.InteractionData.InvokeDropObject();
         }
 
         public void Throw(InputAction.CallbackContext _context)
         {
-            if (!_playerManager.InteractionData.ObjectRigidbody)
+            if (!_rb)
             {
                 return;
             }
 
             if (_context.phase == InputActionPhase.Performed)
             {
-                _playerManager.InteractionData.ObjectRigidbody.AddForce(transform.position + transform.forward * (_playerManager.InteractionData.ThrowStrength * 100), ForceMode.Acceleration);
+                _rb.AddForce(transform.position + transform.forward * (_playerManager.InteractionData.ThrowStrength * 100), ForceMode.Acceleration);
 
 
-                _playerManager.InteractionData.ObjectCollider.excludeLayers = _playerManager.InteractionData.ExcludeCollisionMask;
+                _selectedCollider.excludeLayers = _playerManager.InteractionData.ExcludeCollisionMask;
 
                 ResetRigidbodyParameters();
 
@@ -367,7 +360,7 @@ namespace MyCode.Player.Components
 
             if (zoomValue == 0) return;
 
-            _playerManager.InteractionData.PickupPoint.transform.position = transform.position + transform.forward * (_playerManager.InteractionData.PickupPointDistance + _playerManager.InteractionData.ZoomInterval * zoomValue);
+            _pickupPoint.transform.position = transform.position + transform.forward * (_playerManager.InteractionData.PickupPointDistance + _playerManager.InteractionData.ZoomInterval * zoomValue);
             PickupPointDistanceCorrection();
         }
 
@@ -375,31 +368,31 @@ namespace MyCode.Player.Components
         {
             if (_playerManager.InteractionData.PickupPointDistance > _playerManager.InteractionData.MaxPickupPointDistance)
             {
-                _playerManager.InteractionData.PickupPoint.transform.position = transform.position + transform.forward * _playerManager.InteractionData.MaxPickupPointDistance;
+                _pickupPoint.transform.position = transform.position + transform.forward * _playerManager.InteractionData.MaxPickupPointDistance;
                 _playerManager.InteractionData.PickupPointDistance = _playerManager.InteractionData.MaxPickupPointDistance;
             }
             else if (_playerManager.InteractionData.PickupPointDistance < _playerManager.InteractionData.MinPickupPointDistance)
             {
-                _playerManager.InteractionData.PickupPoint.transform.position = transform.position + transform.forward * _playerManager.InteractionData.MinPickupPointDistance;
+                _pickupPoint.transform.position = transform.position + transform.forward * _playerManager.InteractionData.MinPickupPointDistance;
                 _playerManager.InteractionData.PickupPointDistance = _playerManager.InteractionData.MinPickupPointDistance;
             }
         }
 
         public void ResetRigidbodyParameters()
         {
-            _playerManager.InteractionData.ObjectRigidbody.excludeLayers = _playerManager.InteractionData.ExcludeCollisionMask;
+            _rb.excludeLayers = _playerManager.InteractionData.ExcludeCollisionMask;
 
-            _playerManager.InteractionData.ObjectRigidbody.useGravity = true;
-            _playerManager.InteractionData.ObjectRigidbody.angularDrag = _playerManager.InteractionData.ObjectAngularDrag;
-            _playerManager.InteractionData.ObjectRigidbody.drag = _playerManager.InteractionData.ObjectDrag;
-            _playerManager.InteractionData.ObjectRigidbody.mass = _playerManager.InteractionData.ObjectMass;
+            _rb.useGravity = true;
+            _rb.angularDrag = _angularDrag;
+            _rb.drag = _drag;
+            _rb.mass = _mass;
 
-            _playerManager.InteractionData.ObjectRigidbody.velocity /= _playerManager.InteractionData.DropVelocityReduction;
-            _playerManager.InteractionData.ObjectRigidbody = null;
+            _rb.velocity /= _playerManager.InteractionData.DropVelocityReduction;
+            _rb = null;
 
-            _playerManager.InteractionData.ObjectAngularDrag = 0;
-            _playerManager.InteractionData.ObjectDrag = 0;
-            _playerManager.InteractionData.ObjectMass = 0;
+            _angularDrag = 0;
+            _drag = 0;
+            _mass = 0;
             return;
         }
     }

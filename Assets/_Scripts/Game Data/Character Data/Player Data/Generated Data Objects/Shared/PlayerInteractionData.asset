@@ -17,26 +17,18 @@ MonoBehaviour:
     m_Bits: 8
   _interactRange: 1.5
   _sphereCheckRange: 1
-  _hitPosition: {x: 5.016322, y: 2.3034701, z: 5.4314938}
-  _perColliderHitPosition: {x: 2.829377e-24, y: 3.6502e-41, z: 0}
+  _hitPosition: {x: -8.682867, y: 2.09495, z: -0.4510312}
+  _perColliderHitPosition: {x: 0, y: 0, z: 0}
   _interactiblesMask:
     serializedVersion: 2
     m_Bits: 1088
-  _selectedCollider: {fileID: 0}
-  _pickupPoint: {fileID: 0}
-  _objectRigidbody: {fileID: 0}
-  _objectCollider: {fileID: 0}
-  _maxPickupDistance: 1.5
   _maxPickupPointDistance: 2
   _minPickupPointDistance: 1
   _maxDistanceFromPoint: 2
-  _pickupPointDistance: 1.0000001
-  _pickupLayer:
-    serializedVersion: 2
-    m_Bits: 1024
+  _pickupPointDistance: 1.4124122
   _maxObjectWeight: 25
   _dropVelocityReduction: 2.5
-  _throwStrength: 3.5
+  _throwStrength: 3
   _intervalCount: 15
   _input_InteractValue: {fileID: -4784122219073580990, guid: 5cbe42c2b73edc740bbce0ae6343c7c0,
     type: 3}
