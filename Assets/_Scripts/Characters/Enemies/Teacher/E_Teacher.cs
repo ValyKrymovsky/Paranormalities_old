@@ -8,7 +8,7 @@ using MyBox;
 
 public class E_Teacher : MonoBehaviour
 {
-    [Separator("Patrol", true)]
+    /*[Separator("Patrol", true)]
     [SerializeField]
     public bool useLocationalPatrol;
     [SerializeField]
@@ -67,7 +67,7 @@ public class E_Teacher : MonoBehaviour
     [SerializeField]
     private float damage = 25f;
     [SerializeField]
-    MyCode.Player.P_Health p_health;
+    P_Health p_health;
     private Coroutine dealDamageCoroutine = null;
     
     private void Awake()
@@ -387,5 +387,5 @@ public class E_Teacher : MonoBehaviour
             }
         }
         return false;
-    }
+    }*/
 }

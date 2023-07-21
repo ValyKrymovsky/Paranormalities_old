@@ -2,14 +2,41 @@ using UnityEngine;
 using UnityEngine.AddressableAssets;
 using UnityEngine.ResourceManagement.AsyncOperations;
 using Cysharp.Threading.Tasks;
+using MyCode.Data.Settings;
 
 
-public class SettingsManager : MonoBehaviour
+namespace MyCode.Managers
 {
-    private static SettingsManager _instance;
-    public static SettingsManager Instance
+    public class SettingsManager : MonoBehaviour
     {
-        get
+        private static SettingsManager _instance;
+        public static SettingsManager Instance
+        {
+            get
+            {
+                if (_instance == null)
+                {
+                    _instance = FindObjectOfType<SettingsManager>();
+                }
+
+
+                if (_instance == null)
+                {
+                    AsyncOperationHandle managerHandle = Addressables.LoadAssetAsync<GameObject>("SettingsManager");
+
+                    if (managerHandle.Status.Equals(AsyncOperationStatus.Succeeded))
+                    {
+                        _instance = Instantiate((GameObject)managerHandle.Result).GetComponent<SettingsManager>();
+                        return _instance;
+                    }
+                    return null;
+                }
+
+                return _instance;
+            }
+        }
+
+        public static async UniTask<SettingsManager> LoadManager(DifficultyProperties _properties)
         {
             if (_instance == null)
             {
@@ -21,9 +48,12 @@ public class SettingsManager : MonoBehaviour
             {
                 AsyncOperationHandle managerHandle = Addressables.LoadAssetAsync<GameObject>("SettingsManager");
 
+                await managerHandle.Task;
+
                 if (managerHandle.Status.Equals(AsyncOperationStatus.Succeeded))
                 {
                     _instance = Instantiate((GameObject)managerHandle.Result).GetComponent<SettingsManager>();
+                    _instance.SettingsData.DifficultyProperties = _properties;
                     return _instance;
                 }
                 return null;
@@ -31,47 +61,22 @@ public class SettingsManager : MonoBehaviour
 
             return _instance;
         }
-    }
 
-    public static async UniTask<SettingsManager> LoadManager(DifficultyProperties _properties)
-    {
-        if (_instance == null)
+        private void Awake()
         {
-            _instance = FindObjectOfType<SettingsManager>();
-        }
-
-
-        if (_instance == null)
-        {
-            AsyncOperationHandle managerHandle = Addressables.LoadAssetAsync<GameObject>("SettingsManager");
-
-            await managerHandle.Task;
-
-            if (managerHandle.Status.Equals(AsyncOperationStatus.Succeeded))
+            if (_instance != null && _instance != this)
             {
-                _instance = Instantiate((GameObject)managerHandle.Result).GetComponent<SettingsManager>();
-                _instance.SettingsData.DifficultyProperties = _properties;
-                return _instance;
+                Destroy(this.gameObject);
             }
-            return null;
+            else
+            {
+                _instance = this;
+                DontDestroyOnLoad(gameObject);
+            }
         }
 
-        return _instance;
+        [field: SerializeField] public GameSettingsData SettingsData { get; set; }
+
     }
-
-    private void Awake()
-    {
-        if (_instance != null && _instance != this)
-        {
-            Destroy(this.gameObject);
-        }
-        else
-        {
-            _instance = this;
-            DontDestroyOnLoad(gameObject);
-        }
-    }
-
-    [field: SerializeField] public GameSettingsData SettingsData { get; set; }
 }
 

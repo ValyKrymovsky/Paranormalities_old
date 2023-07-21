@@ -5,7 +5,7 @@ using UnityEngine;
 using UnityEditor;
 using MyBox;
 
-namespace MyCode.Player
+namespace MyCode.Player.Components
 {
     public class P_SoundSystem : MonoBehaviour
     {

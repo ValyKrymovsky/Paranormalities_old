@@ -5,10 +5,9 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using MyBox;
-using MyCode.Player;
 using UnityEngine.InputSystem;
-using UnityEditor.PackageManager;
-using System;
+using MyCode.Managers;
+using MyCode.Player.Inventory;
 
 public class InventoryHandler : MonoBehaviour {
 

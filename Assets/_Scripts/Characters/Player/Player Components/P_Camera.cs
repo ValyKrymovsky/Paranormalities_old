@@ -1,8 +1,9 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 using MyBox;
+using MyCode.Managers;
 
-namespace MyCode.Player
+namespace MyCode.Player.Components
 {
     [System.Serializable]
     public class P_Camera : MonoBehaviour

@@ -2,11 +2,10 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using System.Collections.Generic;
 using System;
-using MyBox;
-using UnityEngine.AddressableAssets;
-using UnityEngine.ResourceManagement.AsyncOperations;
+using MyCode.Managers;
+using MyCode.Player.Interaction;
 
-namespace MyCode.Player
+namespace MyCode.Player.Components
 {
     public class P_Interactor : MonoBehaviour
     {

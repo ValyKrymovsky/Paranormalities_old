@@ -2,6 +2,9 @@ using MyCode.Player;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using MyCode.Data.Settings;
+using MyCode.Managers;
+using MyCode.Player.Interaction;
 
 
 public class ManagerLoader : MonoBehaviour

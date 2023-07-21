@@ -2,9 +2,9 @@ using System;
 using UnityEngine.InputSystem;
 using UnityEngine;
 using MyBox;
+using MyCode.Managers;
 
-
-namespace MyCode.Player
+namespace MyCode.Player.Components
 {
     public class P_Movement : MonoBehaviour
     {

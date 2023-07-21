@@ -2,9 +2,11 @@ using UnityEngine;
 using UnityEngine.AddressableAssets;
 using UnityEngine.ResourceManagement.AsyncOperations;
 using Cysharp.Threading.Tasks;
+using MyCode.Data.Settings;
+using MyCode.Data.Player;
 
 
-namespace MyCode.Player
+namespace MyCode.Managers
 {
     public class PlayerManager : MonoBehaviour
     {

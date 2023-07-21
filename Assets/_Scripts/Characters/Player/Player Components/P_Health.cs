@@ -4,7 +4,7 @@ using UnityEngine.UIElements;
 using UnityEngine.SceneManagement;
 using MyBox;
 
-namespace MyCode.Player
+namespace MyCode.Player.Components
 {
     public class P_Health : MonoBehaviour
     {

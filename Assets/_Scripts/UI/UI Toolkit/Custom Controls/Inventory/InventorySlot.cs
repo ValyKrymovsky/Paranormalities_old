@@ -2,6 +2,7 @@ using UnityEngine;
 using UnityEditor;
 using UnityEngine.UIElements;
 using UnityEngine.EventSystems;
+using MyCode.Player.Inventory;
 
 public class InventorySlot : VisualElement
 {

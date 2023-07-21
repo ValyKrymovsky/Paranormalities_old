@@ -1,0 +1,19 @@
+{
+    "name": "MyCode.UI",
+    "rootNamespace": "MyCode.UI",
+    "references": [
+        "GUID:48c9f6afdac61634db0e0f241c7d4d51",
+        "GUID:8a6ea36881bd99a47a001a4ab3b720a6",
+        "GUID:769ba3316ebb4f54e849cfe7443358a7",
+        "GUID:75469ad4d38634e559750d17036d5f7c"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

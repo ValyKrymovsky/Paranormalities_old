@@ -1,9 +1,9 @@
 using System.Collections;
 using UnityEngine;
-
+using MyCode.Managers;
 using MyBox;
 
-namespace MyCode.Player
+namespace MyCode.Player.Components
 {
     public class P_Stamina : MonoBehaviour
     {

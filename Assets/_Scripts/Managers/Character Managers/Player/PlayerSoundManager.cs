@@ -3,9 +3,11 @@ using UnityEngine.AddressableAssets;
 using UnityEngine.ResourceManagement.AsyncOperations;
 using Cysharp.Threading.Tasks;
 using System.Linq;
+using MyCode.Data.Player;
+using MyCode.Player.Sound;
 
 
-namespace MyCode.Player
+namespace MyCode.Managers
 {
     public class PlayerSoundManager : MonoBehaviour
     {

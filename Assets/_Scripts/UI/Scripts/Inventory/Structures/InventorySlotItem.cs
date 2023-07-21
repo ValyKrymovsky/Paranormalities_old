@@ -1,5 +1,6 @@
 using System;
 using UnityEngine;
+using MyCode.Player.Inventory;
 
 [Serializable]
 public struct InventorySlotItem

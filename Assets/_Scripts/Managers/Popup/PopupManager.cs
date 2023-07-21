@@ -3,8 +3,10 @@ using UnityEngine.AddressableAssets;
 using UnityEngine.ResourceManagement.AsyncOperations;
 using Cysharp.Threading.Tasks;
 using System;
+using MyCode.Data.Interaction;
+using MyCode.Player.Interaction;
 
-namespace MyCode.Player
+namespace MyCode.Managers
 {
     public class PopupManager : MonoBehaviour
     {

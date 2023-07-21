@@ -4,6 +4,7 @@ using UnityEditor;
 [CustomEditor(typeof(E_Teacher))]
 public class SightVisibility : Editor
 {
+    /*
     private void OnSceneGUI()
     {
         E_Teacher teacher = (E_Teacher)target;
@@ -31,4 +32,5 @@ public class SightVisibility : Editor
 
         return new Vector3(Mathf.Sin(_anglesInDegrees * Mathf.Deg2Rad), 0, Mathf.Cos(_anglesInDegrees * Mathf.Deg2Rad));
     }
+    */
 }

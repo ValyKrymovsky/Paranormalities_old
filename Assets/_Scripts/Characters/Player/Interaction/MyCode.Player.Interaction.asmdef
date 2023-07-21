@@ -1,0 +1,18 @@
+{
+    "name": "MyCode.Player.Interaction",
+    "rootNamespace": "MyCode.Player.Interaction",
+    "references": [
+        "GUID:48c9f6afdac61634db0e0f241c7d4d51",
+        "GUID:8a6ea36881bd99a47a001a4ab3b720a6",
+        "GUID:769ba3316ebb4f54e849cfe7443358a7"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}
