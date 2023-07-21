@@ -33,6 +33,8 @@ namespace MyCode.Managers
                             _instance.HealthData = SettingsManager.Instance.SettingsData.DifficultyProperties.playerHealthData;
                             _instance.InventoryData = SettingsManager.Instance.SettingsData.DifficultyProperties.playerInventoryData;
                             _instance.InteractionData = SettingsManager.Instance.SettingsData.DifficultyProperties.playerInteractionData;
+
+                            DontDestroyOnLoad(_instance.gameObject);
                         }
                     };
 

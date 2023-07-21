@@ -33,6 +33,8 @@ namespace MyCode.Player.Interaction
             PopupManager.Instance.PopupData.OnParentChange += value => ChangeParent(value);
             PopupManager.Instance.PopupData.OnOpacityChange += value => SetTextOpacity(value);
             PopupManager.Instance.PopupData.OnSizeChange += value => SetTextSize(value);
+
+            PopupManager.Instance.PopupData.OnVisibilityChange += value => SetVisibility(value);
         }
 
         private void OnDisable()
@@ -43,6 +45,8 @@ namespace MyCode.Player.Interaction
             PopupManager.Instance.PopupData.OnParentChange -= value => ChangeParent(value);
             PopupManager.Instance.PopupData.OnOpacityChange -= value => SetTextOpacity(value);
             PopupManager.Instance.PopupData.OnSizeChange -= value => SetTextSize(value);
+
+            PopupManager.Instance.PopupData.OnVisibilityChange -= value => SetVisibility(value);
         }
 
         private void ChangeParent(Transform _transform)
