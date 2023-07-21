@@ -20,6 +20,11 @@ namespace MyCode.Player.Interaction
             Renderer = GetComponent<MeshRenderer>();
         }
 
+        private void Start()
+        {
+            SetVisibility(false);
+        }
+
         private void OnEnable()
         {
             PlayerManager.Instance.InteractionData.OnPickUpObject += () => SetVisibility(false);

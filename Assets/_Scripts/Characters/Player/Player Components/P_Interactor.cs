@@ -134,11 +134,37 @@ namespace MyCode.Player.Components
             if (!canInteract) return;
 
             Ray r = new Ray(transform.position, transform.forward);
-            RaycastHit hit;
 
-            Physics.Raycast(r, out hit, _playerManager.InteractionData.InteractRange);
+            Physics.Raycast(r, out RaycastHit hitInfo, _playerManager.InteractionData.InteractRange);
 
-            _playerManager.InteractionData.HitPosition = hit.collider != null ? hit.point : transform.position + transform.forward * _playerManager.InteractionData.InteractRange;
+            _playerManager.InteractionData.HitPosition = hitInfo.collider != null ? hitInfo.point : transform.position + transform.forward * _playerManager.InteractionData.InteractRange;
+
+            if (hitInfo.collider != null)
+            {
+                if (!hitInfo.collider.TryGetComponent(out InteractionController controller)) return;
+
+                if (!controller.Interactible) return;
+
+                if (_playerManager.InteractionData.SelectedCollider != hitInfo.collider)
+                {
+                    UpdateSelectedCollider(hitInfo.collider, controller);
+                }
+
+                if (!_popupManager.PopupData.IsVisible)
+                    _popupManager.PopupData.IsVisible = true;
+
+                Vector2 playerPosition = new Vector2(transform.position.x, transform.position.z);
+                Vector2 popupPosition = new Vector2(_popupManager.PopupObject.transform.position.x, _popupManager.PopupObject.transform.position.z);
+                float proximityTextSize = Mathf.InverseLerp(_playerManager.InteractionData.InteractRange + _playerManager.InteractionData.SphereCheckRange, 0, Vector2.Distance(playerPosition, popupPosition)) * _popupManager.PopupData.MaxTextSize;
+                if (proximityTextSize < _popupManager.PopupData.MinTextSize) proximityTextSize = _popupManager.PopupData.MinTextSize;
+
+                _popupManager.PopupObject.transform.LookAt(transform, transform.up);
+
+                UpdateText(proximityTextSize, 1);
+
+                interactibleColliders.Clear();
+                return;
+            }
 
             int results = Physics.OverlapSphereNonAlloc(_playerManager.InteractionData.HitPosition, _playerManager.InteractionData.SphereCheckRange, _playerManager.InteractionData.ColliderArray, _playerManager.InteractionData.InteractiblesMask);
 
@@ -171,25 +197,29 @@ namespace MyCode.Player.Components
                 _interactionController = null;
                 return;
             }
-                
+
 
             // finds the nearest collider
             float minDistance = -1;
             foreach (Collider collider in interactibleColliders)
             {
+                Ray ray = new(_playerManager.InteractionData.HitPosition, collider.transform.position - _playerManager.InteractionData.HitPosition);
+                collider.Raycast(ray, out RaycastHit perColliderHitInfo, _playerManager.InteractionData.SphereCheckRange);
                 if (minDistance == -1)
                 {
-                    minDistance = Vector3.Distance(_playerManager.InteractionData.HitPosition, collider.transform.position);
+                    minDistance = Vector3.Distance(_playerManager.InteractionData.HitPosition, perColliderHitInfo.point);
+                    _playerManager.InteractionData.PerColliderHitPosition = perColliderHitInfo.point;
                     nearestInteractibleCollider = collider;
                     continue;
                 }
                 else
                 {
-                    float distance = Vector3.Distance(_playerManager.InteractionData.HitPosition, collider.transform.position);
+                    float distance = Vector3.Distance(_playerManager.InteractionData.HitPosition, perColliderHitInfo.point);
 
                     if (distance < minDistance)
                     {
                         minDistance = distance;
+                        _playerManager.InteractionData.PerColliderHitPosition = perColliderHitInfo.point;
                         nearestInteractibleCollider = collider;
                         continue;
                     }
@@ -199,17 +229,36 @@ namespace MyCode.Player.Components
 
             if (_playerManager.InteractionData.SelectedCollider != nearestInteractibleCollider)
             {
-                _playerManager.InteractionData.SelectedCollider = nearestInteractibleCollider;
-                _interactionController = nearestInteractibleCollider.GetComponent<InteractionController>();
-                _popupManager.PopupData.InvokeOnParentChange(nearestInteractibleCollider.transform);
-                _popupManager.PopupObject.Text.text = _interactionController.PopupText;
+                UpdateSelectedCollider(nearestInteractibleCollider);
             }
 
             if (!_popupManager.PopupData.IsVisible)
                 _popupManager.PopupData.IsVisible = true;
 
             _popupManager.PopupObject.transform.LookAt(transform, transform.up);
+            UpdateText();
 
+            interactibleColliders.Clear();
+        }
+
+        private void UpdateSelectedCollider(Collider _newCollider)
+        {
+            _playerManager.InteractionData.SelectedCollider = _newCollider;
+            _interactionController = _newCollider.GetComponent<InteractionController>();
+            _popupManager.PopupData.InvokeOnParentChange(_newCollider.transform);
+            _popupManager.PopupObject.Text.text = _interactionController.PopupText;
+        }
+
+        private void UpdateSelectedCollider(Collider _newCollider, InteractionController _newController)
+        {
+            _playerManager.InteractionData.SelectedCollider = _newCollider;
+            _interactionController = _newController;
+            _popupManager.PopupData.InvokeOnParentChange(_newCollider.transform);
+            _popupManager.PopupObject.Text.text = _interactionController.PopupText;
+        }
+
+        private void UpdateText()
+        {
             float proximityTextOpacity = Mathf.InverseLerp(_playerManager.InteractionData.SphereCheckRange, 0, Vector3.Distance(_playerManager.InteractionData.HitPosition, _popupManager.PopupObject.transform.position));
             _popupManager.PopupData.InvokeOnOpacityChange(proximityTextOpacity);
 
@@ -218,8 +267,13 @@ namespace MyCode.Player.Components
             float proximityTextSize = Mathf.InverseLerp(_playerManager.InteractionData.InteractRange + _playerManager.InteractionData.SphereCheckRange, 0, Vector2.Distance(playerPosition, popupPosition)) * _popupManager.PopupData.MaxTextSize;
             if (proximityTextSize < _popupManager.PopupData.MinTextSize) proximityTextSize = _popupManager.PopupData.MinTextSize;
             _popupManager.PopupData.InvokeOnSizeChange(proximityTextSize);
+        }
 
-            interactibleColliders.Clear();
+        private void UpdateText(float _size, float _opacity)
+        {
+            _popupManager.PopupData.InvokeOnOpacityChange(_opacity);
+
+            _popupManager.PopupData.InvokeOnSizeChange(_size);
         }
 
         public void PickUp()

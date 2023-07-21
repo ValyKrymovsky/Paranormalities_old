@@ -24,6 +24,7 @@ namespace MyCode.Data.Player
         [SerializeField] private float _interactRange;
         [SerializeField] private float _sphereCheckRange;
         [SerializeField, ReadOnly] private Vector3 _hitPosition;
+        [SerializeField, ReadOnly] private Vector3 _perColliderHitPosition;
         [SerializeField] private LayerMask _interactiblesMask;
         [SerializeField, ReadOnly] private Collider _selectedCollider;
         private Collider[] colliderArray;
@@ -95,6 +96,7 @@ namespace MyCode.Data.Player
         public float InteractRange { get => _interactRange; set => _interactRange = value; }
         public float SphereCheckRange { get => _sphereCheckRange; set => _sphereCheckRange = value; }
         public Vector3 HitPosition { get => _hitPosition; set => _hitPosition = value; }
+        public Vector3 PerColliderHitPosition { get => _perColliderHitPosition; set => _perColliderHitPosition = value; }
         public LayerMask InteractiblesMask { get => _interactiblesMask; set => _interactiblesMask = value; }
         public Collider SelectedCollider { get => _selectedCollider; set => _selectedCollider = value; }
         public Collider[] ColliderArray { get => colliderArray; set => colliderArray = value; }
