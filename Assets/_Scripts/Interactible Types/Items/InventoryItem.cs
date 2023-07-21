@@ -2,6 +2,7 @@ using UnityEngine;
 using MyBox;
 using MyCode.Managers;
 using MyCode.Player.Inventory;
+using MyCode.Player.Interaction;
 
 namespace MyCode.Interactibles
 {
@@ -17,25 +18,29 @@ namespace MyCode.Interactibles
         public GameObject model;
         public Sprite itemImage;
 
+        private InteractionController _intController;
+
         private void Awake()
         {
             model = this.gameObject;
+            _intController = GetComponent<InteractionController>();
         }
 
         private void OnEnable()
         {
-            PlayerManager.Instance.InteractionData.OnInteract += AddToInventory;
+            _intController.OnInteracted += AddToInventory;
         }
 
         private void OnDisable()
         {
-            PlayerManager.Instance.InteractionData.OnInteract -= AddToInventory;
+            _intController.OnInteracted -= AddToInventory;
         }
 
         public void AddToInventory()
         {
             if (PlayerManager.Instance.InventoryData.Inventory.AddItem(_item, model))
             {
+                Debug.Log("Added " + _item);
                 PlayerManager.Instance.InventoryData.InvokeOnAddItem(_item, model, itemImage);
             }
         }

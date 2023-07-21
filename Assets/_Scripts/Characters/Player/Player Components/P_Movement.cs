@@ -179,7 +179,6 @@ namespace MyCode.Player.Components
             if (_pm.StaminaData.UseStaminaSystem)
                 {
                     _pm.MovementData.InvokeStoppedRunning();
-                    Debug.Log("Stamina system on");
                 }
             
             if (_sneakValue != 0)

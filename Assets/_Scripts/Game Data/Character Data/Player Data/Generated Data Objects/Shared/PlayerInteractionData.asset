@@ -17,15 +17,16 @@ MonoBehaviour:
     m_Bits: 8
   _interactRange: 1.5
   _sphereCheckRange: 1
-  _hitPosition: {x: -8.682867, y: 2.09495, z: -0.4510312}
+  _hitPosition: {x: 3.4919777, y: 1.5879225, z: 5.160163}
   _perColliderHitPosition: {x: 0, y: 0, z: 0}
+  _colliderAraySize: 20
   _interactiblesMask:
     serializedVersion: 2
     m_Bits: 1088
   _maxPickupPointDistance: 2
   _minPickupPointDistance: 1
   _maxDistanceFromPoint: 2
-  _pickupPointDistance: 1.4124122
+  _pickupPointDistance: 1.0000001
   _maxObjectWeight: 25
   _dropVelocityReduction: 2.5
   _throwStrength: 3

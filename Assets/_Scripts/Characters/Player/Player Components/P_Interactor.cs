@@ -20,11 +20,13 @@ namespace MyCode.Player.Components
         [SerializeField] private Rigidbody _rb;
         [SerializeField] private Collider _selectedCollider;
 
+        [SerializeField] private Collider[] _colliderArray; 
+
         private float _mass;
         private float _drag;
         private float _angularDrag;
 
-        private InteractionController _interactionController;
+        [SerializeField] private InteractionController _interactionController;
 
         
 
@@ -42,12 +44,12 @@ namespace MyCode.Player.Components
 
             _playerManager.InteractionData.ZoomInterval = (_playerManager.InteractionData.MaxPickupPointDistance - _playerManager.InteractionData.MinPickupPointDistance) / _playerManager.InteractionData.IntervalCount;
 
-            _playerManager.InteractionData.ColliderArray = new Collider[5];
+            _colliderArray = new Collider[_playerManager.InteractionData.ColliderAraySize];
         }
 
         private void OnEnable()
         {
-            _playerManager.InteractionData.Input_InteractValue.action.started += Interact;
+            _playerManager.InteractionData.Input_InteractValue.action.performed += Interact;
             _playerManager.InteractionData.Input_InteractValue.action.canceled += Drop;
             _playerManager.InteractionData.Input_ThrowValue.action.performed += Throw;
             _playerManager.InteractionData.Input_ZoomValue.action.performed += _ctx => Zoom(_ctx);
@@ -59,7 +61,7 @@ namespace MyCode.Player.Components
 
         private void OnDisable()
         {
-            _playerManager.InteractionData.Input_InteractValue.action.started -= Interact;
+            _playerManager.InteractionData.Input_InteractValue.action.performed -= Interact;
             _playerManager.InteractionData.Input_InteractValue.action.canceled -= Drop;
             _playerManager.InteractionData.Input_ThrowValue.action.performed -= Throw;
             _playerManager.InteractionData.Input_ZoomValue.action.performed -= _ctx => Zoom(_ctx);
@@ -106,11 +108,12 @@ namespace MyCode.Player.Components
 
             try
             {
-                if (_interactionController == null)
+                if (_selectedCollider == null)
                     return;
 
                 if (_interactionController.InteractionType == InteractionType.Interact)
                 {
+                    Debug.Log("Interacted");
                     _interactionController.Interact();
                     return;
                 }
@@ -119,9 +122,7 @@ namespace MyCode.Player.Components
                     PickUp();
                     return;
                 }
-                
-                
-                
+ 
             }
             catch(NullReferenceException)
             {
@@ -171,7 +172,7 @@ namespace MyCode.Player.Components
                 return;
             }
 
-            int results = Physics.OverlapSphereNonAlloc(_playerManager.InteractionData.HitPosition, _playerManager.InteractionData.SphereCheckRange, _playerManager.InteractionData.ColliderArray, _playerManager.InteractionData.InteractiblesMask);
+            int results = Physics.OverlapSphereNonAlloc(_playerManager.InteractionData.HitPosition, _playerManager.InteractionData.SphereCheckRange, _colliderArray, _playerManager.InteractionData.InteractiblesMask);
 
             Collider nearestInteractibleCollider = null;
 
@@ -193,9 +194,9 @@ namespace MyCode.Player.Components
             // Checks if all colliders are interactible and adding them to a separate list if they are
             for (int i = 0; i < results; i++)
             {
-                if (_playerManager.InteractionData.ColliderArray[i].TryGetComponent(out InteractionController tempIntController))
+                if (_colliderArray[i].TryGetComponent(out InteractionController tempIntController))
                 {
-                    if (tempIntController.Interactible) interactibleColliders.Add(_playerManager.InteractionData.ColliderArray[i]);
+                    if (tempIntController.Interactible) interactibleColliders.Add(_colliderArray[i]);
                 }
             }
 
@@ -240,6 +241,7 @@ namespace MyCode.Player.Components
             if (_selectedCollider != nearestInteractibleCollider)
             {
                 UpdateSelectedCollider(nearestInteractibleCollider);
+                Debug.Log("Updated selected collider");
             }
 
             if (!_popupManager.PopupData.IsVisible)

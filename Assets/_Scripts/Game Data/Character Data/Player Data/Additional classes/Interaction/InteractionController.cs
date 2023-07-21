@@ -1,6 +1,6 @@
 using UnityEngine;
 using MyBox;
-using MyCode.Managers;
+using System;
 
 namespace MyCode.Player.Interaction
 {
@@ -17,6 +17,7 @@ namespace MyCode.Player.Interaction
         [SerializeField, ConditionalField("_customPopupLocation")] public GameObject customPopupLocationObject;
         [ReadOnly] private Vector3 popupLocation;
 
+        public event Action OnInteracted;
 
 
         private void Awake()
@@ -31,7 +32,8 @@ namespace MyCode.Player.Interaction
 
         public void Interact()
         {
-            PlayerManager.Instance.InteractionData.InvokeOnInteract();
+            Debug.Log("Invoked interact action");
+            OnInteracted?.Invoke();
         }
     }
 

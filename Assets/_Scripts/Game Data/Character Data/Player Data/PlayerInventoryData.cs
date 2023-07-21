@@ -57,6 +57,7 @@ namespace MyCode.Data.Player
 
         public void InvokeOnAddItem(ItemObject _item, GameObject _model, Sprite _image)
         {
+            Debug.Log("add item action invoked");
             OnAddItem?.Invoke(_item, _model, _image);
         }
 

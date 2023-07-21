@@ -4,6 +4,7 @@ using UnityEngine.InputSystem;
 using UnityEngine;
 using System;
 using MyBox;
+using MyCode.Player.Interaction;
 
 
 namespace MyCode.Data.Player
@@ -25,8 +26,8 @@ namespace MyCode.Data.Player
         [SerializeField] private float _sphereCheckRange;
         [SerializeField, ReadOnly] private Vector3 _hitPosition;
         [SerializeField, ReadOnly] private Vector3 _perColliderHitPosition;
+        [SerializeField] private int _colliderAraySize;
         [SerializeField] private LayerMask _interactiblesMask;
-        private Collider[] colliderArray;
         private LayerMask _excludeCollisionMask;
         [Space]
 
@@ -71,7 +72,6 @@ namespace MyCode.Data.Player
 
         public event Action OnPickUpObject;
         public event Action OnDropObject;
-        public event Action OnInteract;
 
         // Player
         public LayerMask PlayerLayerMask { get => _playerLayerMask; set => _playerLayerMask = value; }
@@ -81,8 +81,8 @@ namespace MyCode.Data.Player
         public float SphereCheckRange { get => _sphereCheckRange; set => _sphereCheckRange = value; }
         public Vector3 HitPosition { get => _hitPosition; set => _hitPosition = value; }
         public Vector3 PerColliderHitPosition { get => _perColliderHitPosition; set => _perColliderHitPosition = value; }
+        public int ColliderAraySize { get => _colliderAraySize; }
         public LayerMask InteractiblesMask { get => _interactiblesMask; set => _interactiblesMask = value; }
-        public Collider[] ColliderArray { get => colliderArray; set => colliderArray = value; }
         public LayerMask ExcludeCollisionMask { get => _excludeCollisionMask; set => _excludeCollisionMask = value; }
 
 
@@ -105,7 +105,7 @@ namespace MyCode.Data.Player
         public InputActionReference Input_InteractValue { get => _input_InteractValue; set => _input_InteractValue = value; }
         public InputActionReference Input_ThrowValue { get => _input_ThrowValue; set => _input_ThrowValue = value; }
         public InputActionReference Input_ZoomValue { get => _input_ZoomValue; set => _input_ZoomValue = value; }
-        
+
 
         public void InvokePickUpObject()
         {
@@ -115,11 +115,6 @@ namespace MyCode.Data.Player
         public void InvokeDropObject()
         {
             OnDropObject?.Invoke();
-        }
-
-        public void InvokeOnInteract()
-        {
-            OnInteract?.Invoke();
         }
 
         private void OnEnable()
