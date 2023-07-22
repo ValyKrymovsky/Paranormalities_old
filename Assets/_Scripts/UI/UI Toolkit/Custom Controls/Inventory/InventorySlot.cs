@@ -26,7 +26,7 @@ public class InventorySlot : VisualElement
     public int SlotIndex { get; set; }
 
     public InventoryObject inventory;
-    public (ItemObject item, GameObject model) item = (null, null);
+    public InventoryItem item;
 
 
     public VisualElement slot;
@@ -52,15 +52,15 @@ public class InventorySlot : VisualElement
         RegisterCallback<PointerDownEvent>(OnPointerDown);
     }
 
-    public void SetItemParameters(InventorySlotItem slotItem)
+    public void SetItemParameters(InventorySlotItem _slotItem)
     {
-        item = (slotItem._itemObject, slotItem._model);
-        slotImage.style.backgroundImage = new StyleBackground(slotItem._sprite);
+        item = new InventoryItem(_slotItem.item.Item, _slotItem.item.Model, _slotItem.item.Image);
+        slotImage.style.backgroundImage = new StyleBackground(_slotItem.item.Image);
     }
 
     public void ResetParameters()
     {
-        item = (null, null);
+        item = new InventoryItem(null, null, null);
         slotImage.style.backgroundImage = null;
     }
 
@@ -76,7 +76,7 @@ public class InventorySlot : VisualElement
     
     private void OnPointerDown(PointerDownEvent _event)
     {
-        if (_event.button != 0 || item.Equals((null, null))) return;
+        if (_event.button != 0 || item.Equals(new InventoryItem(null, null, null))) return;
 
         InventoryHandler.StartDrag(_event.position, this);
         slotImage.style.backgroundImage = null;

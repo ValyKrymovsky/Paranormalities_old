@@ -1,12 +1,11 @@
 using UnityEngine;
 using MyBox;
 using MyCode.Managers;
-using MyCode.Player.Inventory;
 using MyCode.Player.Interaction;
 
-namespace MyCode.Interactibles
+namespace MyCode.Player.Inventory
 {
-    public class InventoryItem : MonoBehaviour
+    public class InventoryItemProperties : MonoBehaviour
     {
         [Space]
         [Separator("Inventory")]
@@ -14,15 +13,15 @@ namespace MyCode.Interactibles
 
         [Header("Inventory Item")]
         [Space]
-        [SerializeField] private ItemObject _item;
+        [SerializeField] private InventoryItem _item;
+        /*[SerializeField] private ItemObject _item;
         public GameObject model;
         public Sprite itemImage;
-
+        */
         private InteractionController _intController;
 
         private void Awake()
         {
-            model = this.gameObject;
             _intController = GetComponent<InteractionController>();
         }
 
@@ -38,10 +37,10 @@ namespace MyCode.Interactibles
 
         public void AddToInventory()
         {
-            if (PlayerManager.Instance.InventoryData.Inventory.AddItem(_item, model))
+            if (PlayerManager.Instance.InventoryData.Inventory.AddItem(_item))
             {
                 Debug.Log("Added " + _item);
-                PlayerManager.Instance.InventoryData.InvokeOnAddItem(_item, model, itemImage);
+                PlayerManager.Instance.InventoryData.InvokeOnAddItem(_item);
             }
         }
 

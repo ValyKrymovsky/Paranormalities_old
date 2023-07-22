@@ -5,14 +5,10 @@ using MyCode.Player.Inventory;
 [Serializable]
 public struct InventorySlotItem
 {
-    public ItemObject _itemObject;
-    public GameObject _model;
-    public Sprite _sprite;
+    public InventoryItem item;
 
-    public InventorySlotItem(ItemObject itemObject, GameObject model, Sprite sprite)
+    public InventorySlotItem(InventoryItem _item)
     {
-        _itemObject = itemObject;
-        _sprite = sprite;
-        _model = model;
+        this.item = _item;
     }
 }

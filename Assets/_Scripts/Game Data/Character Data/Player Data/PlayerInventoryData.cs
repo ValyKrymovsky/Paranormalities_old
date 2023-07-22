@@ -17,6 +17,8 @@ namespace MyCode.Data.Player
         [Header("Inventory Object")]
         [Space]
         [SerializeField] private InventoryObject inventory;
+        [SerializeField] private InventoryItem _primaryEquipment;
+        [SerializeField] private InventoryItem _secondaryEquipment;
 
         [Space]
         [Separator("Drop", true)]
@@ -39,26 +41,35 @@ namespace MyCode.Data.Player
         private bool inventoryOpen;
 
         public event Action<bool> OnInventoryStatusChange;
-        public event Action<ItemObject, GameObject, Sprite> OnAddItem;
+        public event Action<InventoryItem> OnAddItem;
 
 
+        // Inventory
         public InventoryObject Inventory { get => inventory; set => inventory = value; }
+        public InventoryItem PrimaryEquipment { get => _primaryEquipment; set => _primaryEquipment = value; }
+        public InventoryItem SecondaryEquipment { get => _secondaryEquipment; set => _secondaryEquipment = value; }
+
+        // Item drop
         public float DropRange { get => dropRange; set => dropRange = value; }
+
+        // Inputs
         public InputActionReference DropItemInput { get => input_DropItem; }
         public InputActionReference ToggleInventoryInput { get => input_ToggleInventory; }
         public GameObject InventoryUI { get => inventoryUI; set => inventoryUI = value; }
-        public bool InventoryOpen { get => inventoryOpen; set => inventoryOpen = value; }
 
+        // Inventory state
+        public bool InventoryOpen { get => inventoryOpen; set => inventoryOpen = value; }
+        
 
         public void InvokeOnInventoryStatusChange(bool _newState)
         {
             OnInventoryStatusChange?.Invoke(_newState);
         }
 
-        public void InvokeOnAddItem(ItemObject _item, GameObject _model, Sprite _image)
+        public void InvokeOnAddItem(InventoryItem _item)
         {
             Debug.Log("add item action invoked");
-            OnAddItem?.Invoke(_item, _model, _image);
+            OnAddItem?.Invoke(_item);
         }
 
         private void OnEnable()

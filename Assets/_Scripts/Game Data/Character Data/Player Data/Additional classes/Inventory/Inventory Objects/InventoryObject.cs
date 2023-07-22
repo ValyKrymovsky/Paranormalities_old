@@ -9,18 +9,21 @@ namespace MyCode.Player.Inventory
     [CreateAssetMenu(fileName = "NewInventory", menuName = "Inventory System/Inventory")]
     public class InventoryObject : ScriptableObject
     {
-        public List<(ItemObject item, GameObject model)> inventory = new List<(ItemObject item, GameObject model)>();
-        public (ItemObject item, GameObject model) selectedItem;
+        public List<InventoryItem> inventory = new List<InventoryItem>();
         public int size = 16;
         public bool inventoryFull;
 
-        public bool AddItem(ItemObject _item, GameObject _model)
+        public event Action<InventoryItem> OnAddEquipment;
+
+        public bool AddItem(InventoryItem _item)
         {
             if (IsFull() == false)
             {
                 if (!HasItem(_item))
                 {
-                    inventory.Add((_item, _model));
+                    inventory.Add(_item);
+
+                    if (_item.Item.itemType == ItemObject.ItemType.Equipment) OnAddEquipment?.Invoke(_item);
                     return true;
                 }
                 else
@@ -34,11 +37,11 @@ namespace MyCode.Player.Inventory
             }
         }
 
-        public void RemoveItem(ItemObject _item, GameObject _model)
+        public void RemoveItem(InventoryItem _item)
         {
             if (HasItem(_item))
             {
-                inventory.Remove((_item, _model));
+                inventory.Remove(_item);
             }
         }
 
@@ -52,41 +55,35 @@ namespace MyCode.Player.Inventory
             size = _size;
         }
 
-        public (ItemObject item, GameObject model) GetItemAsIndex(int _index)
+        public InventoryItem GetItemAsIndex(int _index)
         {
             try
             {
-                (ItemObject item, GameObject model) item = inventory.ElementAt(_index);
+                InventoryItem item = inventory.ElementAt(_index);
                 return item;
             }
             catch (ArgumentOutOfRangeException)
             {
-                return (null, null);
+                return new InventoryItem(null, null, null);
             }
         }
 
-        public int GetIndexOfItem((ItemObject item, GameObject model) _item)
+        public int GetIndexOfItem(InventoryItem _item)
         {
             return inventory.IndexOf(_item);
         }
 
-        /// <returns></returns>
-        public (ItemObject item, GameObject model) GetSelectedItem()
+        public bool HasItem(InventoryItem _item)
         {
-            return selectedItem;
-        }
-
-        public bool HasItem(ItemObject _item)
-        {
-            if (_item == null)
+            if (_item.Item == null)
             {
                 return false;
             }
             else
             {
-                foreach ((ItemObject item, GameObject model) item in inventory)
+                foreach (InventoryItem item in inventory)
                 {
-                    if (item.item.Equals(_item))
+                    if (item.Item.Equals(_item))
                     {
                         return true;
                     }
@@ -114,9 +111,9 @@ namespace MyCode.Player.Inventory
         public void PrintInventory()
         {
             int index = 0;
-            foreach ((ItemObject item, GameObject model) item in inventory)
+            foreach (InventoryItem item in inventory)
             {
-                Debug.Log(string.Format("Id: {0}, Item: {1}, model : {2}", index, item.item, item.model));
+                Debug.Log(string.Format("Id: {0}, Item: {1}, model : {2}", index, item.Item, item.Model));
                 index++;
             }
         }

@@ -80,9 +80,9 @@ public class InventoryHandler : MonoBehaviour {
         {
             inventorySlot.RegisterCallback<MouseOverEvent>((type) =>
             {
-                if (!inventorySlot.item.Equals((null, null)) && inventorySlot.slotImage.style.backgroundImage.value.sprite != null)
+                if (!inventorySlot.item.Equals(new InventoryItem(null, null, null)) && inventorySlot.slotImage.style.backgroundImage.value.sprite != null)
                 {
-                    SetDescription(inventorySlot.item.item.description, inventorySlot.slotImage.style.backgroundImage.value.sprite);
+                    SetDescription(inventorySlot.item.Item.description, inventorySlot.slotImage.style.backgroundImage.value.sprite);
                 }
             });
 
@@ -166,10 +166,10 @@ public class InventoryHandler : MonoBehaviour {
 
         
         InventorySlot closestSlot = overlapingSlots.OrderBy(x => Vector2.Distance(x.worldBound.position, ghostIcon.worldBound.position)).First();
-        InventorySlotItem originalSlotItem = new InventorySlotItem(originalSlot.item.item, originalSlot.item.model, ghostIcon.style.backgroundImage.value.sprite);
+        InventorySlotItem originalSlotItem = new InventorySlotItem(new InventoryItem(originalSlot.item.Item, originalSlot.item.Model, ghostIcon.style.backgroundImage.value.sprite));
 
         // Returns item to original slot if the item is not equipment and is trying to go to equipment slots
-        if (originalSlot.item.item.itemType != ItemObject.ItemType.Equipment &&
+        if (originalSlot.item.Item.itemType != ItemObject.ItemType.Equipment &&
         closestSlot.name != "InventorySlot")
         {
             ReturnToOriginalSlot(originalSlot);
@@ -181,7 +181,7 @@ public class InventoryHandler : MonoBehaviour {
         if (originalSlot.name != "InventorySlot" &&
             (closestSlot.name != "InventorySlot" && closestSlot.name != originalSlot.name))
         {
-            InventorySlotItem closestSlotItem = new InventorySlotItem(closestSlot.item.item, closestSlot.item.model, closestSlot.GetItemImage());
+            InventorySlotItem closestSlotItem = new InventorySlotItem(new InventoryItem(closestSlot.item.Item, closestSlot.item.Model, closestSlot.GetItemImage()));
 
             SwapEquipment(originalSlot, closestSlot, originalSlotItem, closestSlotItem);
             StopDragging();
@@ -189,7 +189,7 @@ public class InventoryHandler : MonoBehaviour {
         }
 
         // Returns item to original slot when the new slot is not empty
-        if (!closestSlot.item.Equals((null, null)))
+        if (!closestSlot.item.Equals(new InventoryItem(null, null, null)))
         {
             ReturnToOriginalSlot(originalSlot);
             StopDragging();
@@ -222,17 +222,17 @@ public class InventoryHandler : MonoBehaviour {
         _originalSlot.SetItemParameters(_newItem);
     }
 
-    private void AddItemToUI(ItemObject _item, GameObject _model, Sprite _itemImage)
+    private void AddItemToUI(InventoryItem _item)
     {
-        InventorySlot tmp = _item.itemType == ItemObject.ItemType.Equipment ? GetEmptyEquipmentSlot() : GetFirstEmptySlot();
-        tmp.SetItemParameters(new InventorySlotItem(_item, _model, _itemImage));
+        InventorySlot tmp = _item.Item.itemType == ItemObject.ItemType.Equipment ? GetEmptyEquipmentSlot() : GetFirstEmptySlot();
+        tmp.SetItemParameters(new InventorySlotItem(_item));
     }
 
     private InventorySlot GetFirstEmptySlot()
     {
         foreach (InventorySlot inventorySlot in inventorySlots)
         {
-            if (inventorySlot.item.Equals((null, null)))
+            if (inventorySlot.item.Equals(new InventoryItem(null, null, null)))
             {
                 return inventorySlot;
             }
@@ -243,11 +243,11 @@ public class InventoryHandler : MonoBehaviour {
 
     private InventorySlot GetEmptyEquipmentSlot()
     {
-        if (primarySlot.item.Equals((null, null)))
+        if (primarySlot.item.Equals(new InventoryItem(null, null, null)))
         {
             return primarySlot;
         }
-        else if (secondarySlot.item.Equals((null, null)))
+        else if (secondarySlot.item.Equals(new InventoryItem(null, null, null)))
         {
             return secondarySlot;
         }
