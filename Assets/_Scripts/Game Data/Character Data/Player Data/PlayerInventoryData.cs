@@ -68,7 +68,6 @@ namespace MyCode.Data.Player
 
         public void InvokeOnAddItem(InventoryItem _item)
         {
-            Debug.Log("add item action invoked");
             OnAddItem?.Invoke(_item);
         }
 

@@ -5,63 +5,13 @@ using Cysharp.Threading.Tasks;
 using System.Linq;
 using MyCode.Data.Player;
 using MyCode.Player.Sound;
-
+using MyCode.Data.Settings;
+using System;
 
 namespace MyCode.Managers
 {
-    public class PlayerSoundManager : MonoBehaviour
+    public class PlayerSoundManager : Manager<PlayerSoundManager>
     {
-        private static PlayerSoundManager _instance;
-        public static PlayerSoundManager Instance
-        {
-            get
-            {
-                if (_instance == null)
-                {
-                    _instance = FindObjectOfType<PlayerSoundManager>();
-                }
-
-
-                if (_instance == null)
-                {
-                    Addressables.LoadAssetAsync<GameObject>("PlayerSoundManager").Completed += (handle) =>
-                    {
-                        if (handle.Status == AsyncOperationStatus.Succeeded)
-                        {
-                            _instance = Instantiate(handle.Result).GetComponent<PlayerSoundManager>();
-                        }
-                    };
-                }
-
-
-                return _instance;
-            }
-        }
-
-        public static async UniTask<PlayerSoundManager> LoadManager()
-        {
-            if (_instance == null)
-            {
-                _instance = FindObjectOfType<PlayerSoundManager>();
-            }
-
-
-            if (_instance == null)
-            {
-                AsyncOperationHandle managerHandle = Addressables.LoadAssetAsync<GameObject>("PlayerSoundManager");
-
-                await managerHandle.Task;
-
-                if (managerHandle.Status.Equals(AsyncOperationStatus.Succeeded))
-                {
-                    _instance = Instantiate((GameObject)managerHandle.Result).GetComponent<PlayerSoundManager>();
-                    return _instance;
-                }
-                return null;
-            }
-
-            return _instance;
-        }
 
         private void Awake()
         {

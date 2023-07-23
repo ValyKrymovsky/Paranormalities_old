@@ -1,11 +1,10 @@
-using MyCode.Player;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 using MyCode.Data.Settings;
 using MyCode.Managers;
 using MyCode.Player.Interaction;
-
+using System.Threading.Tasks;
+using Cysharp.Threading.Tasks;
 
 public class ManagerLoader : MonoBehaviour
 {
@@ -13,42 +12,42 @@ public class ManagerLoader : MonoBehaviour
 
     public List<DifficultyProperties> DifficultyProperties { get => difficultyProperties; private set => difficultyProperties = value; }
 
-    public async static void LoadManagers(DifficultyProperties _difficultyProp)
+    public async static void LoadNewManagers(DifficultyProperties _difficultyProp)
     {
-        DeleteAllGarbage();
+        DeleteAllManagers();
 
-        // Game Settings setter
-        await SettingsManager.LoadManager(_difficultyProp);
-
-        // Player Manager
-        await PlayerManager.LoadManager(_difficultyProp);
-
-        // Sound Manager
-        await PlayerSoundManager.LoadManager();
-
-        if (PlayerSoundManager.Instance.SoundData.SoundObjects.Count > 0)
+        UniTask[] taskPool = new UniTask[]
         {
-            PlayerSoundManager.Instance.SoundData.SoundObjects.Clear();
-        }
-        PlayerSoundManager.Instance.LoadSoundObjects();
+            SettingsManager.LoadManager(SettingsManager._instance),
+            PopupManager.LoadManager(PopupManager._instance),
+            PlayerManager.LoadManager(PlayerManager._instance),
+            PlayerSoundManager.LoadManager(PlayerSoundManager._instance),
+        };
 
-        // Popup Manager
-        await PopupManager.LoadManager();
+        await UniTask.WhenAll(taskPool);
+
+        taskPool = new UniTask[]
+        {
+        SettingsManager.Instance.SetUpManager(_difficultyProp),
+        PlayerManager.Instance.SetUpManager(_difficultyProp),
+        PopupManager.Instance.SetUpManager(_difficultyProp),
+        };
+
+        await UniTask.WhenAll(taskPool);
 
         // Load Main Scene
         await SceneLoader.LoadScene(Scene.DebugScene);
 
-        
     }
 
-    private static void DeleteAllGarbage()
+    private static void DeleteAllManagers()
     {
         SettingsManager[] tempSM = GameObject.FindObjectsByType<SettingsManager>(FindObjectsSortMode.None);
         if (tempSM.Length != 0)
         {
             foreach (SettingsManager s in tempSM)
             {
-                Destroy(s);
+                Destroy(s.gameObject);
             }
         }
 
@@ -57,7 +56,7 @@ public class ManagerLoader : MonoBehaviour
         {
             foreach (PlayerManager p in tempPM)
             {
-                Destroy(p);
+                Destroy(p.gameObject);
             }
         }
 
@@ -66,7 +65,7 @@ public class ManagerLoader : MonoBehaviour
         {
             foreach (PlayerSoundManager ps in tempPSM)
             {
-                Destroy(ps);
+                Destroy(ps.gameObject);
             }
         }
 
@@ -75,7 +74,7 @@ public class ManagerLoader : MonoBehaviour
         {
             foreach (PopupManager pu in tempPUM)
             {
-                Destroy(pu);
+                Destroy(pu.gameObject);
             }
         }
 
@@ -84,7 +83,7 @@ public class ManagerLoader : MonoBehaviour
         {
             foreach (InteractionPopup ip in tempIP)
             {
-                Destroy(ip);
+                Destroy(ip.gameObject);
             }
         }
     }

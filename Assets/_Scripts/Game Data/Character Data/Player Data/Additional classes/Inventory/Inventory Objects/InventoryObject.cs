@@ -3,14 +3,15 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using System;
 using System.Linq;
+using MyBox;
 
 namespace MyCode.Player.Inventory
 {
     [CreateAssetMenu(fileName = "NewInventory", menuName = "Inventory System/Inventory")]
     public class InventoryObject : ScriptableObject
     {
-        public List<InventoryItem> inventory = new List<InventoryItem>();
-        public int size = 16;
+        public InventoryItem[] inventory;
+        public int size;
         public bool inventoryFull;
 
         public event Action<InventoryItem> OnAddEquipment;
@@ -21,7 +22,7 @@ namespace MyCode.Player.Inventory
             {
                 if (!HasItem(_item))
                 {
-                    inventory.Add(_item);
+                    inventory.Append(_item);
 
                     if (_item.Item.itemType == ItemObject.ItemType.Equipment) OnAddEquipment?.Invoke(_item);
                     return true;
@@ -41,21 +42,11 @@ namespace MyCode.Player.Inventory
         {
             if (HasItem(_item))
             {
-                inventory.Remove(_item);
+                // inventory[inventory.IndexOfItem(_item)] ;
             }
         }
 
-        public int GetSize()
-        {
-            return size;
-        }
-
-        public void SetSize(int _size)
-        {
-            size = _size;
-        }
-
-        public InventoryItem GetItemAsIndex(int _index)
+        public InventoryItem GetItemAtIndex(int _index)
         {
             try
             {
@@ -66,11 +57,6 @@ namespace MyCode.Player.Inventory
             {
                 return new InventoryItem(null, null, null);
             }
-        }
-
-        public int GetIndexOfItem(InventoryItem _item)
-        {
-            return inventory.IndexOf(_item);
         }
 
         public bool HasItem(InventoryItem _item)
@@ -95,12 +81,12 @@ namespace MyCode.Player.Inventory
 
         public void Clear()
         {
-            inventory.Clear();
+            Array.Clear(inventory, 0, inventory.Length);
         }
 
         public bool IsFull()
         {
-            if (inventory.Count >= size)
+            if (inventory.Count() >= size)
             {
                 return true;
             }

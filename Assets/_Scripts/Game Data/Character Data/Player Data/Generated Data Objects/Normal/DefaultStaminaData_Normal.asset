@@ -10,14 +10,14 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 0c7684d5f3a19274b8f21463697646fb, type: 3}
-  m_Name: PlayerStaminaData_Insane
+  m_Name: DefaultStaminaData_Normal
   m_EditorClassIdentifier: 
   _useStaminaSystem: 1
   _currentStamina: 0
-  _maxStamina: 65
-  _depletionValue: 0.3
-  _regenValue: 0.175
-  _limit: 40
+  _maxStamina: 90
+  _depletionValue: 0.25
+  _regenValue: 0.25
+  _limit: 25
   _reachedLimit: 0
   _canSprint: 0
-  _regenDelay: 3
+  _regenDelay: 2

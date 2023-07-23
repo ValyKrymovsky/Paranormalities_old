@@ -32,7 +32,6 @@ namespace MyCode.Player.Interaction
 
         public void Interact()
         {
-            Debug.Log("Invoked interact action");
             OnInteracted?.Invoke();
         }
     }

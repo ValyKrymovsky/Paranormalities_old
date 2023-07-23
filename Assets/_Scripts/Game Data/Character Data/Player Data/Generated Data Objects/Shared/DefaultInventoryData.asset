@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 92943daca2b894c4a86e4778acb21a0d, type: 3}
-  m_Name: PlayerInventoryData
+  m_Name: DefaultInventoryData
   m_EditorClassIdentifier: 
   inventory: {fileID: 11400000, guid: 0e997334215066a4bb6b75a208a603b4, type: 2}
   dropRange: 3

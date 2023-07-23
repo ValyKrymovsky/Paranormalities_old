@@ -4,7 +4,7 @@ using MyBox;
 namespace MyCode.Data.Settings
 {
     [CreateAssetMenu(fileName = "NewGameSettingsData", menuName = "DataObjects/GameSettings/Settings")]
-    public class GameSettingsData : ScriptableObject
+    public class GameDifficultyData : ScriptableObject
     {
         [Space]
         [Separator("Game Save properties")]

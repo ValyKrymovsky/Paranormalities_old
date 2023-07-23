@@ -113,7 +113,6 @@ namespace MyCode.Player.Components
 
                 if (_interactionController.InteractionType == InteractionType.Interact)
                 {
-                    Debug.Log("Interacted");
                     _interactionController.Interact();
                     return;
                 }
@@ -241,7 +240,6 @@ namespace MyCode.Player.Components
             if (_selectedCollider != nearestInteractibleCollider)
             {
                 UpdateSelectedCollider(nearestInteractibleCollider);
-                Debug.Log("Updated selected collider");
             }
 
             if (!_popupManager.PopupData.IsVisible)

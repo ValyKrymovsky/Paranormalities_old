@@ -15,55 +15,57 @@ public class MainMenuHandler : MonoBehaviour
 
     [Header("UI Document")]
     [Space]
-    [SerializeField] private UIDocument mainMenu;
+    [SerializeField] private UIDocument _mainMenu;
     [Space]
 
     [Header("Elements - MainMenu")]
     [Space]
-    private VisualElement root;
-    private VisualElement title;
-    private VisualElement menu;
-    private Button play;
-    private Button options;
-    private Button exit;
+    private VisualElement _root;
+    private VisualElement _title;
+    private VisualElement _menu;
+    private Button _play;
+    private Button _loadSave;
+    private Button _options;
+    private Button _exit;
     [Space]
 
     [Header("Elements - MainMenu")]
     [Space]
-    private VisualElement difficultySelection;
+    private VisualElement _difficultySelection;
 
-    private ManagerLoader loader;
+    private ManagerLoader _loader;
 
     private void Awake()
     {
-        loader = GetComponent<ManagerLoader>();
-        mainMenu = GetComponent<UIDocument>();
-        root = mainMenu.rootVisualElement;
+        _loader = GetComponent<ManagerLoader>();
+        _mainMenu = GetComponent<UIDocument>();
+        _root = _mainMenu.rootVisualElement;
 
         // Main menu containers
-        title = root.Q<VisualElement>("Title");
-        menu = root.Q<VisualElement>("Menu");
+        _title = _root.Q<VisualElement>("Title");
+        _menu = _root.Q<VisualElement>("Menu");
 
         // Main menu buttons
-        play = root.Q<Button>("Play");
-        options = root.Q<Button>("Options");
-        exit = root.Q<Button>("Exit");
+        _play = _root.Q<Button>("NewGame");
+        _loadSave = _root.Q<Button>("LoadSave");
+        _options = _root.Q<Button>("Options");
+        _exit = _root.Q<Button>("Exit");
 
-        play.clicked += OpenDifficultySelection;
+        _play.clicked += OpenDifficultySelection;
 
         // Difficulty selection buttons
-        difficultySelection = root.Q<VisualElement>("DifficultySelection");
+        _difficultySelection = _root.Q<VisualElement>("DifficultySelection");
         SpawnDifficultyButtons();
 
-        difficultySelection.style.display = DisplayStyle.None;
+        _difficultySelection.style.display = DisplayStyle.None;
     }
 
     private void OpenDifficultySelection()
     {
-        title.style.display = DisplayStyle.None;
-        menu.style.display = DisplayStyle.None;
+        _title.style.display = DisplayStyle.None;
+        _menu.style.display = DisplayStyle.None;
 
-        difficultySelection.style.display = DisplayStyle.Flex;
+        _difficultySelection.style.display = DisplayStyle.Flex;
     }
 
     private void SpawnDifficultyButtons()
@@ -75,14 +77,14 @@ public class MainMenuHandler : MonoBehaviour
             buttonElement.name = diff.ToString();
             buttonElement.AddToClassList("mainButton");
             buttonElement.Button.text = diff.ToString();
-            difficultySelection.Add(buttonElement);
+            _difficultySelection.Add(buttonElement);
 
-            buttonElement.Button.clicked += () => activateManagerLoader(loader.DifficultyProperties.Where(d => d.difficulty.Equals(buttonElement.Difficulty)).First());
+            buttonElement.Button.clicked += () => activateManagerLoader(_loader.DifficultyProperties.Where(d => d.difficulty.Equals(buttonElement.Difficulty)).First());
         }
     }
 
     private void activateManagerLoader(DifficultyProperties _properties)
     {
-        ManagerLoader.LoadManagers(_properties);
+        ManagerLoader.LoadNewManagers(_properties);
     }
 }

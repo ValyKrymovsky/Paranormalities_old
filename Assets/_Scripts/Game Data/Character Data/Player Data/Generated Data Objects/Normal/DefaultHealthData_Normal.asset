@@ -10,8 +10,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 6071b7856cd2d374a8b3f33a2dc096d2, type: 3}
-  m_Name: PlayerHealthData_Insane
+  m_Name: DefaultHealthData_Normal
   m_EditorClassIdentifier: 
-  _maxHealth: 65
+  _maxHealth: 90
   _currentHealth: 0
   _dead: 0

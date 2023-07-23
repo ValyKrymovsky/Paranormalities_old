@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 8b2730f6cf6095649a84f1799f271c94, type: 3}
-  m_Name: PlayerCameraData
+  m_Name: DefaultCameraData
   m_EditorClassIdentifier: 
   sensetivity: 10
   topRotationLimit: 75

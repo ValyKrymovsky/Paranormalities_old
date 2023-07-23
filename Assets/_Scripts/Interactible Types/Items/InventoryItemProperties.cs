@@ -39,7 +39,6 @@ namespace MyCode.Player.Inventory
         {
             if (PlayerManager.Instance.InventoryData.Inventory.AddItem(_item))
             {
-                Debug.Log("Added " + _item);
                 PlayerManager.Instance.InventoryData.InvokeOnAddItem(_item);
             }
         }

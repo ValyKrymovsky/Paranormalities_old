@@ -5,7 +5,8 @@
             <ui:Label tabindex="-1" text="Paranormalities" display-tooltip-when-elided="true" style="-unity-font: url(&apos;project://database/Assets/Fonts/RobotoMono-VariableFont_wght.ttf?fileID=12800000&amp;guid=fb7448ff68bb17c469ece491fc477749&amp;type=3#RobotoMono-VariableFont_wght&apos;); -unity-font-definition: url(&apos;project://database/Assets/Fonts/RobotoMono-VariableFont_wght%20SDF.asset?fileID=11400000&amp;guid=ef00b26ddf4e40f4495363dda20223bb&amp;type=2#RobotoMono-VariableFont_wght SDF&apos;); font-size: 64px;" />
         </ui:VisualElement>
         <ui:VisualElement name="Menu" style="flex-grow: 0; background-color: rgba(0, 0, 0, 0); align-items: center; align-self: center; justify-content: space-around; width: 1000px; height: 750px; margin-top: 50px; display: flex;">
-            <ui:Button text="Play" display-tooltip-when-elided="true" name="Play" class="mainButton" />
+            <ui:Button text="New Game" display-tooltip-when-elided="true" name="NewGame" class="mainButton" />
+            <ui:Button text="Load Save" display-tooltip-when-elided="true" name="LoadSave" class="mainButton" />
             <ui:Button text="Options" display-tooltip-when-elided="true" name="Options" class="mainButton" />
             <ui:Button text="Exit" display-tooltip-when-elided="true" name="Exit" class="mainButton" />
         </ui:VisualElement>

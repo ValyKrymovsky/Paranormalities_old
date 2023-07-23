@@ -7,59 +7,17 @@ using MyCode.Data.Settings;
 
 namespace MyCode.Managers
 {
-    public class SettingsManager : MonoBehaviour
+    public class SettingsManager : Manager<SettingsManager>
     {
-        private static SettingsManager _instance;
-        public static SettingsManager Instance
+
+        public override async UniTask SetUpManager(DifficultyProperties _properties)
         {
-            get
-            {
-                if (_instance == null)
-                {
-                    _instance = FindObjectOfType<SettingsManager>();
-                }
-
-
-                if (_instance == null)
-                {
-                    AsyncOperationHandle managerHandle = Addressables.LoadAssetAsync<GameObject>("SettingsManager");
-
-                    if (managerHandle.Status.Equals(AsyncOperationStatus.Succeeded))
-                    {
-                        _instance = Instantiate((GameObject)managerHandle.Result).GetComponent<SettingsManager>();
-                        return _instance;
-                    }
-                    return null;
-                }
-
-                return _instance;
-            }
+            await SetSettingsProperties(_properties);
         }
 
-        public static async UniTask<SettingsManager> LoadManager(DifficultyProperties _properties)
+        private async UniTask SetSettingsProperties(DifficultyProperties _properties)
         {
-            if (_instance == null)
-            {
-                _instance = FindObjectOfType<SettingsManager>();
-            }
-
-
-            if (_instance == null)
-            {
-                AsyncOperationHandle managerHandle = Addressables.LoadAssetAsync<GameObject>("SettingsManager");
-
-                await managerHandle.Task;
-
-                if (managerHandle.Status.Equals(AsyncOperationStatus.Succeeded))
-                {
-                    _instance = Instantiate((GameObject)managerHandle.Result).GetComponent<SettingsManager>();
-                    _instance.SettingsData.DifficultyProperties = _properties;
-                    return _instance;
-                }
-                return null;
-            }
-
-            return _instance;
+            _instance.SettingsData.DifficultyProperties = _properties;
         }
 
         private void Awake()
@@ -75,7 +33,7 @@ namespace MyCode.Managers
             }
         }
 
-        [field: SerializeField] public GameSettingsData SettingsData { get; set; }
+        [field: SerializeField] public GameDifficultyData SettingsData { get; set; }
 
     }
 }

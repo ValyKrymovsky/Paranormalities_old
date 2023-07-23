@@ -9,9 +9,15 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6071b7856cd2d374a8b3f33a2dc096d2, type: 3}
-  m_Name: PlayerHealthData_Easy
+  m_Script: {fileID: 11500000, guid: 0c7684d5f3a19274b8f21463697646fb, type: 3}
+  m_Name: DefaultStaminaData_Hard
   m_EditorClassIdentifier: 
-  _maxHealth: 100
-  _currentHealth: 0
-  _dead: 0
+  _useStaminaSystem: 1
+  _currentStamina: 0
+  _maxStamina: 80
+  _depletionValue: 0.275
+  _regenValue: 0.2
+  _limit: 30
+  _reachedLimit: 0
+  _canSprint: 0
+  _regenDelay: 2.5
