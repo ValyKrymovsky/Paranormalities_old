@@ -30,6 +30,8 @@ namespace MyCode.Player.Components
         private float valueX;
         private float valueY;
 
+        public InputActionReference inputAction;
+
         private Vector3 smootheningVelocity;
 
         private void Awake()
@@ -41,12 +43,8 @@ namespace MyCode.Player.Components
 
         private void Start()
         {
+            inputAction.action.performed += ctx => Look(ctx.ReadValue<Vector2>());
 
-            PlayerManager.Instance.CameraData.CamStabilizationObject = camStabilizationObject;
-            PlayerManager.Instance.CameraData.HeadJoint = headJoint;
-            PlayerManager.Instance.CameraData.EyeJoint = eyeJoint;
-
-            PlayerManager.Instance.CameraData.CameraValueInput.action.performed += ctx => Look(ctx.ReadValue<Vector2>());
         }
 
         private void OnEnable()
@@ -70,23 +68,23 @@ namespace MyCode.Player.Components
             mouseRotation -= valueY;
             mouseRotation = Mathf.Clamp(mouseRotation, PlayerManager.Instance.CameraData.BottomRotationLimit, PlayerManager.Instance.CameraData.TopRotationLimit);
             transform.localRotation = Quaternion.Euler(mouseRotation, 0, 0);
-            PlayerManager.Instance.CameraData.CamStabilizationObject.transform.localRotation = Quaternion.Euler(mouseRotation, 0, 0);
+            camStabilizationObject.transform.localRotation = Quaternion.Euler(mouseRotation, 0, 0);
             player.transform.Rotate(Vector3.up * valueX);
             if (PlayerManager.Instance.CameraData.UseStabilization)
             {
                 cam.transform.LookAt(FocusTarget());
-                transform.position = FollowHeadJoint(PlayerManager.Instance.CameraData.HeadJoint, PlayerManager.Instance.CameraData.EyeJoint, .2f, PlayerManager.Instance.CameraData.StabilizationAmount);
+                transform.position = FollowHeadJoint(headJoint, eyeJoint, .2f, PlayerManager.Instance.CameraData.StabilizationAmount);
             }
             else
             {
-                transform.position = FollowHeadJoint(PlayerManager.Instance.CameraData.HeadJoint, PlayerManager.Instance.CameraData.EyeJoint, .2f);
+                transform.position = FollowHeadJoint(headJoint, eyeJoint, .2f);
             }
         }
 
         private Vector3 FocusTarget()
         {
             PlayerManager.Instance.CameraData.FocusPointStabilizationDistance = PlayerManager.Instance.CameraData.FocusPointStabilizationDistance <= 0 ? 1f : PlayerManager.Instance.CameraData.FocusPointStabilizationDistance;
-            Vector3 pos = PlayerManager.Instance.CameraData.CamStabilizationObject.transform.position + PlayerManager.Instance.CameraData.CamStabilizationObject.transform.forward * PlayerManager.Instance.CameraData.FocusPointStabilizationDistance;
+            Vector3 pos = camStabilizationObject.transform.position + camStabilizationObject.transform.forward * PlayerManager.Instance.CameraData.FocusPointStabilizationDistance;
             return pos;
         }
 

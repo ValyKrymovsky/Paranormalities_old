@@ -5,17 +5,20 @@ using UnityEngine;
 namespace MyCode.Player.Inventory
 {
     [Serializable]
-    public struct InventoryItem
+    public class InventoryItem
     {
-        [field: SerializeField] public ItemObject Item { get; private set; }
-        [field: SerializeField] public GameObject Model { get; private set; }
-        [field: SerializeField] public Sprite Image { get; private set; }
+        private ItemObject _item;
+        [NonSerialized] private GameObject _model;
+        [NonSerialized] private Sprite _image;
+        public GameObject Model { get => _model; private set => _model = value; }
+        public Sprite Image { get => _image; private set => _image = value; }
+        public ItemObject Item { get => _item; private set => _item = value; }
 
         public InventoryItem(ItemObject item, GameObject model, Sprite image)
         {
-            this.Item = item;
-            this.Model = model;
-            this.Image = image;
+            this._item = item;
+            this._model = model;
+            this._image = image;
         }
     }
 }

@@ -12,26 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4cd94157f07b6d542a896d9d44424a96, type: 3}
   m_Name: PlayerInventory
   m_EditorClassIdentifier: 
-  inventory:
-  - <Item>k__BackingField: {fileID: 11400000, guid: 97ff08004d7716641b7a60dca335031e,
-      type: 2}
-    <Model>k__BackingField: {fileID: 0}
-    <Image>k__BackingField: {fileID: 21300000, guid: 372a6326e10e8794baa2bf22ec444c6e,
-      type: 3}
-  - <Item>k__BackingField: {fileID: 11400000, guid: 1169366dedf583143983aaa65d41973c,
-      type: 2}
-    <Model>k__BackingField: {fileID: 0}
-    <Image>k__BackingField: {fileID: 21300000, guid: 105081091eaace84d904f2ccd9c26ea6,
-      type: 3}
-  - <Item>k__BackingField: {fileID: 11400000, guid: 9e12b11b33e7c5c4e845c691e11423c6,
-      type: 2}
-    <Model>k__BackingField: {fileID: 0}
-    <Image>k__BackingField: {fileID: 21300060, guid: 5e7ed4c8ec8de2743b9bd93130790085,
-      type: 3}
-  - <Item>k__BackingField: {fileID: 11400000, guid: 141b010bfcd318f4f999b49343ede8da,
-      type: 2}
-    <Model>k__BackingField: {fileID: 0}
-    <Image>k__BackingField: {fileID: 21300004, guid: 5e7ed4c8ec8de2743b9bd93130790085,
-      type: 3}
-  size: 16
+  inventory: []
+  size: 15
   inventoryFull: 0

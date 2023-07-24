@@ -30,12 +30,13 @@ public class ManagerLoader : MonoBehaviour
         taskPool = new UniTask[]
         {
         SettingsManager.Instance.SetUpManager(_difficultyProp),
-        GameSaveManager.Instance.SetUpManager(_difficultyProp),
         PlayerManager.Instance.SetUpManager(_difficultyProp),
         PopupManager.Instance.SetUpManager(_difficultyProp),
         };
 
         await UniTask.WhenAll(taskPool);
+
+        await GameSaveManager.Instance.SetUpManager(_difficultyProp);
 
         // Load Main Scene
         await SceneLoader.LoadScene(Scene.DebugScene);

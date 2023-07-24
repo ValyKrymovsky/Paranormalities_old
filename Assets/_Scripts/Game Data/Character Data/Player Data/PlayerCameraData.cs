@@ -1,6 +1,7 @@
 using UnityEngine.InputSystem;
 using UnityEngine;
 using MyBox;
+using System;
 
 namespace MyCode.Data.Player
 {
@@ -30,17 +31,6 @@ namespace MyCode.Data.Player
         [SerializeField] private bool useStabilization;
         [SerializeField, Range(0, 100)] private float focusPointStabilizationDistance;
         [SerializeField, Range(0, 1)] private float stabilizationAmount;
-        private GameObject camStabilizationObject;
-        private GameObject headJoint;
-        private GameObject eyeJoint;
-
-        [Space]
-        [Separator("Inputs")]
-        [Space]
-
-        [Header("Input Action")]
-        [Space]
-        [SerializeField] private InputActionReference _input_CameraValue;
 
 
         public float Sensetivity { get => sensetivity; set => sensetivity = value; }
@@ -49,20 +39,7 @@ namespace MyCode.Data.Player
         public bool UseStabilization { get => useStabilization; set => useStabilization = value; }
         public float FocusPointStabilizationDistance { get => focusPointStabilizationDistance; set => focusPointStabilizationDistance = value; }
         public float StabilizationAmount { get => stabilizationAmount; set => stabilizationAmount = value; }
-        public GameObject CamStabilizationObject { get => camStabilizationObject; set => camStabilizationObject = value; }
-        public GameObject HeadJoint { get => headJoint; set => headJoint = value; }
-        public GameObject EyeJoint { get => eyeJoint; set => eyeJoint = value; }
-        public InputActionReference CameraValueInput { get => _input_CameraValue; }
 
-        private void OnEnable()
-        {
-            _input_CameraValue.action.Enable();
-        }
-
-        private void OnDisable()
-        {
-            _input_CameraValue.action.Disable();
-        }
     }
 
 }
