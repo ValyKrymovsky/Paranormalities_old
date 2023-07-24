@@ -41,6 +41,12 @@ MonoBehaviour:
     m_SerializedLabels:
     - SettingsManager
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: d9249a5c773a32147a5ef58101d7e1c0
+    m_Address: Assets/_Scripts/Managers/Game Saves/GameSaveManager.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - GameSaveManager
+    FlaggedDuringContentUpdateRestriction: 0
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: 05725dfde3bb9b84d9f5556a03d1a5bb, type: 2}
   m_SchemaSet:

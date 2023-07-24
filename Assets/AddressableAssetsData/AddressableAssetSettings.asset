@@ -88,12 +88,13 @@ MonoBehaviour:
     m_ProfileVersion: 1
   m_LabelTable:
     m_LabelNames:
-    - default
     - PlayerManager
     - PopupManager
-    - InteractionPopup
+    - GameSaveManager
     - PlayerSoundManager
     - SettingsManager
+    - InteractionPopup
+    - GameSave
   m_SchemaTemplates: []
   m_GroupTemplateObjects:
   - {fileID: 11400000, guid: 24339c45f0efb1347a8da48ff1b27f0f, type: 2}

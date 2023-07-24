@@ -19,6 +19,7 @@ public class ManagerLoader : MonoBehaviour
         UniTask[] taskPool = new UniTask[]
         {
             SettingsManager.LoadManager(SettingsManager._instance),
+            GameSaveManager.LoadManager(GameSaveManager._instance),
             PopupManager.LoadManager(PopupManager._instance),
             PlayerManager.LoadManager(PlayerManager._instance),
             PlayerSoundManager.LoadManager(PlayerSoundManager._instance),
@@ -29,6 +30,7 @@ public class ManagerLoader : MonoBehaviour
         taskPool = new UniTask[]
         {
         SettingsManager.Instance.SetUpManager(_difficultyProp),
+        GameSaveManager.Instance.SetUpManager(_difficultyProp),
         PlayerManager.Instance.SetUpManager(_difficultyProp),
         PopupManager.Instance.SetUpManager(_difficultyProp),
         };

@@ -155,7 +155,6 @@ namespace MyCode.Player.Components
                 if (_pm.StaminaData.UseStaminaSystem)
                 {
                     _pm.MovementData.InvokeStartedRunning();
-                    Debug.Log("Stamina system on");
                 }
                     
                 _sneakValue = value.ReadValue<float>();
@@ -207,7 +206,6 @@ namespace MyCode.Player.Components
                 if (_pm.StaminaData.UseStaminaSystem)
                 {
                     _pm.MovementData.InvokeStartedRunning();
-                    Debug.Log("Stamina system on");
                 }
 
                 _internalSpeedMultiplier = _pm.MovementData.SprintMultiplier;
@@ -337,7 +335,6 @@ namespace MyCode.Player.Components
                     if (_pm.StaminaData.UseStaminaSystem)
                     {
                         _pm.MovementData.InvokeStoppedRunning();
-                        Debug.Log("Stamina system on");
                     }
 
                     _internalSpeedMultiplier = _pm.MovementData.SneakMultiplier;
@@ -348,7 +345,6 @@ namespace MyCode.Player.Components
                     if (_pm.StaminaData.UseStaminaSystem)
                     {
                         _pm.MovementData.InvokeStoppedRunning();
-                        Debug.Log("Stamina system on");
                     }
 
                     _internalSpeedMultiplier = 1;
