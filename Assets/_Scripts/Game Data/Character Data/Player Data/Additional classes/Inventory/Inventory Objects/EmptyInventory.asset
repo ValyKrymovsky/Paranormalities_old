@@ -9,8 +9,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 92943daca2b894c4a86e4778acb21a0d, type: 3}
-  m_Name: DefaultInventoryData
+  m_Script: {fileID: 11500000, guid: 4cd94157f07b6d542a896d9d44424a96, type: 3}
+  m_Name: EmptyInventory
   m_EditorClassIdentifier: 
-  _inventory: {fileID: 11400000, guid: 0e997334215066a4bb6b75a208a603b4, type: 2}
-  dropRange: 3
+  inventory: []
+  size: 15
+  inventoryFull: 0

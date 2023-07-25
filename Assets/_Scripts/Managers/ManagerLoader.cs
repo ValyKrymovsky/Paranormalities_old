@@ -38,6 +38,8 @@ public class ManagerLoader : MonoBehaviour
 
         await GameSaveManager.Instance.SetUpManager(_difficultyProp);
 
+        PlayerManager.Instance.OverrideInventory(GameSaveManager.Instance.EmptyInventory);
+
         // Load Main Scene
         await SceneLoader.LoadScene(Scene.DebugScene);
 

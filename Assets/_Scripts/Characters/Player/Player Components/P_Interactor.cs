@@ -28,7 +28,11 @@ namespace MyCode.Player.Components
 
         [SerializeField] private InteractionController _interactionController;
 
-        
+        [SerializeField] private InputActionReference _input_InteractValue;
+        [SerializeField] private InputActionReference _input_ThrowValue;
+        [SerializeField] private InputActionReference _input_ZoomValue;
+
+
 
         List<Collider> interactibleColliders = new List<Collider>();
         void Awake()
@@ -49,10 +53,14 @@ namespace MyCode.Player.Components
 
         private void OnEnable()
         {
-            _playerManager.InteractionData.Input_InteractValue.action.performed += Interact;
-            _playerManager.InteractionData.Input_InteractValue.action.canceled += Drop;
-            _playerManager.InteractionData.Input_ThrowValue.action.performed += Throw;
-            _playerManager.InteractionData.Input_ZoomValue.action.performed += _ctx => Zoom(_ctx);
+            _input_InteractValue.action.Enable();
+            _input_ThrowValue.action.Enable();
+            _input_ZoomValue.action.Enable();
+
+            _input_InteractValue.action.performed += Interact;
+            _input_InteractValue.action.canceled += Drop;
+            _input_ThrowValue.action.performed += Throw;
+            _input_ZoomValue.action.performed += _ctx => Zoom(_ctx);
 
             _playerManager.InventoryData.OnInventoryStatusChange += value => canInteract = !value;
             _playerManager.InteractionData.OnPickUpObject += () => canCheckInteractibles = false;
@@ -61,10 +69,14 @@ namespace MyCode.Player.Components
 
         private void OnDisable()
         {
-            _playerManager.InteractionData.Input_InteractValue.action.performed -= Interact;
-            _playerManager.InteractionData.Input_InteractValue.action.canceled -= Drop;
-            _playerManager.InteractionData.Input_ThrowValue.action.performed -= Throw;
-            _playerManager.InteractionData.Input_ZoomValue.action.performed -= _ctx => Zoom(_ctx);
+            _input_InteractValue.action.Disable();
+            _input_ThrowValue.action.Disable();
+            _input_ZoomValue.action.Disable();
+
+            _input_InteractValue.action.performed -= Interact;
+            _input_InteractValue.action.canceled -= Drop;
+            _input_ThrowValue.action.performed -= Throw;
+            _input_ZoomValue.action.performed -= _ctx => Zoom(_ctx);
 
             _playerManager.InventoryData.OnInventoryStatusChange -= value => canInteract = !value;
             _playerManager.InteractionData.OnPickUpObject -= () => canCheckInteractibles = false;
@@ -106,30 +118,18 @@ namespace MyCode.Player.Components
         {
             if (!canInteract) return;
 
-            try
-            {
-                if (_selectedCollider == null)
-                    return;
+            if (_selectedCollider == null)
+                return;
 
-                if (_interactionController.InteractionType == InteractionType.Interact)
-                {
-                    _interactionController.Interact();
-                    return;
-                }
-                else if (_interactionController.InteractionType == InteractionType.PickUp)
-                {
-                    PickUp();
-                    return;
-                }
- 
-            }
-            catch(NullReferenceException)
+            if (_interactionController.InteractionType == InteractionType.Interact)
             {
-                Debug.Log("InteractionData script not found");
+                _interactionController.Interact();
+                return;
             }
-            catch(UnassignedReferenceException)
+            else if (_interactionController.InteractionType == InteractionType.PickUp)
             {
-                Debug.Log("Object cannot be interacted with");
+                PickUp();
+                return;
             }
         }
 

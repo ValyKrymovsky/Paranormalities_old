@@ -41,19 +41,17 @@ namespace MyCode.Player.Components
             cam = GetComponent<Camera>();
         }
 
-        private void Start()
-        {
-            inputAction.action.performed += ctx => Look(ctx.ReadValue<Vector2>());
-
-        }
-
         private void OnEnable()
         {
+            inputAction.action.Enable();
+            inputAction.action.performed += ctx => Look(ctx.ReadValue<Vector2>());
             PlayerManager.Instance.InventoryData.OnInventoryStatusChange += value => canLook = !value;
         }
 
         private void OnDisable()
         {
+            inputAction.action.Disable();
+            inputAction.action.performed -= ctx => Look(ctx.ReadValue<Vector2>());
             PlayerManager.Instance.InventoryData.OnInventoryStatusChange -= value => canLook = !value;
         }
 

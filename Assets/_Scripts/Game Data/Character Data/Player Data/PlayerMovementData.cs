@@ -49,17 +49,6 @@ namespace MyCode.Data.Player
         [Space]
         [SerializeField] private bool freezeOnInventory;
 
-        [Space]
-        [Separator("Inputs", true)]
-        [Space]
-
-        [Header("Input Action")]
-        [Space]
-        [SerializeField] private InputActionReference _input_WalkValue;
-        [SerializeField] private InputActionReference _input_SprintValue;
-        [SerializeField] private InputActionReference _input_SneakValue;
-
-        [SerializeField] private InputActionReference _input_TestSoundValue;
 
         // Events
         public event Action StartedRunning;
@@ -87,11 +76,6 @@ namespace MyCode.Data.Player
         // Difficulty Rules
         public bool FreezeOnInventory { get => freezeOnInventory; }
 
-        // Inputs
-        public InputActionReference WalkValueInput { get => _input_WalkValue; }
-        public InputActionReference SprintValueInput { get => _input_SprintValue; }
-        public InputActionReference SneakValueInput { get => _input_SneakValue; }
-        public InputActionReference TestSoundValueInput { get => _input_TestSoundValue; }
 
         public void InvokeStartedRunning()
         {
@@ -103,21 +87,6 @@ namespace MyCode.Data.Player
             StoppedRunning?.Invoke();
         }
 
-        private void OnEnable()
-        {
-            _input_WalkValue.action.Enable();
-            _input_SprintValue.action.Enable();
-            _input_SneakValue.action.Enable();
-            _input_TestSoundValue.action.Enable();
-        }
-
-        private void OnDisable()
-        {
-            _input_WalkValue.action.Disable();
-            _input_SprintValue.action.Disable();
-            _input_SneakValue.action.Disable();
-            _input_TestSoundValue.action.Disable();
-        }
     }
 
 }

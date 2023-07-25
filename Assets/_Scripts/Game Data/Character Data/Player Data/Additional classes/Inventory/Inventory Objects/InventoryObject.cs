@@ -12,30 +12,24 @@ namespace MyCode.Player.Inventory
     {
         public InventoryItem[] inventory;
         public int size;
-        public bool inventoryFull;
 
         public event Action<InventoryItem> OnAddEquipment;
 
         public bool AddItem(InventoryItem _item)
         {
-            if (IsFull() == false)
-            {
-                if (!HasItem(_item))
-                {
-                    inventory.Append(_item);
+            if (IsFull() == true) return false;
 
-                    if (_item.Item.itemType == ItemObject.ItemType.Equipment) OnAddEquipment?.Invoke(_item);
-                    return true;
-                }
-                else
-                {
-                    return false;
-                }
-            }
-            else
-            {
-                return false;
-            }
+            Debug.Log("Inventory not full");
+
+            if (HasItem(_item)) return false;
+
+            Debug.Log("Inventory doesn't have this item");
+
+            inventory = inventory.Append(_item).ToArray();
+
+            if (_item.Item.itemType == ItemObject.ItemType.Equipment) OnAddEquipment?.Invoke(_item);
+
+            return true;
         }
 
         public void RemoveItem(InventoryItem _item)
@@ -55,28 +49,17 @@ namespace MyCode.Player.Inventory
             }
             catch (ArgumentOutOfRangeException)
             {
-                return new InventoryItem(null, null, null);
+                return new InventoryItem(0, null, null, null);
             }
         }
 
         public bool HasItem(InventoryItem _item)
         {
-            if (_item.Item == null)
-            {
-                return false;
-            }
-            else
-            {
-                foreach (InventoryItem item in inventory)
-                {
-                    if (item.Item.Equals(_item))
-                    {
-                        return true;
-                    }
-                    continue;
-                }
-                return false;
-            }
+            if (_item.Item == null) return false;
+
+            if (inventory.Where(item => item.ItemId == _item.ItemId).Any()) return true;
+
+            return false;
         }
 
         public void Clear()
@@ -86,22 +69,9 @@ namespace MyCode.Player.Inventory
 
         public bool IsFull()
         {
-            if (inventory.Count() >= size)
-            {
-                return true;
-            }
+            if (inventory.Count() >= size) return true;
 
             return false;
-        }
-
-        public void PrintInventory()
-        {
-            int index = 0;
-            foreach (InventoryItem item in inventory)
-            {
-                Debug.Log(string.Format("Id: {0}, Item: {1}, model : {2}", index, item.Item, item.Model));
-                index++;
-            }
         }
     }
 

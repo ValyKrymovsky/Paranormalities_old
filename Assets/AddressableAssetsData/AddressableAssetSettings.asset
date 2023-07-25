@@ -48,6 +48,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: eb067a4d8c152524b82a6e632e3df67c, type: 2}
   - {fileID: 11400000, guid: 40fc964ddeedf1044885dfce976d604b, type: 2}
   - {fileID: 11400000, guid: 260907e6b917f39439ae5559602c5d61, type: 2}
+  - {fileID: 11400000, guid: dafac0befdcc7ef479c675601f06beea, type: 2}
   m_BuildSettings:
     m_CompileScriptsInVirtualMode: 0
     m_CleanupStreamingAssetsAfterBuilds: 1
@@ -94,7 +95,7 @@ MonoBehaviour:
     - PlayerSoundManager
     - SettingsManager
     - InteractionPopup
-    - GameSave
+    - EmptyInventory
   m_SchemaTemplates: []
   m_GroupTemplateObjects:
   - {fileID: 11400000, guid: 24339c45f0efb1347a8da48ff1b27f0f, type: 2}

@@ -1,0 +1,32 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bbb281ee3bf0b054c82ac2347e9e782c, type: 3}
+  m_Name: Inventory
+  m_EditorClassIdentifier: 
+  m_GroupName: Inventory
+  m_Data:
+    m_SerializedData: []
+  m_GUID: 3682fc5e52307bf479cec63ad8b22a7c
+  m_SerializeEntries:
+  - m_GUID: 637eb819336072d42b3591826ecf3a66
+    m_Address: Assets/_Scripts/Game Data/Character Data/Player Data/Additional classes/Inventory/Inventory
+      Objects/EmptyInventory.asset
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - EmptyInventory
+    FlaggedDuringContentUpdateRestriction: 0
+  m_ReadOnly: 0
+  m_Settings: {fileID: 11400000, guid: 05725dfde3bb9b84d9f5556a03d1a5bb, type: 2}
+  m_SchemaSet:
+    m_Schemas:
+    - {fileID: 11400000, guid: c9e7c8f3b36a94741b22f8f006061b7e, type: 2}
+    - {fileID: 11400000, guid: 5282f0500c0e8b84db870d01af7e8346, type: 2}

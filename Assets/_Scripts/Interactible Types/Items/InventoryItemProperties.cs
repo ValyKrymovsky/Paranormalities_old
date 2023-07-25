@@ -14,15 +14,18 @@ namespace MyCode.Player.Inventory
         [Header("Inventory Item")]
         [Space]
         [SerializeField] private InventoryItem _item;
-        /*[SerializeField] private ItemObject _item;
-        public GameObject model;
-        public Sprite itemImage;
-        */
         private InteractionController _intController;
 
         private void Awake()
         {
             _intController = GetComponent<InteractionController>();
+        }
+
+        private void Start()
+        {
+            _item.Model = gameObject;
+
+            _item.ItemId = _item.ItemId == 0 ? UnityEngine.Random.Range(1000, 10000) : _item.ItemId;
         }
 
         private void OnEnable()
@@ -39,7 +42,13 @@ namespace MyCode.Player.Inventory
         {
             if (PlayerManager.Instance.InventoryData.Inventory.AddItem(_item))
             {
+                Debug.Log("Added item to inventory");
                 PlayerManager.Instance.InventoryData.InvokeOnAddItem(_item);
+                Debug.Log("Invoked add to inventory action");
+
+                this.gameObject.SetActive(false);
+
+                
             }
         }
 

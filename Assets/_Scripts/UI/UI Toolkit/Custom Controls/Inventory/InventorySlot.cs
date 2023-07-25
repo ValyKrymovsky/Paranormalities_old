@@ -49,18 +49,20 @@ public class InventorySlot : VisualElement
         slotImage.AddToClassList("inventorySlotImage");
         slot.Add(slotImage);
 
+        item = InventoryItem.empty;
+
         RegisterCallback<PointerDownEvent>(OnPointerDown);
     }
 
-    public void SetItemParameters(InventorySlotItem _slotItem)
+    public void SetItemParameters(InventoryItem _slotItem)
     {
-        item = new InventoryItem(_slotItem.item.Item, _slotItem.item.Model, _slotItem.item.Image);
-        slotImage.style.backgroundImage = new StyleBackground(_slotItem.item.Image);
+        item = new InventoryItem(_slotItem.ItemId, _slotItem.Item, _slotItem.Model, _slotItem.Image);
+        slotImage.style.backgroundImage = new StyleBackground(_slotItem.Image);
     }
 
     public void ResetParameters()
     {
-        item = new InventoryItem(null, null, null);
+        item = InventoryItem.empty;
         slotImage.style.backgroundImage = null;
     }
 
@@ -76,7 +78,7 @@ public class InventorySlot : VisualElement
     
     private void OnPointerDown(PointerDownEvent _event)
     {
-        if (_event.button != 0 || item.Equals(new InventoryItem(null, null, null))) return;
+        if (_event.button != 0 || item.Equals(InventoryItem.empty)) return;
 
         InventoryHandler.StartDrag(_event.position, this);
         slotImage.style.backgroundImage = null;

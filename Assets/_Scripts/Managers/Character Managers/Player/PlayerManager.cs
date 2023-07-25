@@ -4,7 +4,7 @@ using UnityEngine.ResourceManagement.AsyncOperations;
 using Cysharp.Threading.Tasks;
 using MyCode.Data.Settings;
 using MyCode.Data.Player;
-
+using MyCode.Player.Inventory;
 
 namespace MyCode.Managers
 {
@@ -24,6 +24,12 @@ namespace MyCode.Managers
             _instance.HealthData = _properties.playerHealthData;
             _instance.InventoryData = _properties.playerInventoryData;
             _instance.InteractionData = _properties.playerInteractionData;
+        }
+
+        public void OverrideInventory(InventoryObject _newInventory)
+        {
+            _instance.InventoryData.Inventory.inventory = _newInventory.inventory;
+            _instance.InventoryData.Inventory.size = _newInventory.size;
         }
 
         private void Awake()

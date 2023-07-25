@@ -1,7 +1,5 @@
 using UnityEngine;
 using UnityEngine.UIElements;
-using UnityEngine.EventSystems;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using MyBox;
@@ -39,6 +37,9 @@ public class InventoryHandler : MonoBehaviour {
     private static VisualElement ghostIcon;
     private static bool isDragging;
     private static InventorySlot originalSlot;
+
+    [SerializeField] private InputActionReference _input_DropItem;
+    [SerializeField] private InputActionReference _input_ToggleInventory;
 
     //                  //
     // Input Controller //
@@ -80,7 +81,7 @@ public class InventoryHandler : MonoBehaviour {
         {
             inventorySlot.RegisterCallback<MouseOverEvent>((type) =>
             {
-                if (!inventorySlot.item.Equals(new InventoryItem(null, null, null)) && inventorySlot.slotImage.style.backgroundImage.value.sprite != null)
+                if (inventorySlot.item != InventoryItem.empty)
                 {
                     SetDescription(inventorySlot.item.Item.description, inventorySlot.slotImage.style.backgroundImage.value.sprite);
                 }
@@ -88,7 +89,8 @@ public class InventoryHandler : MonoBehaviour {
 
             inventorySlot.RegisterCallback<MouseOutEvent>((type) =>
             {
-                ResetDescription();
+                if (inventorySlot.item != InventoryItem.empty)
+                    ResetDescription();
             });
         }
 
@@ -108,13 +110,19 @@ public class InventoryHandler : MonoBehaviour {
 
     private void OnEnable()
     {
-        _pm.InventoryData.ToggleInventoryInput.action.performed += ToggleInventoryUI;
+        _input_ToggleInventory.action.Enable();
+        _input_DropItem.action.Enable();
+
+        _input_ToggleInventory.action.performed += ToggleInventoryUI;
         _pm.InventoryData.OnAddItem += AddItemToUI;
     }
 
     private void OnDisable()
     {
-        _pm.InventoryData.ToggleInventoryInput.action.performed -= ToggleInventoryUI;
+        _input_ToggleInventory.action.Disable();
+        _input_DropItem.action.Disable();
+
+        _input_ToggleInventory.action.performed -= ToggleInventoryUI;
         _pm.InventoryData.OnAddItem -= AddItemToUI;
     }
 
@@ -166,7 +174,7 @@ public class InventoryHandler : MonoBehaviour {
 
         
         InventorySlot closestSlot = overlapingSlots.OrderBy(x => Vector2.Distance(x.worldBound.position, ghostIcon.worldBound.position)).First();
-        InventorySlotItem originalSlotItem = new InventorySlotItem(new InventoryItem(originalSlot.item.Item, originalSlot.item.Model, ghostIcon.style.backgroundImage.value.sprite));
+        InventoryItem originalSlotItem = new InventoryItem(originalSlot.item.ItemId, originalSlot.item.Item, originalSlot.item.Model, ghostIcon.style.backgroundImage.value.sprite);
 
         // Returns item to original slot if the item is not equipment and is trying to go to equipment slots
         if (originalSlot.item.Item.itemType != ItemObject.ItemType.Equipment &&
@@ -181,7 +189,7 @@ public class InventoryHandler : MonoBehaviour {
         if (originalSlot.name != "InventorySlot" &&
             (closestSlot.name != "InventorySlot" && closestSlot.name != originalSlot.name))
         {
-            InventorySlotItem closestSlotItem = new InventorySlotItem(new InventoryItem(closestSlot.item.Item, closestSlot.item.Model, closestSlot.GetItemImage()));
+            InventoryItem closestSlotItem = new InventoryItem(closestSlot.item.ItemId, closestSlot.item.Item, closestSlot.item.Model, closestSlot.GetItemImage());
 
             SwapEquipment(originalSlot, closestSlot, originalSlotItem, closestSlotItem);
             StopDragging();
@@ -189,7 +197,7 @@ public class InventoryHandler : MonoBehaviour {
         }
 
         // Returns item to original slot when the new slot is not empty
-        if (!closestSlot.item.Equals(new InventoryItem(null, null, null)))
+        if (!closestSlot.item.Equals(InventoryItem.empty))
         {
             ReturnToOriginalSlot(originalSlot);
             StopDragging();
@@ -216,7 +224,7 @@ public class InventoryHandler : MonoBehaviour {
         _originalSlot.SetSlotImage(ghostIcon.style.backgroundImage.value.sprite);
     }
 
-    private void SwapEquipment(InventorySlot _originalSlot, InventorySlot _newSlot, InventorySlotItem _originalItem, InventorySlotItem _newItem)
+    private void SwapEquipment(InventorySlot _originalSlot, InventorySlot _newSlot, InventoryItem _originalItem, InventoryItem _newItem)
     {
         _newSlot.SetItemParameters(_originalItem);
         _originalSlot.SetItemParameters(_newItem);
@@ -225,14 +233,14 @@ public class InventoryHandler : MonoBehaviour {
     private void AddItemToUI(InventoryItem _item)
     {
         InventorySlot tmp = _item.Item.itemType == ItemObject.ItemType.Equipment ? GetEmptyEquipmentSlot() : GetFirstEmptySlot();
-        tmp.SetItemParameters(new InventorySlotItem(_item));
+        tmp.SetItemParameters(_item);
     }
 
     private InventorySlot GetFirstEmptySlot()
     {
         foreach (InventorySlot inventorySlot in inventorySlots)
         {
-            if (inventorySlot.item.Equals(new InventoryItem(null, null, null)))
+            if (inventorySlot.item.Equals(InventoryItem.empty))
             {
                 return inventorySlot;
             }
@@ -243,11 +251,11 @@ public class InventoryHandler : MonoBehaviour {
 
     private InventorySlot GetEmptyEquipmentSlot()
     {
-        if (primarySlot.item.Equals(new InventoryItem(null, null, null)))
+        if (primarySlot.item.Equals(InventoryItem.empty))
         {
             return primarySlot;
         }
-        else if (secondarySlot.item.Equals(new InventoryItem(null, null, null)))
+        else if (secondarySlot.item.Equals(InventoryItem.empty))
         {
             return secondarySlot;
         }

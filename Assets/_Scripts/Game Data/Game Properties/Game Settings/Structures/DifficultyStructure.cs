@@ -1,5 +1,6 @@
 using System;
 using MyCode.Data.Player;
+using Newtonsoft.Json;
 
 namespace MyCode.Data.Settings
 {
@@ -7,12 +8,12 @@ namespace MyCode.Data.Settings
     public struct DifficultyProperties
     {
         public Difficulty difficulty;
-        public PlayerCameraData playerCameraData;
-        public PlayerHealthData playerHealthData;
-        public PlayerInventoryData playerInventoryData;
-        public PlayerMovementData playerMovementData;
-        public PlayerStaminaData playerStaminaData;
-        public PlayerInteractionData playerInteractionData;
+        [JsonIgnore] public PlayerCameraData playerCameraData;
+        [JsonIgnore] public PlayerHealthData playerHealthData;
+        [JsonIgnore] public PlayerInventoryData playerInventoryData;
+        [JsonIgnore] public PlayerMovementData playerMovementData;
+        [JsonIgnore] public PlayerStaminaData playerStaminaData;
+        [JsonIgnore] public PlayerInteractionData playerInteractionData;
     }
 }
 

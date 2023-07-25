@@ -16,7 +16,7 @@ namespace MyCode.Data.Player
 
         [Header("Inventory Object")]
         [Space]
-        [SerializeField] private InventoryObject inventory;
+        [SerializeField] private InventoryObject _inventory;
         [SerializeField] private InventoryItem _primaryEquipment;
         [SerializeField] private InventoryItem _secondaryEquipment;
 
@@ -27,15 +27,7 @@ namespace MyCode.Data.Player
         [Header("Item Drop")]
         [Space]
         [SerializeField] private float dropRange;
-
-        [Space]
-        [Separator("Inputs", true)]
-        [Space]
-
-        [Header("Input Action")]
-        [Space]
-        [SerializeField] private InputActionReference input_DropItem;
-        [SerializeField] private InputActionReference input_ToggleInventory;
+        
 
         private GameObject inventoryUI;
         private bool inventoryOpen;
@@ -45,16 +37,13 @@ namespace MyCode.Data.Player
 
 
         // Inventory
-        public InventoryObject Inventory { get => inventory; set => inventory = value; }
+        public InventoryObject Inventory { get => _inventory; set => _inventory = value; }
         public InventoryItem PrimaryEquipment { get => _primaryEquipment; set => _primaryEquipment = value; }
         public InventoryItem SecondaryEquipment { get => _secondaryEquipment; set => _secondaryEquipment = value; }
 
         // Item drop
         public float DropRange { get => dropRange; set => dropRange = value; }
 
-        // Inputs
-        public InputActionReference DropItemInput { get => input_DropItem; }
-        public InputActionReference ToggleInventoryInput { get => input_ToggleInventory; }
         public GameObject InventoryUI { get => inventoryUI; set => inventoryUI = value; }
 
         // Inventory state
@@ -71,17 +60,6 @@ namespace MyCode.Data.Player
             OnAddItem?.Invoke(_item);
         }
 
-        private void OnEnable()
-        {
-            input_DropItem.action.Enable();
-            input_ToggleInventory.action.Enable();
-        }
-
-        private void OnDisable()
-        {
-            input_DropItem.action.Disable();
-            input_ToggleInventory.action.Disable();
-        }
     }
 
 }

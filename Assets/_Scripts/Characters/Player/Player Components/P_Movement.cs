@@ -32,7 +32,9 @@ namespace MyCode.Player.Components
         private float _currentGravityVelocity;
         private float _gravityForce;
 
-        
+        [SerializeField] private InputActionReference _input_WalkValue;
+        [SerializeField] private InputActionReference _input_SprintValue;
+        [SerializeField] private InputActionReference _input_SneakValue;
 
         private bool canMove = true;
 
@@ -44,24 +46,32 @@ namespace MyCode.Player.Components
 
         private void OnEnable()
         {
-            _pm.MovementData.WalkValueInput.action.performed += OnWalkAction;
-            _pm.MovementData.SprintValueInput.action.performed += OnSprintAction;
-            _pm.MovementData.SneakValueInput.action.performed += OnSneakAction;
-            _pm.MovementData.WalkValueInput.action.canceled += StopWalkAction;
-            _pm.MovementData.SprintValueInput.action.canceled += StopSprintAction;
-            _pm.MovementData.SneakValueInput.action.canceled += StopSneakAction;
+            _input_WalkValue.action.Enable();
+            _input_SprintValue.action.Enable();
+            _input_SneakValue.action.Enable();
+
+            _input_WalkValue.action.performed += OnWalkAction;
+            _input_SprintValue.action.performed += OnSprintAction;
+            _input_SneakValue.action.performed += OnSneakAction;
+            _input_WalkValue.action.canceled += StopWalkAction;
+            _input_SprintValue.action.canceled += StopSprintAction;
+            _input_SneakValue.action.canceled += StopSneakAction;
 
             _pm.InventoryData.OnInventoryStatusChange += value => canMove = !value;
         }
 
         private void OnDisable()
         {
-            _pm.MovementData.WalkValueInput.action.performed -= OnWalkAction;
-            _pm.MovementData.SprintValueInput.action.performed -= OnSprintAction;
-            _pm.MovementData.SneakValueInput.action.performed -= OnSneakAction;
-            _pm.MovementData.WalkValueInput.action.canceled -=StopWalkAction;
-            _pm.MovementData.SprintValueInput.action.canceled -= StopSprintAction;
-            _pm.MovementData.SneakValueInput.action.canceled -= StopSneakAction;
+            _input_WalkValue.action.Disable();
+            _input_SprintValue.action.Disable();
+            _input_SneakValue.action.Disable();
+
+            _input_WalkValue.action.performed -= OnWalkAction;
+            _input_SprintValue.action.performed -= OnSprintAction;
+            _input_SneakValue.action.performed -= OnSneakAction;
+            _input_WalkValue.action.canceled -= StopWalkAction;
+            _input_SprintValue.action.canceled -= StopSprintAction;
+            _input_SneakValue.action.canceled -= StopSneakAction;
 
             _pm.InventoryData.OnInventoryStatusChange -= value => canMove = !value;
         }

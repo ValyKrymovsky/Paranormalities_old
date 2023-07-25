@@ -58,17 +58,7 @@ namespace MyCode.Data.Player
         [Space]
         [SerializeField] private int _intervalCount;
         private float _zoomInterval;
-        
 
-        [Space]
-        [Separator("Inputs", true)]
-        [Space]
-
-        [Header("Input Action")]
-        [Space]
-        [SerializeField] private InputActionReference _input_InteractValue;
-        [SerializeField] private InputActionReference _input_ThrowValue;
-        [SerializeField] private InputActionReference _input_ZoomValue;
 
         public event Action OnPickUpObject;
         public event Action OnDropObject;
@@ -101,11 +91,6 @@ namespace MyCode.Data.Player
         public float ZoomInterval { get => _zoomInterval; set => _zoomInterval = value; }
         public int IntervalCount { get => _intervalCount; set => _intervalCount = value; }
 
-        // Inputs
-        public InputActionReference Input_InteractValue { get => _input_InteractValue; set => _input_InteractValue = value; }
-        public InputActionReference Input_ThrowValue { get => _input_ThrowValue; set => _input_ThrowValue = value; }
-        public InputActionReference Input_ZoomValue { get => _input_ZoomValue; set => _input_ZoomValue = value; }
-
 
         public void InvokePickUpObject()
         {
@@ -115,20 +100,6 @@ namespace MyCode.Data.Player
         public void InvokeDropObject()
         {
             OnDropObject?.Invoke();
-        }
-
-        private void OnEnable()
-        {
-            _input_InteractValue.action.Enable();
-            _input_ThrowValue.action.Enable();
-            _input_ZoomValue.action.Enable();
-        }
-
-        private void OnDisable()
-        {
-            _input_InteractValue.action.Disable();
-            _input_ThrowValue.action.Disable();
-            _input_ZoomValue.action.Disable();
         }
     }
 

@@ -343,6 +343,7 @@ MonoBehaviour:
   camStabilizationObject: {fileID: 7027933504672788302}
   headJoint: {fileID: 1459634648416421091}
   eyeJoint: {fileID: 7786446919598636374}
+  inputAction: {fileID: 0}
 --- !u!114 &1014441539299005514
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -355,7 +356,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e7ba716ab84857f4fb810f9defd005db, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  pickupPoint: {fileID: 3892116940582215893}
+  _pickupPoint: {fileID: 3892116940582215893}
+  _rb: {fileID: 0}
+  _selectedCollider: {fileID: 0}
+  _colliderArray: []
+  _interactionController: {fileID: 0}
+  _input_InteractValue: {fileID: 0}
+  _input_ThrowValue: {fileID: 0}
+  _input_ZoomValue: {fileID: 0}
 --- !u!114 &6977362163617390126
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -371,7 +379,7 @@ MonoBehaviour:
   currentBakedListener: {fileID: 0}
   applyReverb: 0
   reverbType: 0
-  useAllProbeBatches: 0
+  useAllProbeBatches: 1
   probeBatches:
   - {fileID: 0}
   mTotalDataSize: 0
@@ -405,7 +413,6 @@ GameObject:
   - component: {fileID: 6773999443569532765}
   - component: {fileID: 3291882108270107738}
   - component: {fileID: 1936277374354919567}
-  - component: {fileID: 4658391508624660943}
   - component: {fileID: 7788709692059068805}
   - component: {fileID: 8278223283906203810}
   - component: {fileID: 7960209895511488273}
@@ -434,7 +441,7 @@ Transform:
   - {fileID: 7744861861942806116}
   - {fileID: 4034706488148676899}
   m_Father: {fileID: 0}
-  m_RootOrder: 0
+  m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!136 &3291882108270107738
 CapsuleCollider:
@@ -485,81 +492,6 @@ CharacterController:
   m_SkinWidth: 0.0001
   m_MinMoveDistance: 0.001
   m_Center: {x: 0, y: 0.95, z: 0}
---- !u!114 &4658391508624660943
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8074515666999579833}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 62899f850307741f2a39c98a8b639597, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Actions: {fileID: -944628639613478452, guid: 5cbe42c2b73edc740bbce0ae6343c7c0,
-    type: 3}
-  m_NotificationBehavior: 2
-  m_UIInputModule: {fileID: 0}
-  m_DeviceLostEvent:
-    m_PersistentCalls:
-      m_Calls: []
-  m_DeviceRegainedEvent:
-    m_PersistentCalls:
-      m_Calls: []
-  m_ControlsChangedEvent:
-    m_PersistentCalls:
-      m_Calls: []
-  m_ActionEvents:
-  - m_PersistentCalls:
-      m_Calls: []
-    m_ActionId: 139c8294-1cfe-4071-aceb-1692b723461a
-    m_ActionName: Gameplay/Move[/Keyboard/w,/Keyboard/upArrow,/Keyboard/s,/Keyboard/downArrow,/Keyboard/a,/Keyboard/leftArrow,/Keyboard/d,/Keyboard/rightArrow]
-  - m_PersistentCalls:
-      m_Calls: []
-    m_ActionId: c0fc7b39-46e7-4c0f-8913-3308add7720a
-    m_ActionName: Gameplay/Look[/Mouse/delta]
-  - m_PersistentCalls:
-      m_Calls: []
-    m_ActionId: 5da064af-d488-4b60-a2e8-35a98326aa4b
-    m_ActionName: Gameplay/Sneak[/Keyboard/c,/Keyboard/ctrl]
-  - m_PersistentCalls:
-      m_Calls: []
-    m_ActionId: 2d018f5e-edb8-4e02-8e86-87cbe36d5fb0
-    m_ActionName: Gameplay/Sprint[/Keyboard/shift]
-  - m_PersistentCalls:
-      m_Calls: []
-    m_ActionId: 6641576a-5a57-41b2-9bce-c20c8cd4c757
-    m_ActionName: Gameplay/Interact[/Mouse/leftButton]
-  - m_PersistentCalls:
-      m_Calls: []
-    m_ActionId: 44fc24b0-8562-49d0-adaf-703fb011b5e6
-    m_ActionName: Gameplay/Pickup Zoom[/Mouse/scroll/y]
-  - m_PersistentCalls:
-      m_Calls: []
-    m_ActionId: 161ec41a-9050-4f1c-9384-0102ceaec7e5
-    m_ActionName: Gameplay/Throw[/Mouse/rightButton]
-  - m_PersistentCalls:
-      m_Calls: []
-    m_ActionId: 9a1c23c0-1bfb-40b3-9236-42a4b0f4c07c
-    m_ActionName: Gameplay/Drop item[/Keyboard/q]
-  - m_PersistentCalls:
-      m_Calls: []
-    m_ActionId: 23ce93c8-d12a-4f78-8cf9-e2fc287b6502
-    m_ActionName: Gameplay/Toggle Inventory[/Keyboard/tab,/Keyboard/x]
-  - m_PersistentCalls:
-      m_Calls: []
-    m_ActionId: 1bab3e9e-5c91-4fc9-b945-4652cdbdc24b
-    m_ActionName: Gameplay/Toggle Main Menu[/Keyboard/escape,/Keyboard/r]
-  - m_PersistentCalls:
-      m_Calls: []
-    m_ActionId: 9030733b-04b2-420b-ac46-387748918686
-    m_ActionName: Gameplay/Test Sound[/Keyboard/z]
-  m_NeverAutoSwitchControlSchemes: 0
-  m_DefaultControlScheme: 
-  m_DefaultActionMap: Gameplay
-  m_SplitScreenIndex: -1
-  m_Camera: {fileID: 0}
 --- !u!114 &7788709692059068805
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -572,6 +504,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d31eb7102ae6dba48aa4c0b4812c7fce, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _input_WalkValue: {fileID: -3387201930974474098, guid: 5cbe42c2b73edc740bbce0ae6343c7c0,
+    type: 3}
+  _input_SprintValue: {fileID: -6067321428764384243, guid: 5cbe42c2b73edc740bbce0ae6343c7c0,
+    type: 3}
+  _input_SneakValue: {fileID: -5786487062162588242, guid: 5cbe42c2b73edc740bbce0ae6343c7c0,
+    type: 3}
 --- !u!114 &8278223283906203810
 MonoBehaviour:
   m_ObjectHideFlags: 0
