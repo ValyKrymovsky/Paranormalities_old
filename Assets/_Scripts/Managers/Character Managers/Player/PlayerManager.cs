@@ -18,12 +18,12 @@ namespace MyCode.Managers
 
         private async UniTask SetPlayerProperties(DifficultyProperties _properties)
         {
-            _instance.CameraData = _properties.playerCameraData;
-            _instance.MovementData = _properties.playerMovementData;
-            _instance.StaminaData = _properties.playerStaminaData;
-            _instance.HealthData = _properties.playerHealthData;
-            _instance.InventoryData = _properties.playerInventoryData;
-            _instance.InteractionData = _properties.playerInteractionData;
+            await UniTask.RunOnThreadPool(() => _instance.CameraData = _properties.playerCameraData);
+            await UniTask.RunOnThreadPool(() => _instance.MovementData = _properties.playerMovementData);
+            await UniTask.RunOnThreadPool(() => _instance.StaminaData = _properties.playerStaminaData);
+            await UniTask.RunOnThreadPool(() => _instance.HealthData = _properties.playerHealthData);
+            await UniTask.RunOnThreadPool(() => _instance.InventoryData = _properties.playerInventoryData);
+            await UniTask.RunOnThreadPool(() => _instance.InteractionData = _properties.playerInteractionData);
         }
 
         public void OverrideInventory(InventoryObject _newInventory)

@@ -13,21 +13,13 @@ namespace MyCode.Player.Inventory
         public InventoryItem[] inventory;
         public int size;
 
-        public event Action<InventoryItem> OnAddEquipment;
-
         public bool AddItem(InventoryItem _item)
         {
             if (IsFull() == true) return false;
 
-            Debug.Log("Inventory not full");
-
             if (HasItem(_item)) return false;
 
-            Debug.Log("Inventory doesn't have this item");
-
             inventory = inventory.Append(_item).ToArray();
-
-            if (_item.Item.itemType == ItemObject.ItemType.Equipment) OnAddEquipment?.Invoke(_item);
 
             return true;
         }

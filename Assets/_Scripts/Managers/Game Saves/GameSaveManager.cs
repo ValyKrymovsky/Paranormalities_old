@@ -1,16 +1,12 @@
 using Cysharp.Threading.Tasks;
 using MyCode.Data.GameSave;
 using MyCode.Data.Settings;
-using UnityEditor;
 using UnityEngine;
 using System.IO;
 using System;
 using System.Linq;
 using System.Text.RegularExpressions;
 using Newtonsoft.Json;
-using Newtonsoft.Json.Converters;
-using MyCode.Managers;
-using System.Collections.Generic;
 using UnityEngine.ResourceManagement.AsyncOperations;
 using UnityEngine.AddressableAssets;
 using MyCode.Player.Inventory;
@@ -52,7 +48,7 @@ namespace MyCode.Managers
 
             EmptyInventory = loadHandle.Result as InventoryObject;
 
-            gs.SetPlayer((0, 0, 0),
+            gs.SetPlayer(new float[] {0, 0, 0},
                 PlayerManager.Instance.HealthData.OriginalMaxHealth,
                 PlayerManager.Instance.StaminaData.MaxStamina,
                 false,
@@ -62,18 +58,23 @@ namespace MyCode.Managers
 
             gs.SetDifficulty(_properties);
 
-            using (StreamWriter file = File.CreateText(String.Format(savePath + @"Save{0}_{1}.json", saveFiles.Count() + 1, _index)))
-            {
-                JsonSerializer serializer = new JsonSerializer();
-                serializer.Formatting = Formatting.Indented;
+            gs.SetSaveIndex(SaveIndex.entrance);
 
-                serializer.Serialize(file, gs);
-            }
+            string fullPath = String.Format(savePath + @"Save{0}_{1}.json", saveFiles.Count() + 1, _index);
 
+            JsonSerializer serializer = new JsonSerializer();
+            serializer.Formatting = Formatting.Indented;
+            serializer.ContractResolver = new IgnorePropertiesResolver(new[] { "name", "hideFlags" });
+
+            await SaveSerializer.SerializeObjectAsync(serializer, gs, fullPath);
+
+            saveFilePath = fullPath;
+            CurrentGameSave = gs;
         }
 
         internal InventoryObject EmptyInventory { get; private set; }
-        public GameSave CurrentGameSave { get; private set; }
+        [field: SerializeField] public GameSave CurrentGameSave { get; set; }
+        public string saveFilePath;
     }
 
 }

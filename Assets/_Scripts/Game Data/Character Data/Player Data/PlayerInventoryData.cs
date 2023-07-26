@@ -34,6 +34,7 @@ namespace MyCode.Data.Player
 
         public event Action<bool> OnInventoryStatusChange;
         public event Action<InventoryItem> OnAddItem;
+        public event Action<InventoryItem> OnAddEquipment;
 
 
         // Inventory
@@ -58,6 +59,31 @@ namespace MyCode.Data.Player
         public void InvokeOnAddItem(InventoryItem _item)
         {
             OnAddItem?.Invoke(_item);
+        }
+
+        public void InvokeOnAddEquipment(InventoryItem _item)
+        {
+            OnAddEquipment?.Invoke(_item);
+        }
+
+        private void OnEnable()
+        {
+            OnAddEquipment += SetEquipment;
+        }
+
+        private void SetEquipment(InventoryItem _item)
+        {
+            if (_primaryEquipment.Item != null)
+            {
+                _primaryEquipment = _item;
+                return;
+            }
+
+            if (_secondaryEquipment.Item != null)
+            {
+                _secondaryEquipment = _item;
+                return;
+            }
         }
 
     }

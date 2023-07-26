@@ -13,4 +13,12 @@ MonoBehaviour:
   m_Name: DefaultInventoryData
   m_EditorClassIdentifier: 
   _inventory: {fileID: 11400000, guid: 0e997334215066a4bb6b75a208a603b4, type: 2}
+  _primaryEquipment:
+    _itemId: 0
+    _item: {fileID: 0}
+    _image: {fileID: 0}
+  _secondaryEquipment:
+    _itemId: 0
+    _item: {fileID: 0}
+    _image: {fileID: 0}
   dropRange: 3

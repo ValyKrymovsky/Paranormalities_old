@@ -42,9 +42,9 @@ namespace MyCode.Player.Inventory
         {
             if (PlayerManager.Instance.InventoryData.Inventory.AddItem(_item))
             {
-                Debug.Log("Added item to inventory");
                 PlayerManager.Instance.InventoryData.InvokeOnAddItem(_item);
-                Debug.Log("Invoked add to inventory action");
+
+                if (_item.Item.itemType == ItemObject.ItemType.Equipment) PlayerManager.Instance.InventoryData.InvokeOnAddEquipment(_item);
 
                 this.gameObject.SetActive(false);
 

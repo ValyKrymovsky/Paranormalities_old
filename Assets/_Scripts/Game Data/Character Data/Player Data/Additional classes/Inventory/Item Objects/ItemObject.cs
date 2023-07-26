@@ -18,8 +18,6 @@ namespace MyCode.Player.Inventory
 
         [TextArea(15, 20)]
         public string description;
-
-
     }
 }
 

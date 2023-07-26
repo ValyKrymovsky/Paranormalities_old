@@ -25,13 +25,7 @@ public class SoundEvent : MonoBehaviour
     [SerializeField, Tooltip("Set only if Play Mode is set to limited")] private int _playCount;
     private int _playState;
 
-    [Space]
-    [Separator("Event system")]
-    [Space]
-
-    [Header("event system")]
-    [Space]
-    [SerializeField] private EventSystem _eventSystem;
+    private EventSystem _eventSystem;
 
     private void Awake()
     {

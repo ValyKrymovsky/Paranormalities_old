@@ -2,9 +2,11 @@ using UnityEngine;
 using MyBox;
 using MyCode.Player.Inventory;
 using MyCode.Data.Settings;
+using System;
 
 namespace MyCode.Data.GameSave
 {
+    [Serializable]
     public class GameSave
     {
             [Space]
@@ -32,13 +34,21 @@ namespace MyCode.Data.GameSave
         [SerializeField] private InventoryItem _primaryEquipment;
         [SerializeField] private InventoryItem _secondaryEquipment;
 
-        [Space]
+            [Space]
             [Separator("Game Settings")]
             [Space]
 
         [Header("Game difficulty")]
         [Space]
         [SerializeField] private DifficultyProperties _difficulty;
+
+        [Space]
+        [Separator("Save settings")]
+        [Space]
+
+        [Header("Save")]
+        [Space]
+        [SerializeField] private SaveIndex _saveIndex;
 
 
         //                   //
@@ -69,13 +79,19 @@ namespace MyCode.Data.GameSave
 
         // Difficulty
         public DifficultyProperties Difficulty { get => _difficulty; set => _difficulty = value; }
-        
 
-        public void SetPlayer((float x, float y, float z) _spawnLocation, float _health, float _stamina, bool _reachedStaminaLimit, InventoryObject _inventory, InventoryItem _pEquipment, InventoryItem _sEquipment)
+        //               //
+        // Save settings //
+        //               //
+
+
+        // Save indicator
+        public SaveIndex SaveIndex { get => _saveIndex; set => _saveIndex = value; }
+
+
+        public void SetPlayer(float[] _spawnLocation, float _health, float _stamina, bool _reachedStaminaLimit, InventoryObject _inventory, InventoryItem _pEquipment, InventoryItem _sEquipment)
         {
-            this._checkpointLocation[0] = _spawnLocation.x;
-            this._checkpointLocation[1] = _spawnLocation.y;
-            this._checkpointLocation[2] = _spawnLocation.z;
+            this._checkpointLocation = _spawnLocation;
             this._health = _health;
             this._currentStamina = _stamina;
             this._reachedLimit = _reachedStaminaLimit;
@@ -87,6 +103,11 @@ namespace MyCode.Data.GameSave
         public void SetDifficulty(DifficultyProperties _properties)
         {
             this._difficulty = _properties;
+        }
+
+        public void SetSaveIndex(SaveIndex _index)
+        {
+            _saveIndex = _index;
         }
     
     }

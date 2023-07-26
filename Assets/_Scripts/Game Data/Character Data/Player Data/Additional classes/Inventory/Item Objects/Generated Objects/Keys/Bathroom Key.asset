@@ -12,7 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eca436b52e5195848912cebe67fa8c6b, type: 3}
   m_Name: Bathroom Key
   m_EditorClassIdentifier: 
-  objectName: 
+  objectName: Bathroom key
   itemType: 0
   description: 
-  target: {fileID: 0}

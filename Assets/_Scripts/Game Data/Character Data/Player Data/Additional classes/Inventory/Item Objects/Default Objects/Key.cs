@@ -7,7 +7,7 @@ namespace MyCode.Player.Inventory
     [CreateAssetMenu(fileName = "NewKey", menuName = "Inventory System/Items/Key")]
     public class Key : ItemObject
     {
-        [SerializeField] private GameObject target;
+        private GameObject target;
         public void Awake()
         {
             itemType = ItemType.Key;

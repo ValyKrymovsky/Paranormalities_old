@@ -17,7 +17,7 @@ namespace MyCode.Managers
 
         private async UniTask SetSettingsProperties(DifficultyProperties _properties)
         {
-            _instance.SettingsData.DifficultyProperties = _properties;
+            await UniTask.RunOnThreadPool(() => _instance.SettingsData.DifficultyProperties = _properties);
         }
 
         private void Awake()

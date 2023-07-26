@@ -12,6 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7ac2cdae4c69dfd42b371bb55e98d7fc, type: 3}
   m_Name: Scanner
   m_EditorClassIdentifier: 
-  objectName: 
+  objectName: Scanner
   itemType: 3
   description: Lorem ipsum
