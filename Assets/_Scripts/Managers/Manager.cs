@@ -1,12 +1,8 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using Cysharp.Threading.Tasks;
-using MyCode.Data.Settings;
-using MyCode.Managers;
+using MyCode.GameData.GameSettings;
 using UnityEngine.AddressableAssets;
 using UnityEngine.ResourceManagement.AsyncOperations;
-using System;
 
 public class Manager<T> : MonoBehaviour where T : class
 {

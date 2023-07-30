@@ -1,10 +1,10 @@
-using System;
 using UnityEngine.InputSystem;
 using UnityEngine;
 using MyBox;
 using MyCode.Managers;
+using MyCode.GameData.Player.Movement;
 
-namespace MyCode.Player.Components
+namespace MyCode.PlayerComponents
 {
     public class P_Movement : MonoBehaviour
     {

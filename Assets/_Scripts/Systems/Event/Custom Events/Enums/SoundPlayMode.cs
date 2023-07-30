@@ -1,9 +1,10 @@
-using UnityEngine;
-
-public enum SoundPlayMode
+namespace MyCode.Systems
 {
-    once,
-    limited,
-    unlimited,
-    continuous
+    public enum SoundPlayMode
+    {
+        once,
+        limited,
+        unlimited,
+        continuous
+    }
 }

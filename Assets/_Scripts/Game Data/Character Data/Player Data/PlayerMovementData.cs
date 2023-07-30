@@ -1,10 +1,10 @@
 using System;
-using UnityEngine.InputSystem;
 using UnityEngine;
 using MyBox;
+using MyCode.GameData.Player.Movement;
 
 
-namespace MyCode.Data.Player
+namespace MyCode.GameData.PlayerData
 {
     [CreateAssetMenu(fileName = "NewMovementData", menuName = "DataObjects/Player/Movement")]
     public class PlayerMovementData : ScriptableObject

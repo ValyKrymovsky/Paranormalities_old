@@ -1,7 +1,7 @@
 using UnityEngine;
 using MyBox;
 
-namespace MyCode.Data.Settings
+namespace MyCode.GameData.GameSettings
 {
     [CreateAssetMenu(fileName = "NewGameSettingsData", menuName = "DataObjects/GameSettings/Settings")]
     public class GameDifficultyData : ScriptableObject

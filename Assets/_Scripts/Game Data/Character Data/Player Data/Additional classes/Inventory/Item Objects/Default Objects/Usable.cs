@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace MyCode.Player.Inventory
+namespace MyCode.GameData.Inventory
 {
     [CreateAssetMenu(fileName = "NewUsable", menuName = "Inventory System/Items/Usable")]
     public class Usable : ItemObject

@@ -3,7 +3,7 @@ using UnityEngine.InputSystem;
 using MyBox;
 using MyCode.Managers;
 
-namespace MyCode.Player.Components
+namespace MyCode.PlayerComponents
 {
     [System.Serializable]
     public class P_Camera : MonoBehaviour

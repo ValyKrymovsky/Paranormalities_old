@@ -3,9 +3,8 @@ using UnityEngine.AddressableAssets;
 using UnityEngine.ResourceManagement.AsyncOperations;
 using Cysharp.Threading.Tasks;
 using System;
-using MyCode.Data.Interaction;
-using MyCode.Player.Interaction;
-using MyCode.Data.Settings;
+using MyCode.GameData.Interaction;
+using MyCode.GameData.GameSettings;
 
 namespace MyCode.Managers
 {

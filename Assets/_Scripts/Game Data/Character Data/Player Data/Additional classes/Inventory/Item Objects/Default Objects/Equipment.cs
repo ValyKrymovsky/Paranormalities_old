@@ -1,8 +1,6 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-namespace MyCode.Player.Inventory
+namespace MyCode.GameData.Inventory
 {
     [CreateAssetMenu(fileName = "NewEquipment", menuName = "Inventory System/Items/Equipment")]
     public class Equipment : ItemObject

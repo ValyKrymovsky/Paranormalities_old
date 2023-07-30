@@ -1,5 +1,11 @@
-public interface IInteraction
+
+
+namespace MyCode.GameData.Interaction
 {
-    public void Interact();
+    public interface IInteraction
+    {
+        public void Interact();
+    }
 }
+
 

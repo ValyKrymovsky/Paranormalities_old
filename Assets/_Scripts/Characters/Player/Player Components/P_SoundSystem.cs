@@ -1,11 +1,8 @@
-using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
 using UnityEditor;
 using MyBox;
 
-namespace MyCode.Player.Components
+namespace MyCode.PlayerComponents
 {
     public class P_SoundSystem : MonoBehaviour
     {

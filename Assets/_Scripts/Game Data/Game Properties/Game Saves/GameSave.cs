@@ -1,10 +1,10 @@
 using UnityEngine;
 using MyBox;
-using MyCode.Player.Inventory;
-using MyCode.Data.Settings;
+using MyCode.GameData.Inventory;
+using MyCode.GameData.GameSettings;
 using System;
 
-namespace MyCode.Data.GameSave
+namespace MyCode.GameData.GameSave
 {
     [Serializable]
     public class GameSave

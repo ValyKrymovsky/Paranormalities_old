@@ -1,9 +1,11 @@
 using UnityEngine;
 
-
-public enum PlayerSoundType
+namespace MyCode.GameData.Player.Sound
 {
-    footstep,
-    noise,
-    voice
+    public enum PlayerSoundType
+    {
+        footstep,
+        noise,
+        voice
+    }
 }

@@ -1,8 +1,6 @@
 using UnityEngine;
-using UnityEngine.AddressableAssets;
-using UnityEngine.ResourceManagement.AsyncOperations;
 using Cysharp.Threading.Tasks;
-using MyCode.Data.Settings;
+using MyCode.GameData.GameSettings;
 
 
 namespace MyCode.Managers

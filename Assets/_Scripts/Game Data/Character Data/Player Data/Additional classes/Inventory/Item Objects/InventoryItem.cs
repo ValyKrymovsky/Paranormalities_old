@@ -1,9 +1,8 @@
-using MyCode.Player.Inventory;
 using Newtonsoft.Json;
 using System;
 using UnityEngine;
 
-namespace MyCode.Player.Inventory
+namespace MyCode.GameData.Inventory
 {
     [Serializable]
     public class InventoryItem

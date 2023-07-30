@@ -1,7 +1,7 @@
 using UnityEngine;
 using MyBox;
 
-namespace MyCode.Data.Player
+namespace MyCode.GameData.PlayerData
 {
     [CreateAssetMenu(fileName = "NewHealthData", menuName = "DataObjects/Player/Health")]
     public class PlayerHealthData : ScriptableObject

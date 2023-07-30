@@ -1,10 +1,8 @@
 using UnityEngine;
-using UnityEngine.AddressableAssets;
-using UnityEngine.ResourceManagement.AsyncOperations;
 using Cysharp.Threading.Tasks;
-using MyCode.Data.Settings;
-using MyCode.Data.Player;
-using MyCode.Player.Inventory;
+using MyCode.GameData.GameSettings;
+using MyCode.GameData.PlayerData;
+using MyCode.GameData.Inventory;
 
 namespace MyCode.Managers
 {

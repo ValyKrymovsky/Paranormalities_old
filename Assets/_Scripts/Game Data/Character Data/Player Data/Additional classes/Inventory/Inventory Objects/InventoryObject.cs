@@ -5,7 +5,7 @@ using System;
 using System.Linq;
 using MyBox;
 
-namespace MyCode.Player.Inventory
+namespace MyCode.GameData.Inventory
 {
     [CreateAssetMenu(fileName = "NewInventory", menuName = "Inventory System/Inventory")]
     public class InventoryObject : ScriptableObject

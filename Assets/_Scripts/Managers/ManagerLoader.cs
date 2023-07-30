@@ -1,10 +1,10 @@
 using System.Collections.Generic;
 using UnityEngine;
-using MyCode.Data.Settings;
+using MyCode.GameData.GameSettings;
 using MyCode.Managers;
-using MyCode.Player.Interaction;
-using System.Threading.Tasks;
+using MyCode.GameData.Interaction;
 using Cysharp.Threading.Tasks;
+using MyCode.GameData.Scene;
 
 public class ManagerLoader : MonoBehaviour
 {
@@ -41,7 +41,7 @@ public class ManagerLoader : MonoBehaviour
         PlayerManager.Instance.OverrideInventory(GameSaveManager.Instance.EmptyInventory);
 
         // Load Main Scene
-        await SceneLoader.LoadScene(Scene.DebugScene);
+        await SceneLoader.LoadScene(MyScene.DebugScene);
 
     }
 

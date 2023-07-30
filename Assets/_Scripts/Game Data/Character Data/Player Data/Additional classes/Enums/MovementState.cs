@@ -1,9 +1,12 @@
 
-
-public enum MovementState
+namespace MyCode.GameData.Player.Movement
 {
-    none,
-    walk,
-    sprint,
-    sneak
+    public enum MovementState
+    {
+        none,
+        walk,
+        sprint,
+        sneak
+    }
 }
+

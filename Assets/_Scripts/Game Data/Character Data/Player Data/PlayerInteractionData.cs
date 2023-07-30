@@ -1,13 +1,9 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine.InputSystem;
 using UnityEngine;
 using System;
 using MyBox;
-using MyCode.Player.Interaction;
 
 
-namespace MyCode.Data.Player
+namespace MyCode.GameData.PlayerData
 {
     [CreateAssetMenu(fileName = "NewInteractionData", menuName = "DataObjects/Player/Interaction")]
     public class PlayerInteractionData : ScriptableObject

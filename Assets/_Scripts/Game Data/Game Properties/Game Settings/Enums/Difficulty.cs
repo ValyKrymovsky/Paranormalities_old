@@ -1,6 +1,4 @@
-using UnityEngine;
-
-namespace MyCode.Data.Settings
+namespace MyCode.GameData.GameSettings
 {
     public enum Difficulty
     {

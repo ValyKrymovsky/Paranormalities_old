@@ -1,8 +1,8 @@
 using System;
-using MyCode.Data.Player;
+using MyCode.GameData.PlayerData;
 using Newtonsoft.Json;
 
-namespace MyCode.Data.Settings
+namespace MyCode.GameData.GameSettings
 {
     [Serializable]
     public struct DifficultyProperties

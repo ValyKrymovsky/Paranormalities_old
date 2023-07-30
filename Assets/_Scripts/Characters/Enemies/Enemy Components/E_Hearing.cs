@@ -7,6 +7,7 @@ using MyBox;
 
 public class E_Hearing : MonoBehaviour
 {
+    /*
     [Separator("Hearing", true)]
     public float hearingRadius = 10f;
     [SerializeField]
@@ -138,5 +139,5 @@ public class E_Hearing : MonoBehaviour
         }
         
     }
-
+    */
 }

@@ -1,8 +1,10 @@
 using UnityEngine;
 
-
-public enum FootSide
+namespace MyCode.GameData.Player.Sound
 {
-    left,
-    right
+    public enum FootSide
+    {
+        left,
+        right
+    }
 }

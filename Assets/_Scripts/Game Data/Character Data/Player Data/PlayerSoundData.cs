@@ -1,11 +1,10 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using MyBox;
-using MyCode.Player.Sound;
+using MyCode.GameData.Sound;
 
 
-namespace MyCode.Data.Player
+namespace MyCode.GameData.PlayerData
 {
     [CreateAssetMenu(fileName = "NewSoundData", menuName = "DataObjects/Systems/Sound/SoundData")]
     public class PlayerSoundData : ScriptableObject

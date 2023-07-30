@@ -1,9 +1,10 @@
 using UnityEngine;
 using MyBox;
 using MyCode.Managers;
-using MyCode.Player.Interaction;
+using MyCode.GameData.Inventory;
+using MyCode.GameData.Interaction;
 
-namespace MyCode.Player.Inventory
+namespace MyCode.Interactibles
 {
     public class InventoryItemProperties : MonoBehaviour
     {

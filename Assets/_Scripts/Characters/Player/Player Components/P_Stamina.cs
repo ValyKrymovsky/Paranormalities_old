@@ -3,7 +3,7 @@ using UnityEngine;
 using MyCode.Managers;
 using MyBox;
 
-namespace MyCode.Player.Components
+namespace MyCode.PlayerComponents
 {
     public class P_Stamina : MonoBehaviour
     {

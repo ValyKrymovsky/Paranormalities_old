@@ -1,8 +1,10 @@
-using UnityEngine;
-
-public enum SaveIndex
+namespace MyCode.GameData.GameSave
 {
-    entrance,
-    stairs,
-    dungeons
+    public enum SaveIndex
+    {
+        entrance,
+        stairs,
+        dungeons
+    }
 }
+

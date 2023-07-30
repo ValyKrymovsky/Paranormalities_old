@@ -1,9 +1,7 @@
-using MyCode.Player;
 using System.Collections;
-using System;
 using UnityEngine;
 
-namespace MyCode.Player.Sound
+namespace MyCode.GameData.Sound
 {
     public class SoundObject
     {

@@ -1,6 +1,6 @@
 using Cysharp.Threading.Tasks;
-using MyCode.Data.GameSave;
-using MyCode.Data.Settings;
+using MyCode.GameData.GameSave;
+using MyCode.GameData.GameSettings;
 using UnityEngine;
 using System.IO;
 using System;
@@ -9,7 +9,8 @@ using System.Text.RegularExpressions;
 using Newtonsoft.Json;
 using UnityEngine.ResourceManagement.AsyncOperations;
 using UnityEngine.AddressableAssets;
-using MyCode.Player.Inventory;
+using MyCode.GameData.Inventory;
+using MyCode.Helper.Serializer;
 
 namespace MyCode.Managers
 {

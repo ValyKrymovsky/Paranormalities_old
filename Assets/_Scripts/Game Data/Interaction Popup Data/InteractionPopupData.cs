@@ -1,7 +1,7 @@
 using UnityEngine;
 using System;
 
-namespace MyCode.Data.Interaction
+namespace MyCode.GameData.Interaction
 {
     [CreateAssetMenu(fileName = "NewInteractionPopupData", menuName = "DataObjects/InteractionPopup/Popup")]
     public class InteractionPopupData : ScriptableObject

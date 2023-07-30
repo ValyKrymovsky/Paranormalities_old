@@ -1,11 +1,10 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 using System.Collections.Generic;
-using System;
 using MyCode.Managers;
-using MyCode.Player.Interaction;
+using MyCode.GameData.Interaction;
 
-namespace MyCode.Player.Components
+namespace MyCode.PlayerComponents
 {
     public class P_Interactor : MonoBehaviour
     {

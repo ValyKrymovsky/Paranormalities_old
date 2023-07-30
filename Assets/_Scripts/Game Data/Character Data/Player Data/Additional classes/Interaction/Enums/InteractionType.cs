@@ -1,8 +1,10 @@
 using UnityEngine;
 
-
-public enum InteractionType
+namespace MyCode.GameData.Interaction
 {
-    Interact,
-    PickUp
+    public enum InteractionType
+    {
+        Interact,
+        PickUp
+    }
 }

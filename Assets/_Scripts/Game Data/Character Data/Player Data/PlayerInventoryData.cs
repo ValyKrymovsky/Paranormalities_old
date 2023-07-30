@@ -1,11 +1,10 @@
-using UnityEngine.InputSystem;
 using UnityEngine;
 using System;
 using MyBox;
-using MyCode.Player.Inventory;
+using MyCode.GameData.Inventory;
 
 
-namespace MyCode.Data.Player
+namespace MyCode.GameData.PlayerData
 {
     [CreateAssetMenu(fileName = "NewInventoryData", menuName = "DataObjects/Player/Inventory")]
     public class PlayerInventoryData : ScriptableObject

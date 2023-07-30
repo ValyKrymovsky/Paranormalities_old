@@ -3,7 +3,7 @@ using UnityEngine;
 using MyCode.Managers;
 using TMPro;
 
-namespace MyCode.Player.Interaction
+namespace MyCode.GameData.Interaction
 {
     [Serializable]
     public class InteractionPopup : MonoBehaviour
