@@ -45,14 +45,23 @@ namespace MyCode.Interactibles
             {
                 PlayerManager.Instance.InventoryData.InvokeOnAddItem(_item);
 
-                if (_item.Item.itemType == ItemObject.ItemType.Equipment) PlayerManager.Instance.InventoryData.InvokeOnAddEquipment(_item);
+                if (_item.Item.itemType == ItemObject.ItemType.Equipment)
+                {
+                    if (PlayerManager.Instance.InventoryData.PrimaryEquipment == InventoryItem.empty)
+                    {
+                        PlayerManager.Instance.InventoryData.PrimaryEquipment = _item;
+                    }
+                    else if (PlayerManager.Instance.InventoryData.SecondaryEquipment == InventoryItem.empty)
+                    {
+                        PlayerManager.Instance.InventoryData.SecondaryEquipment = _item;
+                    }
+                }
 
                 this.gameObject.SetActive(false);
 
-                
             }
         }
 
-    }
 
+    }
 }

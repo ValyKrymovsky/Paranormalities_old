@@ -231,6 +231,11 @@ namespace MyCode.UI.Inventory
         {
             _newSlot.SetItemParameters(_originalItem);
             _originalSlot.SetItemParameters(_newItem);
+
+            InventoryItem tempItem = PlayerManager.Instance.InventoryData.PrimaryEquipment;
+
+            PlayerManager.Instance.InventoryData.PrimaryEquipment = PlayerManager.Instance.InventoryData.SecondaryEquipment;
+            PlayerManager.Instance.InventoryData.SecondaryEquipment = tempItem;
         }
 
         private void AddItemToUI(InventoryItem _item)

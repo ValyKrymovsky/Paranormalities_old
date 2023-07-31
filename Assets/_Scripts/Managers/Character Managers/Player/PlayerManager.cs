@@ -3,6 +3,7 @@ using Cysharp.Threading.Tasks;
 using MyCode.GameData.GameSettings;
 using MyCode.GameData.PlayerData;
 using MyCode.GameData.Inventory;
+using System;
 
 namespace MyCode.Managers
 {
@@ -11,17 +12,24 @@ namespace MyCode.Managers
 
         public override async UniTask SetUpManager(DifficultyProperties _properties)
         {
-            await SetPlayerProperties(_properties);
+            await UniTask.RunOnThreadPool(() => SetPlayerProperties(_properties));
+            ResetInventoryEquipment();
         }
 
-        private async UniTask SetPlayerProperties(DifficultyProperties _properties)
+        private void SetPlayerProperties(DifficultyProperties _properties)
         {
-            await UniTask.RunOnThreadPool(() => _instance.CameraData = _properties.playerCameraData);
-            await UniTask.RunOnThreadPool(() => _instance.MovementData = _properties.playerMovementData);
-            await UniTask.RunOnThreadPool(() => _instance.StaminaData = _properties.playerStaminaData);
-            await UniTask.RunOnThreadPool(() => _instance.HealthData = _properties.playerHealthData);
-            await UniTask.RunOnThreadPool(() => _instance.InventoryData = _properties.playerInventoryData);
-            await UniTask.RunOnThreadPool(() => _instance.InteractionData = _properties.playerInteractionData);
+            _instance.CameraData = _properties.playerCameraData;
+            _instance.MovementData = _properties.playerMovementData;
+            _instance.StaminaData = _properties.playerStaminaData;
+            _instance.HealthData = _properties.playerHealthData;
+            _instance.InventoryData = _properties.playerInventoryData;
+            _instance.InteractionData = _properties.playerInteractionData;
+        }
+
+        private void ResetInventoryEquipment()
+        {
+            InventoryData.PrimaryEquipment = InventoryItem.empty;
+            InventoryData.SecondaryEquipment = InventoryItem.empty;
         }
 
         public void OverrideInventory(InventoryObject _newInventory)

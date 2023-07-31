@@ -37,7 +37,6 @@ namespace MyCode.Systems
         {
             if (_saveIndex.CompareTo(GameSaveManager.Instance.CurrentGameSave.SaveIndex) < 1) return;
 
-
             GameSave saveForUpdate = new GameSave();
 
             SaveSerializer.DeserializeGameSave(await SaveSerializer.ReadSaveFileAsync(GameSaveManager.Instance.saveFilePath), saveForUpdate);
