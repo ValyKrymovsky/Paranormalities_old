@@ -12,7 +12,7 @@
         </ui:VisualElement>
         <ui:VisualElement name="DifficultySelection" style="flex-grow: 1; background-color: rgba(0, 0, 0, 0); width: 1000px; height: auto; margin-top: 250px; margin-bottom: 250px; justify-content: center; align-items: center; align-self: center; display: none;" />
         <ui:VisualElement name="GameSaveSelection" style="flex-grow: 1; background-color: rgba(0, 0, 0, 0); width: 1000px; height: auto; display: none; margin-top: 100px; margin-bottom: 100px; justify-content: center; align-items: center; flex-direction: row; align-self: auto;">
-            <ui:ListView focusable="true" name="GameSaveView" show-border="true" horizontal-scrolling="true" show-foldout-header="false" fixed-item-height="160" reorder-mode="Animated" selection-type="None" style="width: 1000%; height: 100%;" />
+            <ui:ListView focusable="true" name="GameSaveView" show-border="false" horizontal-scrolling="false" show-foldout-header="false" fixed-item-height="144" reorder-mode="Animated" selection-type="None" show-bound-collection-size="false" style="width: 100%; height: 100%; flex-grow: 1; justify-content: center; background-color: rgba(0, 0, 0, 0); -unity-background-image-tint-color: rgb(255, 255, 255);" />
         </ui:VisualElement>
     </ui:VisualElement>
 </ui:UXML>

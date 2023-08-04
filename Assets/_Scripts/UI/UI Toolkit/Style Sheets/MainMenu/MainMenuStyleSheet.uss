@@ -63,3 +63,7 @@
     align-items: center;
     justify-content: center;
 }
+
+.unity-list-view__item {
+    background-color: rgba(0, 0, 0, 0);
+}
