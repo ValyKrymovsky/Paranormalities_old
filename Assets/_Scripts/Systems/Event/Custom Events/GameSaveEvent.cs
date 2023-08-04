@@ -53,9 +53,11 @@ namespace MyCode.Systems
                     PlayerManager.Instance.InventoryData.PrimaryEquipment,
                     PlayerManager.Instance.InventoryData.SecondaryEquipment);
 
-                newSave.SetDifficulty(GameSaveManager.Instance.CurrentGameSave.Difficulty);
+                newSave.Difficulty = GameSaveManager.Instance.CurrentGameSave.Difficulty;
 
-                newSave.SetSaveIndex(_saveIndex);
+                newSave.SavePath = GameSaveManager.Instance.CurrentGameSave.SavePath;
+
+                newSave.SaveIndex = _saveIndex;
 
                 newSave.SaveName = saveForUpdate.SaveName;
                 newSave.SaveTime = saveForUpdate.SaveTime;

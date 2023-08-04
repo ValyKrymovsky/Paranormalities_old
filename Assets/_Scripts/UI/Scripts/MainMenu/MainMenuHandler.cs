@@ -114,7 +114,7 @@ namespace MyCode.UI.MainMenu
                 buttonElement.Button.text = diff.ToString();
                 _difficultySelection.Add(buttonElement);
 
-                buttonElement.Button.clicked += () => activateManagerLoader(_loader.DifficultyProperties.Where(d => d.difficulty.Equals(buttonElement.Difficulty)).First());
+                buttonElement.Button.clicked += () => ManagerLoader.CreateManagers(_loader.DifficultyProperties.Where(d => d.difficulty.Equals(buttonElement.Difficulty)).First());
             }
         }
 
@@ -150,26 +150,30 @@ namespace MyCode.UI.MainMenu
         {
             _gameSaveSelection.makeItem = () =>
             {
-                TemplateContainer test = saveAsset.CloneTree();
+                GameSaveContainer save = new GameSaveContainer();
+                save.userData = new GameSave();
 
-                test.userData = new GameSave();
-
-                return test;
+                return save;
             };
 
             _gameSaveSelection.bindItem = (item, index) =>
             {
                 item.userData = gameSaves[index];
-                item.Q<Label>("SaveName").text = gameSaves[index].SaveName;
-                item.Q<Label>("SaveTime").text = gameSaves[index].SaveTime.ToString();
+
+                (item as GameSaveContainer).GameSavePath = _saveList[index].SavePath;
+                (item as GameSaveContainer).SaveName.text = _saveList[index].SaveName;
+                (item as GameSaveContainer).SaveDate.text = _saveList[index].SaveTime.ToString();
+
+                (item as GameSaveContainer).OnDeleteSave += (e) =>
+                {
+                    _saveList = _saveList.RemoveAt(index);
+                    _gameSaveSelection.itemsSource = _saveList;
+
+                    _gameSaveSelection.Rebuild();
+                };
             };
 
             _gameSaveSelection.itemsSource = _saveList;
-        }
-
-        private void activateManagerLoader(DifficultyProperties _properties)
-        {
-            ManagerLoader.LoadNewManagers(_properties);
         }
     }
 

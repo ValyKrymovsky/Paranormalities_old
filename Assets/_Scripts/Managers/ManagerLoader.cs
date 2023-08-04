@@ -12,7 +12,7 @@ public class ManagerLoader : MonoBehaviour
 
     public List<DifficultyProperties> DifficultyProperties { get => difficultyProperties; private set => difficultyProperties = value; }
 
-    public async static void LoadNewManagers(DifficultyProperties _difficultyProp)
+    public async static void CreateManagers(DifficultyProperties _difficultyProp)
     {
         DeleteAllManagers();
 
@@ -42,6 +42,11 @@ public class ManagerLoader : MonoBehaviour
 
         // Load Main Scene
         await SceneLoader.LoadScene(MyScene.DebugScene);
+
+    }
+
+    public async static void LoadManagers(DifficultyProperties _difficultyProp)
+    {
 
     }
 

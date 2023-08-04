@@ -1,9 +1,8 @@
 using MyCode.GameData.GameSave;
-using MyCode.GameData.GameSettings;
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
 using UnityEngine.UIElements;
+using MyCode.Managers;
+using System.IO;
+using System;
 
 public class GameSaveContainer : VisualElement
 {
@@ -23,63 +22,88 @@ public class GameSaveContainer : VisualElement
         }
     }
     public string GameSavePath { get; set; }
+    
 
+    private GameSave _gameSave;
 
-    public GameSave gameSave;
+    private VisualElement _container;
+    private VisualElement _saveImage;
 
-    public VisualElement container;
-    public VisualElement saveImage;
+    private VisualElement _propertiesContainer;
 
-    public VisualElement propertiesContainer;
+    private Label _saveName;
+    private Label _saveDate;
 
-    public Label saveName;
-    public Label saveDate;
+    private VisualElement _buttonContainer;
 
-    public VisualElement buttonContainer;
+    private Button _loadButton;
+    private Button _deleteButton;
 
-    public Button loadButton;
-    public Button deleteButton;
+    public event Action<GameSaveContainer> OnDeleteSave;
+
+    public GameSave GameSave { get => _gameSave; set => _gameSave = value; }
+    public VisualElement Container { get => _container; private set => _container = value; }
+    public VisualElement SaveImage { get => _saveImage; set => _saveImage = value; }
+    public VisualElement PropertiesContainer { get => _propertiesContainer; private set => _propertiesContainer = value; }
+    public Label SaveName { get => _saveName; set => _saveName = value; }
+    public Label SaveDate { get => _saveDate; set => _saveDate = value; }
+    public VisualElement ButtonContainer { get => _buttonContainer; private set => _buttonContainer = value; }
+    public Button LoadButton { get => _loadButton; private set => _loadButton = value; }
+    public Button DeleteButton { get => _deleteButton; private set => _deleteButton = value; }
 
     public GameSaveContainer()
     {
-        container = new VisualElement();
-        container.name = "GameSaveContainer";
-        container.AddToClassList("gameSaveContainer");
+        Container = new VisualElement();
+        Container.name = "GameSaveContainer";
+        Container.AddToClassList("saveContainer");
 
-        saveImage = new VisualElement();
-        saveImage.name = "GameSaveImage";
-        saveImage.AddToClassList("gameSaveImage");
+        SaveImage = new VisualElement();
+        SaveImage.name = "GameSaveImage";
+        SaveImage.AddToClassList("saveImage");
 
-        propertiesContainer = new VisualElement();
-        propertiesContainer.name = "PropertiesContainer";
-        propertiesContainer.AddToClassList("gameSavePropertiesContainer");
+        PropertiesContainer = new VisualElement();
+        PropertiesContainer.name = "PropertiesContainer";
+        PropertiesContainer.AddToClassList("saveProperties");
 
-        saveName = new Label();
-        saveDate = new Label();
+        SaveName = new Label();
+        SaveName.AddToClassList("propertyLabel");
+        SaveDate = new Label();
+        SaveDate.AddToClassList("propertyLabel");
 
-        buttonContainer = new VisualElement();
-        buttonContainer.name = "ButtonContainer";
-        buttonContainer.AddToClassList("gameSaveButtonContainer");
+        ButtonContainer = new VisualElement();
+        ButtonContainer.name = "ButtonContainer";
+        ButtonContainer.AddToClassList("buttonContainer");
 
-        loadButton = new Button();
-        loadButton.text = "Load";
-        deleteButton = new Button();
-        deleteButton.text = "Delete";
+        LoadButton = new Button();
+        LoadButton.text = "Load";
+        LoadButton.AddToClassList("button");
+        DeleteButton = new Button();
+        DeleteButton.text = "Delete";
+        DeleteButton.AddToClassList("button");
 
-        hierarchy.Add(container);
-        container.Add(saveImage);
+        hierarchy.Add(Container);
+        Container.Add(SaveImage);
 
-        container.Add(propertiesContainer);
+        Container.Add(PropertiesContainer);
 
-        propertiesContainer.Add(saveName);
-        propertiesContainer.Add(saveDate);
+        PropertiesContainer.Add(SaveName);
+        PropertiesContainer.Add(SaveDate);
 
-        propertiesContainer.Add(buttonContainer);
+        PropertiesContainer.Add(ButtonContainer);
 
-        buttonContainer.Add(loadButton);
-        buttonContainer.Add(deleteButton);
+        ButtonContainer.Add(LoadButton);
+        ButtonContainer.Add(DeleteButton);
 
-        Debug.Log("Called constructor");
+        _loadButton.clicked += () => ManagerLoader.LoadManagers(_gameSave.Difficulty);
+        _deleteButton.clicked += () =>
+        {
+            File.Delete(GameSavePath);
+
+            OnDeleteSave?.Invoke(this);
+        };
     }
+
+
+
 
 }

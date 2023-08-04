@@ -51,6 +51,7 @@ namespace MyCode.GameData.GameSave
         [SerializeField] private SaveIndex _saveIndex;
         [SerializeField] private string _saveName;
         [SerializeField, ReadOnly] private DateTime _saveTime;
+        private string _savePath;
 
 
         //                   //
@@ -90,6 +91,7 @@ namespace MyCode.GameData.GameSave
         public SaveIndex SaveIndex { get => _saveIndex; set => _saveIndex = value; }
         public string SaveName { get => _saveName; set => _saveName = value; }
         public DateTime SaveTime { get => _saveTime; set => _saveTime = value; }
+        public string SavePath { get => _savePath; set => _savePath = value; }
 
         public void SetPlayer(float[] _spawnLocation, float _health, float _stamina, bool _reachedStaminaLimit, InventoryObject _inventory, InventoryItem _pEquipment, InventoryItem _sEquipment)
         {
@@ -100,16 +102,6 @@ namespace MyCode.GameData.GameSave
             this._inventory = _inventory;
             this._primaryEquipment = _pEquipment;
             this._secondaryEquipment = _sEquipment;
-        }
-
-        public void SetDifficulty(DifficultyProperties _properties)
-        {
-            this._difficulty = _properties;
-        }
-
-        public void SetSaveIndex(SaveIndex _index)
-        {
-            _saveIndex = _index;
         }
     
     }

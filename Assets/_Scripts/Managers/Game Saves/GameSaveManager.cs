@@ -57,14 +57,16 @@ namespace MyCode.Managers
                 null,
                 null);
 
-            gs.SetDifficulty(_properties);
+            gs.Difficulty = _properties;
 
-            gs.SetSaveIndex(SaveIndex.entrance);
+            gs.SaveIndex = SaveIndex.entrance;
 
             gs.SaveName = String.Format("{0}_{1}", difficultyInteger[_index]._dif.ToString(), saveFiles.Count());
             gs.SaveTime = System.DateTime.Now;
 
             string fullPath = String.Format(savePath + @"Save{0}_{1}.json", saveFiles.Count() + 1, _index);
+
+            gs.SavePath = fullPath;
 
             JsonSerializer serializer = new JsonSerializer();
             serializer.Formatting = Formatting.Indented;
