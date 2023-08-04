@@ -49,6 +49,8 @@ namespace MyCode.GameData.GameSave
         [Header("Save")]
         [Space]
         [SerializeField] private SaveIndex _saveIndex;
+        [SerializeField] private string _saveName;
+        [SerializeField, ReadOnly] private DateTime _saveTime;
 
 
         //                   //
@@ -85,9 +87,9 @@ namespace MyCode.GameData.GameSave
         //               //
 
 
-        // Save indicator
         public SaveIndex SaveIndex { get => _saveIndex; set => _saveIndex = value; }
-
+        public string SaveName { get => _saveName; set => _saveName = value; }
+        public DateTime SaveTime { get => _saveTime; set => _saveTime = value; }
 
         public void SetPlayer(float[] _spawnLocation, float _health, float _stamina, bool _reachedStaminaLimit, InventoryObject _inventory, InventoryItem _pEquipment, InventoryItem _sEquipment)
         {

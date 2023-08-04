@@ -61,6 +61,9 @@ namespace MyCode.Managers
 
             gs.SetSaveIndex(SaveIndex.entrance);
 
+            gs.SaveName = String.Format("{0}_{1}", difficultyInteger[_index]._dif.ToString(), saveFiles.Count());
+            gs.SaveTime = System.DateTime.Now;
+
             string fullPath = String.Format(savePath + @"Save{0}_{1}.json", saveFiles.Count() + 1, _index);
 
             JsonSerializer serializer = new JsonSerializer();

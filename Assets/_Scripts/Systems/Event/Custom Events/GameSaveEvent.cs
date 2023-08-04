@@ -39,7 +39,7 @@ namespace MyCode.Systems
 
             GameSave saveForUpdate = new GameSave();
 
-            SaveSerializer.DeserializeGameSave(await SaveSerializer.ReadSaveFileAsync(GameSaveManager.Instance.saveFilePath), saveForUpdate);
+            saveForUpdate = SaveSerializer.DeserializeGameSave(await SaveSerializer.ReadSaveFileAsync(GameSaveManager.Instance.saveFilePath), saveForUpdate);
 
             GameSave newSave = new GameSave();
 
@@ -56,6 +56,9 @@ namespace MyCode.Systems
                 newSave.SetDifficulty(GameSaveManager.Instance.CurrentGameSave.Difficulty);
 
                 newSave.SetSaveIndex(_saveIndex);
+
+                newSave.SaveName = saveForUpdate.SaveName;
+                newSave.SaveTime = saveForUpdate.SaveTime;
 
                 UniTask.SwitchToThreadPool();
             });

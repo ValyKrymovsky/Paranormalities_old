@@ -11,9 +11,14 @@ namespace MyCode.Helper.Serializer
 {
     public class SaveSerializer : MonoBehaviour
     {
-        public static async UniTask<string> ReadSaveFileAsync(string path)
+        public static async UniTask<string> ReadSaveFileAsync(string _path)
         {
-            return await File.ReadAllTextAsync(path);
+            return await File.ReadAllTextAsync(_path);
+        }
+
+        public static string ReadSaveFile(string _path)
+        {
+            return File.ReadAllText(_path);
         }
 
         public static async UniTask<GameSave> DeserializeGameSaveAsync(string _jsonString, GameSave _gameSave)
@@ -21,7 +26,6 @@ namespace MyCode.Helper.Serializer
             await UniTask.RunOnThreadPool(() =>
             {
                 _gameSave = JsonConvert.DeserializeObject<GameSave>(_jsonString);
-
             });
 
             return _gameSave;
@@ -31,6 +35,23 @@ namespace MyCode.Helper.Serializer
         {
             _gameSave = JsonConvert.DeserializeObject<GameSave>(_jsonString);
             return _gameSave;
+        }
+
+        public static GameSave DeserializeGameSave(string _jsonString)
+        {
+            GameSave _gameSave = JsonConvert.DeserializeObject<GameSave>(_jsonString);
+            return _gameSave;
+        }
+
+        public static GameSave[] DeserializeAllGameSaves(string[] _gameSaves)
+        {
+            GameSave[] saveArray = new GameSave[_gameSaves.Length];
+            for (int i = 0; i < _gameSaves.Length; i++)
+            {
+                saveArray[i] = DeserializeGameSave(_gameSaves[i]);
+            }
+
+            return saveArray;
         }
 
         public static async UniTask<GameSave> UpdateSaveAsync(GameSave _newGameSave, GameSave _gameSaveToUpdate)

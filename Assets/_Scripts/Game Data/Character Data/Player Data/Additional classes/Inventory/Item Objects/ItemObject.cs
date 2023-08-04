@@ -3,7 +3,7 @@ using UnityEngine;
 namespace MyCode.GameData.Inventory
 {
     [CreateAssetMenu(fileName = "NewDefault", menuName = "Inventory System")]
-    public abstract class ItemObject : ScriptableObject
+    public class ItemObject : ScriptableObject
     {
         public enum ItemType
         {
