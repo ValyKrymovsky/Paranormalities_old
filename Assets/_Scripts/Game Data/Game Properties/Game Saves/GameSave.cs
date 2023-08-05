@@ -40,7 +40,7 @@ namespace MyCode.GameData.GameSave
 
         [Header("Game difficulty")]
         [Space]
-        [SerializeField] private DifficultyProperties _difficulty;
+        [SerializeField] private DifficultyProperties _difficultyProperties;
 
         [Space]
         [Separator("Save settings")]
@@ -81,7 +81,7 @@ namespace MyCode.GameData.GameSave
 
 
         // Difficulty
-        public DifficultyProperties Difficulty { get => _difficulty; set => _difficulty = value; }
+        public DifficultyProperties Difficulty { get => _difficultyProperties; set => _difficultyProperties = value; }
 
         //               //
         // Save settings //

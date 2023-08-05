@@ -57,7 +57,13 @@ namespace MyCode.PlayerComponents
             _input_SprintValue.action.canceled += StopSprintAction;
             _input_SneakValue.action.canceled += StopSneakAction;
 
-            _pm.InventoryData.OnInventoryStatusChange += value => canMove = !value;
+            PlayerManager.OnPlayerTeleport += (position) =>
+            {
+                transform.position = position;
+                Debug.Log(string.Format("Teleported player to: {0}", position));
+            };
+
+                _pm.InventoryData.OnInventoryStatusChange += value => canMove = !value;
         }
 
         private void OnDisable()

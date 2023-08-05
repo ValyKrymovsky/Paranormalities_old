@@ -17,9 +17,15 @@ namespace MyCode.Managers
     public class GameSaveManager : Manager<GameSaveManager>
     {
 
-        public override async UniTask SetUpManager(DifficultyProperties _properties)
+        public override async UniTask SetUpNewManager(DifficultyProperties _properties)
         {
             await CreateNewSave(_properties);
+        }
+
+        public override async UniTask SetUpExistingManager(GameSave _save)
+        {
+            CurrentGameSave = _save;
+            saveFilePath = _save.SavePath;
         }
 
         private async UniTask CreateNewSave(DifficultyProperties _properties)

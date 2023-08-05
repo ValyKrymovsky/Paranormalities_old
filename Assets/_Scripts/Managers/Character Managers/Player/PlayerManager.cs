@@ -4,18 +4,31 @@ using MyCode.GameData.GameSettings;
 using MyCode.GameData.PlayerData;
 using MyCode.GameData.Inventory;
 using System;
+using MyCode.GameData.GameSave;
+using System.Linq;
 
 namespace MyCode.Managers
 {
     public class PlayerManager : Manager<PlayerManager>
     {
 
-        public override async UniTask SetUpManager(DifficultyProperties _properties)
+        public override async UniTask SetUpNewManager(DifficultyProperties _properties)
         {
             await UniTask.RunOnThreadPool(() =>
             {
                 SetPlayerProperties(_properties);
                 ResetInventoryEquipment();
+            });
+        }
+
+        public override async UniTask SetUpExistingManager(GameSave _save)
+        {
+            Loader = GameObject.FindAnyObjectByType<ManagerLoader>();
+            await UniTask.RunOnThreadPool(() =>
+            {
+                SetPlayerProperties(Loader.DifficultyProperties.Where(diff => diff.difficulty == _save.Difficulty.difficulty).First());
+                OverridePlayerProperties(_save);
+                SetInventoryEquipment(_save.PrimaryEquipment, _save.SecondaryEquipment);
             });
         }
 
@@ -29,16 +42,37 @@ namespace MyCode.Managers
             _instance.InteractionData = _properties.playerInteractionData;
         }
 
+        private void OverridePlayerProperties(GameSave _save)
+        {
+            _instance.HealthData.CurrentHealth = _save.Health;
+
+            _instance.StaminaData.CurrentStamina = _save.CurrentStamina;
+            _instance.StaminaData.ReachedLimit = _save.ReachedLimit;
+
+            _instance.InventoryData.Inventory = _save.Inventory;
+        }
+
         private void ResetInventoryEquipment()
         {
             InventoryData.PrimaryEquipment = InventoryItem.empty;
             InventoryData.SecondaryEquipment = InventoryItem.empty;
         }
 
+        private void SetInventoryEquipment(InventoryItem _primary, InventoryItem _secondary)
+        {
+            InventoryData.PrimaryEquipment = _primary;
+            InventoryData.SecondaryEquipment = _secondary;
+        }
+
         public void OverrideInventory(InventoryObject _newInventory)
         {
             _instance.InventoryData.Inventory.inventory = _newInventory.inventory;
             _instance.InventoryData.Inventory.size = _newInventory.size;
+        }
+
+        public static void InvokeOnPlayerTeleport(GameSave _save)
+        {
+            OnPlayerTeleport?.Invoke(new Vector3(_save.CheckpointLocation[0], _save.CheckpointLocation[1], _save.CheckpointLocation[2]));
         }
 
         private void Awake()
@@ -60,6 +94,10 @@ namespace MyCode.Managers
         [field: SerializeField] public PlayerStaminaData StaminaData { get; set; }
         [field: SerializeField] public PlayerInventoryData InventoryData { get; set; }
         [field: SerializeField] public PlayerInteractionData InteractionData { get; set; }
+
+        public static event Action<Vector3> OnPlayerTeleport;
+
+        public ManagerLoader Loader { get; set; }
     }
 }
 

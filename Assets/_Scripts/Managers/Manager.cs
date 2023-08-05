@@ -3,6 +3,7 @@ using Cysharp.Threading.Tasks;
 using MyCode.GameData.GameSettings;
 using UnityEngine.AddressableAssets;
 using UnityEngine.ResourceManagement.AsyncOperations;
+using MyCode.GameData.GameSave;
 
 public class Manager<T> : MonoBehaviour where T : class
 {
@@ -31,7 +32,9 @@ public class Manager<T> : MonoBehaviour where T : class
         }
     }
 
-    public virtual async UniTask SetUpManager(DifficultyProperties _properties) { await UniTask.WaitForSeconds(1); }
+    public virtual async UniTask SetUpNewManager(DifficultyProperties _properties) { await UniTask.WaitForSeconds(1); }
+
+    public virtual async UniTask SetUpExistingManager(GameSave _save) { await UniTask.WaitForSeconds(1); }
 
     public static async UniTask<T> LoadManager(T _instance)
     {

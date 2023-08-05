@@ -167,18 +167,11 @@ namespace MyCode.UI.MainMenu
 
         private void LoadGameSaves(GameSave[] _saveList)
         {
-            _gameSaveList.makeItem = () =>
-            {
-                GameSaveContainer save = new GameSaveContainer();
-                save.userData = new GameSave();
-
-                return save;
-            };
+            _gameSaveList.makeItem = () => new GameSaveContainer();
 
             _gameSaveList.bindItem = (item, index) =>
             {
-                item.userData = gameSaves[index];
-
+                (item as GameSaveContainer).GameSave = _saveList[index];
                 (item as GameSaveContainer).GameSavePath = _saveList[index].SavePath;
                 (item as GameSaveContainer).SaveName.text = _saveList[index].SaveName;
                 (item as GameSaveContainer).SaveDate.text = _saveList[index].SaveTime.ToString();

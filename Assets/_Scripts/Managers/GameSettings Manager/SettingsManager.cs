@@ -7,12 +7,6 @@ namespace MyCode.Managers
 {
     public class SettingsManager : Manager<SettingsManager>
     {
-
-        public override async UniTask SetUpManager(DifficultyProperties _properties)
-        {
-            // await UniTask.RunOnThreadPool(() => _instance.SettingsData.DifficultyProperties = _properties);
-        }
-
         private void Awake()
         {
             if (_instance != null && _instance != this)

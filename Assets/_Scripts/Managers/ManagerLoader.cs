@@ -6,6 +6,8 @@ using MyCode.GameData.Interaction;
 using Cysharp.Threading.Tasks;
 using MyCode.GameData.Scene;
 using MyCode.GameData.GameSave;
+using System.Linq;
+using System.Runtime.CompilerServices;
 
 public class ManagerLoader : MonoBehaviour
 {
@@ -30,19 +32,18 @@ public class ManagerLoader : MonoBehaviour
 
         taskPool = new UniTask[]
         {
-        PlayerManager.Instance.SetUpManager(_difficultyProp),
-        PopupManager.Instance.SetUpManager(_difficultyProp),
+            PlayerManager.Instance.SetUpNewManager(_difficultyProp),
+            PopupManager.Instance.SetUpNewManager(_difficultyProp),
         };
 
         await UniTask.WhenAll(taskPool);
 
-        await GameSaveManager.Instance.SetUpManager(_difficultyProp);
+        await GameSaveManager.Instance.SetUpNewManager(_difficultyProp);
 
         PlayerManager.Instance.OverrideInventory(GameSaveManager.Instance.EmptyInventory);
 
         // Load Main Scene
         await SceneLoader.LoadScene(MyScene.DebugScene);
-
     }
 
     public async static void LoadManagers(GameSave _gameSave)
@@ -60,7 +61,19 @@ public class ManagerLoader : MonoBehaviour
 
         await UniTask.WhenAll(taskPool);
 
+        taskPool = new UniTask[]
+        {
+            GameSaveManager.Instance.SetUpExistingManager(_gameSave),
+            PopupManager.Instance.SetUpExistingManager(_gameSave),
+            PlayerManager.Instance.SetUpExistingManager(_gameSave),
+            PlayerSoundManager.Instance.SetUpExistingManager(_gameSave),
+        };
 
+        await UniTask.WhenAll(taskPool);
+
+        // Load Main Scene
+        await SceneLoader.LoadScene(MyScene.DebugScene);
+        PlayerManager.InvokeOnPlayerTeleport(_gameSave);
     }
 
     private static void DeleteAllManagers()

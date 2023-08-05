@@ -5,13 +5,14 @@ using Cysharp.Threading.Tasks;
 using System;
 using MyCode.GameData.Interaction;
 using MyCode.GameData.GameSettings;
+using MyCode.GameData.GameSave;
 
 namespace MyCode.Managers
 {
     public class PopupManager : Manager<PopupManager>
     {
 
-        public override async UniTask SetUpManager(DifficultyProperties _properties)
+        public override async UniTask SetUpNewManager(DifficultyProperties _properties)
         {
             if (_popupObject != null) return;
 
@@ -21,6 +22,17 @@ namespace MyCode.Managers
 
             await LoadPopup();
         } 
+
+        public override async UniTask SetUpExistingManager(GameSave _save)
+        {
+            if (_popupObject != null) return;
+
+            _popupObject = FindObjectOfType<InteractionPopup>();
+
+            if (_popupObject != null) return;
+
+            await LoadPopup();
+        }
 
         private static async UniTask<InteractionPopup> LoadPopup()
         {
