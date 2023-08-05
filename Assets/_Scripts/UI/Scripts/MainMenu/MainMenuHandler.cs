@@ -34,15 +34,19 @@ namespace MyCode.UI.MainMenu
         private Button _exit;
         [Space]
 
-        [Header("Elements - MainMenu")]
+        [Header("Elements - DifficultySelection")]
         [Space]
         private VisualElement _difficultySelection;
+        private VisualElement _difficultyButtonContainer;
+        private Button _difficultyBackButton;
+        [Space]
 
-        private VisualElement _gameSaveContainer;
-        private ListView _gameSaveSelection;
+        [Header("Elements -GameSaveSelection")]
+        [Space]
+        private VisualElement _gameSaveSelection;
+        private ListView _gameSaveList;
+        private Button _gameSaveBackButton;
         private GameSave[] gameSaves;
-
-        public VisualTreeAsset saveAsset;
 
         private ManagerLoader _loader;
 
@@ -67,11 +71,17 @@ namespace MyCode.UI.MainMenu
 
             // Difficulty selection buttons
             _difficultySelection = _root.Q<VisualElement>("DifficultySelection");
-            SpawnDifficultyButtons();
+            _difficultyButtonContainer = _difficultySelection.Q<VisualElement>("DifficultyButtonContainer");
+            SpawnDifficultyButtons(_difficultyButtonContainer);
+            _difficultyBackButton = _difficultySelection.Q<Button>("BackButton");
+            _difficultyBackButton.clicked += BackToMainMenu;
+
 
             // Game save selection
-            _gameSaveContainer = _root.Q<VisualElement>("GameSaveSelection");
-            _gameSaveSelection = _gameSaveContainer.Q<ListView>("GameSaveView");
+            _gameSaveSelection = _root.Q<VisualElement>("GameSaveSelection");
+            _gameSaveList = _gameSaveSelection.Q<ListView>("GameSaveView");
+            _gameSaveBackButton = _gameSaveSelection.Q<Button>("BackButton");
+            _gameSaveBackButton.clicked += BackToMainMenu;
 
             _difficultySelection.style.display = DisplayStyle.None;
         }
@@ -98,12 +108,21 @@ namespace MyCode.UI.MainMenu
 
             LoadGameSaves(gameSaves);
 
-            _gameSaveSelection.Rebuild();
+            _gameSaveList.Rebuild();
 
-            _gameSaveContainer.style.display = DisplayStyle.Flex;
+            _gameSaveSelection.style.display = DisplayStyle.Flex;
         }
 
-        private void SpawnDifficultyButtons()
+        private void BackToMainMenu()
+        {
+            _gameSaveSelection.style.display = DisplayStyle.None;
+            _difficultySelection.style.display = DisplayStyle.None;
+
+            _title.style.display = DisplayStyle.Flex;
+            _menu.style.display = DisplayStyle.Flex;
+        }
+
+        private void SpawnDifficultyButtons(VisualElement _parent)
         {
             foreach (Difficulty diff in Enum.GetValues(typeof(Difficulty)))
             {
@@ -112,7 +131,7 @@ namespace MyCode.UI.MainMenu
                 buttonElement.name = diff.ToString();
                 buttonElement.AddToClassList("mainButton");
                 buttonElement.Button.text = diff.ToString();
-                _difficultySelection.Add(buttonElement);
+                _parent.Add(buttonElement);
 
                 buttonElement.Button.clicked += () => ManagerLoader.CreateManagers(_loader.DifficultyProperties.Where(d => d.difficulty.Equals(buttonElement.Difficulty)).First());
             }
@@ -148,7 +167,7 @@ namespace MyCode.UI.MainMenu
 
         private void LoadGameSaves(GameSave[] _saveList)
         {
-            _gameSaveSelection.makeItem = () =>
+            _gameSaveList.makeItem = () =>
             {
                 GameSaveContainer save = new GameSaveContainer();
                 save.userData = new GameSave();
@@ -156,7 +175,7 @@ namespace MyCode.UI.MainMenu
                 return save;
             };
 
-            _gameSaveSelection.bindItem = (item, index) =>
+            _gameSaveList.bindItem = (item, index) =>
             {
                 item.userData = gameSaves[index];
 
@@ -167,13 +186,13 @@ namespace MyCode.UI.MainMenu
                 (item as GameSaveContainer).OnDeleteSave += (e) =>
                 {
                     _saveList = _saveList.RemoveAt(index);
-                    _gameSaveSelection.itemsSource = _saveList;
+                    _gameSaveList.itemsSource = _saveList;
 
-                    _gameSaveSelection.Rebuild();
+                    _gameSaveList.Rebuild();
                 };
             };
 
-            _gameSaveSelection.itemsSource = _saveList;
+            _gameSaveList.itemsSource = _saveList;
         }
     }
 
