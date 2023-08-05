@@ -94,7 +94,7 @@ public class GameSaveContainer : VisualElement
         ButtonContainer.Add(LoadButton);
         ButtonContainer.Add(DeleteButton);
 
-        _loadButton.clicked += () => ManagerLoader.LoadManagers(_gameSave.Difficulty);
+        _loadButton.clicked += () => ManagerLoader.LoadManagers(_gameSave);
         _deleteButton.clicked += () =>
         {
             File.Delete(GameSavePath);

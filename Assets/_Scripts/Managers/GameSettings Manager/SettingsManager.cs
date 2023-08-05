@@ -10,12 +10,7 @@ namespace MyCode.Managers
 
         public override async UniTask SetUpManager(DifficultyProperties _properties)
         {
-            await SetSettingsProperties(_properties);
-        }
-
-        private async UniTask SetSettingsProperties(DifficultyProperties _properties)
-        {
-            await UniTask.RunOnThreadPool(() => _instance.SettingsData.DifficultyProperties = _properties);
+            // await UniTask.RunOnThreadPool(() => _instance.SettingsData.DifficultyProperties = _properties);
         }
 
         private void Awake()
@@ -31,7 +26,7 @@ namespace MyCode.Managers
             }
         }
 
-        [field: SerializeField] public GameDifficultyData SettingsData { get; set; }
+        [field: SerializeField] public GameSettingsData SettingsData { get; set; }
 
     }
 }

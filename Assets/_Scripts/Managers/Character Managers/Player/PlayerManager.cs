@@ -12,8 +12,11 @@ namespace MyCode.Managers
 
         public override async UniTask SetUpManager(DifficultyProperties _properties)
         {
-            await UniTask.RunOnThreadPool(() => SetPlayerProperties(_properties));
-            ResetInventoryEquipment();
+            await UniTask.RunOnThreadPool(() =>
+            {
+                SetPlayerProperties(_properties);
+                ResetInventoryEquipment();
+            });
         }
 
         private void SetPlayerProperties(DifficultyProperties _properties)

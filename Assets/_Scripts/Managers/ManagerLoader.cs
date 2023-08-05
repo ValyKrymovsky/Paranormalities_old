@@ -5,6 +5,7 @@ using MyCode.Managers;
 using MyCode.GameData.Interaction;
 using Cysharp.Threading.Tasks;
 using MyCode.GameData.Scene;
+using MyCode.GameData.GameSave;
 
 public class ManagerLoader : MonoBehaviour
 {
@@ -29,7 +30,6 @@ public class ManagerLoader : MonoBehaviour
 
         taskPool = new UniTask[]
         {
-        SettingsManager.Instance.SetUpManager(_difficultyProp),
         PlayerManager.Instance.SetUpManager(_difficultyProp),
         PopupManager.Instance.SetUpManager(_difficultyProp),
         };
@@ -45,8 +45,21 @@ public class ManagerLoader : MonoBehaviour
 
     }
 
-    public async static void LoadManagers(DifficultyProperties _difficultyProp)
+    public async static void LoadManagers(GameSave _gameSave)
     {
+        DeleteAllManagers();
+
+        UniTask[] taskPool = new UniTask[]
+        {
+            SettingsManager.LoadManager(SettingsManager._instance),
+            GameSaveManager.LoadManager(GameSaveManager._instance),
+            PopupManager.LoadManager(PopupManager._instance),
+            PlayerManager.LoadManager(PlayerManager._instance),
+            PlayerSoundManager.LoadManager(PlayerSoundManager._instance),
+        };
+
+        await UniTask.WhenAll(taskPool);
+
 
     }
 
