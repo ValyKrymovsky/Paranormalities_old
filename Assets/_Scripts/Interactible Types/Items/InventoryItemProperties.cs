@@ -32,6 +32,8 @@ namespace MyCode.Interactibles
         private void OnEnable()
         {
             _intController.OnInteracted += AddToInventory;
+            if (_item != InventoryItem.empty)
+                InventoryItemStorage.AddItem(_item);
         }
 
         private void OnDisable()

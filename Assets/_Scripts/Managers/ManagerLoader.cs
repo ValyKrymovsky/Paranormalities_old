@@ -46,30 +46,39 @@ namespace MyCode.Managers
             
             // Load Main Scene
             await SceneLoader.LoadScene(MyScene.DebugScene);
+
+            SceneLoader.SetActiveScene(MyScene.DebugScene);
         }
 
         public async void LoadManagers(GameSave _gameSave)
         {
-            DeleteAllManagers(_handle);
+            if (_handle.IsValid())
+                DeleteAllManagers(_handle);
+
+            _managerList = await LoadAllManagers(_managerGroupLabel, _managerList);
 
             SettingsManager.CreateManager(_managerList[typeof(SettingsManager)]);
             GameSaveManager.CreateManager(_managerList[typeof(GameSaveManager)]);
-            PopupManager.CreateManager(_managerList[typeof(PopupManager)]);
             PlayerManager.CreateManager(_managerList[typeof(PlayerManager)]);
+            PopupManager.CreateManager(_managerList[typeof(PopupManager)]);
             PlayerSoundManager.CreateManager(_managerList[typeof(PlayerSoundManager)]);
 
             UniTask[] taskPool = new UniTask[]
             {
             GameSaveManager.Instance.SetUpExistingManager(_gameSave),
-            PopupManager.Instance.SetUpExistingManager(_gameSave),
             PlayerManager.Instance.SetUpExistingManager(_gameSave),
             PlayerSoundManager.Instance.SetUpExistingManager(_gameSave),
             };
 
             await UniTask.WhenAll(taskPool);
 
+            await PopupManager.Instance.SetUpExistingManager(_gameSave);
+
             // Load Main Scene
             await SceneLoader.LoadScene(MyScene.DebugScene);
+
+            SceneLoader.SetActiveScene(MyScene.DebugScene);
+
             PlayerManager.InvokeOnPlayerTeleport(_gameSave);
         }
 

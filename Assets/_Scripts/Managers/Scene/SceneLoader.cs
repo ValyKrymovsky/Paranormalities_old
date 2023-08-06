@@ -8,8 +8,12 @@ public class SceneLoader : MonoBehaviour
     public static async UniTask<MyScene> LoadScene(MyScene _scene)
     {
         await SceneManager.LoadSceneAsync(_scene.ToString(), LoadSceneMode.Single);
-        SceneManager.SetActiveScene(SceneManager.GetSceneByName(_scene.ToString()));
 
         return _scene;
+    }
+
+    public static void SetActiveScene(MyScene _scene)
+    {
+        SceneManager.SetActiveScene(SceneManager.GetSceneByName(_scene.ToString()));
     }
 }

@@ -36,8 +36,6 @@ namespace MyCode.Managers
             AsyncOperationHandle loadHandle = Addressables.LoadAssetAsync<ScriptableObject>("EmptyInventory");
             await loadHandle.Task;
 
-            
-
             await UniTask.RunOnThreadPool(() =>
             {
                 SetPlayerProperties(Loader.DifficultyProperties.Where(diff => diff.difficulty == _save.Difficulty.difficulty).First());
@@ -55,6 +53,17 @@ namespace MyCode.Managers
             InventoryData.Inventory.name = "PlayerInventory";
 
 
+        }
+
+        public InventoryItem[] ReplaceAllItems(InventoryItem[] _newItems)
+        {
+            InventoryItem[] newArray = new InventoryItem[_newItems.Length];
+            for (int i = 0; i < _newItems.Length; i++)
+            {
+                newArray[i] = InventoryItemStorage.GetItem(_newItems[i].ItemId);
+            }
+
+            return newArray;
         }
 
         private void SetPlayerProperties(DifficultyProperties _properties)

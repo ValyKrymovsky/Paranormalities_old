@@ -50,7 +50,6 @@ public class Manager<T> : MonoBehaviour where T : class
 
         _instance = manager.GetComponent<T>();
         DontDestroyOnLoad(manager);
-        Debug.Log($"Created {manager.name}");
 
         return _instance;
     }

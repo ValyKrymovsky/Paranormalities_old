@@ -60,7 +60,6 @@ namespace MyCode.PlayerComponents
             PlayerManager.OnPlayerTeleport += (position) =>
             {
                 transform.position = position;
-                Debug.Log(string.Format("Teleported player to: {0}", position));
             };
 
                 _pm.InventoryData.OnInventoryStatusChange += value => canMove = !value;

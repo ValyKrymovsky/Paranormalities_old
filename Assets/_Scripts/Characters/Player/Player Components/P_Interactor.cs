@@ -3,6 +3,7 @@ using UnityEngine.InputSystem;
 using System.Collections.Generic;
 using MyCode.Managers;
 using MyCode.GameData.Interaction;
+using MyCode.GameData.Inventory;
 
 namespace MyCode.PlayerComponents
 {
