@@ -17,35 +17,11 @@ MonoBehaviour:
     m_SerializedData: []
   m_GUID: 98d8f8ef8bf1fb74c90f1bf1951935a4
   m_SerializeEntries:
-  - m_GUID: 5093c3dfdb3334641aa50bc13662b8a2
-    m_Address: Assets/_Scripts/Managers/PlayerManager.prefab
+  - m_GUID: d530040bdfc660244b4ffd0a3b72531c
+    m_Address: Assets/_Scripts/Managers/Manager Prefabs
     m_ReadOnly: 0
     m_SerializedLabels:
-    - PlayerManager
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 6982fb0d2acef6d47bcd087f8094594b
-    m_Address: Assets/_Scripts/Managers/Popup/PopupManager.prefab
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - PopupManager
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 80771b6c6461dd849aec184ff631d326
-    m_Address: Assets/_Scripts/Managers/Character Managers/Player/PlayerSoundManager.prefab
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - PlayerSoundManager
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 3f13ff80b9af26f46ad71ca7240e856a
-    m_Address: Assets/_Scripts/Managers/GameSettings Manager/SettingsManager.prefab
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - SettingsManager
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: d9249a5c773a32147a5ef58101d7e1c0
-    m_Address: Assets/_Scripts/Managers/Game Saves/GameSaveManager.prefab
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - GameSaveManager
+    - GameManager
     FlaggedDuringContentUpdateRestriction: 0
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: 05725dfde3bb9b84d9f5556a03d1a5bb, type: 2}

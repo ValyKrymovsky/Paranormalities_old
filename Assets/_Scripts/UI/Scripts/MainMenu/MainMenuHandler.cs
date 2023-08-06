@@ -9,6 +9,7 @@ using MyCode.Helper.Serializer;
 using System.IO;
 using System.Text.RegularExpressions;
 using MyCode.GameData.GameSave;
+using MyCode.Managers;
 
 namespace MyCode.UI.MainMenu
 {
@@ -133,7 +134,7 @@ namespace MyCode.UI.MainMenu
                 buttonElement.Button.text = diff.ToString();
                 _parent.Add(buttonElement);
 
-                buttonElement.Button.clicked += () => ManagerLoader.CreateManagers(_loader.DifficultyProperties.Where(d => d.difficulty.Equals(buttonElement.Difficulty)).First());
+                buttonElement.Button.clicked += () => _loader.CreateManagers(_loader.DifficultyProperties.Where(d => d.difficulty.Equals(buttonElement.Difficulty)).First());
             }
         }
 
@@ -175,6 +176,11 @@ namespace MyCode.UI.MainMenu
                 (item as GameSaveContainer).GameSavePath = _saveList[index].SavePath;
                 (item as GameSaveContainer).SaveName.text = _saveList[index].SaveName;
                 (item as GameSaveContainer).SaveDate.text = _saveList[index].SaveTime.ToString();
+
+                (item as GameSaveContainer).OnLoadSave += (s) =>
+                {
+                    _loader.LoadManagers(s);
+                };
 
                 (item as GameSaveContainer).OnDeleteSave += (e) =>
                 {

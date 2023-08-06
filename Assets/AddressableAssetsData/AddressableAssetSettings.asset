@@ -89,11 +89,7 @@ MonoBehaviour:
     m_ProfileVersion: 1
   m_LabelTable:
     m_LabelNames:
-    - PlayerManager
-    - PopupManager
-    - GameSaveManager
-    - PlayerSoundManager
-    - SettingsManager
+    - GameManager
     - InteractionPopup
     - EmptyInventory
   m_SchemaTemplates: []

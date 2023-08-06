@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4340448589850938058}
   - component: {fileID: 6797242249109338060}
+  - component: {fileID: 5819124269707846615}
   m_Layer: 0
   m_Name: PlayerManager
   m_TagString: Untagged
@@ -44,8 +45,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6f856679d44bbbb4bb5456b368c09f41, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  <Camera>k__BackingField: {fileID: 0}
-  <Movement>k__BackingField: {fileID: 0}
-  <Health>k__BackingField: {fileID: 0}
-  <Stamina>k__BackingField: {fileID: 0}
-  <Inventory>k__BackingField: {fileID: 0}
+  <CameraData>k__BackingField: {fileID: 0}
+  <MovementData>k__BackingField: {fileID: 0}
+  <HealthData>k__BackingField: {fileID: 0}
+  <StaminaData>k__BackingField: {fileID: 0}
+  <InventoryData>k__BackingField: {fileID: 0}
+  <InteractionData>k__BackingField: {fileID: 0}
+--- !u!114 &5819124269707846615
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5906065115325285566}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 27777176f3ec9a847bc8eaebb47a593d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  managerType: PlayerManager

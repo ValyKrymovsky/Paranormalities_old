@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1960336877818759398}
   - component: {fileID: 4466280101977318394}
+  - component: {fileID: 293426272635338693}
   m_Layer: 0
   m_Name: SettingsManager
   m_TagString: Untagged
@@ -46,3 +47,16 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   <SettingsData>k__BackingField: {fileID: 11400000, guid: 05658c1b0dcca7142ad0fbda5a291f57,
     type: 2}
+--- !u!114 &293426272635338693
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5677278932844822614}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 27777176f3ec9a847bc8eaebb47a593d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  managerType: 4

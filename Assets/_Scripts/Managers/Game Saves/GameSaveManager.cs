@@ -7,9 +7,6 @@ using System;
 using System.Linq;
 using System.Text.RegularExpressions;
 using Newtonsoft.Json;
-using UnityEngine.ResourceManagement.AsyncOperations;
-using UnityEngine.AddressableAssets;
-using MyCode.GameData.Inventory;
 using MyCode.Helper.Serializer;
 
 namespace MyCode.Managers
@@ -50,16 +47,11 @@ namespace MyCode.Managers
 
             GameSave gs = new GameSave();
 
-            AsyncOperationHandle loadHandle = Addressables.LoadAssetAsync<ScriptableObject>("EmptyInventory");
-            await loadHandle.Task;
-
-            EmptyInventory = loadHandle.Result as InventoryObject;
-
             gs.SetPlayer(new float[] {0, 0, 0},
                 PlayerManager.Instance.HealthData.OriginalMaxHealth,
                 PlayerManager.Instance.StaminaData.MaxStamina,
                 false,
-                EmptyInventory,
+                PlayerManager.Instance.InventoryData.Inventory,
                 null,
                 null);
 
@@ -84,7 +76,6 @@ namespace MyCode.Managers
             CurrentGameSave = gs;
         }
 
-        internal InventoryObject EmptyInventory { get; private set; }
         [field: SerializeField] public GameSave CurrentGameSave { get; set; }
         public string saveFilePath;
     }

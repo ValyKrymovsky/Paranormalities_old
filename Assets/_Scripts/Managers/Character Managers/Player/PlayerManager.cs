@@ -6,6 +6,8 @@ using MyCode.GameData.Inventory;
 using System;
 using MyCode.GameData.GameSave;
 using System.Linq;
+using UnityEngine.AddressableAssets;
+using UnityEngine.ResourceManagement.AsyncOperations;
 
 namespace MyCode.Managers
 {
@@ -19,17 +21,40 @@ namespace MyCode.Managers
                 SetPlayerProperties(_properties);
                 ResetInventoryEquipment();
             });
+
+            AsyncOperationHandle loadHandle = Addressables.LoadAssetAsync<ScriptableObject>("EmptyInventory");
+            await loadHandle.Task;
+
+            InventoryData.Inventory = Instantiate(loadHandle.Result as InventoryObject);
+            InventoryData.Inventory.name = "PlayerInventory";
         }
 
         public override async UniTask SetUpExistingManager(GameSave _save)
         {
             Loader = GameObject.FindAnyObjectByType<ManagerLoader>();
+
+            AsyncOperationHandle loadHandle = Addressables.LoadAssetAsync<ScriptableObject>("EmptyInventory");
+            await loadHandle.Task;
+
+            
+
             await UniTask.RunOnThreadPool(() =>
             {
                 SetPlayerProperties(Loader.DifficultyProperties.Where(diff => diff.difficulty == _save.Difficulty.difficulty).First());
-                OverridePlayerProperties(_save);
+
+                _instance.HealthData.CurrentHealth = _save.Health;
+
+                _instance.StaminaData.CurrentStamina = _save.CurrentStamina;
+                _instance.StaminaData.ReachedLimit = _save.ReachedLimit;
+
                 SetInventoryEquipment(_save.PrimaryEquipment, _save.SecondaryEquipment);
             });
+
+            _instance.InventoryData.Inventory = Instantiate(loadHandle.Result as InventoryObject);
+            _instance.InventoryData.Inventory.inventory = _save.Inventory.inventory;
+            InventoryData.Inventory.name = "PlayerInventory";
+
+
         }
 
         private void SetPlayerProperties(DifficultyProperties _properties)
@@ -40,16 +65,6 @@ namespace MyCode.Managers
             _instance.HealthData = _properties.playerHealthData;
             _instance.InventoryData = _properties.playerInventoryData;
             _instance.InteractionData = _properties.playerInteractionData;
-        }
-
-        private void OverridePlayerProperties(GameSave _save)
-        {
-            _instance.HealthData.CurrentHealth = _save.Health;
-
-            _instance.StaminaData.CurrentStamina = _save.CurrentStamina;
-            _instance.StaminaData.ReachedLimit = _save.ReachedLimit;
-
-            _instance.InventoryData.Inventory = _save.Inventory;
         }
 
         private void ResetInventoryEquipment()

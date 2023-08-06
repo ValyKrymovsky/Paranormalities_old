@@ -390,6 +390,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cbbb77f53e3ec774bab52a35ce0537d9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _managerGroupLabel:
+    m_LabelString: GameManager
   difficultyProperties:
   - difficulty: 0
     playerCameraData: {fileID: 11400000, guid: a24e943685a02b14da8e3d8b40fc9577, type: 2}
@@ -491,5 +493,3 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _mainMenu: {fileID: 0}
-  saveAsset: {fileID: 9197481963319205126, guid: 0c9380f3b246a454fb64d1de78abe206,
-    type: 3}

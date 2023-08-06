@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8079082220647111907}
   - component: {fileID: 840682325646262705}
+  - component: {fileID: -6311350637450702286}
   m_Layer: 0
   m_Name: GameSaveManager
   m_TagString: Untagged
@@ -44,5 +45,44 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 825d32115a6eae345873559eba69be0f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  <SavePath>k__BackingField: Assets/_Scripts/Game Data/Game Properties/Game Saves/Generated
-    Data Objects/
+  <CurrentGameSave>k__BackingField:
+    _checkpointLocation:
+    - 0
+    - 0
+    - 0
+    _health: 0
+    _currentStamina: 0
+    _reachedLimit: 0
+    _inventory: {fileID: 0}
+    _primaryEquipment:
+      _itemId: 0
+      _item: {fileID: 0}
+      _image: {fileID: 0}
+    _secondaryEquipment:
+      _itemId: 0
+      _item: {fileID: 0}
+      _image: {fileID: 0}
+    _difficultyProperties:
+      difficulty: 0
+      playerCameraData: {fileID: 0}
+      playerHealthData: {fileID: 0}
+      playerInventoryData: {fileID: 0}
+      playerMovementData: {fileID: 0}
+      playerStaminaData: {fileID: 0}
+      playerInteractionData: {fileID: 0}
+    _saveIndex: 0
+    _saveName: 
+  saveFilePath: 
+--- !u!114 &-6311350637450702286
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4423808263398657042}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 27777176f3ec9a847bc8eaebb47a593d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  managerType: 2

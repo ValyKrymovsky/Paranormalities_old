@@ -24,7 +24,6 @@ public class GameSaveContainer : VisualElement
         }
     }
     public string GameSavePath { get; set; }
-    
 
     private GameSave _gameSave;
 
@@ -41,6 +40,7 @@ public class GameSaveContainer : VisualElement
     private Button _loadButton;
     private Button _deleteButton;
 
+    public event Action<GameSave> OnLoadSave;
     public event Action<GameSaveContainer> OnDeleteSave;
 
     public GameSave GameSave { get => _gameSave; set => _gameSave = value; }
@@ -96,7 +96,11 @@ public class GameSaveContainer : VisualElement
         ButtonContainer.Add(LoadButton);
         ButtonContainer.Add(DeleteButton);
 
-        _loadButton.clicked += () => ManagerLoader.LoadManagers(_gameSave);
+        _loadButton.clicked += () =>
+        {
+            OnLoadSave?.Invoke(_gameSave);
+        };
+
         _deleteButton.clicked += () =>
         {
             File.Delete(GameSavePath);
