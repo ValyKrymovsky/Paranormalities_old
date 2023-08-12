@@ -21,8 +21,12 @@ namespace MyCode.Managers
 
         public override async UniTask SetUpExistingManager(GameSave _save)
         {
-            CurrentGameSave = _save;
-            saveFilePath = _save.SavePath;
+            await UniTask.RunOnThreadPool(() =>
+            {
+                CurrentGameSave = _save;
+                saveFilePath = _save.SavePath;
+            });
+            
         }
 
         private async UniTask CreateNewSave(DifficultyProperties _properties)
