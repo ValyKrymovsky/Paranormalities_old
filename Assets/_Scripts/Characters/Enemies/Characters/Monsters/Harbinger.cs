@@ -12,7 +12,7 @@ namespace MyCode.Enemy
     public class Harbinger : MonoBehaviour
     {
         public EnemyState enemyState = EnemyState.Patrolling;
-        public PatrolState patrolState;
+        public PatrolState patrolState = PatrolState.Decision;
         private NavMeshAgent _agent;
         private Coroutine _patrolCoroutine;
 
@@ -46,18 +46,7 @@ namespace MyCode.Enemy
                     case PatrolState.Decision:
                         if (_currentNavPath == null)
                         {
-                            _currentNavPathPoint = FindNextPoint();
-                            _currentNavPath = _currentNavPathPoint.MainPath;
-                            patrolState = PatrolState.Patrol;
-                            _agent.SetDestination(_currentNavPathPoint.transform.position);
-
-                            _visitedPointsIndex = _visitedPointsIndex >= _visitedPoints.Length ? 0 : _visitedPointsIndex;
-                            _visitedPoints[_visitedPointsIndex] = _currentNavPathPoint;
-                            _visitedPointsIndex++;
-
-                            _visitedPathsIndex = _visitedPathsIndex >= _visitedPaths.Length ? 0 : _visitedPathsIndex;
-                            _visitedPaths[_visitedPathsIndex] = _currentNavPath;
-                            _visitedPathsIndex++;
+                            GoToRandomPoint();
                             break;
                         }
 
@@ -65,25 +54,21 @@ namespace MyCode.Enemy
                         
                         if (nextPoint != null)
                         {
+                            if (_currentNavPathPoint.Delay)
+                                yield return new WaitForSeconds(_currentNavPathPoint.DelayTime);
+                            else
+                                yield return new WaitForSeconds(UnityEngine.Random.Range(.5f, 1.5f));
+
                             _currentNavPathPoint = nextPoint;
                             _agent.SetDestination(nextPoint.transform.position);
                             patrolState = PatrolState.Patrol;
                             break;
                         }
 
-                        _currentNavPathPoint = FindNextPoint();
-                        _currentNavPath = _currentNavPathPoint.MainPath;
-                        patrolState = PatrolState.Patrol;
-                        _agent.SetDestination(_currentNavPathPoint.transform.position);
+                        if (_currentNavPathPoint.Delay)
+                            yield return new WaitForSeconds(_currentNavPathPoint.DelayTime);
 
-                        _visitedPointsIndex = _visitedPointsIndex >= _visitedPoints.Length ? 0 : _visitedPointsIndex;
-                        _visitedPoints[_visitedPointsIndex] = _currentNavPathPoint;
-                        _visitedPointsIndex++;
-
-                        _visitedPathsIndex = _visitedPathsIndex >= _visitedPaths.Length ? 0 : _visitedPathsIndex;
-                        _visitedPaths[_visitedPathsIndex] = _currentNavPath;
-                        _visitedPathsIndex++;
-
+                        GoToRandomPoint();
                         break;
 
                     case PatrolState.Patrol:
@@ -97,47 +82,58 @@ namespace MyCode.Enemy
             }
         }
 
+        private void GoToRandomPoint()
+        {
+            _currentNavPathPoint = FindRandomPoint();
+            _currentNavPath = _currentNavPathPoint.MainPath;
+            patrolState = PatrolState.Patrol;
+            _agent.SetDestination(_currentNavPathPoint.transform.position);
+
+            _visitedPointsIndex = _visitedPointsIndex >= _visitedPoints.Length ? 0 : _visitedPointsIndex;
+            _visitedPoints[_visitedPointsIndex] = _currentNavPathPoint;
+            _visitedPointsIndex++;
+
+            _visitedPathsIndex = _visitedPathsIndex >= _visitedPaths.Length ? 0 : _visitedPathsIndex;
+            _visitedPaths[_visitedPathsIndex] = _currentNavPath;
+            _visitedPathsIndex++;
+        }
+
         private bool ReachedPoint(Vector3 point)
         {
+            // Checks if the distance between spicified position and current Harbinger position is less than 1
             if ((point - transform.position).sqrMagnitude / 2 <= 1) return true;
-
             return false;
         }
 
-        private NavigationPathPoint FindNextPoint()
+        private NavigationPathPoint FindRandomPoint()
         {
             Collider[] colliders = Physics.OverlapSphere(transform.position, 7.5f, _navigationMask);
             List<NavigationPathPoint> pathPoints = new List<NavigationPathPoint>(); 
 
+            //Adds all path points to pathPoints List
             for (int i = 0; i < colliders.Length; i++)
             {
                 if (colliders[i].TryGetComponent<NavigationPathPoint>(out NavigationPathPoint point))
                 {
+                    // Ignores all last points in the path
                     if (point.MainPath.NavigationPoints.IndexOfItem(point) == point.MainPath.NavigationPoints.Length - 1) continue;
                     pathPoints.Add(point);
                 }
             }
-            /*
-            for (int i = 0; i < _visitedPoints.Length; i++)
-            {
-                if (pathPoints.Contains(_visitedPoints[i])) pathPoints.Remove(_visitedPoints[i]);
-            }
-            */
+
+            // Deletes all points that are in the visisted paths array, making it less repetitive
             for (int i = 0; i < _visitedPaths.Length; i++)
             {
                 if (_visitedPaths[i] == null) continue;
                 if (!_visitedPaths[i].NavigationPoints.Intersect(pathPoints).Any()) continue;
 
                 pathPoints.RemoveAll(p => _visitedPaths[i].NavigationPoints.Contains(p));
-                /*
-                foreach (NavigationPathPoint point in pathPoints.Where(p => _visitedPaths[i].NavigationPoints.Contains(p)))
-                { 
-                    pathPoints.Remove(point);
-                }
-                */
             }
 
+            // Orders points by their distance to the Harbinger
             pathPoints.OrderBy(point => (point.transform.position - transform.position).sqrMagnitude / 2);
+
+            // Returns random point from first 3 points in the list, caps the number to list size if smaller than 3
             int randomCap = pathPoints.Count < 3 ? pathPoints.Count : 3;
             return pathPoints[UnityEngine.Random.Range(0, randomCap)];
         }

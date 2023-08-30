@@ -22,13 +22,14 @@ namespace MyCode.GameData.Interaction
 
         private void Awake()
         {
-            PopupLocation = _customPopupLocation ? customPopupLocationObject.transform.position : transform.position;
+            PopupLocation = CustomPopupLocation ? customPopupLocationObject.transform.position : transform.position;
         }
 
         public bool Interactible { get => _interactible; set => _interactible = value; }
         public InteractionType InteractionType { get => _interactionType; private set => _interactionType = value; }
         public string PopupText { get => _popupText; set => _popupText = value; }
         public Vector3 PopupLocation { get => popupLocation; private set => popupLocation = value; }
+        public bool CustomPopupLocation { get => _customPopupLocation; set => _customPopupLocation = value; }
 
         public void Interact()
         {

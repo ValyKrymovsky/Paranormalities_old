@@ -17,7 +17,7 @@ namespace MyCode.GameData.PlayerData
         [SerializeField] private bool _dead = false;
 
 
-        public float OriginalMaxHealth { get => _maxHealth; private set => _maxHealth = value; }
+        public float MaxHealth { get => _maxHealth; private set => _maxHealth = value; }
         public float CurrentHealth { get => _currentHealth; set => _currentHealth = value; }
         public bool Dead { get => _dead; set => _dead = value; }
 

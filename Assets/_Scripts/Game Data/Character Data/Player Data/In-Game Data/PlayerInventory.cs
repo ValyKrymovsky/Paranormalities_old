@@ -6,8 +6,7 @@ using MyCode.GameData.Inventory;
 
 namespace MyCode.GameData.PlayerData
 {
-    [CreateAssetMenu(fileName = "NewInventoryData", menuName = "DataObjects/Player/Inventory")]
-    public class PlayerInventoryData : ScriptableObject
+    public class PlayerInventory
     {
         [Space]
         [Separator("Inventory", true)]
@@ -15,9 +14,9 @@ namespace MyCode.GameData.PlayerData
 
         [Header("Inventory Object")]
         [Space]
-        [SerializeField] private InventoryObject _inventory;
-        [SerializeField] private InventoryItem _primaryEquipment;
-        [SerializeField] private InventoryItem _secondaryEquipment;
+        private InventoryObject _inventory;
+        private InventoryItem _primaryEquipment;
+        private InventoryItem _secondaryEquipment;
 
         [Space]
         [Separator("Drop", true)]
@@ -25,11 +24,9 @@ namespace MyCode.GameData.PlayerData
 
         [Header("Item Drop")]
         [Space]
-        [SerializeField] private float dropRange;
-        
+        private float _dropRange;
 
-        private GameObject inventoryUI;
-        private bool inventoryOpen;
+        private bool _inventoryOpen;
 
         public event Action<bool> OnInventoryStatusChange;
         public event Action<InventoryItem> OnAddItem;
@@ -41,13 +38,22 @@ namespace MyCode.GameData.PlayerData
         public InventoryItem SecondaryEquipment { get => _secondaryEquipment; set => _secondaryEquipment = value; }
 
         // Item drop
-        public float DropRange { get => dropRange; set => dropRange = value; }
-
-        public GameObject InventoryUI { get => inventoryUI; set => inventoryUI = value; }
+        public float DropRange { get => _dropRange; set => _dropRange = value; }
 
         // Inventory state
-        public bool InventoryOpen { get => inventoryOpen; set => inventoryOpen = value; }
-        
+        public bool InventoryOpen { get => _inventoryOpen; set => _inventoryOpen = value; }
+
+
+        public PlayerInventory(PlayerInventoryData _data)
+        {
+            _inventory = _data.Inventory;
+            _primaryEquipment = _data.PrimaryEquipment;
+            _secondaryEquipment = _data.SecondaryEquipment;
+
+            _dropRange = _data.DropRange;
+
+            _inventoryOpen = _data.InventoryOpen;
+        }
 
         public void InvokeOnInventoryStatusChange(bool _newState)
         {

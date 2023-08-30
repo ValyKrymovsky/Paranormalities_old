@@ -30,10 +30,6 @@ namespace MyCode.GameData.PlayerData
         [Space]
         [SerializeField] private float _regenDelay;
 
-        private Coroutine _regenCoroutine;
-        private Coroutine _drainCoroutine;
-
-
         public bool UseStaminaSystem { get => _useStaminaSystem; set => _useStaminaSystem = value; }
         public float CurrentStamina { get => _currentStamina; set => _currentStamina = value; }
         public float MaxStamina { get => _maxStamina; set => _maxStamina = value; }
@@ -43,8 +39,6 @@ namespace MyCode.GameData.PlayerData
         public bool ReachedLimit { get => _reachedLimit; set => _reachedLimit = value; }
         public bool CanSprint { get => _canSprint; set => _canSprint = value; }
         public float RegenDelay { get => _regenDelay; set => _regenDelay = value; }
-        public Coroutine RegenCoroutine { get => _regenCoroutine; set => _regenCoroutine = value; }
-        public Coroutine DrainCoroutine { get => _drainCoroutine; set => _drainCoroutine = value; }
     }
 
 }

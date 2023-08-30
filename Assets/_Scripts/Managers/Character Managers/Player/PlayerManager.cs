@@ -68,12 +68,12 @@ namespace MyCode.Managers
 
         private void SetPlayerProperties(DifficultyProperties _properties)
         {
-            _instance.CameraData = _properties.playerCameraData;
-            _instance.MovementData = _properties.playerMovementData;
-            _instance.StaminaData = _properties.playerStaminaData;
-            _instance.HealthData = _properties.playerHealthData;
-            _instance.InventoryData = _properties.playerInventoryData;
-            _instance.InteractionData = _properties.playerInteractionData;
+            _instance.CameraData = new PlayerCamera(_properties.playerCameraData);
+            _instance.MovementData = new PlayerMovement(_properties.playerMovementData);
+            _instance.StaminaData = new PlayerStamina(_properties.playerStaminaData);
+            _instance.HealthData = new PlayerHealth(_properties.playerHealthData);
+            _instance.InventoryData = new PlayerInventory(_properties.playerInventoryData);
+            _instance.InteractionData = new PlayerInteraction(_properties.playerInteractionData);
         }
 
         private void ResetInventoryEquipment()
@@ -112,12 +112,12 @@ namespace MyCode.Managers
             }
         }
 
-        [field: SerializeField] public PlayerCameraData CameraData { get; set; }
-        [field: SerializeField] public PlayerMovementData MovementData { get; set; }
-        [field: SerializeField] public PlayerHealthData HealthData { get; set; }
-        [field: SerializeField] public PlayerStaminaData StaminaData { get; set; }
-        [field: SerializeField] public PlayerInventoryData InventoryData { get; set; }
-        [field: SerializeField] public PlayerInteractionData InteractionData { get; set; }
+        [field: SerializeField] public PlayerCamera CameraData { get; set; }
+        [field: SerializeField] public PlayerMovement MovementData { get; set; }
+        [field: SerializeField] public PlayerHealth HealthData { get; set; }
+        [field: SerializeField] public PlayerStamina StaminaData { get; set; }
+        [field: SerializeField] public PlayerInventory InventoryData { get; set; }
+        [field: SerializeField] public PlayerInteraction InteractionData { get; set; }
 
         public static event Action<Vector3> OnPlayerTeleport;
 

@@ -6,8 +6,7 @@ using MyCode.GameData.Player.Movement;
 
 namespace MyCode.GameData.PlayerData
 {
-    [CreateAssetMenu(fileName = "NewMovementData", menuName = "DataObjects/Player/Movement")]
-    public class PlayerMovementData : ScriptableObject
+    public class PlayerMovement
     {
 
         [Space]
@@ -17,18 +16,18 @@ namespace MyCode.GameData.PlayerData
         [Header("General parameters")]
         [Space]
 
-        [SerializeField] private float _walkSpeed;
-        [SerializeField] private float _sprintMultiplier, _sneakMultiplier;
-        [SerializeField] private MovementState _movementState;
-        [SerializeField] private MovementDirection _movementDirection;
-        [SerializeField, ReadOnly] private bool _isMoving, _isMovingForward = false;
-        [SerializeField, ReadOnly] private Vector3 _directionToMove;
-        [SerializeField, ReadOnly] private Vector2 _smoothMoveValue;
+        private float _walkSpeed;
+        private float _sprintMultiplier, _sneakMultiplier;
+        private MovementState _movementState;
+        private MovementDirection _movementDirection;
+        private bool _isMoving, _isMovingForward = false;
+        private Vector3 _directionToMove;
+        private Vector2 _smoothMoveValue;
         [Space]
 
         [Header("Movement Smoothening")]
         [Space]
-        [SerializeField, Tooltip("Time before reaching full speed")] private float _smoothTime;
+        private float _smoothTime;
 
         [Space]
         [Separator("Gravity", true)]
@@ -36,9 +35,9 @@ namespace MyCode.GameData.PlayerData
 
         [Header("Gravity Parameters")]
         [Space]
-        [SerializeField] private float _gravityMultiplier = .5f;
-        [SerializeField] private bool _isGrounded;
-        [SerializeField] private bool _useCustomGravity;
+        private float _gravityMultiplier = .5f;
+        private bool _isGrounded;
+        private bool _useCustomGravity;
         private const float _customGravity = -9.8f;
 
         [Space]
@@ -47,7 +46,7 @@ namespace MyCode.GameData.PlayerData
 
         [Header("Rules")]
         [Space]
-        [SerializeField] private bool freezeOnInventory;
+        private bool _freezeOnInventory;
 
 
         // Events
@@ -74,8 +73,29 @@ namespace MyCode.GameData.PlayerData
         public float CustomGravity { get => _customGravity; }
 
         // Difficulty Rules
-        public bool FreezeOnInventory { get => freezeOnInventory; }
+        public bool FreezeOnInventory { get => _freezeOnInventory; }
 
+
+        public PlayerMovement(PlayerMovementData _data)
+        {
+            _walkSpeed = _data.WalkSpeed;
+            _sprintMultiplier = _data.SprintMultiplier;
+            _sneakMultiplier = _data.SneakMultiplier;
+            _movementState = _data.MovementState;
+            _movementDirection = _data.MovementDirection;
+            _isMoving = _data.IsMoving;
+            _isMovingForward = _data.IsMovingForward;
+            _directionToMove = _data.DirectionToMove;
+            _smoothMoveValue = _data.SmoothMoveValue;
+
+            _smoothTime = _data.SmoothTime;
+
+            _gravityMultiplier = _data.GravityMultiplier;
+            _isGrounded = _data.IsGrounded;
+            _useCustomGravity = _data.UseCustomGravity;
+            
+            _freezeOnInventory = _data.FreezeOnInventory;
+        }
 
         public void InvokeStartedRunning()
         {

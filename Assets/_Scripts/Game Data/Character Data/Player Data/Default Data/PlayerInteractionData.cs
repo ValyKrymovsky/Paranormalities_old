@@ -56,9 +56,6 @@ namespace MyCode.GameData.PlayerData
         private float _zoomInterval;
 
 
-        public event Action OnPickUpObject;
-        public event Action OnDropObject;
-
         // Player
         public LayerMask PlayerLayerMask { get => _playerLayerMask; set => _playerLayerMask = value; }
 
@@ -87,16 +84,6 @@ namespace MyCode.GameData.PlayerData
         public float ZoomInterval { get => _zoomInterval; set => _zoomInterval = value; }
         public int IntervalCount { get => _intervalCount; set => _intervalCount = value; }
 
-
-        public void InvokePickUpObject()
-        {
-            OnPickUpObject?.Invoke();
-        }
-
-        public void InvokeDropObject()
-        {
-            OnDropObject?.Invoke();
-        }
     }
 
 }

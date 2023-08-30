@@ -263,7 +263,12 @@ namespace MyCode.PlayerComponents
         {
             _selectedCollider = _newCollider;
             _interactionController = _newController;
-            _popupManager.PopupData.InvokeOnParentChange(_newCollider.transform);
+
+            if (_newController.CustomPopupLocation)
+                _popupManager.PopupData.InvokeOnParentChange(_newController.customPopupLocationObject.transform);
+            else
+                _popupManager.PopupData.InvokeOnParentChange(_newCollider.transform);
+
             _popupManager.PopupObject.Text.text = _interactionController.PopupText;
         }
 

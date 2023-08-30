@@ -49,8 +49,8 @@ namespace MyCode.Managers
             _soundData.SoundObjects.Add(_soundObject);
         }
 
-        [field: SerializeField] private PlayerSoundData _soundData;
-        public PlayerSoundData SoundData { get => _soundData; }
+        [field: SerializeField] private PlayerSound _soundData;
+        public PlayerSound SoundData { get => _soundData; }
     }
 }
 
