@@ -49,11 +49,10 @@ namespace MyCode.UI.MainMenu
         private Button _gameSaveBackButton;
         private GameSave[] gameSaves;
 
-        private ManagerLoader _loader;
+        public ManagerLoader _loader;
 
         private void Awake()
         {
-            _loader = GetComponent<ManagerLoader>();
             _mainMenu = GetComponent<UIDocument>();
             _root = _mainMenu.rootVisualElement;
 

@@ -13,6 +13,16 @@ namespace MyCode.Managers
 {
     public class PlayerManager : Manager<PlayerManager>
     {
+        [field: SerializeField] public PlayerCamera CameraData { get; set; }
+        [field: SerializeField] public PlayerMovement MovementData { get; set; }
+        [field: SerializeField] public PlayerHealth HealthData { get; set; }
+        [field: SerializeField] public PlayerStamina StaminaData { get; set; }
+        [field: SerializeField] public PlayerInventory InventoryData { get; set; }
+        [field: SerializeField] public PlayerInteraction InteractionData { get; set; }
+
+        public static event Action<Vector3> OnPlayerTeleport;
+
+        public ManagerLoader Loader { get; set; }
 
         public override async UniTask SetUpNewManager(DifficultyProperties _properties)
         {
@@ -111,17 +121,6 @@ namespace MyCode.Managers
                 DontDestroyOnLoad(gameObject);
             }
         }
-
-        [field: SerializeField] public PlayerCamera CameraData { get; set; }
-        [field: SerializeField] public PlayerMovement MovementData { get; set; }
-        [field: SerializeField] public PlayerHealth HealthData { get; set; }
-        [field: SerializeField] public PlayerStamina StaminaData { get; set; }
-        [field: SerializeField] public PlayerInventory InventoryData { get; set; }
-        [field: SerializeField] public PlayerInteraction InteractionData { get; set; }
-
-        public static event Action<Vector3> OnPlayerTeleport;
-
-        public ManagerLoader Loader { get; set; }
     }
 }
 

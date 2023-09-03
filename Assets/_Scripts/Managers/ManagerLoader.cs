@@ -15,10 +15,18 @@ namespace MyCode.Managers
     {
         [SerializeField] private AssetLabelReference _managerGroupLabel;
         private AsyncOperationHandle _handle;
-        [SerializeField] private Dictionary<Type, GameObject> _managerList;
+        private Dictionary<Type, GameObject> _managerList;
         [SerializeField] private List<DifficultyProperties> difficultyProperties = new List<DifficultyProperties>();
 
+        public event Action OnNewGame;
+        public event Action OnLoadGame;
+
         public List<DifficultyProperties> DifficultyProperties { get => difficultyProperties; private set => difficultyProperties = value; }
+
+        private void Start()
+        {
+            DontDestroyOnLoad(this.gameObject);
+        }
 
         public async void CreateManagers(DifficultyProperties _difficultyProp)
         {
@@ -26,7 +34,6 @@ namespace MyCode.Managers
                 DeleteAllManagers(_handle);
 
             _managerList = await LoadAllManagers(_managerGroupLabel, _managerList);
-            
             
             SettingsManager.CreateManager(_managerList[typeof(SettingsManager)]);
             GameSaveManager.CreateManager(_managerList[typeof(GameSaveManager)]);
@@ -42,12 +49,13 @@ namespace MyCode.Managers
 
             await UniTask.WhenAll(taskPool);
 
-            await GameSaveManager.Instance.SetUpNewManager(_difficultyProp);
+            GameSaveManager.Instance.SetUpNewManager(_difficultyProp);
             
             // Load Main Scene
             await SceneLoader.LoadScene(MyScene.DebugScene);
-
             SceneLoader.SetActiveScene(MyScene.DebugScene);
+
+            OnNewGame?.Invoke();
         }
 
         public async void LoadManagers(GameSave _gameSave)
@@ -65,9 +73,9 @@ namespace MyCode.Managers
 
             UniTask[] taskPool = new UniTask[]
             {
-            GameSaveManager.Instance.SetUpExistingManager(_gameSave),
-            PlayerManager.Instance.SetUpExistingManager(_gameSave),
-            PlayerSoundManager.Instance.SetUpExistingManager(_gameSave),
+                GameSaveManager.Instance.SetUpExistingManager(_gameSave),
+                PlayerManager.Instance.SetUpExistingManager(_gameSave),
+                PlayerSoundManager.Instance.SetUpExistingManager(_gameSave),
             };
 
             await UniTask.WhenAll(taskPool);
@@ -78,6 +86,8 @@ namespace MyCode.Managers
             await SceneLoader.LoadScene(MyScene.DebugScene);
 
             SceneLoader.SetActiveScene(MyScene.DebugScene);
+
+            OnLoadGame?.Invoke();
 
             PlayerManager.InvokeOnPlayerTeleport(_gameSave);
         }
@@ -101,11 +111,6 @@ namespace MyCode.Managers
             await _handle.Task;
 
             return _list;
-        }
-
-        private void UnloadAllManagers()
-        {
-
         }
     }
 

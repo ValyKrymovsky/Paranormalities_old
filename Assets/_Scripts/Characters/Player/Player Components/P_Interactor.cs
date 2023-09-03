@@ -144,11 +144,12 @@ namespace MyCode.PlayerComponents
 
             _playerManager.InteractionData.HitPosition = hitInfo.collider != null ? hitInfo.point : transform.position + transform.forward * _playerManager.InteractionData.InteractRange;
 
+            
             if (hitInfo.collider != null)
             {
-                if (!hitInfo.collider.TryGetComponent(out InteractionController controller)) return;
+                if (!hitInfo.collider.TryGetComponent(out InteractionController controller)) goto Continue;
 
-                if (!controller.Interactible) return;
+                if (!controller.Interactible) goto Continue;
 
                 if (_selectedCollider != hitInfo.collider)
                 {
@@ -171,6 +172,8 @@ namespace MyCode.PlayerComponents
                 return;
             }
 
+            Continue:
+            
             int results = Physics.OverlapSphereNonAlloc(_playerManager.InteractionData.HitPosition, _playerManager.InteractionData.SphereCheckRange, _colliderArray, _playerManager.InteractionData.InteractiblesMask);
 
             Collider nearestInteractibleCollider = null;
@@ -399,6 +402,26 @@ namespace MyCode.PlayerComponents
             _drag = 0;
             _mass = 0;
             return;
+        }
+
+        private void OnDrawGizmos()
+        {
+            if (_selectedCollider != null)
+            {
+                Gizmos.color = Color.green;
+            }
+            else
+            {
+                Gizmos.color = Color.red;
+            }
+
+            Gizmos.DrawWireSphere(transform.position + (transform.forward * _playerManager.InteractionData.InteractRange), _playerManager.InteractionData.SphereCheckRange);
+
+            if (_selectedCollider != null)
+            {
+                Gizmos.color = Color.yellow;
+                Gizmos.DrawLine(transform.position + (transform.forward * _playerManager.InteractionData.InteractRange), _selectedCollider.transform.position);
+            }  
         }
     }
 }
