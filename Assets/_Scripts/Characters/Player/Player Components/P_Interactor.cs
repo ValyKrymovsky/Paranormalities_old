@@ -20,7 +20,9 @@ namespace MyCode.PlayerComponents
         [SerializeField] private Rigidbody _rb;
         [SerializeField] private Collider _selectedCollider;
 
-        [SerializeField] private Collider[] _colliderArray; 
+        [SerializeField] private Collider[] _colliderArray;
+
+        private Vector3 _colliderHitPosition;
 
         private float _mass;
         private float _drag;
@@ -121,6 +123,12 @@ namespace MyCode.PlayerComponents
             if (_selectedCollider == null)
                 return;
 
+            float distanceToCollider = Vector3.Distance(_playerManager.InteractionData.HitPosition, _colliderHitPosition);
+
+            
+            if (distanceToCollider > _playerManager.InteractionData.MaxInteractDistance)
+                return;
+
             if (_interactionController.InteractionType == InteractionType.Interact)
             {
                 _interactionController.Interact();
@@ -133,6 +141,16 @@ namespace MyCode.PlayerComponents
             }
         }
 
+        private float CalculateTextSize(float maxDistance)
+        {
+            Vector2 playerPosition = new Vector2(transform.position.x, transform.position.z);
+            Vector2 popupPosition = new Vector2(_popupManager.PopupObject.transform.position.x, _popupManager.PopupObject.transform.position.z);
+            float proximityTextSize = Mathf.InverseLerp(0, maxDistance, Vector2.Distance(playerPosition, popupPosition)) * _popupManager.PopupData.MaxTextSize;
+
+            if (proximityTextSize < _popupManager.PopupData.MinTextSize) proximityTextSize = _popupManager.PopupData.MinTextSize;
+            return proximityTextSize;
+        }
+
         public void CheckInteractibles()
         {
             if (!canInteract) return;
@@ -140,11 +158,13 @@ namespace MyCode.PlayerComponents
 
             Ray r = new Ray(transform.position, transform.forward);
 
+            // Cast ray in front of the camera with InteractRange as max distance
             Physics.Raycast(r, out RaycastHit hitInfo, _playerManager.InteractionData.InteractRange);
-
             _playerManager.InteractionData.HitPosition = hitInfo.collider != null ? hitInfo.point : transform.position + transform.forward * _playerManager.InteractionData.InteractRange;
 
-            
+            // Checks if raycast has hit any collider
+            // Then it checks whether the collider is interactible or not
+            // If the collider is interactible, then the _selectedCollider is updated along with interaction popup location, opacity and size
             if (hitInfo.collider != null)
             {
                 if (!hitInfo.collider.TryGetComponent(out InteractionController controller)) goto Continue;
@@ -156,17 +176,23 @@ namespace MyCode.PlayerComponents
                     UpdateSelectedCollider(hitInfo.collider, controller);
                 }
 
+                _colliderHitPosition = _playerManager.InteractionData.HitPosition;
+
                 if (!_popupManager.PopupData.IsVisible)
                     _popupManager.PopupData.InvokeOnVisibilityChange(true);
 
+                /*
                 Vector2 playerPosition = new Vector2(transform.position.x, transform.position.z);
                 Vector2 popupPosition = new Vector2(_popupManager.PopupObject.transform.position.x, _popupManager.PopupObject.transform.position.z);
                 float proximityTextSize = Mathf.InverseLerp(_playerManager.InteractionData.InteractRange + _playerManager.InteractionData.SphereCheckRange, 0, Vector2.Distance(playerPosition, popupPosition)) * _popupManager.PopupData.MaxTextSize;
                 if (proximityTextSize < _popupManager.PopupData.MinTextSize) proximityTextSize = _popupManager.PopupData.MinTextSize;
+                */
 
                 _popupManager.PopupObject.transform.LookAt(transform, transform.up);
 
-                UpdateText(proximityTextSize, 1);
+                float distanceFromPopup = _playerManager.InteractionData.InteractRange + _playerManager.InteractionData.SphereCheckRange;
+
+                UpdateText(CalculateTextSize(distanceFromPopup), 1);
 
                 interactibleColliders.Clear();
                 return;
@@ -223,6 +249,7 @@ namespace MyCode.PlayerComponents
                     minDistance = Vector3.Distance(_playerManager.InteractionData.HitPosition, perColliderHitInfo.point);
                     _playerManager.InteractionData.PerColliderHitPosition = perColliderHitInfo.point;
                     nearestInteractibleCollider = collider;
+                    _colliderHitPosition = perColliderHitInfo.point;
                     continue;
                 }
                 else
@@ -234,6 +261,7 @@ namespace MyCode.PlayerComponents
                         minDistance = distance;
                         _playerManager.InteractionData.PerColliderHitPosition = perColliderHitInfo.point;
                         nearestInteractibleCollider = collider;
+                        _colliderHitPosition = perColliderHitInfo.point;
                         continue;
                     }
                 }
@@ -280,11 +308,16 @@ namespace MyCode.PlayerComponents
             float proximityTextOpacity = Mathf.InverseLerp(_playerManager.InteractionData.SphereCheckRange, 0, Vector3.Distance(_playerManager.InteractionData.HitPosition, _playerManager.InteractionData.PerColliderHitPosition));
             _popupManager.PopupData.InvokeOnOpacityChange(proximityTextOpacity);
 
+            /*
             Vector2 playerPosition = new Vector2(transform.position.x, transform.position.z);
             Vector2 popupPosition = new Vector2(_playerManager.InteractionData.PerColliderHitPosition.x, _playerManager.InteractionData.PerColliderHitPosition.z);
             float proximityTextSize = Mathf.InverseLerp(_playerManager.InteractionData.InteractRange + _playerManager.InteractionData.SphereCheckRange, 0, Vector2.Distance(playerPosition, popupPosition)) * _popupManager.PopupData.MaxTextSize;
             if (proximityTextSize < _popupManager.PopupData.MinTextSize) proximityTextSize = _popupManager.PopupData.MinTextSize;
-            _popupManager.PopupData.InvokeOnSizeChange(proximityTextSize);
+            */
+
+            float distanceFromPopup = _playerManager.InteractionData.InteractRange + _playerManager.InteractionData.SphereCheckRange;
+
+            _popupManager.PopupData.InvokeOnSizeChange(CalculateTextSize(distanceFromPopup));
         }
 
         private void UpdateText(float _size, float _opacity)

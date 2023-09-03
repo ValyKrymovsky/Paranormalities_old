@@ -12,5 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 43e5731864fd26d4f921ea30f47bd8cc, type: 3}
   m_Name: PopupData
   m_EditorClassIdentifier: 
-  _maxTextSize: 3
-  _minTextSize: 2
+  _maxTextSize: 2
+  _minTextSize: 1

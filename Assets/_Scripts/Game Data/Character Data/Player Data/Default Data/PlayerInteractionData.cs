@@ -18,7 +18,11 @@ namespace MyCode.GameData.PlayerData
 
         [Header("Interaction parameters")]
         [Space]
+        [Tooltip("Interactibles Raycast distance")]
         [SerializeField] private float _interactRange;
+        [Tooltip("Defines the max distance the interactible object can be from Raycast Hit Position to be interacted with")]
+        [SerializeField] private float _maxInteractDistance;
+        [Tooltip("Distance within to get all colliders after the Interactibles Raycast")]
         [SerializeField] private float _sphereCheckRange;
         [SerializeField, ReadOnly] private Vector3 _hitPosition;
         [SerializeField, ReadOnly] private Vector3 _perColliderHitPosition;
@@ -61,6 +65,7 @@ namespace MyCode.GameData.PlayerData
 
         // Interaction
         public float InteractRange { get => _interactRange; set => _interactRange = value; }
+        public float MaxInteractDistance { get => _maxInteractDistance; set => _maxInteractDistance = value; }
         public float SphereCheckRange { get => _sphereCheckRange; set => _sphereCheckRange = value; }
         public Vector3 HitPosition { get => _hitPosition; set => _hitPosition = value; }
         public Vector3 PerColliderHitPosition { get => _perColliderHitPosition; set => _perColliderHitPosition = value; }
@@ -83,7 +88,6 @@ namespace MyCode.GameData.PlayerData
         // Picked up object zoom parameters
         public float ZoomInterval { get => _zoomInterval; set => _zoomInterval = value; }
         public int IntervalCount { get => _intervalCount; set => _intervalCount = value; }
-
     }
 
 }

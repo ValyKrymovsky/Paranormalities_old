@@ -18,6 +18,7 @@ namespace MyCode.GameData.PlayerData
         [Header("Interaction parameters")]
         [Space]
         private float _interactRange;
+        private float _maxInteractDistance;
         private float _sphereCheckRange;
         private Vector3 _hitPosition;
         private Vector3 _perColliderHitPosition;
@@ -61,6 +62,7 @@ namespace MyCode.GameData.PlayerData
 
         // Interaction
         public float InteractRange { get => _interactRange; set => _interactRange = value; }
+        public float MaxInteractDistance { get => _maxInteractDistance; set => _maxInteractDistance = value; }
         public float SphereCheckRange { get => _sphereCheckRange; set => _sphereCheckRange = value; }
         public Vector3 HitPosition { get => _hitPosition; set => _hitPosition = value; }
         public Vector3 PerColliderHitPosition { get => _perColliderHitPosition; set => _perColliderHitPosition = value; }
@@ -83,12 +85,13 @@ namespace MyCode.GameData.PlayerData
         // Picked up object zoom parameters
         public float ZoomInterval { get => _zoomInterval; set => _zoomInterval = value; }
         public int IntervalCount { get => _intervalCount; set => _intervalCount = value; }
-
+        
 
         public PlayerInteraction(PlayerInteractionData _data)
         {
             _playerLayerMask = _data.PlayerLayerMask;
             _interactRange = _data.InteractRange;
+            _maxInteractDistance = _data.MaxInteractDistance;
             _sphereCheckRange = _data.SphereCheckRange;
             _hitPosition = _data.HitPosition;
             _perColliderHitPosition = _data.PerColliderHitPosition;
