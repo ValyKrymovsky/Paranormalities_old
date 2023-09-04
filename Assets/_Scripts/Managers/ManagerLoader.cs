@@ -22,6 +22,7 @@ namespace MyCode.Managers
         public event Action OnLoadGame;
 
         public List<DifficultyProperties> DifficultyProperties { get => difficultyProperties; private set => difficultyProperties = value; }
+        public AssetLabelReference ManagerGroupLabel { get => _managerGroupLabel; set => _managerGroupLabel = value; }
 
         private void Start()
         {
@@ -33,7 +34,7 @@ namespace MyCode.Managers
             if (_handle.IsValid())
                 DeleteAllManagers(_handle);
 
-            _managerList = await LoadAllManagers(_managerGroupLabel, _managerList);
+            _managerList = await LoadAllManagers(ManagerGroupLabel, _managerList);
             
             SettingsManager.CreateManager(_managerList[typeof(SettingsManager)]);
             GameSaveManager.CreateManager(_managerList[typeof(GameSaveManager)]);
@@ -63,7 +64,7 @@ namespace MyCode.Managers
             if (_handle.IsValid())
                 DeleteAllManagers(_handle);
 
-            _managerList = await LoadAllManagers(_managerGroupLabel, _managerList);
+            _managerList = await LoadAllManagers(ManagerGroupLabel, _managerList);
 
             SettingsManager.CreateManager(_managerList[typeof(SettingsManager)]);
             GameSaveManager.CreateManager(_managerList[typeof(GameSaveManager)]);

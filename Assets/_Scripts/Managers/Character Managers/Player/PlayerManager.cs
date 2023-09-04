@@ -113,6 +113,7 @@ namespace MyCode.Managers
         {
             if (_instance != null && _instance != this)
             {
+                Debug.LogWarning("Player manager destroyed!");
                 Destroy(this.gameObject);
             }
             else

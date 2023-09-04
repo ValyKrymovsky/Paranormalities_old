@@ -124,6 +124,79 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!1001 &88634033
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 3197091880555606436, guid: 63ccdc0ce13e12443b327db12086a835,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 3197091880555606436, guid: 63ccdc0ce13e12443b327db12086a835,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3197091880555606436, guid: 63ccdc0ce13e12443b327db12086a835,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3197091880555606436, guid: 63ccdc0ce13e12443b327db12086a835,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3197091880555606436, guid: 63ccdc0ce13e12443b327db12086a835,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3197091880555606436, guid: 63ccdc0ce13e12443b327db12086a835,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3197091880555606436, guid: 63ccdc0ce13e12443b327db12086a835,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3197091880555606436, guid: 63ccdc0ce13e12443b327db12086a835,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3197091880555606436, guid: 63ccdc0ce13e12443b327db12086a835,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3197091880555606436, guid: 63ccdc0ce13e12443b327db12086a835,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3197091880555606436, guid: 63ccdc0ce13e12443b327db12086a835,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3353011490368783729, guid: 63ccdc0ce13e12443b327db12086a835,
+        type: 3}
+      propertyPath: m_Name
+      value: ManagerLoader
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 63ccdc0ce13e12443b327db12086a835, type: 3}
 --- !u!1 &872807172
 GameObject:
   m_ObjectHideFlags: 0
@@ -359,108 +432,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &1743143465
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1743143467}
-  - component: {fileID: 1743143466}
-  m_Layer: 0
-  m_Name: ManagerLoader
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &1743143466
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1743143465}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cbbb77f53e3ec774bab52a35ce0537d9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _managerGroupLabel:
-    m_LabelString: GameManager
-  difficultyProperties:
-  - difficulty: 0
-    playerCameraData: {fileID: 11400000, guid: a24e943685a02b14da8e3d8b40fc9577, type: 2}
-    playerHealthData: {fileID: 11400000, guid: 502fc4bc0efa17e4b8f7037292aa2d5a, type: 2}
-    playerInventoryData: {fileID: 11400000, guid: 8129c20030a58ff428eec754fc87d2e2,
-      type: 2}
-    playerMovementData: {fileID: 11400000, guid: d242fe22636880342b9afd6f01d09c77,
-      type: 2}
-    playerStaminaData: {fileID: 11400000, guid: 188bff70435e13f478be584cb2873d73,
-      type: 2}
-    playerInteractionData: {fileID: 11400000, guid: 9692a72364f9e69438007987150268d7,
-      type: 2}
-  - difficulty: 1
-    playerCameraData: {fileID: 11400000, guid: a24e943685a02b14da8e3d8b40fc9577, type: 2}
-    playerHealthData: {fileID: 11400000, guid: 66876b9ad60ba2445acd9361a50735f1, type: 2}
-    playerInventoryData: {fileID: 11400000, guid: 8129c20030a58ff428eec754fc87d2e2,
-      type: 2}
-    playerMovementData: {fileID: 11400000, guid: aec8ec4bcca421e45a8ba42b6ed7bfd4,
-      type: 2}
-    playerStaminaData: {fileID: 11400000, guid: eb7b07d8110978f44886780a9757427c,
-      type: 2}
-    playerInteractionData: {fileID: 11400000, guid: 9692a72364f9e69438007987150268d7,
-      type: 2}
-  - difficulty: 2
-    playerCameraData: {fileID: 11400000, guid: a24e943685a02b14da8e3d8b40fc9577, type: 2}
-    playerHealthData: {fileID: 11400000, guid: fcafab8eb9fce064aa3c7650422e8500, type: 2}
-    playerInventoryData: {fileID: 11400000, guid: 8129c20030a58ff428eec754fc87d2e2,
-      type: 2}
-    playerMovementData: {fileID: 11400000, guid: 50c7ea42253d96a49b74f9c42f962ace,
-      type: 2}
-    playerStaminaData: {fileID: 11400000, guid: 6f6bb2b07b8ad9d41a1bd67a05dad944,
-      type: 2}
-    playerInteractionData: {fileID: 11400000, guid: 9692a72364f9e69438007987150268d7,
-      type: 2}
-  - difficulty: 3
-    playerCameraData: {fileID: 11400000, guid: a24e943685a02b14da8e3d8b40fc9577, type: 2}
-    playerHealthData: {fileID: 11400000, guid: e618972b6b32d3b4fa9f05c27bdba849, type: 2}
-    playerInventoryData: {fileID: 11400000, guid: 8129c20030a58ff428eec754fc87d2e2,
-      type: 2}
-    playerMovementData: {fileID: 11400000, guid: 279cdc847aa7c304db243b6fb62f78b2,
-      type: 2}
-    playerStaminaData: {fileID: 11400000, guid: 0b8a64881ed4c314db07fd47140ac551,
-      type: 2}
-    playerInteractionData: {fileID: 11400000, guid: 9692a72364f9e69438007987150268d7,
-      type: 2}
-  - difficulty: 4
-    playerCameraData: {fileID: 11400000, guid: a24e943685a02b14da8e3d8b40fc9577, type: 2}
-    playerHealthData: {fileID: 11400000, guid: 913e97caecd6a1741a0e4b9c6fa1907b, type: 2}
-    playerInventoryData: {fileID: 11400000, guid: 8129c20030a58ff428eec754fc87d2e2,
-      type: 2}
-    playerMovementData: {fileID: 11400000, guid: 7e9c0c84fe3000541b6808c5ad5b391b,
-      type: 2}
-    playerStaminaData: {fileID: 11400000, guid: fe0a1fdbbec317349b32f25f3096b14f,
-      type: 2}
-    playerInteractionData: {fileID: 11400000, guid: 9692a72364f9e69438007987150268d7,
-      type: 2}
---- !u!4 &1743143467
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1743143465}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 3
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1907280419
 GameObject:
   m_ObjectHideFlags: 0
@@ -524,4 +495,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _mainMenu: {fileID: 0}
-  _loader: {fileID: 1743143466}
+  _loader: {fileID: 0}

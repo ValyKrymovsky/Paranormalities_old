@@ -3,6 +3,7 @@ using UnityEngine;
 using MyBox;
 using MyCode.Managers;
 using MyCode.GameData.Player.Movement;
+using System.Collections;
 
 namespace MyCode.PlayerComponents
 {
@@ -15,8 +16,10 @@ namespace MyCode.PlayerComponents
         [Header("Components")]
         [Space]
         private CharacterController _characterController;
-        private PlayerManager _pm;
+        public PlayerManager _pm;
         [Space]
+
+        private Coroutine _managerCoroutine;
 
         // MovementData
         private Vector2 _moveValue;
@@ -57,12 +60,18 @@ namespace MyCode.PlayerComponents
             _input_SprintValue.action.canceled += StopSprintAction;
             _input_SneakValue.action.canceled += StopSneakAction;
 
+            if (_pm == null)
+            {
+                if (_managerCoroutine == null) _managerCoroutine = StartCoroutine(WaitForManager());
+                return;
+            }
+
             PlayerManager.OnPlayerTeleport += (position) =>
             {
                 transform.position = position;
             };
 
-                _pm.InventoryData.OnInventoryStatusChange += value => canMove = !value;
+            _pm.InventoryData.OnInventoryStatusChange += value => canMove = !value;
         }
 
         private void OnDisable()
@@ -375,6 +384,15 @@ namespace MyCode.PlayerComponents
 
                 _internalSpeedMultiplier = _pm.MovementData.SprintMultiplier;
                 _pm.MovementData.MovementState = MovementState.sprint;
+            }
+        }
+
+        private IEnumerator WaitForManager()
+        {
+            while (_pm == null)
+            {
+                _pm = PlayerManager.Instance;
+                yield return null;
             }
         }
     }

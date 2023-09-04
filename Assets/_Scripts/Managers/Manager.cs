@@ -5,6 +5,9 @@ using UnityEngine.AddressableAssets;
 using UnityEngine.ResourceManagement.AsyncOperations;
 using MyCode.GameData.GameSave;
 using MyCode.Managers;
+using System.Collections.Generic;
+using System.Collections;
+using System.Linq;
 
 [RequireComponent(typeof(ManagerType))]
 public class Manager<T> : MonoBehaviour where T : class
@@ -17,16 +20,27 @@ public class Manager<T> : MonoBehaviour where T : class
         {
             if (_instance != null) return _instance;
 
+            Debug.LogWarning("Instance not found");
+
             _instance = FindObjectOfType(typeof(T)) as T;
 
             if (_instance != null) return _instance;
 
-            Addressables.InstantiateAsync(typeof(T).Name).Completed += handle =>
+            Debug.LogWarning("Instance not found x2");
+
+            ManagerLoader managerLoader = (ManagerLoader)FindObjectOfType(typeof(ManagerLoader));
+
+            Addressables.LoadAssetsAsync<GameObject>(managerLoader.ManagerGroupLabel, null).Completed += handle =>
             {
                 if (!handle.Status.Equals(AsyncOperationStatus.Succeeded)) return;
 
-                _instance = ((GameObject)handle.Result).GetComponent<T>();
-                DontDestroyOnLoad((GameObject)handle.Result);
+                GameObject managerObject = handle.Result.Where(m => m.name == typeof(T).Name).First();
+                T manager = managerObject.GetComponent<T>();
+
+                Debug.Log("Successfully loaded " +  managerObject.name);
+
+                _instance = manager;
+                DontDestroyOnLoad(managerObject);
             };
             
 

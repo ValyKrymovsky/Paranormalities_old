@@ -53,6 +53,8 @@ namespace MyCode.UI.MainMenu
 
         private void Awake()
         {
+            _loader = FindObjectOfType<ManagerLoader>();
+
             _mainMenu = GetComponent<UIDocument>();
             _root = _mainMenu.rootVisualElement;
 

@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 using System.Collections.Generic;
+using System.Collections;
 using MyCode.Managers;
 using MyCode.GameData.Interaction;
 using MyCode.GameData.Inventory;
@@ -141,16 +142,6 @@ namespace MyCode.PlayerComponents
             }
         }
 
-        private float CalculateTextSize(float maxDistance)
-        {
-            Vector2 playerPosition = new Vector2(transform.position.x, transform.position.z);
-            Vector2 popupPosition = new Vector2(_popupManager.PopupObject.transform.position.x, _popupManager.PopupObject.transform.position.z);
-            float proximityTextSize = Mathf.InverseLerp(0, maxDistance, Vector2.Distance(playerPosition, popupPosition)) * _popupManager.PopupData.MaxTextSize;
-
-            if (proximityTextSize < _popupManager.PopupData.MinTextSize) proximityTextSize = _popupManager.PopupData.MinTextSize;
-            return proximityTextSize;
-        }
-
         public void CheckInteractibles()
         {
             if (!canInteract) return;
@@ -180,13 +171,6 @@ namespace MyCode.PlayerComponents
 
                 if (!_popupManager.PopupData.IsVisible)
                     _popupManager.PopupData.InvokeOnVisibilityChange(true);
-
-                /*
-                Vector2 playerPosition = new Vector2(transform.position.x, transform.position.z);
-                Vector2 popupPosition = new Vector2(_popupManager.PopupObject.transform.position.x, _popupManager.PopupObject.transform.position.z);
-                float proximityTextSize = Mathf.InverseLerp(_playerManager.InteractionData.InteractRange + _playerManager.InteractionData.SphereCheckRange, 0, Vector2.Distance(playerPosition, popupPosition)) * _popupManager.PopupData.MaxTextSize;
-                if (proximityTextSize < _popupManager.PopupData.MinTextSize) proximityTextSize = _popupManager.PopupData.MinTextSize;
-                */
 
                 _popupManager.PopupObject.transform.LookAt(transform, transform.up);
 
@@ -308,16 +292,19 @@ namespace MyCode.PlayerComponents
             float proximityTextOpacity = Mathf.InverseLerp(_playerManager.InteractionData.SphereCheckRange, 0, Vector3.Distance(_playerManager.InteractionData.HitPosition, _playerManager.InteractionData.PerColliderHitPosition));
             _popupManager.PopupData.InvokeOnOpacityChange(proximityTextOpacity);
 
-            /*
-            Vector2 playerPosition = new Vector2(transform.position.x, transform.position.z);
-            Vector2 popupPosition = new Vector2(_playerManager.InteractionData.PerColliderHitPosition.x, _playerManager.InteractionData.PerColliderHitPosition.z);
-            float proximityTextSize = Mathf.InverseLerp(_playerManager.InteractionData.InteractRange + _playerManager.InteractionData.SphereCheckRange, 0, Vector2.Distance(playerPosition, popupPosition)) * _popupManager.PopupData.MaxTextSize;
-            if (proximityTextSize < _popupManager.PopupData.MinTextSize) proximityTextSize = _popupManager.PopupData.MinTextSize;
-            */
-
             float distanceFromPopup = _playerManager.InteractionData.InteractRange + _playerManager.InteractionData.SphereCheckRange;
 
             _popupManager.PopupData.InvokeOnSizeChange(CalculateTextSize(distanceFromPopup));
+        }
+
+        private float CalculateTextSize(float maxDistance)
+        {
+            Vector2 playerPosition = new Vector2(transform.position.x, transform.position.z);
+            Vector2 popupPosition = new Vector2(_popupManager.PopupObject.transform.position.x, _popupManager.PopupObject.transform.position.z);
+            float proximityTextSize = Mathf.InverseLerp(0, maxDistance, Vector2.Distance(playerPosition, popupPosition)) * _popupManager.PopupData.MaxTextSize;
+
+            if (proximityTextSize < _popupManager.PopupData.MinTextSize) proximityTextSize = _popupManager.PopupData.MinTextSize;
+            return proximityTextSize;
         }
 
         private void UpdateText(float _size, float _opacity)
@@ -361,7 +348,7 @@ namespace MyCode.PlayerComponents
             _playerManager.InteractionData.InvokePickUpObject();
         }
 
-        public void Drop(InputAction.CallbackContext _context)
+        private void Drop(InputAction.CallbackContext _context)
         {
             if (!_rb)
             {
@@ -375,7 +362,7 @@ namespace MyCode.PlayerComponents
             _playerManager.InteractionData.InvokeDropObject();
         }
 
-        public void Throw(InputAction.CallbackContext _context)
+        private void Throw(InputAction.CallbackContext _context)
         {
             if (!_rb)
             {
@@ -395,7 +382,7 @@ namespace MyCode.PlayerComponents
             }
         }
 
-        public void Zoom(InputAction.CallbackContext _context)
+        private void Zoom(InputAction.CallbackContext _context)
         {
             float zoomValue = _context.ReadValue<float>() / 120;
 
