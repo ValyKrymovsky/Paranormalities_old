@@ -66,16 +66,12 @@ namespace MyCode.PlayerComponents
             mouseRotation -= valueY;
             mouseRotation = Mathf.Clamp(mouseRotation, PlayerManager.Instance.CameraData.BottomRotationLimit, PlayerManager.Instance.CameraData.TopRotationLimit);
             transform.localRotation = Quaternion.Euler(mouseRotation, 0, 0);
-            camStabilizationObject.transform.localRotation = Quaternion.Euler(mouseRotation, 0, 0);
             player.transform.Rotate(Vector3.up * valueX);
             if (PlayerManager.Instance.CameraData.UseStabilization)
             {
+                camStabilizationObject.transform.localRotation = Quaternion.Euler(mouseRotation, 0, 0);
                 cam.transform.LookAt(FocusTarget());
                 transform.position = FollowHeadJoint(headJoint, eyeJoint, .2f, PlayerManager.Instance.CameraData.StabilizationAmount);
-            }
-            else
-            {
-                transform.position = FollowHeadJoint(headJoint, eyeJoint, .2f);
             }
         }
 

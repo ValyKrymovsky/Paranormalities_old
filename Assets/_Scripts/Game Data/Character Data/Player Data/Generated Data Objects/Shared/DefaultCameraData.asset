@@ -15,8 +15,6 @@ MonoBehaviour:
   sensetivity: 10
   topRotationLimit: 75
   bottomRotationLimit: -65
-  useStabilization: 1
+  useStabilization: 0
   focusPointStabilizationDistance: 100
   stabilizationAmount: 0.1
-  _input_CameraValue: {fileID: 3583690661758649077, guid: 5cbe42c2b73edc740bbce0ae6343c7c0,
-    type: 3}

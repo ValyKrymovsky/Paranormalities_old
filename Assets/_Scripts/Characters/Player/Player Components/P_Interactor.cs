@@ -5,6 +5,7 @@ using System.Collections;
 using MyCode.Managers;
 using MyCode.GameData.Interaction;
 using MyCode.GameData.Inventory;
+using TMPro;
 
 namespace MyCode.PlayerComponents
 {
@@ -17,6 +18,9 @@ namespace MyCode.PlayerComponents
         private bool canCheckInteractibles = true;
 
         [SerializeField] private GameObject _pickupPoint;
+
+        [SerializeField] private TextMeshPro _popupText;
+        [SerializeField] private MeshRenderer _textRenderer;
 
         [SerializeField] private Rigidbody _rb;
         [SerializeField] private Collider _selectedCollider;

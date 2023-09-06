@@ -15,7 +15,7 @@
     "com.unity.inputsystem": "1.6.3",
     "com.unity.memoryprofiler": "1.0.0",
     "com.unity.nuget.newtonsoft-json": "3.2.1",
-    "com.unity.render-pipelines.universal": "14.0.8",
+    "com.unity.render-pipelines.high-definition": "14.0.8",
     "com.unity.splines": "2.2.1",
     "com.unity.textmeshpro": "3.0.6",
     "com.unity.timeline": "1.7.5",
