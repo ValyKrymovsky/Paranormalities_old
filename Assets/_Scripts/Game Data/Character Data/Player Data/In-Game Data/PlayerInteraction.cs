@@ -21,7 +21,6 @@ namespace MyCode.GameData.PlayerData
         private float _maxInteractDistance;
         private float _sphereCheckRange;
         private Vector3 _hitPosition;
-        private Vector3 _perColliderHitPosition;
         private int _colliderAraySize;
         private LayerMask _interactiblesMask;
         private LayerMask _excludeCollisionMask;
@@ -65,7 +64,6 @@ namespace MyCode.GameData.PlayerData
         public float MaxInteractDistance { get => _maxInteractDistance; set => _maxInteractDistance = value; }
         public float SphereCheckRange { get => _sphereCheckRange; set => _sphereCheckRange = value; }
         public Vector3 HitPosition { get => _hitPosition; set => _hitPosition = value; }
-        public Vector3 PerColliderHitPosition { get => _perColliderHitPosition; set => _perColliderHitPosition = value; }
         public int ColliderAraySize { get => _colliderAraySize; }
         public LayerMask InteractiblesMask { get => _interactiblesMask; set => _interactiblesMask = value; }
         public LayerMask ExcludeCollisionMask { get => _excludeCollisionMask; set => _excludeCollisionMask = value; }
@@ -94,7 +92,6 @@ namespace MyCode.GameData.PlayerData
             _maxInteractDistance = _data.MaxInteractDistance;
             _sphereCheckRange = _data.SphereCheckRange;
             _hitPosition = _data.HitPosition;
-            _perColliderHitPosition = _data.PerColliderHitPosition;
             _colliderAraySize = _data.ColliderAraySize;
             _interactiblesMask = _data.InteractiblesMask;
             _excludeCollisionMask = _data.ExcludeCollisionMask;

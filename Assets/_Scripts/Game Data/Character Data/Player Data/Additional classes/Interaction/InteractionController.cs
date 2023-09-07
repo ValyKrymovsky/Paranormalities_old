@@ -19,7 +19,6 @@ namespace MyCode.GameData.Interaction
 
         public event Action OnInteracted;
 
-
         private void Awake()
         {
             PopupLocation = CustomPopupLocation ? customPopupLocationObject.transform.position : transform.position;
