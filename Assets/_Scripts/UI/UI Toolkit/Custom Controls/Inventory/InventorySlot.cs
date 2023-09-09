@@ -13,18 +13,22 @@ public class InventorySlot : VisualElement
         UxmlIntAttributeDescription slotIndex =
             new UxmlIntAttributeDescription { name = "slot-index", defaultValue = 0 };
 
+        UxmlEnumAttributeDescription<SlotType> slotType = 
+            new UxmlEnumAttributeDescription<SlotType> { name = "slot-type", defaultValue = SlotType.Normal };
+
         public override void Init(VisualElement ve, IUxmlAttributes bag, CreationContext cc)
         {
             base.Init(ve, bag, cc);
             var ate = ve as InventorySlot;
 
             ate.SlotIndex = slotIndex.GetValueFromBag(bag, cc);
+            ate.SlotType = slotType.GetValueFromBag(bag, cc);
         }
     }
 
     public int SlotIndex { get; set; }
+    public SlotType SlotType { get; set; }
 
-    public InventoryObject inventory;
     public InventoryItem item;
 
 
@@ -55,7 +59,7 @@ public class InventorySlot : VisualElement
 
     public void SetItemParameters(InventoryItem _slotItem)
     {
-        item = new InventoryItem(_slotItem.ItemId, _slotItem.Item, _slotItem.Model, _slotItem.Image);
+        item = _slotItem;
         slotImage.style.backgroundImage = new StyleBackground(_slotItem.Image);
     }
 

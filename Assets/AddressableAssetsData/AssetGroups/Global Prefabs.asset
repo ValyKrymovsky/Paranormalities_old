@@ -16,13 +16,7 @@ MonoBehaviour:
   m_Data:
     m_SerializedData: []
   m_GUID: 4dd8e2a431f991a499b60c73079c21cb
-  m_SerializeEntries:
-  - m_GUID: 1531f1f6ce2c27f46b0a84e1377aa7f1
-    m_Address: Assets/_Scripts/Interactables/Interaction Popup.prefab
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - InteractionPopup
-    FlaggedDuringContentUpdateRestriction: 0
+  m_SerializeEntries: []
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: 05725dfde3bb9b84d9f5556a03d1a5bb, type: 2}
   m_SchemaSet:

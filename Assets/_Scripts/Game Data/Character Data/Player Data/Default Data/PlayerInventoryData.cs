@@ -2,6 +2,7 @@ using UnityEngine;
 using System;
 using MyBox;
 using MyCode.GameData.Inventory;
+using System.Linq;
 
 
 namespace MyCode.GameData.PlayerData
@@ -15,7 +16,7 @@ namespace MyCode.GameData.PlayerData
 
         [Header("Inventory Object")]
         [Space]
-        [SerializeField] private InventoryObject _inventory;
+        [SerializeField] private InventoryItem[] _inventory;
         [SerializeField] private InventoryItem _primaryEquipment;
         [SerializeField] private InventoryItem _secondaryEquipment;
 
@@ -33,7 +34,7 @@ namespace MyCode.GameData.PlayerData
 
 
         // Inventory
-        public InventoryObject Inventory { get => _inventory; set => _inventory = value; }
+        public InventoryItem[] Inventory { get => _inventory; set => _inventory = value; }
         public InventoryItem PrimaryEquipment { get => _primaryEquipment; set => _primaryEquipment = value; }
         public InventoryItem SecondaryEquipment { get => _secondaryEquipment; set => _secondaryEquipment = value; }
 
@@ -44,8 +45,6 @@ namespace MyCode.GameData.PlayerData
 
         // Inventory state
         public bool InventoryOpen { get => inventoryOpen; set => inventoryOpen = value; }
-        
-
     }
 
 }

@@ -20,6 +20,7 @@ namespace MyCode.Interactibles
         private void Awake()
         {
             _intController = GetComponent<InteractionController>();
+            InventoryItemStorage.AddItem(_item);
         }
 
         private void Start()
@@ -43,25 +44,9 @@ namespace MyCode.Interactibles
 
         public void AddToInventory()
         {
-            if (PlayerManager.Instance.InventoryData.Inventory.AddItem(_item))
-            {
-                PlayerManager.Instance.InventoryData.InvokeOnAddItem(_item);
-
-                if (_item.Item.itemType == ItemObject.ItemType.Equipment)
-                {
-                    if (PlayerManager.Instance.InventoryData.PrimaryEquipment == InventoryItem.empty)
-                    {
-                        PlayerManager.Instance.InventoryData.PrimaryEquipment = _item;
-                    }
-                    else if (PlayerManager.Instance.InventoryData.SecondaryEquipment == InventoryItem.empty)
-                    {
-                        PlayerManager.Instance.InventoryData.SecondaryEquipment = _item;
-                    }
-                }
-
-                this.gameObject.SetActive(false);
-
-            }
+            if (!PlayerManager.InventoryData.AddItem(_item)) return;
+            
+            this.gameObject.SetActive(false);
         }
 
 

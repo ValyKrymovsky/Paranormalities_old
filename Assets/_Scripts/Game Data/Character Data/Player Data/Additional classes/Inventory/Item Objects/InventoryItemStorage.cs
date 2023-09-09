@@ -7,7 +7,7 @@ namespace MyCode.GameData.Inventory
 {
     public class InventoryItemStorage
     {
-        public static List<InventoryItem> activeInventoryItems = new List<InventoryItem>();
+        private static List<InventoryItem> activeInventoryItems = new List<InventoryItem>();
 
         public static bool ContainsItem(int _itemId)
         {
@@ -20,7 +20,7 @@ namespace MyCode.GameData.Inventory
         {
             if (ContainsItem(_itemId)) return activeInventoryItems.Where(item => item.ItemId == _itemId).First();
 
-            return null;
+            return InventoryItem.empty;
         }
 
         public static void AddItem(InventoryItem _item)

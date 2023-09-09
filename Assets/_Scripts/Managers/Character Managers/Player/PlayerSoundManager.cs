@@ -7,21 +7,6 @@ namespace MyCode.Managers
 {
     public class PlayerSoundManager : Manager<PlayerSoundManager>
     {
-
-        private void Awake()
-        {
-            if (_instance != null && _instance != this)
-            {
-                Destroy(this.gameObject);
-            }
-            else
-            {
-                _instance = this;
-                DontDestroyOnLoad(gameObject);
-
-            }
-        }
-
         public void LoadSoundObjects()
         {
             for (int i = 0; i < _soundData.ListCapacity; i++)

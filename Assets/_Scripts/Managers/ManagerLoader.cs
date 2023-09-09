@@ -7,7 +7,7 @@ using MyCode.GameData.GameSave;
 using UnityEngine.AddressableAssets;
 using System;
 using UnityEngine.ResourceManagement.AsyncOperations;
-using System.Runtime.Serialization.Json;
+using MyCode.GameData.Inventory;
 
 namespace MyCode.Managers
 {
@@ -31,26 +31,12 @@ namespace MyCode.Managers
 
         public async void CreateManagers(DifficultyProperties _difficultyProp)
         {
-            if (_handle.IsValid())
-                DeleteAllManagers(_handle);
+            PlayerManager playerManager = new PlayerManager();
+            GameSaveManager gameSaveManager = new GameSaveManager();
 
-            _managerList = await LoadAllManagers(ManagerGroupLabel, _managerList);
-            
-            SettingsManager.CreateManager(_managerList[typeof(SettingsManager)]);
-            GameSaveManager.CreateManager(_managerList[typeof(GameSaveManager)]);
-            PopupManager.CreateManager(_managerList[typeof(PopupManager)]);
-            PlayerManager.CreateManager(_managerList[typeof(PlayerManager)]);
-            PlayerSoundManager.CreateManager(_managerList[typeof(PlayerSoundManager)]);
+            await playerManager.SetUpNewManager(_difficultyProp);
 
-            UniTask[] taskPool = new UniTask[]
-            {
-                PlayerManager.Instance.SetUpNewManager(_difficultyProp),
-                PopupManager.Instance.SetUpNewManager(_difficultyProp),
-            };
-
-            await UniTask.WhenAll(taskPool);
-
-            GameSaveManager.Instance.SetUpNewManager(_difficultyProp);
+            gameSaveManager.SetUpNewManager(_difficultyProp);
             
             // Load Main Scene
             await SceneLoader.LoadScene(MyScene.DebugScene);
@@ -61,27 +47,14 @@ namespace MyCode.Managers
 
         public async void LoadManagers(GameSave _gameSave)
         {
-            if (_handle.IsValid())
-                DeleteAllManagers(_handle);
+            GameSaveManager gameSaveManager = new GameSaveManager();
+            PlayerManager playerManager = new PlayerManager();
+            PlayerSoundManager playerSoundManager = new PlayerSoundManager();
 
-            _managerList = await LoadAllManagers(ManagerGroupLabel, _managerList);
 
-            SettingsManager.CreateManager(_managerList[typeof(SettingsManager)]);
-            GameSaveManager.CreateManager(_managerList[typeof(GameSaveManager)]);
-            PlayerManager.CreateManager(_managerList[typeof(PlayerManager)]);
-            PopupManager.CreateManager(_managerList[typeof(PopupManager)]);
-            PlayerSoundManager.CreateManager(_managerList[typeof(PlayerSoundManager)]);
-
-            UniTask[] taskPool = new UniTask[]
-            {
-                GameSaveManager.Instance.SetUpExistingManager(_gameSave),
-                PlayerManager.Instance.SetUpExistingManager(_gameSave),
-                PlayerSoundManager.Instance.SetUpExistingManager(_gameSave),
-            };
-
-            await UniTask.WhenAll(taskPool);
-
-            await PopupManager.Instance.SetUpExistingManager(_gameSave);
+            await gameSaveManager.SetUpExistingManager(_gameSave);
+            playerManager.SetUpExistingManager(_gameSave);
+            playerSoundManager.SetUpExistingManager(_gameSave);
 
             // Load Main Scene
             await SceneLoader.LoadScene(MyScene.DebugScene);
@@ -91,27 +64,6 @@ namespace MyCode.Managers
             OnLoadGame?.Invoke();
 
             PlayerManager.InvokeOnPlayerTeleport(_gameSave);
-        }
-
-        private void DeleteAllManagers(AsyncOperationHandle _handle)
-        {
-            Addressables.ReleaseInstance(_handle);
-            Debug.Log("Released handle");
-            _managerList.Clear();
-        }
-
-        private async UniTask<Dictionary<Type, GameObject>> LoadAllManagers(AssetLabelReference _label, Dictionary<Type, GameObject> _list)
-        {
-            if (_list == null) _list = new Dictionary<Type, GameObject>();
-            _handle = Addressables.LoadAssetsAsync<GameObject>(_label, (a) =>
-            {
-                Type type = Type.GetType($"MyCode.Managers.{a.GetComponent<ManagerType>().managerType}");
-                _list.Add(type, a);
-            });
-
-            await _handle.Task;
-
-            return _list;
         }
     }
 

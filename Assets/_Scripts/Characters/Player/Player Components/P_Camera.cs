@@ -45,14 +45,14 @@ namespace MyCode.PlayerComponents
         {
             inputAction.action.Enable();
             inputAction.action.performed += ctx => Look(ctx.ReadValue<Vector2>());
-            PlayerManager.Instance.InventoryData.OnInventoryStatusChange += value => canLook = !value;
+            PlayerManager.InventoryData.OnInventoryStatusChange += value => canLook = !value;
         }
 
         private void OnDisable()
         {
             inputAction.action.Disable();
             inputAction.action.performed -= ctx => Look(ctx.ReadValue<Vector2>());
-            PlayerManager.Instance.InventoryData.OnInventoryStatusChange -= value => canLook = !value;
+            PlayerManager.InventoryData.OnInventoryStatusChange -= value => canLook = !value;
         }
 
         private void Look(Vector2 _valueXY)
@@ -60,25 +60,25 @@ namespace MyCode.PlayerComponents
             if (!canLook)
                 return;
 
-            valueX = _valueXY.x * PlayerManager.Instance.CameraData.Sensetivity * Time.deltaTime;
-            valueY = _valueXY.y * PlayerManager.Instance.CameraData.Sensetivity * Time.deltaTime;
+            valueX = _valueXY.x * PlayerManager.CameraData.Sensetivity * Time.deltaTime;
+            valueY = _valueXY.y * PlayerManager.CameraData.Sensetivity * Time.deltaTime;
 
             mouseRotation -= valueY;
-            mouseRotation = Mathf.Clamp(mouseRotation, PlayerManager.Instance.CameraData.BottomRotationLimit, PlayerManager.Instance.CameraData.TopRotationLimit);
+            mouseRotation = Mathf.Clamp(mouseRotation, PlayerManager.CameraData.BottomRotationLimit, PlayerManager.CameraData.TopRotationLimit);
             transform.localRotation = Quaternion.Euler(mouseRotation, 0, 0);
             player.transform.Rotate(Vector3.up * valueX);
-            if (PlayerManager.Instance.CameraData.UseStabilization)
+            if (PlayerManager.CameraData.UseStabilization)
             {
                 camStabilizationObject.transform.localRotation = Quaternion.Euler(mouseRotation, 0, 0);
                 cam.transform.LookAt(FocusTarget());
-                transform.position = FollowHeadJoint(headJoint, eyeJoint, .2f, PlayerManager.Instance.CameraData.StabilizationAmount);
+                transform.position = FollowHeadJoint(headJoint, eyeJoint, .2f, PlayerManager.CameraData.StabilizationAmount);
             }
         }
 
         private Vector3 FocusTarget()
         {
-            PlayerManager.Instance.CameraData.FocusPointStabilizationDistance = PlayerManager.Instance.CameraData.FocusPointStabilizationDistance <= 0 ? 1f : PlayerManager.Instance.CameraData.FocusPointStabilizationDistance;
-            Vector3 pos = camStabilizationObject.transform.position + camStabilizationObject.transform.forward * PlayerManager.Instance.CameraData.FocusPointStabilizationDistance;
+            PlayerManager.CameraData.FocusPointStabilizationDistance = PlayerManager.CameraData.FocusPointStabilizationDistance <= 0 ? 1f : PlayerManager.CameraData.FocusPointStabilizationDistance;
+            Vector3 pos = camStabilizationObject.transform.position + camStabilizationObject.transform.forward * PlayerManager.CameraData.FocusPointStabilizationDistance;
             return pos;
         }
 

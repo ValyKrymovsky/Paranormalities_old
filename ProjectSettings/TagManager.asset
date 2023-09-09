@@ -11,6 +11,7 @@ TagManager:
   - Noise
   - Parent Patrol Point
   - Child Patrol Point
+  - InventoryItem
   layers:
   - Default
   - TransparentFX

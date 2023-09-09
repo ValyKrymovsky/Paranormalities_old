@@ -35,27 +35,27 @@ namespace MyCode.Systems
 
         private async void SaveGame()
         {
-            if (_saveIndex.CompareTo(GameSaveManager.Instance.CurrentGameSave.SaveIndex) < 1) return;
+            if (_saveIndex.CompareTo(GameSaveManager.CurrentGameSave.SaveIndex) < 1) return;
 
             GameSave saveForUpdate = new GameSave();
 
-            saveForUpdate = SaveSerializer.DeserializeGameSave(await SaveSerializer.ReadSaveFileAsync(GameSaveManager.Instance.saveFilePath), saveForUpdate);
+            saveForUpdate = SaveSerializer.DeserializeGameSave(await SaveSerializer.ReadSaveFileAsync(GameSaveManager.saveFilePath), saveForUpdate);
 
             GameSave newSave = new GameSave();
 
             await UniTask.RunOnThreadPool(() =>
             {
                 newSave.SetPlayer(_saveLocation,
-                    PlayerManager.Instance.HealthData.CurrentHealth,
-                    PlayerManager.Instance.StaminaData.CurrentStamina,
+                    PlayerManager.HealthData.CurrentHealth,
+                    PlayerManager.StaminaData.CurrentStamina,
                     false,
-                    PlayerManager.Instance.InventoryData.Inventory,
-                    PlayerManager.Instance.InventoryData.PrimaryEquipment,
-                    PlayerManager.Instance.InventoryData.SecondaryEquipment);
+                    PlayerManager.InventoryData.Inventory,
+                    PlayerManager.InventoryData.PrimaryEquipment,
+                    PlayerManager.InventoryData.SecondaryEquipment);
 
-                newSave.Difficulty = GameSaveManager.Instance.CurrentGameSave.Difficulty;
+                newSave.Difficulty = GameSaveManager.CurrentGameSave.Difficulty;
 
-                newSave.SavePath = GameSaveManager.Instance.CurrentGameSave.SavePath;
+                newSave.SavePath = GameSaveManager.CurrentGameSave.SavePath;
 
                 newSave.SaveIndex = _saveIndex;
 
@@ -71,9 +71,9 @@ namespace MyCode.Systems
             serializer.Formatting = Formatting.Indented;
             serializer.ContractResolver = new IgnorePropertiesResolver(new[] { "name", "hideFlags" });
 
-            await SaveSerializer.SerializeObjectAsync(serializer, newSave, GameSaveManager.Instance.saveFilePath);
+            await SaveSerializer.SerializeObjectAsync(serializer, newSave, GameSaveManager.saveFilePath);
 
-            GameSaveManager.Instance.CurrentGameSave = newSave;
+            GameSaveManager.CurrentGameSave = newSave;
         }
 
     }

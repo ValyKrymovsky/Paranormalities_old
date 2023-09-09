@@ -30,7 +30,7 @@ namespace MyCode.GameData.GameSave
 
         [Header("Inventory")]
         [Space]
-        [SerializeField] private InventoryObject _inventory;
+        [SerializeField] private InventoryItem[] _inventory;
         [SerializeField] private InventoryItem _primaryEquipment;
         [SerializeField] private InventoryItem _secondaryEquipment;
 
@@ -70,7 +70,7 @@ namespace MyCode.GameData.GameSave
         public bool ReachedLimit { get => _reachedLimit; set => _reachedLimit = value; }
 
         // Inventory
-        public InventoryObject Inventory { get => _inventory; set => _inventory = value; }
+        public InventoryItem[] Inventory { get => _inventory; set => _inventory = value; }
         public InventoryItem PrimaryEquipment { get => _primaryEquipment; set => _primaryEquipment = value; }
         public InventoryItem SecondaryEquipment { get => _secondaryEquipment; set => _secondaryEquipment = value; }
 
@@ -93,7 +93,7 @@ namespace MyCode.GameData.GameSave
         public DateTime SaveTime { get => _saveTime; set => _saveTime = value; }
         public string SavePath { get => _savePath; set => _savePath = value; }
 
-        public void SetPlayer(float[] _spawnLocation, float _health, float _stamina, bool _reachedStaminaLimit, InventoryObject _inventory, InventoryItem _pEquipment, InventoryItem _sEquipment)
+        public void SetPlayer(float[] _spawnLocation, float _health, float _stamina, bool _reachedStaminaLimit, InventoryItem[] _inventory, InventoryItem _pEquipment, InventoryItem _sEquipment)
         {
             this._checkpointLocation = _spawnLocation;
             this._health = _health;

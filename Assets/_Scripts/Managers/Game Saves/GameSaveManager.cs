@@ -52,10 +52,10 @@ namespace MyCode.Managers
             GameSave gs = new GameSave();
 
             gs.SetPlayer(new float[] {0, 0, 0},
-                PlayerManager.Instance.HealthData.OriginalMaxHealth,
-                PlayerManager.Instance.StaminaData.MaxStamina,
+                PlayerManager.HealthData.OriginalMaxHealth,
+                PlayerManager.StaminaData.MaxStamina,
                 false,
-                PlayerManager.Instance.InventoryData.Inventory,
+                PlayerManager.InventoryData.Inventory,
                 null,
                 null);
 
@@ -80,8 +80,8 @@ namespace MyCode.Managers
             CurrentGameSave = gs;
         }
 
-        [field: SerializeField] public GameSave CurrentGameSave { get; set; }
-        public string saveFilePath;
+        [field: SerializeField] public static GameSave CurrentGameSave { get; set; }
+        public static string saveFilePath;
     }
 
 }

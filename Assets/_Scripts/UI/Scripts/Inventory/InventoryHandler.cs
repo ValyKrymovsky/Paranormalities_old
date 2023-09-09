@@ -31,7 +31,6 @@ namespace MyCode.UI.Inventory
         [Space]
         [Header("Equipment Slots")]
         private VisualElement equipment;
-        private VisualElement equipmentImage;
         public InventorySlot primarySlot;
         public InventorySlot secondarySlot;
 
@@ -44,11 +43,6 @@ namespace MyCode.UI.Inventory
         [SerializeField] private InputActionReference _input_DropItem;
         [SerializeField] private InputActionReference _input_ToggleInventory;
 
-        //                  //
-        // Input Controller //
-        //                  //
-
-        private PlayerManager _pm;
         private void Awake()
         {
 
@@ -66,7 +60,6 @@ namespace MyCode.UI.Inventory
             inventoryGrid = root.Q<VisualElement>("InventoryGrid");
 
             equipment = root.Q<VisualElement>("Equipment");
-            equipmentImage = equipment.Q<VisualElement>("EquipmentImage");
             primarySlot = equipment.Q<InventorySlot>("PrimarySlot");
             secondarySlot = equipment.Q<InventorySlot>("SecondarySlot");
 
@@ -101,14 +94,6 @@ namespace MyCode.UI.Inventory
 
             ghostIcon.RegisterCallback<PointerMoveEvent>(OnPointerMove);
             ghostIcon.RegisterCallback<PointerUpEvent>(OnPointerUp);
-
-            //                  //
-            // Input Controller //
-            //                  //
-
-            _pm = PlayerManager.Instance;
-
-
         }
 
         private void OnEnable()
@@ -117,7 +102,8 @@ namespace MyCode.UI.Inventory
             _input_DropItem.action.Enable();
 
             _input_ToggleInventory.action.performed += ToggleInventoryUI;
-            _pm.InventoryData.OnAddItem += AddItemToUI;
+            PlayerManager.InventoryData.OnAddItem += AddItemToUI;
+            PlayerManager.InventoryData.OnAddEquipment += AddEquipmentToUI;
         }
 
         private void OnDisable()
@@ -126,7 +112,9 @@ namespace MyCode.UI.Inventory
             _input_DropItem.action.Disable();
 
             _input_ToggleInventory.action.performed -= ToggleInventoryUI;
-            _pm.InventoryData.OnAddItem -= AddItemToUI;
+            PlayerManager.InventoryData.OnAddItem -= AddItemToUI;
+            PlayerManager.InventoryData.OnAddEquipment -= AddEquipmentToUI;
+            
         }
 
         private void SetDescription(string _description, Sprite _itemImage)
@@ -170,6 +158,7 @@ namespace MyCode.UI.Inventory
 
             if (overlapingSlots.Count() == 0)
             {
+                Debug.Log("test 1");
                 ReturnToOriginalSlot(originalSlot);
                 StopDragging();
                 return;
@@ -183,6 +172,7 @@ namespace MyCode.UI.Inventory
             if (originalSlot.item.Item.itemType != ItemObject.ItemType.Equipment &&
             closestSlot.name != "InventorySlot")
             {
+                Debug.Log("test 2");
                 ReturnToOriginalSlot(originalSlot);
                 StopDragging();
                 return;
@@ -192,9 +182,11 @@ namespace MyCode.UI.Inventory
             if (originalSlot.name != "InventorySlot" &&
                 (closestSlot.name != "InventorySlot" && closestSlot.name != originalSlot.name))
             {
+                Debug.Log("test 3");
                 InventoryItem closestSlotItem = new InventoryItem(closestSlot.item.ItemId, closestSlot.item.Item, closestSlot.item.Model, closestSlot.GetItemImage());
 
                 SwapEquipment(originalSlot, closestSlot, originalSlotItem, closestSlotItem);
+                PlayerManager.InventoryData.EquipmentSwap(originalSlot.SlotType);
                 StopDragging();
                 return;
             }
@@ -202,13 +194,16 @@ namespace MyCode.UI.Inventory
             // Returns item to original slot when the new slot is not empty
             if (!closestSlot.item.Equals(InventoryItem.empty))
             {
+                Debug.Log("test 4");
                 ReturnToOriginalSlot(originalSlot);
                 StopDragging();
                 return;
             }
 
+            Debug.Log("test 5");
             // Sets the new slot with the original slot item and empties the original slot
             closestSlot.SetItemParameters(originalSlotItem);
+            PlayerManager.InventoryData.MoveItem(originalSlot.SlotIndex, closestSlot.SlotIndex);
             originalSlot.ResetParameters();
 
             StopDragging();
@@ -231,17 +226,18 @@ namespace MyCode.UI.Inventory
         {
             _newSlot.SetItemParameters(_originalItem);
             _originalSlot.SetItemParameters(_newItem);
-
-            InventoryItem tempItem = PlayerManager.Instance.InventoryData.PrimaryEquipment;
-
-            PlayerManager.Instance.InventoryData.PrimaryEquipment = PlayerManager.Instance.InventoryData.SecondaryEquipment;
-            PlayerManager.Instance.InventoryData.SecondaryEquipment = tempItem;
         }
 
-        private void AddItemToUI(InventoryItem _item)
+        private void AddItemToUI(InventoryItem _item, int _slotIndex)
         {
-            InventorySlot tmp = _item.Item.itemType == ItemObject.ItemType.Equipment ? GetEmptyEquipmentSlot() : GetFirstEmptySlot();
-            tmp.SetItemParameters(_item);
+            InventorySlot slot = inventorySlots[_slotIndex];
+            slot.SetItemParameters(_item);
+        }
+
+        private void AddEquipmentToUI(InventoryItem _item, SlotType _slotType)
+        {
+            InventorySlot slot = _slotType == SlotType.Primary ? primarySlot : secondarySlot;
+            slot.SetItemParameters(_item);
         }
 
         private InventorySlot GetFirstEmptySlot()
@@ -275,21 +271,21 @@ namespace MyCode.UI.Inventory
         {
             if (root.style.display == DisplayStyle.Flex)
             {
-                if (PlayerManager.Instance.MovementData.FreezeOnInventory)
+                if (PlayerManager.MovementData.FreezeOnInventory)
                     Time.timeScale = 1;
 
                 root.style.display = DisplayStyle.None;
                 UnityEngine.Cursor.lockState = CursorLockMode.Locked;
-                PlayerManager.Instance.InventoryData.InvokeOnInventoryStatusChange(false);
+                PlayerManager.InventoryData.InvokeOnInventoryStatusChange(false);
                 return;
             }
 
-            if (PlayerManager.Instance.MovementData.FreezeOnInventory)
+            if (PlayerManager.MovementData.FreezeOnInventory)
                 Time.timeScale = 0;
 
             root.style.display = DisplayStyle.Flex;
             UnityEngine.Cursor.lockState = CursorLockMode.Confined;
-            PlayerManager.Instance.InventoryData.InvokeOnInventoryStatusChange(true);
+            PlayerManager.InventoryData.InvokeOnInventoryStatusChange(true);
         }
     }
 
