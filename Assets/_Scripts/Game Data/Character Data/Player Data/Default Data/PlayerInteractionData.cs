@@ -3,7 +3,7 @@ using System;
 using MyBox;
 
 
-namespace MyCode.GameData.PlayerData
+namespace MyCode.GameData
 {
     [CreateAssetMenu(fileName = "NewInteractionData", menuName = "DataObjects/Player/Interaction")]
     public class PlayerInteractionData : ScriptableObject

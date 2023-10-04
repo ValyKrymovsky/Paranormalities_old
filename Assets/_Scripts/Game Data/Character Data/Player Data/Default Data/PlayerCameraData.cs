@@ -2,7 +2,7 @@ using UnityEngine;
 using MyBox;
 using System;
 
-namespace MyCode.GameData.PlayerData
+namespace MyCode.GameData
 {
     [CreateAssetMenu(fileName = "NewCameraData", menuName = "DataObjects/Player/Camera")]
     public class PlayerCameraData : ScriptableObject

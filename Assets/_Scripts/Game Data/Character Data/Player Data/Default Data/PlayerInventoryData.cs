@@ -1,11 +1,10 @@
 using UnityEngine;
 using System;
 using MyBox;
-using MyCode.GameData.Inventory;
 using System.Linq;
 
 
-namespace MyCode.GameData.PlayerData
+namespace MyCode.GameData
 {
     [CreateAssetMenu(fileName = "NewInventoryData", menuName = "DataObjects/Player/Inventory")]
     public class PlayerInventoryData : ScriptableObject
@@ -16,9 +15,7 @@ namespace MyCode.GameData.PlayerData
 
         [Header("Inventory Object")]
         [Space]
-        [SerializeField] private InventoryItem[] _inventory;
-        [SerializeField] private InventoryItem _primaryEquipment;
-        [SerializeField] private InventoryItem _secondaryEquipment;
+        [SerializeField] private Inventory _inventory;
 
         [Space]
         [Separator("Drop", true)]
@@ -32,11 +29,11 @@ namespace MyCode.GameData.PlayerData
         private GameObject inventoryUI;
         private bool inventoryOpen;
 
+        public event Action<bool> OnInventoryStateChange;
+
 
         // Inventory
-        public InventoryItem[] Inventory { get => _inventory; set => _inventory = value; }
-        public InventoryItem PrimaryEquipment { get => _primaryEquipment; set => _primaryEquipment = value; }
-        public InventoryItem SecondaryEquipment { get => _secondaryEquipment; set => _secondaryEquipment = value; }
+        public Inventory Inventory { get => _inventory; set => _inventory = value; }
 
         // Item drop
         public float DropRange { get => dropRange; set => dropRange = value; }
@@ -45,6 +42,13 @@ namespace MyCode.GameData.PlayerData
 
         // Inventory state
         public bool InventoryOpen { get => inventoryOpen; set => inventoryOpen = value; }
+
+
+        public void InvokeOnInventoryStateChange(bool _newState)
+        {
+            OnInventoryStateChange?.Invoke(_newState);
+        }
+
     }
 
 }

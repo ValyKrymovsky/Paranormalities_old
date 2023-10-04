@@ -1,9 +1,9 @@
 using UnityEngine;
 
-namespace MyCode.GameData.Inventory
+namespace MyCode.GameData
 {
     [CreateAssetMenu(fileName = "NewDefault", menuName = "Inventory System")]
-    public class ItemObject : ScriptableObject
+    public class Item : ScriptableObject
     {
         public enum ItemType
         {

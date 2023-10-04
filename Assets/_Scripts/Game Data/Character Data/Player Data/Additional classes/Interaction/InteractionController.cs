@@ -2,7 +2,7 @@ using UnityEngine;
 using MyBox;
 using System;
 
-namespace MyCode.GameData.Interaction
+namespace MyCode.GameData
 {
     public class InteractionController : MonoBehaviour
     {

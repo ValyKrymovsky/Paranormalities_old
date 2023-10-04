@@ -1,13 +1,9 @@
 using System.Collections.Generic;
 using UnityEngine;
-using MyCode.GameData.GameSettings;
-using Cysharp.Threading.Tasks;
-using MyCode.GameData.Scene;
-using MyCode.GameData.GameSave;
+using MyCode.GameData;
 using UnityEngine.AddressableAssets;
 using System;
 using UnityEngine.ResourceManagement.AsyncOperations;
-using MyCode.GameData.Inventory;
 
 namespace MyCode.Managers
 {
@@ -34,9 +30,9 @@ namespace MyCode.Managers
             PlayerManager playerManager = new PlayerManager();
             GameSaveManager gameSaveManager = new GameSaveManager();
 
-            await playerManager.SetUpNewManager(_difficultyProp);
+            playerManager.SetPlayerProperties(_difficultyProp);
 
-            gameSaveManager.SetUpNewManager(_difficultyProp);
+            gameSaveManager.CreateNewSave(_difficultyProp);
             
             // Load Main Scene
             await SceneLoader.LoadScene(MyScene.DebugScene);
@@ -49,12 +45,11 @@ namespace MyCode.Managers
         {
             GameSaveManager gameSaveManager = new GameSaveManager();
             PlayerManager playerManager = new PlayerManager();
-            PlayerSoundManager playerSoundManager = new PlayerSoundManager();
 
 
-            await gameSaveManager.SetUpExistingManager(_gameSave);
+            gameSaveManager.SetSave(_gameSave);
             playerManager.SetUpExistingManager(_gameSave);
-            playerSoundManager.SetUpExistingManager(_gameSave);
+            //playerSoundManager.SetUpExistingManager(_gameSave);
 
             // Load Main Scene
             await SceneLoader.LoadScene(MyScene.DebugScene);

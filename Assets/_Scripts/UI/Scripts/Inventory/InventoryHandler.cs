@@ -5,7 +5,7 @@ using System.Linq;
 using MyBox;
 using UnityEngine.InputSystem;
 using MyCode.Managers;
-using MyCode.GameData.Inventory;
+using MyCode.GameData;
 
 namespace MyCode.UI.Inventory
 {
@@ -102,8 +102,7 @@ namespace MyCode.UI.Inventory
             _input_DropItem.action.Enable();
 
             _input_ToggleInventory.action.performed += ToggleInventoryUI;
-            PlayerManager.InventoryData.OnAddItem += AddItemToUI;
-            PlayerManager.InventoryData.OnAddEquipment += AddEquipmentToUI;
+            PlayerManager.InventoryData.Inventory.OnAddItem += AddItemToUI;
         }
 
         private void OnDisable()
@@ -112,8 +111,7 @@ namespace MyCode.UI.Inventory
             _input_DropItem.action.Disable();
 
             _input_ToggleInventory.action.performed -= ToggleInventoryUI;
-            PlayerManager.InventoryData.OnAddItem -= AddItemToUI;
-            PlayerManager.InventoryData.OnAddEquipment -= AddEquipmentToUI;
+            PlayerManager.InventoryData.Inventory.OnAddItem -= AddItemToUI;
             
         }
 
@@ -169,7 +167,7 @@ namespace MyCode.UI.Inventory
             InventoryItem originalSlotItem = new InventoryItem(originalSlot.item.ItemId, originalSlot.item.Item, originalSlot.item.Model, ghostIcon.style.backgroundImage.value.sprite);
 
             // Returns item to original slot if the item is not equipment and is trying to go to equipment slots
-            if (originalSlot.item.Item.itemType != ItemObject.ItemType.Equipment &&
+            if (originalSlot.item.Item.itemType != Item.ItemType.Equipment &&
             closestSlot.name != "InventorySlot")
             {
                 Debug.Log("test 2");
@@ -186,7 +184,6 @@ namespace MyCode.UI.Inventory
                 InventoryItem closestSlotItem = new InventoryItem(closestSlot.item.ItemId, closestSlot.item.Item, closestSlot.item.Model, closestSlot.GetItemImage());
 
                 SwapEquipment(originalSlot, closestSlot, originalSlotItem, closestSlotItem);
-                PlayerManager.InventoryData.EquipmentSwap(originalSlot.SlotType);
                 StopDragging();
                 return;
             }
@@ -203,7 +200,6 @@ namespace MyCode.UI.Inventory
             Debug.Log("test 5");
             // Sets the new slot with the original slot item and empties the original slot
             closestSlot.SetItemParameters(originalSlotItem);
-            PlayerManager.InventoryData.MoveItem(originalSlot.SlotIndex, closestSlot.SlotIndex);
             originalSlot.ResetParameters();
 
             StopDragging();
@@ -228,10 +224,9 @@ namespace MyCode.UI.Inventory
             _originalSlot.SetItemParameters(_newItem);
         }
 
-        private void AddItemToUI(InventoryItem _item, int _slotIndex)
+        private void AddItemToUI(InventoryItem _item, SlotType _slotType)
         {
-            InventorySlot slot = inventorySlots[_slotIndex];
-            slot.SetItemParameters(_item);
+
         }
 
         private void AddEquipmentToUI(InventoryItem _item, SlotType _slotType)
@@ -276,7 +271,7 @@ namespace MyCode.UI.Inventory
 
                 root.style.display = DisplayStyle.None;
                 UnityEngine.Cursor.lockState = CursorLockMode.Locked;
-                PlayerManager.InventoryData.InvokeOnInventoryStatusChange(false);
+                PlayerManager.InventoryData.InvokeOnInventoryStateChange(false);
                 return;
             }
 
@@ -285,7 +280,7 @@ namespace MyCode.UI.Inventory
 
             root.style.display = DisplayStyle.Flex;
             UnityEngine.Cursor.lockState = CursorLockMode.Confined;
-            PlayerManager.InventoryData.InvokeOnInventoryStatusChange(true);
+            PlayerManager.InventoryData.InvokeOnInventoryStateChange(true);
         }
     }
 

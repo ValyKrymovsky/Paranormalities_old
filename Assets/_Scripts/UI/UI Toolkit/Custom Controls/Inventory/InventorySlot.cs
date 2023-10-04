@@ -1,6 +1,6 @@
 using UnityEngine;
 using UnityEngine.UIElements;
-using MyCode.GameData.Inventory;
+using MyCode.GameData;
 using MyCode.UI.Inventory;
 
 public class InventorySlot : VisualElement

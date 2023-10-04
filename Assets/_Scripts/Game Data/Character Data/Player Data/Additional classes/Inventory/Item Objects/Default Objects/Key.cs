@@ -2,10 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace MyCode.GameData.Inventory
+namespace MyCode.GameData
 {
     [CreateAssetMenu(fileName = "NewKey", menuName = "Inventory System/Items/Key")]
-    public class Key : ItemObject
+    public class Key : Item
     {
         private GameObject target;
         public void Awake()

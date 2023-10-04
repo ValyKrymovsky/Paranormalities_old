@@ -1,4 +1,4 @@
-using MyCode.GameData.GameSettings;
+using MyCode.GameData;
 using System.IO;
 using System;
 using UnityEngine;

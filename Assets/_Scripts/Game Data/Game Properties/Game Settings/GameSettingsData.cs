@@ -4,8 +4,31 @@ using System;
 using System.IO;
 using Newtonsoft.Json;
 
-namespace MyCode.GameData.GameSettings
+namespace MyCode.GameData
 {
+    public enum VideoSettings
+    {
+        lowest, low, medium, high, ultra
+    }
+
+    public enum VideoSettingsState
+    {
+        off, on
+    }
+
+    [Serializable]
+    public struct XYStructure
+    {
+        public int x;
+        public int y;
+
+        public XYStructure(int x, int y)
+        {
+            this.x = x;
+            this.y = y;
+        }
+    }
+
     [Serializable]
     [CreateAssetMenu(fileName = "NewGameSettingsData", menuName = "DataObjects/GameSettings/Settings")]
     public class GameSettingsData : ScriptableObject

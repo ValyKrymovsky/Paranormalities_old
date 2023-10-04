@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace MyCode.GameData.Player.Sound
+namespace MyCode.GameData
 {
     public enum PlayerSoundType
     {

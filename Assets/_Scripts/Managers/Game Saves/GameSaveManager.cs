@@ -1,6 +1,5 @@
 using Cysharp.Threading.Tasks;
-using MyCode.GameData.GameSave;
-using MyCode.GameData.GameSettings;
+using MyCode.GameData;
 using UnityEngine;
 using System.IO;
 using System;
@@ -11,25 +10,16 @@ using MyCode.Helper.Serializer;
 
 namespace MyCode.Managers
 {
-    public class GameSaveManager : Manager<GameSaveManager>
+    public class GameSaveManager
     {
 
-        public override async UniTask SetUpNewManager(DifficultyProperties _properties)
+        public void SetSave(GameSave _save)
         {
-            await CreateNewSave(_properties);
+            CurrentGameSave = _save;
+            saveFilePath = _save.SavePath;
         }
 
-        public override async UniTask SetUpExistingManager(GameSave _save)
-        {
-            await UniTask.RunOnThreadPool(() =>
-            {
-                CurrentGameSave = _save;
-                saveFilePath = _save.SavePath;
-            });
-            
-        }
-
-        private async UniTask CreateNewSave(DifficultyProperties _properties)
+        public async UniTask CreateNewSave(DifficultyProperties _properties)
         {
             string savePath = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments).Replace('\\', '/') + "/My Games/Paranormalities/Saves/";
 
@@ -51,15 +41,9 @@ namespace MyCode.Managers
 
             GameSave gs = new GameSave();
 
-            gs.SetPlayer(new float[] {0, 0, 0},
-                PlayerManager.HealthData.OriginalMaxHealth,
-                PlayerManager.StaminaData.MaxStamina,
-                false,
-                PlayerManager.InventoryData.Inventory,
-                null,
-                null);
+            gs.SetPlayerProperties(PlayerManager.MovementData, PlayerManager.InventoryData);
 
-            gs.Difficulty = _properties;
+            gs.GameDifficulty = _properties.difficulty;
 
             gs.SaveIndex = SaveIndex.entrance;
 

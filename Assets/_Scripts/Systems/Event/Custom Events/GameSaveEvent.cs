@@ -1,6 +1,6 @@
 using UnityEngine;
 using MyCode.Managers;
-using MyCode.GameData.GameSave;
+using MyCode.GameData;
 using Newtonsoft.Json;
 using Cysharp.Threading.Tasks;
 using MyCode.Helper.Serializer;
@@ -45,15 +45,9 @@ namespace MyCode.Systems
 
             await UniTask.RunOnThreadPool(() =>
             {
-                newSave.SetPlayer(_saveLocation,
-                    PlayerManager.HealthData.CurrentHealth,
-                    PlayerManager.StaminaData.CurrentStamina,
-                    false,
-                    PlayerManager.InventoryData.Inventory,
-                    PlayerManager.InventoryData.PrimaryEquipment,
-                    PlayerManager.InventoryData.SecondaryEquipment);
+                newSave.SetPlayerProperties(PlayerManager.MovementData, PlayerManager.InventoryData);
 
-                newSave.Difficulty = GameSaveManager.CurrentGameSave.Difficulty;
+                newSave.GameDifficulty = GameSaveManager.CurrentGameSave.GameDifficulty;
 
                 newSave.SavePath = GameSaveManager.CurrentGameSave.SavePath;
 

@@ -1,4 +1,4 @@
-namespace MyCode.GameData.Scene
+namespace MyCode.GameData
 {
     public enum MyScene
     {

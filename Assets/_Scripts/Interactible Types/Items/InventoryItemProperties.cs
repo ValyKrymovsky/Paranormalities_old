@@ -1,8 +1,7 @@
 using UnityEngine;
 using MyBox;
 using MyCode.Managers;
-using MyCode.GameData.Inventory;
-using MyCode.GameData.Interaction;
+using MyCode.GameData;
 
 namespace MyCode.Interactibles
 {
@@ -44,7 +43,7 @@ namespace MyCode.Interactibles
 
         public void AddToInventory()
         {
-            if (!PlayerManager.InventoryData.AddItem(_item)) return;
+            if (!PlayerManager.InventoryData.Inventory.AddItem(_item)) return;
             
             this.gameObject.SetActive(false);
         }

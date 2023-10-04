@@ -1,7 +1,7 @@
 using System.Collections;
 using UnityEngine;
 
-namespace MyCode.GameData.Sound
+namespace MyCode.GameData
 {
     public class SoundObject
     {

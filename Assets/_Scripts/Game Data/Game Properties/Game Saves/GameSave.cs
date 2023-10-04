@@ -1,11 +1,16 @@
 using UnityEngine;
 using MyBox;
-using MyCode.GameData.Inventory;
-using MyCode.GameData.GameSettings;
 using System;
 
-namespace MyCode.GameData.GameSave
+namespace MyCode.GameData
 {
+    public enum SaveIndex
+    {
+        entrance,
+        stairs,
+        dungeons
+    }
+
     [Serializable]
     public class GameSave
     {
@@ -15,7 +20,7 @@ namespace MyCode.GameData.GameSave
 
         [Header("Checkpoint location")]
         [Space]
-        [SerializeField, ReadOnly] private float[] _checkpointLocation = new float[3];
+        [SerializeField, ReadOnly] private SerializableVector3 _checkpointLocation;
         [Space]
 
         [Header("Health")]
@@ -30,9 +35,7 @@ namespace MyCode.GameData.GameSave
 
         [Header("Inventory")]
         [Space]
-        [SerializeField] private InventoryItem[] _inventory;
-        [SerializeField] private InventoryItem _primaryEquipment;
-        [SerializeField] private InventoryItem _secondaryEquipment;
+        [SerializeField] private Inventory _inventory;
 
             [Space]
             [Separator("Game Settings")]
@@ -40,7 +43,7 @@ namespace MyCode.GameData.GameSave
 
         [Header("Game difficulty")]
         [Space]
-        [SerializeField] private DifficultyProperties _difficultyProperties;
+        [SerializeField] private Difficulty _gameDifficulty;
 
         [Space]
         [Separator("Save settings")]
@@ -60,7 +63,7 @@ namespace MyCode.GameData.GameSave
 
 
         // Location
-        public float[] CheckpointLocation { get => _checkpointLocation; set => _checkpointLocation = value; }
+        public SerializableVector3 CheckpointLocation { get => _checkpointLocation; set => _checkpointLocation = value; }
 
         // Health
         public float Health { get => _health; set => _health = value; }
@@ -70,10 +73,7 @@ namespace MyCode.GameData.GameSave
         public bool ReachedLimit { get => _reachedLimit; set => _reachedLimit = value; }
 
         // Inventory
-        public InventoryItem[] Inventory { get => _inventory; set => _inventory = value; }
-        public InventoryItem PrimaryEquipment { get => _primaryEquipment; set => _primaryEquipment = value; }
-        public InventoryItem SecondaryEquipment { get => _secondaryEquipment; set => _secondaryEquipment = value; }
-
+        public Inventory Inventory { get => _inventory; set => _inventory = value; }
 
         //               //
         // Game settings //
@@ -81,7 +81,7 @@ namespace MyCode.GameData.GameSave
 
 
         // Difficulty
-        public DifficultyProperties Difficulty { get => _difficultyProperties; set => _difficultyProperties = value; }
+        public Difficulty GameDifficulty { get => _gameDifficulty; set => _gameDifficulty = value; }
 
         //               //
         // Save settings //
@@ -93,15 +93,11 @@ namespace MyCode.GameData.GameSave
         public DateTime SaveTime { get => _saveTime; set => _saveTime = value; }
         public string SavePath { get => _savePath; set => _savePath = value; }
 
-        public void SetPlayer(float[] _spawnLocation, float _health, float _stamina, bool _reachedStaminaLimit, InventoryItem[] _inventory, InventoryItem _pEquipment, InventoryItem _sEquipment)
+        public void SetPlayerProperties(PlayerMovementData _movementData, PlayerInventoryData _inventoryData)
         {
-            this._checkpointLocation = _spawnLocation;
-            this._health = _health;
-            this._currentStamina = _stamina;
-            this._reachedLimit = _reachedStaminaLimit;
-            this._inventory = _inventory;
-            this._primaryEquipment = _pEquipment;
-            this._secondaryEquipment = _sEquipment;
+            _checkpointLocation = SerializableVector3.Zero;
+
+            _inventory = _inventoryData.Inventory;
         }
     
     }

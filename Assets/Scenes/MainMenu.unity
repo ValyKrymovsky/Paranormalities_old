@@ -251,8 +251,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 992712817}
+  - component: {fileID: 992712820}
   - component: {fileID: 992712816}
-  - component: {fileID: 992712814}
   - component: {fileID: 992712818}
   - component: {fileID: 992712819}
   m_Layer: 0
@@ -262,18 +262,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &992712814
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 992712813}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a79441f348de89743a2939f4d699eac1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!20 &992712816
 Camera:
   m_ObjectHideFlags: 0
@@ -498,6 +486,14 @@ MonoBehaviour:
       enableFptlForForwardOpaque: 0
       enableBigTilePrepass: 0
       isFptlEnabled: 0
+--- !u!81 &992712820
+AudioListener:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 992712813}
+  m_Enabled: 1
 --- !u!1 &1049677345
 GameObject:
   m_ObjectHideFlags: 0

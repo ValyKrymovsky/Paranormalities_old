@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
 
-namespace MyCode.GameData.Inventory
+namespace MyCode.GameData
 {
     public class InventoryItemStorage
     {

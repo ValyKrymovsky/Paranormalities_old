@@ -1,10 +1,9 @@
 using System;
 using UnityEngine;
 using MyBox;
-using MyCode.GameData.Player.Movement;
 
 
-namespace MyCode.GameData.PlayerData
+namespace MyCode.GameData
 {
     [CreateAssetMenu(fileName = "NewMovementData", menuName = "DataObjects/Player/Movement")]
     public class PlayerMovementData : ScriptableObject
@@ -19,11 +18,7 @@ namespace MyCode.GameData.PlayerData
 
         [SerializeField] private float _walkSpeed;
         [SerializeField] private float _sprintMultiplier, _sneakMultiplier;
-        [SerializeField] private MovementState _movementState;
-        [SerializeField] private MovementDirection _movementDirection;
         [SerializeField, ReadOnly] private bool _isMoving, _isMovingForward = false;
-        [SerializeField, ReadOnly] private Vector3 _directionToMove;
-        [SerializeField, ReadOnly] private Vector2 _smoothMoveValue;
         [Space]
 
         [Header("Movement Smoothening")]
@@ -49,17 +44,16 @@ namespace MyCode.GameData.PlayerData
         [Space]
         [SerializeField] private bool freezeOnInventory;
 
+        public event Action OnStoppedRunning;
+        public event Action OnStartedRunning;
+
 
         // Movement
         public float WalkSpeed { get => _walkSpeed; set => _walkSpeed = value; }
         public float SprintMultiplier { get => _sprintMultiplier; private set => _sprintMultiplier = value; }
         public float SneakMultiplier { get => _sneakMultiplier; private set => _sneakMultiplier = value; }
-        public MovementState MovementState { get => _movementState; set => _movementState = value; }
-        public MovementDirection MovementDirection { get => _movementDirection; set => _movementDirection = value; }
         public bool IsMoving { get => _isMoving; set => _isMoving = value; }
         public bool IsMovingForward { get => _isMovingForward; set => _isMovingForward = value; }
-        public Vector3 DirectionToMove { get => _directionToMove; set => _directionToMove = value; }
-        public Vector2 SmoothMoveValue { get => _smoothMoveValue; set => _smoothMoveValue = value; }
         public float SmoothTime { get => _smoothTime; set => _smoothTime = value; }
 
         // Gravity
@@ -71,5 +65,15 @@ namespace MyCode.GameData.PlayerData
         // Difficulty Rules
         public bool FreezeOnInventory { get => freezeOnInventory; }
 
+
+        public void InvokeOnStoppedRunning()
+        {
+            OnStoppedRunning?.Invoke();
+        }
+
+        public void InvokeOnStartedRunning()
+        {
+            OnStartedRunning?.Invoke();
+        }
     }
 }

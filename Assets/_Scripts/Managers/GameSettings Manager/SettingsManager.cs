@@ -1,11 +1,10 @@
 using UnityEngine;
-using Cysharp.Threading.Tasks;
-using MyCode.GameData.GameSettings;
+using MyCode.GameData;
 
 
 namespace MyCode.Managers
 {
-    public class SettingsManager : Manager<SettingsManager>
+    public class SettingsManager
     {
         [field: SerializeField] public GameSettingsData SettingsData { get; set; }
 
