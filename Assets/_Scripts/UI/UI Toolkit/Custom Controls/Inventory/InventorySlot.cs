@@ -29,7 +29,7 @@ public class InventorySlot : VisualElement
     public int SlotIndex { get; set; }
     public SlotType SlotType { get; set; }
 
-    public InventoryItem item;
+    public Item item;
 
 
     public VisualElement slot;
@@ -52,20 +52,20 @@ public class InventorySlot : VisualElement
         slotImage.AddToClassList("inventorySlotImage");
         slot.Add(slotImage);
 
-        item = InventoryItem.empty;
+        item = Item.empty;
 
-        RegisterCallback<PointerDownEvent>(OnPointerDown);
+        RegisterCallback<PointerDownEvent>(OnItemTake);
     }
 
-    public void SetItemParameters(InventoryItem _slotItem)
+    public void SetItemParameters(Item _slotItem)
     {
         item = _slotItem;
-        slotImage.style.backgroundImage = new StyleBackground(_slotItem.Image);
+        slotImage.style.backgroundImage = new StyleBackground(_slotItem.itemIcon);
     }
 
     public void ResetParameters()
     {
-        item = InventoryItem.empty;
+        item = Item.empty;
         slotImage.style.backgroundImage = null;
     }
 
@@ -79,11 +79,11 @@ public class InventorySlot : VisualElement
         slotImage.style.backgroundImage = new StyleBackground(_image);
     }
 
-    private void OnPointerDown(PointerDownEvent _event)
+    private void OnItemTake(PointerDownEvent _event)
     {
-        if (_event.button != 0 || item.Equals(InventoryItem.empty)) return;
+        if (_event.button != 0 || item.Equals(Item.empty)) return;
 
-        InventoryHandler.StartDrag(_event.position, this);
+        InventoryHandler.TakeItem(_event.position, this);
         slotImage.style.backgroundImage = null;
     }
 }

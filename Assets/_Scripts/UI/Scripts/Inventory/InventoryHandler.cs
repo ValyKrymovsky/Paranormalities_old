@@ -77,23 +77,23 @@ namespace MyCode.UI.Inventory
             {
                 inventorySlot.RegisterCallback<MouseOverEvent>((type) =>
                 {
-                    if (inventorySlot.item != InventoryItem.empty)
+                    if (inventorySlot.item != Item.empty)
                     {
-                        SetDescription(inventorySlot.item.Item.description, inventorySlot.slotImage.style.backgroundImage.value.sprite);
+                        UpdateDescription(inventorySlot.item.description, inventorySlot.slotImage.style.backgroundImage.value.sprite);
                     }
                 });
 
                 inventorySlot.RegisterCallback<MouseOutEvent>((type) =>
                 {
-                    if (inventorySlot.item != InventoryItem.empty)
-                        ResetDescription();
+                    if (inventorySlot.item != Item.empty)
+                        UpdateDescription(null, null);
                 });
             }
 
             root.style.display = DisplayStyle.None;
 
-            ghostIcon.RegisterCallback<PointerMoveEvent>(OnPointerMove);
-            ghostIcon.RegisterCallback<PointerUpEvent>(OnPointerUp);
+            ghostIcon.RegisterCallback<PointerMoveEvent>(DragItem);
+            ghostIcon.RegisterCallback<PointerUpEvent>(PlaceItem);
         }
 
         private void OnEnable()
@@ -115,19 +115,13 @@ namespace MyCode.UI.Inventory
             
         }
 
-        private void SetDescription(string _description, Sprite _itemImage)
+        private void UpdateDescription(string _description, Sprite _itemImage)
         {
             descriptionImage.style.backgroundImage = new StyleBackground(_itemImage);
             descriptionText.text = _description;
         }
 
-        private void ResetDescription()
-        {
-            descriptionImage.style.backgroundImage = null;
-            descriptionText.text = null;
-        }
-
-        public static void StartDrag(Vector2 _position, InventorySlot _originalInventorySlot)
+        public static void TakeItem(Vector2 _position, InventorySlot _originalInventorySlot)
         {
             isDragging = true;
             originalSlot = _originalInventorySlot;
@@ -140,7 +134,7 @@ namespace MyCode.UI.Inventory
             ghostIcon.style.visibility = Visibility.Visible;
         }
 
-        private void OnPointerMove(PointerMoveEvent _event)
+        private void DragItem(PointerMoveEvent _event)
         {
             if (!isDragging) return;
 
@@ -148,7 +142,7 @@ namespace MyCode.UI.Inventory
             ghostIcon.style.left = _event.position.x - ghostIcon.layout.width / 2;
         }
 
-        private void OnPointerUp(PointerUpEvent _event)
+        private void PlaceItem(PointerUpEvent _event)
         {
             if (!isDragging) return;
 
@@ -162,13 +156,14 @@ namespace MyCode.UI.Inventory
                 return;
             }
 
-
-            InventorySlot closestSlot = overlapingSlots.OrderBy(x => Vector2.Distance(x.worldBound.position, ghostIcon.worldBound.position)).First();
-            InventoryItem originalSlotItem = new InventoryItem(originalSlot.item.ItemId, originalSlot.item.Item, originalSlot.item.Model, ghostIcon.style.backgroundImage.value.sprite);
+            // Original Slot = dragged from, New Slot = dragged to
+            InventorySlot newSlot = overlapingSlots.OrderBy(x => Vector2.Distance(x.worldBound.position, ghostIcon.worldBound.position)).First();
+            Item originalSlotItem = originalSlot.item;
+            originalSlotItem.itemIcon = ghostIcon.style.backgroundImage.value.sprite;
 
             // Returns item to original slot if the item is not equipment and is trying to go to equipment slots
-            if (originalSlot.item.Item.itemType != Item.ItemType.Equipment &&
-            closestSlot.name != "InventorySlot")
+            if (originalSlot.item.itemType != ItemType.Equipment &&
+            newSlot.name != "InventorySlot")
             {
                 Debug.Log("test 2");
                 ReturnToOriginalSlot(originalSlot);
@@ -178,18 +173,17 @@ namespace MyCode.UI.Inventory
 
             // Swaps equipment items in primary and secondary equipment slots
             if (originalSlot.name != "InventorySlot" &&
-                (closestSlot.name != "InventorySlot" && closestSlot.name != originalSlot.name))
+                (newSlot.name != "InventorySlot" && newSlot.name != originalSlot.name))
             {
                 Debug.Log("test 3");
-                InventoryItem closestSlotItem = new InventoryItem(closestSlot.item.ItemId, closestSlot.item.Item, closestSlot.item.Model, closestSlot.GetItemImage());
 
-                SwapEquipment(originalSlot, closestSlot, originalSlotItem, closestSlotItem);
+                SwapEquipment();
                 StopDragging();
                 return;
             }
 
             // Returns item to original slot when the new slot is not empty
-            if (!closestSlot.item.Equals(InventoryItem.empty))
+            if (!newSlot.item.Equals(Item.empty))
             {
                 Debug.Log("test 4");
                 ReturnToOriginalSlot(originalSlot);
@@ -199,14 +193,14 @@ namespace MyCode.UI.Inventory
 
             Debug.Log("test 5");
             // Sets the new slot with the original slot item and empties the original slot
-            closestSlot.SetItemParameters(originalSlotItem);
+            newSlot.SetItemParameters(originalSlotItem);
             originalSlot.ResetParameters();
 
             StopDragging();
 
         }
 
-        private static void StopDragging()
+        private void StopDragging()
         {
             isDragging = false;
             originalSlot = null;
@@ -218,28 +212,40 @@ namespace MyCode.UI.Inventory
             _originalSlot.SetSlotImage(ghostIcon.style.backgroundImage.value.sprite);
         }
 
-        private void SwapEquipment(InventorySlot _originalSlot, InventorySlot _newSlot, InventoryItem _originalItem, InventoryItem _newItem)
+        private void SwapEquipment()
         {
-            _newSlot.SetItemParameters(_originalItem);
-            _originalSlot.SetItemParameters(_newItem);
+            Item tempPrimaryItem = primarySlot.item;
+            primarySlot.SetItemParameters(secondarySlot.item);
+            secondarySlot.SetItemParameters(tempPrimaryItem);
         }
 
-        private void AddItemToUI(InventoryItem _item, SlotType _slotType)
+        private void AddItemToUI(Item _item, SlotType _slotType)
         {
+            switch(_slotType)
+            {
+                case SlotType.Normal:
+                    GetFirstEmptySlot().SetItemParameters(_item);
+                    break;
 
-        }
+                case SlotType.Primary:
+                    primarySlot.SetItemParameters(_item);
+                    break;
 
-        private void AddEquipmentToUI(InventoryItem _item, SlotType _slotType)
-        {
-            InventorySlot slot = _slotType == SlotType.Primary ? primarySlot : secondarySlot;
-            slot.SetItemParameters(_item);
+                case SlotType.Secondary:
+                    secondarySlot.SetItemParameters(_item);
+                    break;
+            }
         }
 
         private InventorySlot GetFirstEmptySlot()
         {
-            foreach (InventorySlot inventorySlot in inventorySlots)
+            List<InventorySlot> normalSlots = new List<InventorySlot>();
+            for(int i = 0; i < inventorySlots.Count - 2; i++)
+                normalSlots.Add(inventorySlots[i]);
+
+            foreach (InventorySlot inventorySlot in normalSlots)
             {
-                if (inventorySlot.item.Equals(InventoryItem.empty))
+                if (inventorySlot.item.Equals(Item.empty))
                 {
                     return inventorySlot;
                 }
@@ -250,11 +256,11 @@ namespace MyCode.UI.Inventory
 
         private InventorySlot GetEmptyEquipmentSlot()
         {
-            if (primarySlot.item.Equals(InventoryItem.empty))
+            if (primarySlot.item.Equals(Item.empty))
             {
                 return primarySlot;
             }
-            else if (secondarySlot.item.Equals(InventoryItem.empty))
+            else if (secondarySlot.item.Equals(Item.empty))
             {
                 return secondarySlot;
             }

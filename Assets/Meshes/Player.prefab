@@ -30,7 +30,7 @@ Transform:
   m_Children:
   - {fileID: 5622346457169562140}
   m_Father: {fileID: 0}
-  m_RootOrder: 0
+  m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &7015905249843744846
 GameObject:
@@ -45,11 +45,7 @@ GameObject:
   - component: {fileID: 4765794444649985790}
   - component: {fileID: 6963548559374528027}
   - component: {fileID: 5804107284407704524}
-  - component: {fileID: 2767773204919566829}
-  - component: {fileID: 264399664160476187}
-  - component: {fileID: 1182194039752339125}
-  - component: {fileID: 5876116243795587981}
-  - component: {fileID: 2426150301583290670}
+  - component: {fileID: 4000511736365683055}
   m_Layer: 3
   m_Name: Player Body
   m_TagString: Player
@@ -65,7 +61,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7015905249843744846}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 1, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -172,7 +168,7 @@ CharacterController:
   m_SkinWidth: 0.08
   m_MinMoveDistance: 0.001
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &2767773204919566829
+--- !u!114 &4000511736365683055
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -181,67 +177,26 @@ MonoBehaviour:
   m_GameObject: {fileID: 7015905249843744846}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d31eb7102ae6dba48aa4c0b4812c7fce, type: 3}
+  m_Script: {fileID: 11500000, guid: 8deb279be4bdc97479e4b0c23c6777b0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _pm: {fileID: 0}
-  _input_WalkValue: {fileID: -3387201930974474098, guid: 5cbe42c2b73edc740bbce0ae6343c7c0,
-    type: 3}
-  _input_SprintValue: {fileID: -6067321428764384243, guid: 5cbe42c2b73edc740bbce0ae6343c7c0,
-    type: 3}
-  _input_SneakValue: {fileID: -5786487062162588242, guid: 5cbe42c2b73edc740bbce0ae6343c7c0,
-    type: 3}
---- !u!114 &264399664160476187
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7015905249843744846}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b47cc1ed35ba0f544a7a9c4fb8520c91, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &1182194039752339125
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7015905249843744846}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4ba2d589a1b19bc47a8f173121d5c5f6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &5876116243795587981
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7015905249843744846}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2dc4149114a8d9a44bb5efb8f5693078, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  maxHealth: 100
-  health: 0
-  dead: 0
---- !u!114 &2426150301583290670
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7015905249843744846}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d15e329a743c05c47bb77e1f93beecb1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  _directionToMove: {x: 0, y: 0, z: 0}
+  _groundLayer:
+    serializedVersion: 2
+    m_Bits: 0
+  _inputWalk: {fileID: 0}
+  _inputSprint: {fileID: 0}
+  _inputSneak: {fileID: 0}
+  camStabilizationObject: {fileID: 0}
+  headJoint: {fileID: 0}
+  eyeJoint: {fileID: 0}
+  _inputCamera: {fileID: 0}
+  _pickupPoint: {fileID: 0}
+  _colliderArray: []
+  _colliderHitDistance: 0
+  _inputInteract: {fileID: 0}
+  _inputThrow: {fileID: 0}
+  _inputZoom: {fileID: 0}
 --- !u!1 &7512973448159216388
 GameObject:
   m_ObjectHideFlags: 0
@@ -284,8 +239,6 @@ GameObject:
   - component: {fileID: 226735937414885171}
   - component: {fileID: 3098551009237043671}
   - component: {fileID: 5742967356619453648}
-  - component: {fileID: 5014659513630742765}
-  - component: {fileID: 7926536807799809066}
   - component: {fileID: 3946245212412155938}
   m_Layer: 0
   m_Name: Main Camera
@@ -302,7 +255,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8623402306755056650}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.6, z: 0.495}
+  m_LocalPosition: {x: 0, y: 0.6, z: 0.223}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -369,48 +322,6 @@ AudioListener:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8623402306755056650}
   m_Enabled: 1
---- !u!114 &5014659513630742765
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8623402306755056650}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f9a787f4b86d64d4f9abb0534572df1d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  player: {fileID: 0}
-  cam: {fileID: 0}
-  camStabilizationObject: {fileID: 0}
-  headJoint: {fileID: 0}
-  eyeJoint: {fileID: 0}
-  inputAction: {fileID: 3583690661758649077, guid: 5cbe42c2b73edc740bbce0ae6343c7c0,
-    type: 3}
---- !u!114 &7926536807799809066
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8623402306755056650}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e7ba716ab84857f4fb810f9defd005db, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _pickupPoint: {fileID: 7512973448159216388}
-  _rb: {fileID: 0}
-  _selectedCollider: {fileID: 0}
-  _colliderArray: []
-  _interactionController: {fileID: 0}
-  _input_InteractValue: {fileID: -4784122219073580990, guid: 5cbe42c2b73edc740bbce0ae6343c7c0,
-    type: 3}
-  _input_ThrowValue: {fileID: -6040736028922789219, guid: 5cbe42c2b73edc740bbce0ae6343c7c0,
-    type: 3}
-  _input_ZoomValue: {fileID: 120685478764701253, guid: 5cbe42c2b73edc740bbce0ae6343c7c0,
-    type: 3}
 --- !u!114 &3946245212412155938
 MonoBehaviour:
   m_ObjectHideFlags: 0

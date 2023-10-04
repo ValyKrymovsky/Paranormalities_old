@@ -12,6 +12,8 @@ namespace MyCode.GameData
         [Separator("Interaction", true)]
         [Space]
 
+        private InteractibleIndicator _interactibleIndicator;
+
         [Header("Player")]
         [Space]
         [SerializeField] private LayerMask _playerLayerMask;
@@ -88,6 +90,7 @@ namespace MyCode.GameData
         // Picked up object zoom parameters
         public float ZoomInterval { get => _zoomInterval; set => _zoomInterval = value; }
         public int IntervalCount { get => _intervalCount; set => _intervalCount = value; }
+        public InteractibleIndicator InteractibleIndicator { get => _interactibleIndicator; set => _interactibleIndicator = value; }
     }
 
 }

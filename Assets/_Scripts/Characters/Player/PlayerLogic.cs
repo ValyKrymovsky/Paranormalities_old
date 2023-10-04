@@ -39,7 +39,7 @@ namespace MyCode.Characters
 
 
         [Space]
-        [Separator("Movement")]
+        [Separator("Movement", true)]
         [Space]
 
         private CharacterController _characterController;
@@ -51,7 +51,7 @@ namespace MyCode.Characters
         private float _internalSpeedMultiplier;
         private float _joystickWeight;
 
-        private Vector3 _directionToMove;
+        [SerializeField] private Vector3 _directionToMove;
         private Vector2 _smoothMoveValue;
 
         private Vector2 _currentVelocity;
@@ -62,6 +62,8 @@ namespace MyCode.Characters
         // Gravity
         private float _currentGravityVelocity;
         private float _gravityForce;
+
+        [SerializeField] private LayerMask _groundLayer;
 
         [Header("Input Action")]
         [Space]
@@ -83,7 +85,7 @@ namespace MyCode.Characters
 
         private Camera _camera;
 
-        [Header("CameraData Stabilization Components")]
+        [Header("Stabilization Components")]
         [Space]
         [SerializeField] private GameObject camStabilizationObject;
         [SerializeField] private GameObject headJoint;
@@ -114,6 +116,8 @@ namespace MyCode.Characters
 
         [SerializeField] private GameObject _pickupPoint;
 
+
+        
         private RectTransform _popupTransform;
         private TextMeshProUGUI _popupText;
 
@@ -233,13 +237,8 @@ namespace MyCode.Characters
 
         private void Update()
         {
-            PlayerMove();
-            ApplyGravity();
-            CorrectMovement();
-
-            _characterController.Move(_directionToMove * PlayerManager.MovementData.WalkSpeed * _internalSpeedMultiplier * Time.deltaTime);
-
-            CheckInteractibleColliders();
+            MovePlayer();
+            // CheckInteractibleColliders();
         }
 
         private void FixedUpdate()
@@ -270,9 +269,7 @@ namespace MyCode.Characters
         /*                      Movement Logic                        */
         /**************************************************************/
 
-
-
-        private void PlayerMove()
+        private void MovePlayer()
         {
             if (!canMove)
                 return;
@@ -280,22 +277,42 @@ namespace MyCode.Characters
             PlayerManager.MovementData.IsMoving = IsPlayerMoving();
             PlayerManager.MovementData.IsMovingForward = IsPlayerMovingForward();
             PlayerManager.MovementData.IsGrounded = IsGrounded();
+
             UpdateMovementDirection();
 
-            // sets movement sensetivity from controller stick biggest value
-            _joystickWeight = Mathf.Max(Mathf.Abs(_moveValue.x), Mathf.Abs(_moveValue.y));
-            _joystickWeight = _joystickWeight < .4f ? .4f : _joystickWeight;
+            _joystickWeight = GetJoystickWeight();
+            _directionToMove = CalculateMovementDirection();
 
-            // increases initial speed over time for smooth movement start
+            ApplyGravity();
+            CheckForMovementUpdate();
+
+            _characterController.Move(_directionToMove * PlayerManager.MovementData.WalkSpeed * _internalSpeedMultiplier * Time.deltaTime);
+        }
+
+        private float GetJoystickWeight()
+        {
+            float weight = Mathf.Max(Mathf.Abs(_moveValue.x), Mathf.Abs(_moveValue.y));
+            weight = weight < .4f ? .4f : weight;
+            return weight;
+        }
+
+        private Vector3 CalculateMovementDirection()
+        {
+            // increases/decreases initial speed over time for smooth movement
             _smoothMoveValue = Vector2.SmoothDamp(_smoothMoveValue, _moveValue, ref _currentVelocity, PlayerManager.MovementData.SmoothTime);
+            if (!IsPlayerMoving())
+            {
+                _smoothMoveValue.x = _smoothMoveValue.x < .0001 ? 0 : _smoothMoveValue.x;
+                _smoothMoveValue.y = _smoothMoveValue.y < .0001 ? 0 : _smoothMoveValue.y;
+            }
+            
 
-
-            _directionToMove = (_smoothMoveValue.x * transform.right + _smoothMoveValue.y * transform.forward) * _joystickWeight;
+            Vector3 directionToMove = (_smoothMoveValue.x * transform.right + _smoothMoveValue.y * transform.forward) * _joystickWeight;
 
             // clamps player movement to magnitude of 1
-            _directionToMove = Vector3.ClampMagnitude(_directionToMove, 1);
+            directionToMove = Vector3.ClampMagnitude(directionToMove, 1);
 
-
+            return directionToMove;
         }
 
         private void OnWalkAction(InputAction.CallbackContext value)
@@ -396,19 +413,16 @@ namespace MyCode.Characters
 
 
             _gravityForce = _currentGravityVelocity;
-            _directionToMove = new Vector3(_directionToMove.x, _gravityForce, _directionToMove.z);
+            _directionToMove.y = _gravityForce;
         }
 
         public bool IsGrounded()
         {
-            if (Physics.Raycast(transform.position, transform.up * -1, .1f))
-            {
+            Vector3 characterBottom = new Vector3(transform.position.x, transform.position.y - _characterController.height / 2, transform.position.z);
+            if (Physics.Raycast(characterBottom, transform.up * -1, .1f, _groundLayer))
                 return true;
-            }
-            else
-            {
-                return false;
-            }
+
+            return false;
         }
 
         private bool IsPlayerMoving()
@@ -473,20 +487,21 @@ namespace MyCode.Characters
             }
         }
 
-        private void CorrectMovement()
+        private void CheckForMovementUpdate()
         {
-            if (_sprintValue != 0)
+            if (_sprintValue == 0) return;
+
+            if (_sneakValue != 0)
             {
-                if (_sneakValue != 0)
-                {
-                    _internalSpeedMultiplier = PlayerManager.MovementData.SneakMultiplier;
-                    _movementState = MovementState.sneak;
-                }
-                else
-                {
-                    _internalSpeedMultiplier = 1;
-                    _movementState = MovementState.walk;
-                }
+                _internalSpeedMultiplier = PlayerManager.MovementData.SneakMultiplier;
+                _movementState = MovementState.sneak;
+                return;
+            }
+
+            if (!IsPlayerMovingForward())
+            {
+                _internalSpeedMultiplier = 1;
+                _movementState = MovementState.walk;
             }
         }
 
@@ -508,7 +523,7 @@ namespace MyCode.Characters
 
             mouseRotation -= valueY;
             mouseRotation = Mathf.Clamp(mouseRotation, PlayerManager.CameraData.BottomRotationLimit, PlayerManager.CameraData.TopRotationLimit);
-            transform.localRotation = Quaternion.Euler(mouseRotation, 0, 0);
+            _camera.transform.localRotation = Quaternion.Euler(mouseRotation, 0, 0);
             transform.Rotate(Vector3.up * valueX);
             if (PlayerManager.CameraData.UseStabilization)
             {

@@ -1,6 +1,7 @@
 using MyBox;
 using System;
 using System.Linq;
+using UnityEngine;
 
 namespace MyCode.GameData
 {
@@ -9,52 +10,58 @@ namespace MyCode.GameData
         Normal, Primary, Secondary
     }
 
+    [Serializable]
     public class Inventory
     {
-        private InventoryItem[] _inventory;
-        private InventoryItem _primaryEquipment;
-        private InventoryItem _secondaryEquipment;
+        [SerializeField] private Item[] _inventory;
+        [SerializeField] private Item _primaryEquipment;
+        [SerializeField] private Item _secondaryEquipment;
 
-        public event Action<InventoryItem, SlotType> OnAddItem;
+        public event Action<Item, SlotType> OnAddItem;
 
         public Inventory(int _inventorySize)
         {
-            _inventory = new InventoryItem[_inventorySize];
+            _inventory = new Item[_inventorySize];
             for (int i = 0; i < _inventorySize; i++)
             {
-                _inventory[i] = InventoryItem.empty;
+                _inventory[i] = Item.empty;
             }
-            _primaryEquipment = InventoryItem.empty;
-            _secondaryEquipment = InventoryItem.empty;
+            _primaryEquipment = Item.empty;
+            _secondaryEquipment = Item.empty;
         }
 
         public bool IsFull()
         {
-            return _inventory.Where(item => item != InventoryItem.empty).Count() >= _inventory.Length;
+            return _inventory.Where(item => item != Item.empty).Count() >= _inventory.Length;
         }
 
-        public bool Contains(InventoryItem item)
+        public int Size()
         {
-            if (item == InventoryItem.empty) return false;
+            return _inventory.Length;
+        }
 
-            if (_inventory.Where(i => i.ItemId == item.ItemId).Any()) return true;
+        public bool Contains(Item item)
+        {
+            if (item == Item.empty) return false;
+
+            if (_inventory.Where(i => i.itemId == item.itemId).Any()) return true;
 
             return false;
         }
 
-        public bool AddItem(InventoryItem item)
+        public bool AddItem(Item item)
         {
             if (item == null || IsFull() || Contains(item)) return false;
 
-            if (item.Item.itemType == Item.ItemType.Equipment)
+            if (item.itemType == ItemType.Equipment)
             {
-                if (_primaryEquipment == InventoryItem.empty)
+                if (_primaryEquipment == Item.empty)
                 {
                     _primaryEquipment = item;
                     OnAddItem?.Invoke(item, SlotType.Primary);
                     return true;
                 }
-                else if (_secondaryEquipment == InventoryItem.empty)
+                else if (_secondaryEquipment == Item.empty)
                 {
                     _secondaryEquipment = item;
                     OnAddItem?.Invoke(item, SlotType.Secondary);
@@ -62,18 +69,29 @@ namespace MyCode.GameData
                 }
             }
 
-            int arrayIndex = _inventory.IndexOfItem(_inventory.Where(i => i == InventoryItem.empty).First());
+            int arrayIndex = _inventory.IndexOfItem(_inventory.Where(i => i == Item.empty).First());
             _inventory[arrayIndex] = item;
             OnAddItem?.Invoke(item, SlotType.Normal);
             return true;
         }
 
-        public void RemoveItem(InventoryItem item)
+        public void FillWithNull()
+        {
+            for(int i = 0; i < _inventory.Length; i++)
+            {
+                _inventory[i] = Item.empty;
+            }
+
+            _primaryEquipment = Item.empty;
+            _secondaryEquipment = Item.empty;
+        }
+
+        public void RemoveItem(Item item)
         {
             if (Contains(item))
             {
-                int itemIndex = _inventory.IndexOfItem(_inventory.Where(i => i.ItemId == item.ItemId).First());
-                _inventory[itemIndex] = InventoryItem.empty;
+                int itemIndex = _inventory.IndexOfItem(_inventory.Where(i => i.itemId == item.itemId).First());
+                _inventory[itemIndex] = Item.empty;
             }
         }
     }

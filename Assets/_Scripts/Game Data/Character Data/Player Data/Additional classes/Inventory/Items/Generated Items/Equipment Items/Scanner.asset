@@ -9,8 +9,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 43e5731864fd26d4f921ea30f47bd8cc, type: 3}
-  m_Name: PopupData
+  m_Script: {fileID: 11500000, guid: 7ac2cdae4c69dfd42b371bb55e98d7fc, type: 3}
+  m_Name: Scanner
   m_EditorClassIdentifier: 
-  _maxTextSize: 2
-  _minTextSize: 1
+  itemName: 
+  itemType: 4
+  description: Lorem ipsum
+  itemId: 0
+  itemModel: {fileID: 0}
+  itemIcon: {fileID: 21300000, guid: 26d7da6aaf7f89c4e811fbaa0d5d5905, type: 3}

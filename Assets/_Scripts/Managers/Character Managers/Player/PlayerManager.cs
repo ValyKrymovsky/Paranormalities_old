@@ -23,12 +23,12 @@ namespace MyCode.Managers
             SetPlayerProperties(Loader.DifficultyProperties.Where(diff => diff.difficulty == _save.GameDifficulty).First());
         }
 
-        public static InventoryItem[] ReplaceAllItems(InventoryItem[] _newItems)
+        public static Item[] ReplaceAllItems(Item[] _newItems)
         {
-            InventoryItem[] newArray = new InventoryItem[_newItems.Length];
+            Item[] newArray = new Item[_newItems.Length];
             for (int i = 0; i < _newItems.Length; i++)
             {
-                newArray[i] = InventoryItemStorage.GetItem(_newItems[i].ItemId);
+                newArray[i] = Item.GetItem(_newItems[i].itemId);
             }
 
             return newArray;
@@ -39,7 +39,13 @@ namespace MyCode.Managers
             CameraData = _properties.playerCameraData;
             MovementData = _properties.playerMovementData;
             InventoryData = _properties.playerInventoryData;
+
+            InventoryData.Inventory = new Inventory(15);
+
+            InventoryData.Inventory.FillWithNull();
+
             InteractionData = _properties.playerInteractionData;
+            InteractionData.InteractibleIndicator = new InteractibleIndicator();
         }
 
         public static void InvokeOnPlayerTeleport(GameSave _save)

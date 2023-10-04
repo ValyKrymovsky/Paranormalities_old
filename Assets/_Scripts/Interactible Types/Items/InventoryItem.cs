@@ -5,7 +5,7 @@ using MyCode.GameData;
 
 namespace MyCode.Interactibles
 {
-    public class InventoryItemProperties : MonoBehaviour
+    public class InventoryItem : MonoBehaviour
     {
         [Space]
         [Separator("Inventory")]
@@ -13,27 +13,27 @@ namespace MyCode.Interactibles
 
         [Header("Inventory Item")]
         [Space]
-        [SerializeField] private InventoryItem _item;
+        [SerializeField] private Item _item;
         private InteractionController _intController;
 
         private void Awake()
         {
             _intController = GetComponent<InteractionController>();
-            InventoryItemStorage.AddItem(_item);
+            Item.RegisterItem(_item);
         }
 
         private void Start()
         {
-            _item.Model = gameObject;
+            _item.itemModel = gameObject;
 
-            _item.ItemId = _item.ItemId == 0 ? UnityEngine.Random.Range(1000, 10000) : _item.ItemId;
+            _item.itemId = _item.itemId == 0 ? UnityEngine.Random.Range(1000, 10000) : _item.itemId;
         }
 
         private void OnEnable()
         {
             _intController.OnInteracted += AddToInventory;
-            if (_item != InventoryItem.empty)
-                InventoryItemStorage.AddItem(_item);
+            if (_item != Item.empty)
+                Item.RegisterItem(_item);
         }
 
         private void OnDisable()
