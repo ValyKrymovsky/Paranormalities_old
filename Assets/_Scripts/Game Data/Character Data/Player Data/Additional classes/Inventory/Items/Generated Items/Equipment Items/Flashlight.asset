@@ -18,6 +18,5 @@ MonoBehaviour:
     dui eros, venenatis id volutpat id, laoreet sed lectus. Nullam aliquet commodo
     erat, et tempus enim.
   itemId: 6415
-  itemModel: {fileID: 919132149155446097, guid: 27c9ed455601aa24392eafa548586dc3,
-    type: 3}
+  itemModel: {fileID: 0}
   itemIcon: {fileID: 21300000, guid: fec28403443cb6c44b8496119788a41d, type: 3}

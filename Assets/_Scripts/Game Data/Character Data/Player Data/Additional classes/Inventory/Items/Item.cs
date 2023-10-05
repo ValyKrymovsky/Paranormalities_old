@@ -31,7 +31,7 @@ namespace MyCode.GameData
 
 
 
-        public static List<Item> allItems = new List<Item>();
+        private static List<Item> allItems = new List<Item>();
 
         public Item()
         {

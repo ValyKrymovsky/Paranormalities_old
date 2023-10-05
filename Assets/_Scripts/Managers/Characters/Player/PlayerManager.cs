@@ -45,7 +45,6 @@ namespace MyCode.Managers
             InventoryData.Inventory.FillWithNull();
 
             InteractionData = _properties.playerInteractionData;
-            InteractionData.InteractibleIndicator = new InteractibleIndicator();
         }
 
         public static void InvokeOnPlayerTeleport(GameSave _save)

@@ -44,7 +44,7 @@ namespace MyCode.GameData
         {
             if (item == Item.empty) return false;
 
-            if (_inventory.Where(i => i.itemId == item.itemId).Any()) return true;
+            if (_inventory.Contains(item)) return true;
 
             return false;
         }

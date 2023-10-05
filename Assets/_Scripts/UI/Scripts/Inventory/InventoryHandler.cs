@@ -79,7 +79,7 @@ namespace MyCode.UI.Inventory
                 {
                     if (inventorySlot.item != Item.empty)
                     {
-                        UpdateDescription(inventorySlot.item.description, inventorySlot.slotImage.style.backgroundImage.value.sprite);
+                        UpdateDescription(inventorySlot.item.description, inventorySlot.item.itemIcon);
                     }
                 });
 
@@ -150,7 +150,6 @@ namespace MyCode.UI.Inventory
 
             if (overlapingSlots.Count() == 0)
             {
-                Debug.Log("test 1");
                 ReturnToOriginalSlot(originalSlot);
                 StopDragging();
                 return;
@@ -165,33 +164,29 @@ namespace MyCode.UI.Inventory
             if (originalSlot.item.itemType != ItemType.Equipment &&
             newSlot.name != "InventorySlot")
             {
-                Debug.Log("test 2");
                 ReturnToOriginalSlot(originalSlot);
                 StopDragging();
                 return;
             }
 
-            // Swaps equipment items in primary and secondary equipment slots
+            // Swaps equipment items in primary and secondary equipment slots, if both are equipment items are present
             if (originalSlot.name != "InventorySlot" &&
-                (newSlot.name != "InventorySlot" && newSlot.name != originalSlot.name))
+                (newSlot.name != "InventorySlot" && newSlot.name != originalSlot.name) &&
+                newSlot.item != Item.empty)
             {
-                Debug.Log("test 3");
-
                 SwapEquipment();
                 StopDragging();
                 return;
             }
 
             // Returns item to original slot when the new slot is not empty
-            if (!newSlot.item.Equals(Item.empty))
+            if (newSlot.item != Item.empty)
             {
-                Debug.Log("test 4");
                 ReturnToOriginalSlot(originalSlot);
                 StopDragging();
                 return;
             }
 
-            Debug.Log("test 5");
             // Sets the new slot with the original slot item and empties the original slot
             newSlot.SetItemParameters(originalSlotItem);
             originalSlot.ResetParameters();
@@ -245,7 +240,7 @@ namespace MyCode.UI.Inventory
 
             foreach (InventorySlot inventorySlot in normalSlots)
             {
-                if (inventorySlot.item.Equals(Item.empty))
+                if (inventorySlot.item == Item.empty)
                 {
                     return inventorySlot;
                 }
@@ -256,11 +251,11 @@ namespace MyCode.UI.Inventory
 
         private InventorySlot GetEmptyEquipmentSlot()
         {
-            if (primarySlot.item.Equals(Item.empty))
+            if (primarySlot.item == Item.empty)
             {
                 return primarySlot;
             }
-            else if (secondarySlot.item.Equals(Item.empty))
+            else if (secondarySlot.item == Item.empty)
             {
                 return secondarySlot;
             }

@@ -116,10 +116,7 @@ namespace MyCode.Characters
 
         [SerializeField] private GameObject _pickupPoint;
 
-
-        
-        private RectTransform _popupTransform;
-        private TextMeshProUGUI _popupText;
+        [SerializeField] private InteractibleIndicator _interactibleIndicator;
 
         private Rigidbody _rb;
         private Collider _closestCollider;
@@ -238,7 +235,7 @@ namespace MyCode.Characters
         private void Update()
         {
             MovePlayer();
-            // CheckInteractibleColliders();
+            CheckInteractibleColliders();
         }
 
         private void FixedUpdate()
@@ -590,7 +587,7 @@ namespace MyCode.Characters
             {
                 _closestCollider = null;
                 _activeController = null;
-                _popupText.enabled = false;
+                _interactibleIndicator.indicatorText.enabled = false;
                 _hitPosition = Vector3.zero;
                 return;
             }
@@ -600,14 +597,14 @@ namespace MyCode.Characters
             {
                 _closestCollider = closestCollider;
                 _activeController = _closestCollider.GetComponent<InteractionController>();
-                _popupText.enabled = true;
-                _popupText.text = _activeController.PopupText;
+                _interactibleIndicator.indicatorText.enabled = true;
+                _interactibleIndicator.indicatorText.text = _activeController.PopupText;
             }
 
             Vector3 pointOnScreen = _activeController.CustomPopupLocation ? _camera.WorldToScreenPoint(_activeController.PopupLocation) : _camera.WorldToScreenPoint(_closestCollider.transform.position);
-            _popupTransform.position = pointOnScreen;
+            _interactibleIndicator.indicatorTransform.position = pointOnScreen;
             float proximityTextOpacity = Mathf.InverseLerp(PlayerManager.InteractionData.SphereCheckRange, 0, _colliderHitDistance);
-            _popupText.alpha = proximityTextOpacity;
+            _interactibleIndicator.indicatorText.alpha = proximityTextOpacity;
         }
 
         private Collider[] GetInteractibleColliders()
@@ -615,15 +612,15 @@ namespace MyCode.Characters
             if (!canInteract) return null;
             if (!canCheckInteractibles) return null;
 
-            Ray r = new Ray(transform.position, transform.forward);
+            Ray r = new Ray(_camera.transform.position, _camera.transform.forward);
 
             // Cast ray in front of the camera with InteractRange as its max distance
             Physics.Raycast(r, out RaycastHit hitInfo, PlayerManager.InteractionData.InteractRange);
 
-            if (hitInfo.collider != null)
+            while(hitInfo.collider != null)
             {
-                if (!hitInfo.collider.TryGetComponent(out InteractionController controller)) goto Continue;
-                if (!controller.Interactible) goto Continue;
+                if (!hitInfo.collider.TryGetComponent(out InteractionController controller)) break;
+                if (!controller.Interactible) break;
 
                 _colliderHitPosition = _hitPosition;
                 _colliderHitDistance = 0;
@@ -631,9 +628,7 @@ namespace MyCode.Characters
                 return new Collider[1] { hitInfo.collider };
             }
 
-        Continue:
-
-            _hitPosition = hitInfo.collider != null ? hitInfo.point : transform.position + transform.forward * PlayerManager.InteractionData.InteractRange;
+            _hitPosition = hitInfo.collider != null ? hitInfo.point : _camera.transform.position + _camera.transform.forward * PlayerManager.InteractionData.InteractRange;
 
             // Number of new detected colliders from OverlapSphereNonAlloc
             int results = Physics.OverlapSphereNonAlloc(_hitPosition, PlayerManager.InteractionData.SphereCheckRange, _colliderArray, PlayerManager.InteractionData.InteractiblesMask);
@@ -720,7 +715,7 @@ namespace MyCode.Characters
             float distanceToObject = Vector2.Distance(new Vector2(transform.position.x, transform.position.z), new Vector2(_rb.transform.position.x, _rb.transform.position.z));
             _pickupPoint.transform.position = transform.position + transform.forward * distanceToObject;
 
-            _popupText.enabled = false;
+            _interactibleIndicator.indicatorText.enabled = false;
             canCheckInteractibles = false;
         }
 
@@ -736,7 +731,7 @@ namespace MyCode.Characters
             ResetRigidbodyParameters();
             _closestCollider = null;
 
-            _popupText.enabled = true;
+            _interactibleIndicator.indicatorText.enabled = true;
             canCheckInteractibles = true;
         }
 
@@ -752,7 +747,7 @@ namespace MyCode.Characters
             ResetRigidbodyParameters();
             _closestCollider = null;
 
-            _popupText.enabled = true;
+            _interactibleIndicator.indicatorText.enabled = true;
             canCheckInteractibles = true;
         }
 
@@ -772,7 +767,7 @@ namespace MyCode.Characters
 
                 ResetRigidbodyParameters();
 
-                _popupText.enabled = true;
+                _interactibleIndicator.indicatorText.enabled = true;
                 canCheckInteractibles = true;
             }
         }

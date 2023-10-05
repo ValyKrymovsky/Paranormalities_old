@@ -12,7 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eca436b52e5195848912cebe67fa8c6b, type: 3}
   m_Name: Lobby Key
   m_EditorClassIdentifier: 
-  objectName: 
-  itemType: 0
-  description: 
-  target: {fileID: 0}
+  itemName: Lobby key
+  itemType: 1
+  description: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque
+    rutrum urna ligula, sit amet ullamcorper sapien volutpat in. Pellentesque nisi
+    neque, laoreet non tincidunt in, molestie ac nulla. Sed neque.
+  itemId: 4978
+  itemModel: {fileID: 0}
+  itemIcon: {fileID: 21300000, guid: ac5a18734cb0c9c4d8c679d6d79b0866, type: 3}
