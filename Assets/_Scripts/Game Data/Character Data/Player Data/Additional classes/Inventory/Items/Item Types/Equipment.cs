@@ -7,7 +7,7 @@ namespace MyCode.GameData
     {
         public void Awake()
         {
-            itemType = ItemType.Equipment;
+            type = ItemType.Equipment;
         }
     }
 }

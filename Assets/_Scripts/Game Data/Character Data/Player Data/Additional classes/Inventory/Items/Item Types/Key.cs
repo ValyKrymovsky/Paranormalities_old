@@ -10,7 +10,7 @@ namespace MyCode.GameData
         private GameObject target;
         public void Awake()
         {
-            itemType = ItemType.Key;
+            type = ItemType.Key;
         }
     }
 }

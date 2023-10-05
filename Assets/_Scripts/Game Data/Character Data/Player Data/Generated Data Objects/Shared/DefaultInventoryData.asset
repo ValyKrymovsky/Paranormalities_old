@@ -13,57 +13,22 @@ MonoBehaviour:
   m_Name: DefaultInventoryData
   m_EditorClassIdentifier: 
   _inventory:
-  - _itemId: 0
-    _item: {fileID: 0}
-    _image: {fileID: 0}
-  - _itemId: 0
-    _item: {fileID: 0}
-    _image: {fileID: 0}
-  - _itemId: 0
-    _item: {fileID: 0}
-    _image: {fileID: 0}
-  - _itemId: 0
-    _item: {fileID: 0}
-    _image: {fileID: 0}
-  - _itemId: 0
-    _item: {fileID: 0}
-    _image: {fileID: 0}
-  - _itemId: 0
-    _item: {fileID: 0}
-    _image: {fileID: 0}
-  - _itemId: 0
-    _item: {fileID: 0}
-    _image: {fileID: 0}
-  - _itemId: 0
-    _item: {fileID: 0}
-    _image: {fileID: 0}
-  - _itemId: 0
-    _item: {fileID: 0}
-    _image: {fileID: 0}
-  - _itemId: 0
-    _item: {fileID: 0}
-    _image: {fileID: 0}
-  - _itemId: 0
-    _item: {fileID: 0}
-    _image: {fileID: 0}
-  - _itemId: 0
-    _item: {fileID: 0}
-    _image: {fileID: 0}
-  - _itemId: 0
-    _item: {fileID: 0}
-    _image: {fileID: 0}
-  - _itemId: 0
-    _item: {fileID: 0}
-    _image: {fileID: 0}
-  - _itemId: 0
-    _item: {fileID: 0}
-    _image: {fileID: 0}
-  _primaryEquipment:
-    _itemId: 0
-    _item: {fileID: 0}
-    _image: {fileID: 0}
-  _secondaryEquipment:
-    _itemId: 0
-    _item: {fileID: 0}
-    _image: {fileID: 0}
+    _inventory:
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    _primaryEquipment: {fileID: 0}
+    _secondaryEquipment: {fileID: 0}
   dropRange: 3

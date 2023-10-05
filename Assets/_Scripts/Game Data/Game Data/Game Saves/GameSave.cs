@@ -28,14 +28,9 @@ namespace MyCode.GameData
         [SerializeField] private float _health;
         [Space]
 
-        [Header("Stamina")]
-        [Space]
-        [SerializeField] private float _currentStamina;
-        [SerializeField] private bool _reachedLimit;
-
         [Header("Inventory")]
         [Space]
-        [SerializeField] private Inventory _inventory;
+        [SerializeField] private int[] _inventory;
 
             [Space]
             [Separator("Game Settings")]
@@ -53,7 +48,7 @@ namespace MyCode.GameData
         [Space]
         [SerializeField] private SaveIndex _saveIndex;
         [SerializeField] private string _saveName;
-        [SerializeField, ReadOnly] private DateTime _saveTime;
+        [SerializeField, ReadOnly] private string _saveTime;
         private string _savePath;
 
 
@@ -68,12 +63,9 @@ namespace MyCode.GameData
         // Health
         public float Health { get => _health; set => _health = value; }
 
-        // Stamina
-        public float CurrentStamina { get => _currentStamina; set => _currentStamina = value; }
-        public bool ReachedLimit { get => _reachedLimit; set => _reachedLimit = value; }
 
         // Inventory
-        public Inventory Inventory { get => _inventory; set => _inventory = value; }
+        public int[] Inventory { get => _inventory; set => _inventory = value; }
 
         //               //
         // Game settings //
@@ -90,15 +82,8 @@ namespace MyCode.GameData
 
         public SaveIndex SaveIndex { get => _saveIndex; set => _saveIndex = value; }
         public string SaveName { get => _saveName; set => _saveName = value; }
-        public DateTime SaveTime { get => _saveTime; set => _saveTime = value; }
+        public string SaveTime { get => _saveTime; set => _saveTime = value; }
         public string SavePath { get => _savePath; set => _savePath = value; }
-
-        public void SetPlayerProperties(PlayerMovementData _movementData, PlayerInventoryData _inventoryData)
-        {
-            _checkpointLocation = SerializableVector3.Zero;
-
-            _inventory = _inventoryData.Inventory;
-        }
     
     }
 }

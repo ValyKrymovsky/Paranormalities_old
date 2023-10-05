@@ -28,7 +28,7 @@ namespace MyCode.Managers
             Item[] newArray = new Item[_newItems.Length];
             for (int i = 0; i < _newItems.Length; i++)
             {
-                newArray[i] = Item.GetItem(_newItems[i].itemId);
+                newArray[i] = Item.GetItem(_newItems[i].id);
             }
 
             return newArray;

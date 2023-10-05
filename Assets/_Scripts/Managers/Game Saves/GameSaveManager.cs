@@ -38,21 +38,19 @@ namespace MyCode.Managers
             int _index = difficultyInteger.Where(dif => dif._dif == _properties.difficulty).First()._index;
 
             string[] saveFiles = Directory.GetFiles(savePath).Where(file => Regex.IsMatch(file, String.Format("(Save\\d+_{0}\\.json)", _index))).ToArray();
-
-            GameSave gs = new GameSave();
-
-            gs.SetPlayerProperties(PlayerManager.MovementData, PlayerManager.InventoryData);
-
-            gs.GameDifficulty = _properties.difficulty;
-
-            gs.SaveIndex = SaveIndex.entrance;
-
-            gs.SaveName = String.Format("{0}_{1}", difficultyInteger[_index]._dif.ToString(), saveFiles.Count());
-            gs.SaveTime = System.DateTime.Now;
-
             string fullPath = String.Format(savePath + @"Save{0}_{1}.json", saveFiles.Count() + 1, _index);
 
-            gs.SavePath = fullPath;
+            GameSave gs = new GameSave()
+            {
+                CheckpointLocation = new SerializableVector3(0, 0, 0),
+                Health = 100,
+                Inventory = null,
+                GameDifficulty = _properties.difficulty,
+                SaveIndex = SaveIndex.entrance,
+                SaveName = String.Format("{0}_{1}", difficultyInteger[_index]._dif.ToString(), saveFiles.Count()),
+                SaveTime = System.DateTime.Now.ToString("MM/dd/yyyy HH:mm"),
+                SavePath = fullPath
+        };
 
             JsonSerializer serializer = new JsonSerializer();
             serializer.Formatting = Formatting.Indented;

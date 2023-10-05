@@ -19,8 +19,7 @@ namespace MyCode.Interactibles
         private void Awake()
         {
             _intController = GetComponent<InteractionController>();
-            _item.itemModel = gameObject;
-            _item.itemId = _item.itemId == 0 ? UnityEngine.Random.Range(1000, 10000) : _item.itemId;
+            _item.id = _item.id == 0 ? UnityEngine.Random.Range(1000, 10000) : _item.id;
             Item.RegisterItem(_item);
         }
 

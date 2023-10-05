@@ -4,6 +4,10 @@ using MyCode.GameData;
 using Newtonsoft.Json;
 using Cysharp.Threading.Tasks;
 using MyCode.Helper.Serializer;
+using GluonGui.WorkspaceWindow.Views.WorkspaceExplorer;
+using System;
+using System.Linq;
+using System.Collections.Generic;
 
 namespace MyCode.Systems
 {
@@ -11,16 +15,14 @@ namespace MyCode.Systems
     public class GameSaveEvent : MonoBehaviour
     {
         [SerializeField] private SaveIndex _saveIndex;
-        [SerializeField] private float[] _saveLocation = new float[3];
+        [SerializeField] private SerializableVector3 _saveLocation;
 
         private EventSystem _eventSystem;
 
         private void Awake()
         {
             _eventSystem = GetComponent<EventSystem>();
-            _saveLocation[0] = transform.position.x;
-            _saveLocation[1] = transform.position.y;
-            _saveLocation[2] = transform.position.z;
+            _saveLocation = new SerializableVector3(transform.position);
         }
 
         private void OnEnable()
@@ -37,29 +39,34 @@ namespace MyCode.Systems
         {
             if (_saveIndex.CompareTo(GameSaveManager.CurrentGameSave.SaveIndex) < 1) return;
 
-            GameSave saveForUpdate = new GameSave();
+            GameSave oldSave = new GameSave();
 
-            saveForUpdate = SaveSerializer.DeserializeGameSave(await SaveSerializer.ReadSaveFileAsync(GameSaveManager.saveFilePath), saveForUpdate);
+            oldSave = SaveSerializer.DeserializeGameSave(await SaveSerializer.ReadSaveFileAsync(GameSaveManager.saveFilePath), oldSave);
 
-            GameSave newSave = new GameSave();
-
-            await UniTask.RunOnThreadPool(() =>
+            List<int> itemIds = new List<int>();
+            foreach(Item item in PlayerManager.InventoryData.Inventory.InventoryArray.Where(i => i != Item.empty))
             {
-                newSave.SetPlayerProperties(PlayerManager.MovementData, PlayerManager.InventoryData);
+                itemIds.Add(item.id);
+            }
 
-                newSave.GameDifficulty = GameSaveManager.CurrentGameSave.GameDifficulty;
+            if (PlayerManager.InventoryData.Inventory.PrimaryEquipment != Item.empty)
+                itemIds.Add(PlayerManager.InventoryData.Inventory.PrimaryEquipment.id);
+            if (PlayerManager.InventoryData.Inventory.SecondaryEquipment != Item.empty)
+                itemIds.Add(PlayerManager.InventoryData.Inventory.SecondaryEquipment.id);
 
-                newSave.SavePath = GameSaveManager.CurrentGameSave.SavePath;
+            GameSave newSave = new GameSave()
+            {
+                CheckpointLocation = _saveLocation,
+                Health = 100,
+                Inventory = itemIds.ToArray(),
+                GameDifficulty = GameSaveManager.CurrentGameSave.GameDifficulty,
+                SaveIndex = _saveIndex,
+                SaveName = oldSave.SaveName,
+                SaveTime = System.DateTime.Now.ToString("MM/dd/yyyy HH:mm"),
+                SavePath = GameSaveManager.CurrentGameSave.SavePath
+            };
 
-                newSave.SaveIndex = _saveIndex;
-
-                newSave.SaveName = saveForUpdate.SaveName;
-                newSave.SaveTime = saveForUpdate.SaveTime;
-
-                UniTask.SwitchToThreadPool();
-            });
-
-            await SaveSerializer.UpdateSaveAsync(newSave, saveForUpdate);
+            SaveSerializer.UpdateSaveAsync(newSave, ref oldSave);
 
             JsonSerializer serializer = new JsonSerializer();
             serializer.Formatting = Formatting.Indented;

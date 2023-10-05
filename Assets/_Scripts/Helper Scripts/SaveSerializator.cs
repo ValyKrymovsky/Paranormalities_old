@@ -54,13 +54,9 @@ namespace MyCode.Helper.Serializer
             return saveArray;
         }
 
-        public static async UniTask<GameSave> UpdateSaveAsync(GameSave _newGameSave, GameSave _gameSaveToUpdate)
+        public static void UpdateSaveAsync(GameSave newSave, ref GameSave oldSave)
         {
-            await UniTask.RunOnThreadPool(() => {
-                _gameSaveToUpdate = _newGameSave;
-            });
-
-            return _gameSaveToUpdate;
+            oldSave = newSave;
         }
 
         public static async UniTask<bool> SerializeObjectAsync(JsonSerializer _serializer, GameSave _data, string _savePath)

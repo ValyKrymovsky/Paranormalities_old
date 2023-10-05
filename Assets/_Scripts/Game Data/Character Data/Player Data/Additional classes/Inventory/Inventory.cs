@@ -17,6 +17,10 @@ namespace MyCode.GameData
         [SerializeField] private Item _primaryEquipment;
         [SerializeField] private Item _secondaryEquipment;
 
+        public Item[] InventoryArray { get => _inventory; set => _inventory = value; }
+        public Item PrimaryEquipment { get => _primaryEquipment; set => _primaryEquipment = value; }
+        public Item SecondaryEquipment { get => _secondaryEquipment; set => _secondaryEquipment = value; }
+
         public event Action<Item, SlotType> OnAddItem;
 
         public Inventory(int _inventorySize)
@@ -53,7 +57,7 @@ namespace MyCode.GameData
         {
             if (item == null || IsFull() || Contains(item)) return false;
 
-            if (item.itemType == ItemType.Equipment)
+            if (item.type == ItemType.Equipment)
             {
                 if (_primaryEquipment == Item.empty)
                 {
@@ -90,7 +94,7 @@ namespace MyCode.GameData
         {
             if (Contains(item))
             {
-                int itemIndex = _inventory.IndexOfItem(_inventory.Where(i => i.itemId == item.itemId).First());
+                int itemIndex = _inventory.IndexOfItem(_inventory.Where(i => i.id == item.id).First());
                 _inventory[itemIndex] = Item.empty;
             }
         }

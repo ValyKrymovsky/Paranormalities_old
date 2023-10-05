@@ -34,12 +34,6 @@ namespace MyCode.UI.Inventory
         public InventorySlot primarySlot;
         public InventorySlot secondarySlot;
 
-        [Space]
-        [Header("Ghost Icon")]
-        private static VisualElement ghostIcon;
-        private static bool isDragging;
-        private static InventorySlot originalSlot;
-
         [SerializeField] private InputActionReference _input_DropItem;
         [SerializeField] private InputActionReference _input_ToggleInventory;
 
@@ -63,8 +57,6 @@ namespace MyCode.UI.Inventory
             primarySlot = equipment.Q<InventorySlot>("PrimarySlot");
             secondarySlot = equipment.Q<InventorySlot>("SecondarySlot");
 
-            ghostIcon = root.Q<VisualElement>("GhostIcon");
-
             foreach (InventorySlot inventorySlot in inventoryGrid.Children())
             {
                 inventorySlots.Add(inventorySlot);
@@ -79,7 +71,7 @@ namespace MyCode.UI.Inventory
                 {
                     if (inventorySlot.item != Item.empty)
                     {
-                        UpdateDescription(inventorySlot.item.description, inventorySlot.item.itemIcon);
+                        UpdateDescription(inventorySlot.item.description, inventorySlot.item.sprite);
                     }
                 });
 
@@ -91,9 +83,6 @@ namespace MyCode.UI.Inventory
             }
 
             root.style.display = DisplayStyle.None;
-
-            ghostIcon.RegisterCallback<PointerMoveEvent>(DragItem);
-            ghostIcon.RegisterCallback<PointerUpEvent>(PlaceItem);
         }
 
         private void OnEnable()
@@ -121,98 +110,6 @@ namespace MyCode.UI.Inventory
             descriptionText.text = _description;
         }
 
-        public static void TakeItem(Vector2 _position, InventorySlot _originalInventorySlot)
-        {
-            isDragging = true;
-            originalSlot = _originalInventorySlot;
-
-            ghostIcon.style.top = _position.y - ghostIcon.layout.height / 2;
-            ghostIcon.style.left = _position.x - ghostIcon.layout.width / 2;
-
-            ghostIcon.style.backgroundImage = new StyleBackground(_originalInventorySlot.GetItemImage());
-
-            ghostIcon.style.visibility = Visibility.Visible;
-        }
-
-        private void DragItem(PointerMoveEvent _event)
-        {
-            if (!isDragging) return;
-
-            ghostIcon.style.top = _event.position.y - ghostIcon.layout.height / 2;
-            ghostIcon.style.left = _event.position.x - ghostIcon.layout.width / 2;
-        }
-
-        private void PlaceItem(PointerUpEvent _event)
-        {
-            if (!isDragging) return;
-
-            IEnumerable<InventorySlot> overlapingSlots = inventorySlots.Where(x => x.worldBound.Overlaps(ghostIcon.worldBound));
-
-            if (overlapingSlots.Count() == 0)
-            {
-                ReturnToOriginalSlot(originalSlot);
-                StopDragging();
-                return;
-            }
-
-            // Original Slot = dragged from, New Slot = dragged to
-            InventorySlot newSlot = overlapingSlots.OrderBy(x => Vector2.Distance(x.worldBound.position, ghostIcon.worldBound.position)).First();
-            Item originalSlotItem = originalSlot.item;
-            originalSlotItem.itemIcon = ghostIcon.style.backgroundImage.value.sprite;
-
-            // Returns item to original slot if the item is not equipment and is trying to go to equipment slots
-            if (originalSlot.item.itemType != ItemType.Equipment &&
-            newSlot.name != "InventorySlot")
-            {
-                ReturnToOriginalSlot(originalSlot);
-                StopDragging();
-                return;
-            }
-
-            // Swaps equipment items in primary and secondary equipment slots, if both are equipment items are present
-            if (originalSlot.name != "InventorySlot" &&
-                (newSlot.name != "InventorySlot" && newSlot.name != originalSlot.name) &&
-                newSlot.item != Item.empty)
-            {
-                SwapEquipment();
-                StopDragging();
-                return;
-            }
-
-            // Returns item to original slot when the new slot is not empty
-            if (newSlot.item != Item.empty)
-            {
-                ReturnToOriginalSlot(originalSlot);
-                StopDragging();
-                return;
-            }
-
-            // Sets the new slot with the original slot item and empties the original slot
-            newSlot.SetItemParameters(originalSlotItem);
-            originalSlot.ResetParameters();
-
-            StopDragging();
-
-        }
-
-        private void StopDragging()
-        {
-            isDragging = false;
-            originalSlot = null;
-            ghostIcon.style.visibility = Visibility.Hidden;
-        }
-
-        private void ReturnToOriginalSlot(InventorySlot _originalSlot)
-        {
-            _originalSlot.SetSlotImage(ghostIcon.style.backgroundImage.value.sprite);
-        }
-
-        private void SwapEquipment()
-        {
-            Item tempPrimaryItem = primarySlot.item;
-            primarySlot.SetItemParameters(secondarySlot.item);
-            secondarySlot.SetItemParameters(tempPrimaryItem);
-        }
 
         private void AddItemToUI(Item _item, SlotType _slotType)
         {

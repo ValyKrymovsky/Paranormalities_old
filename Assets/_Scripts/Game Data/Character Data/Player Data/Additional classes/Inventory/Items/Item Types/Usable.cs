@@ -11,7 +11,7 @@ namespace MyCode.GameData
         [SerializeField] private float duration;
         public void Awake()
         {
-            itemType = ItemType.Usable;
+            type = ItemType.Usable;
         }
     }
 }

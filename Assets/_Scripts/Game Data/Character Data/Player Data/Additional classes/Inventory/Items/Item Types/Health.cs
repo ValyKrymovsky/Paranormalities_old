@@ -10,7 +10,7 @@ namespace MyCode.GameData
         [SerializeField] private int healValue;
         public void Awake()
         {
-            itemType = ItemType.Health;
+            type = ItemType.Health;
         }
     }
 }

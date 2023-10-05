@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace MyCode.GameData
 {
-    public class SerializableVector3
+    public struct SerializableVector3
     {
         public float x;
         public float y;
