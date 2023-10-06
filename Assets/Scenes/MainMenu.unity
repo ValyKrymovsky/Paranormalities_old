@@ -132,6 +132,11 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: -2928075188011797533, guid: 63ccdc0ce13e12443b327db12086a835,
+        type: 3}
+      propertyPath: objectives.Array.size
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 3197091880555606436, guid: 63ccdc0ce13e12443b327db12086a835,
         type: 3}
       propertyPath: m_RootOrder

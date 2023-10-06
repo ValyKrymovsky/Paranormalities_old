@@ -2,7 +2,9 @@ using MyBox;
 using MyCode.GameData;
 using MyCode.Managers;
 using System.Linq;
+using System.Text;
 using TMPro;
+using UnityEditor.PackageManager;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -123,6 +125,8 @@ namespace MyCode.Characters
         private InteractionController _activeController;
 
         [SerializeField] private Collider[] _colliderArray;
+
+        private bool _lookingAtCollider;
 
         private Vector3 _hitPosition;
         private Vector3 _colliderHitPosition;
@@ -582,7 +586,9 @@ namespace MyCode.Characters
         {
             if (!canCheckInteractibles) return;
 
-            Collider closestCollider = GetClosestCollider(GetInteractibleColliders());
+            Collider[] interactibleColliders = GetInteractibleColliders();
+            Collider closestCollider = _lookingAtCollider ? interactibleColliders[0] : GetClosestCollider(interactibleColliders);
+
             if (closestCollider == null)
             {
                 _closestCollider = null;
@@ -604,7 +610,10 @@ namespace MyCode.Characters
             Vector3 pointOnScreen = _activeController.CustomPopupLocation ? _camera.WorldToScreenPoint(_activeController.PopupLocation) : _camera.WorldToScreenPoint(_closestCollider.transform.position);
             _interactibleIndicator.indicatorTransform.position = pointOnScreen;
             float proximityTextOpacity = Mathf.InverseLerp(PlayerManager.InteractionData.SphereCheckRange, 0, _colliderHitDistance);
+
             _interactibleIndicator.indicatorText.alpha = proximityTextOpacity;
+
+            _lookingAtCollider = false;
         }
 
         private Collider[] GetInteractibleColliders()
@@ -623,6 +632,7 @@ namespace MyCode.Characters
                 if (!controller.Interactible) break;
 
                 _colliderHitPosition = _hitPosition;
+                _lookingAtCollider = true;
                 _colliderHitDistance = 0;
 
                 return new Collider[1] { hitInfo.collider };
@@ -658,9 +668,11 @@ namespace MyCode.Characters
             if (_colliders.Count() == 1)
             {
                 Ray ray = new Ray(_hitPosition, _colliders[0].transform.position - _hitPosition);
-                _colliders[0].Raycast(ray, out RaycastHit hitInfo, PlayerManager.InteractionData.SphereCheckRange);
-                _colliderHitPosition = hitInfo.distance < .025f ? _hitPosition : hitInfo.point;
-                _colliderHitDistance = hitInfo.distance < .025f ? 0 : hitInfo.distance;
+                Physics.Raycast(ray, out RaycastHit hitInfo, PlayerManager.InteractionData.SphereCheckRange);
+                if (hitInfo.point == Vector3.zero) return null;
+                _colliderHitPosition = hitInfo.point;
+                _colliderHitDistance = Vector3.Distance(_hitPosition, hitInfo.point);
+
                 return _colliders[0];
             }
 
@@ -670,13 +682,13 @@ namespace MyCode.Characters
             {
                 Ray ray = new Ray(_hitPosition, _colliders[i].transform.position - _hitPosition);
                 _colliders[i].Raycast(ray, out RaycastHit perColliderHitInfo, PlayerManager.InteractionData.SphereCheckRange);
-
+                if (perColliderHitInfo.point == Vector3.zero) continue;
                 if (lowestDistance == -1 || perColliderHitInfo.distance < lowestDistance)
                 {
                     lowestDistance = perColliderHitInfo.distance;
                     nearestCollider = _colliders[i];
-                    _colliderHitPosition = perColliderHitInfo.distance < .025f ? _hitPosition : perColliderHitInfo.point;
-                    _colliderHitDistance = perColliderHitInfo.distance < .025f ? 0 : perColliderHitInfo.distance;
+                    _colliderHitPosition = perColliderHitInfo.point;
+                    _colliderHitDistance = Vector3.Distance(_hitPosition, perColliderHitInfo.point);
                     continue;
                 }
             }
@@ -816,7 +828,6 @@ namespace MyCode.Characters
 
         private void OnDrawGizmos()
         {
-            /*
             if (_closestCollider != null)
             {
                 Gizmos.color = Color.green;
@@ -826,7 +837,7 @@ namespace MyCode.Characters
                 Gizmos.color = Color.red;
             }
 
-            Gizmos.DrawWireSphere(transform.position + (transform.forward * PlayerManager.InteractionData.InteractRange), PlayerManager.InteractionData.SphereCheckRange);
+            Gizmos.DrawWireSphere(_camera.transform.position + (_camera.transform.forward * PlayerManager.InteractionData.InteractRange), PlayerManager.InteractionData.SphereCheckRange);
 
             if (_closestCollider != null)
             {
@@ -838,8 +849,7 @@ namespace MyCode.Characters
                 
                 Gizmos.color = Color.green;
                 Gizmos.DrawLine(_colliderHitPosition, _closestCollider.transform.position);
-            }  
-            */
+            }
         }
     }
 }

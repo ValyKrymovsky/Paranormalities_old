@@ -54,7 +54,7 @@ namespace MyCode.Helper.Serializer
             return saveArray;
         }
 
-        public static void UpdateSaveAsync(GameSave newSave, ref GameSave oldSave)
+        public static void UpdateSave(GameSave newSave, ref GameSave oldSave)
         {
             oldSave = newSave;
         }
@@ -69,6 +69,17 @@ namespace MyCode.Helper.Serializer
 
                 file.Close();
             });
+
+            return true;
+        }
+
+        public static bool SerializeObject(JsonSerializer _serializer, GameSave _data, string _savePath)
+        {
+            StreamWriter file = File.CreateText(_savePath);
+
+            _serializer.Serialize(file, _data);
+
+            file.Close();
 
             return true;
         }

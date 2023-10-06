@@ -10,9 +10,9 @@ namespace MyCode.Managers
     public class ManagerLoader : MonoBehaviour
     {
         [SerializeField] private AssetLabelReference _managerGroupLabel;
-        private AsyncOperationHandle _handle;
-        private Dictionary<Type, GameObject> _managerList;
         [SerializeField] private List<DifficultyProperties> difficultyProperties = new List<DifficultyProperties>();
+        [SerializeField] private List<SuperObjective> objectives = new List<SuperObjective>();
+
 
         public event Action OnNewGame;
         public event Action OnLoadGame;
