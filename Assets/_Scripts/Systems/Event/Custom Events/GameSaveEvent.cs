@@ -1,79 +1,87 @@
 using UnityEngine;
 using MyCode.Managers;
-using MyCode.GameData.GameSave;
+using MyCode.GameData;
 using Newtonsoft.Json;
-using Cysharp.Threading.Tasks;
 using MyCode.Helper.Serializer;
+using System.Linq;
+using System.Collections.Generic;
+using System.Threading;
 
 namespace MyCode.Systems
 {
-    [RequireComponent(typeof(EventSystem))]
-    public class GameSaveEvent : MonoBehaviour
+    public class GameSaveEvent : EventSystem
     {
         [SerializeField] private SaveIndex _saveIndex;
-        [SerializeField] private float[] _saveLocation = new float[3];
-
-        private EventSystem _eventSystem;
+        [SerializeField] private SerializableVector3 _saveLocation;
+        private Thread _saveThread;
 
         private void Awake()
         {
-            _eventSystem = GetComponent<EventSystem>();
-            _saveLocation[0] = transform.position.x;
-            _saveLocation[1] = transform.position.y;
-            _saveLocation[2] = transform.position.z;
+            _saveLocation = new SerializableVector3(transform.position);
         }
 
         private void OnEnable()
         {
-            _eventSystem.OnEventStart += SaveGame;
+            OnEventStart += StartSaveProcess;
         }
 
         private void OnDisable()
         {
-            _eventSystem.OnEventStart -= SaveGame;
+            OnEventStart -= StartSaveProcess;
         }
 
-        private async void SaveGame()
+        private void StartSaveProcess()
         {
-            if (_saveIndex.CompareTo(GameSaveManager.CurrentGameSave.SaveIndex) < 1) return;
+            _saveThread = new Thread(new ThreadStart(SaveGame));
 
-            GameSave saveForUpdate = new GameSave();
+            _saveThread.Start();
+        }
 
-            saveForUpdate = SaveSerializer.DeserializeGameSave(await SaveSerializer.ReadSaveFileAsync(GameSaveManager.saveFilePath), saveForUpdate);
+        private void SaveGame()
+        {
+            // checks if current save index is smaller than this events save index
+            if (_saveIndex <= GameSaveManager.Instance.CurrentGameSave.SaveIndex) return;
 
-            GameSave newSave = new GameSave();
+            GameSave oldSave = new GameSave();
 
-            await UniTask.RunOnThreadPool(() =>
+            // Reads save file into a string
+            string saveString = SaveSerializer.ReadSaveFile(GameSaveManager.Instance.saveFilePath);
+
+            // Deserializes save string into a GameSave object
+            oldSave = SaveSerializer.DeserializeGameSave(saveString, oldSave);
+
+            List<int> itemIds = new List<int>();
+            foreach (Item item in PlayerManager.Instance.InventoryData.Inventory.InventoryArray.Where(i => i != Item.empty))
             {
-                newSave.SetPlayer(_saveLocation,
-                    PlayerManager.HealthData.CurrentHealth,
-                    PlayerManager.StaminaData.CurrentStamina,
-                    false,
-                    PlayerManager.InventoryData.Inventory,
-                    PlayerManager.InventoryData.PrimaryEquipment,
-                    PlayerManager.InventoryData.SecondaryEquipment);
+                itemIds.Add(item.id);
+            }
 
-                newSave.Difficulty = GameSaveManager.CurrentGameSave.Difficulty;
+            if (PlayerManager.Instance.InventoryData.Inventory.PrimaryEquipment != Item.empty)
+                itemIds.Add(PlayerManager.Instance.InventoryData.Inventory.PrimaryEquipment.id);
+            if (PlayerManager.Instance.InventoryData.Inventory.SecondaryEquipment != Item.empty)
+                itemIds.Add(PlayerManager.Instance.InventoryData.Inventory.SecondaryEquipment.id);
 
-                newSave.SavePath = GameSaveManager.CurrentGameSave.SavePath;
+            GameSave newSave = new GameSave()
+            {
+                CheckpointLocation = _saveLocation,
+                Health = 100,
+                Inventory = itemIds.ToArray(),
+                GameDifficulty = GameSaveManager.Instance.CurrentGameSave.GameDifficulty,
+                SaveIndex = _saveIndex,
+                SaveName = oldSave.SaveName,
+                SaveTime = System.DateTime.Now.ToString("MM/dd/yyyy HH:mm"),
+                SavePath = GameSaveManager.Instance.CurrentGameSave.SavePath
+            };
 
-                newSave.SaveIndex = _saveIndex;
-
-                newSave.SaveName = saveForUpdate.SaveName;
-                newSave.SaveTime = saveForUpdate.SaveTime;
-
-                UniTask.SwitchToThreadPool();
-            });
-
-            await SaveSerializer.UpdateSaveAsync(newSave, saveForUpdate);
+            SaveSerializer.UpdateSave(newSave, ref oldSave);
 
             JsonSerializer serializer = new JsonSerializer();
             serializer.Formatting = Formatting.Indented;
             serializer.ContractResolver = new IgnorePropertiesResolver(new[] { "name", "hideFlags" });
 
-            await SaveSerializer.SerializeObjectAsync(serializer, newSave, GameSaveManager.saveFilePath);
+            SaveSerializer.SerializeObject(serializer, newSave, GameSaveManager.Instance.saveFilePath);
 
-            GameSaveManager.CurrentGameSave = newSave;
+            GameSaveManager.Instance.CurrentGameSave = newSave;
         }
 
     }

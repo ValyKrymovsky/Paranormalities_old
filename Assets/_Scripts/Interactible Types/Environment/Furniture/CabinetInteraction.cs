@@ -1,7 +1,5 @@
 using MyBox;
-using MyCode.GameData.Interaction;
-using System.Collections;
-using System.Collections.Generic;
+using MyCode.GameData;
 using UnityEngine;
 
 namespace MyCode.Interactibles

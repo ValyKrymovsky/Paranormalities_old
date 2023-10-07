@@ -1,22 +1,18 @@
 using System.Collections.Generic;
 using UnityEngine;
-using MyCode.GameData.GameSettings;
-using Cysharp.Threading.Tasks;
-using MyCode.GameData.Scene;
-using MyCode.GameData.GameSave;
+using MyCode.GameData;
 using UnityEngine.AddressableAssets;
 using System;
 using UnityEngine.ResourceManagement.AsyncOperations;
-using MyCode.GameData.Inventory;
 
 namespace MyCode.Managers
 {
     public class ManagerLoader : MonoBehaviour
     {
         [SerializeField] private AssetLabelReference _managerGroupLabel;
-        private AsyncOperationHandle _handle;
-        private Dictionary<Type, GameObject> _managerList;
         [SerializeField] private List<DifficultyProperties> difficultyProperties = new List<DifficultyProperties>();
+        [SerializeField] private List<SuperObjective> objectives = new List<SuperObjective>();
+
 
         public event Action OnNewGame;
         public event Action OnLoadGame;
@@ -31,15 +27,17 @@ namespace MyCode.Managers
 
         public async void CreateManagers(DifficultyProperties _difficultyProp)
         {
-            PlayerManager playerManager = new PlayerManager();
-            GameSaveManager gameSaveManager = new GameSaveManager();
+            PlayerManager.Instance.SetPlayerProperties(_difficultyProp);
 
-            await playerManager.SetUpNewManager(_difficultyProp);
-
-            gameSaveManager.SetUpNewManager(_difficultyProp);
-            
             // Load Main Scene
             await SceneLoader.LoadScene(MyScene.DebugScene);
+
+            ObjectiveManager.Instance.Objectives = this.objectives;
+            ObjectiveManager.Instance.CurrentSuperObjective = this.objectives[0];
+            ObjectiveManager.Instance.CurrentSubObjective = this.objectives[0].subObjectives[0];
+
+            GameSaveManager.Instance.CreateNewSave(_difficultyProp);
+
             SceneLoader.SetActiveScene(MyScene.DebugScene);
 
             OnNewGame?.Invoke();
@@ -47,14 +45,9 @@ namespace MyCode.Managers
 
         public async void LoadManagers(GameSave _gameSave)
         {
-            GameSaveManager gameSaveManager = new GameSaveManager();
-            PlayerManager playerManager = new PlayerManager();
-            PlayerSoundManager playerSoundManager = new PlayerSoundManager();
-
-
-            await gameSaveManager.SetUpExistingManager(_gameSave);
-            playerManager.SetUpExistingManager(_gameSave);
-            playerSoundManager.SetUpExistingManager(_gameSave);
+            GameSaveManager.Instance.SetSave(_gameSave);
+            PlayerManager.Instance.SetUpExistingManager(_gameSave);
+            //playerSoundManager.SetUpExistingManager(_gameSave);
 
             // Load Main Scene
             await SceneLoader.LoadScene(MyScene.DebugScene);
@@ -63,7 +56,7 @@ namespace MyCode.Managers
 
             OnLoadGame?.Invoke();
 
-            PlayerManager.InvokeOnPlayerTeleport(_gameSave);
+            PlayerManager.Instance.InvokeOnPlayerTeleport(_gameSave);
         }
     }
 

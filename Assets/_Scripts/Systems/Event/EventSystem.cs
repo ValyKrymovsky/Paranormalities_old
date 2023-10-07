@@ -22,6 +22,7 @@ namespace MyCode.Systems
         private void Awake()
         {
             _collider = GetComponent<Collider>();
+            _collider.isTrigger = true;
         }
 
         private void OnTriggerEnter(Collider _other)
