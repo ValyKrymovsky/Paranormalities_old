@@ -1,0 +1,21 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: eca436b52e5195848912cebe67fa8c6b, type: 3}
+  m_Name: Lobby Key
+  m_EditorClassIdentifier: 
+  itemName: Lobby key
+  type: 1
+  description: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque
+    rutrum urna ligula, sit amet ullamcorper sapien volutpat in. Pellentesque nisi
+    neque, laoreet non tincidunt in, molestie ac nulla. Sed neque.
+  id: 3711
+  sprite: {fileID: 21300000, guid: ac5a18734cb0c9c4d8c679d6d79b0866, type: 3}

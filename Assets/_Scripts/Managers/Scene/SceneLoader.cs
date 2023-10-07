@@ -1,9 +1,9 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using Cysharp.Threading.Tasks;
-using MyCode.GameData.Scene;
+using MyCode.GameData;
 
-public class SceneLoader : MonoBehaviour
+public class SceneLoader
 {
     public static async UniTask<MyScene> LoadScene(MyScene _scene)
     {

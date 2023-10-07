@@ -1,5 +1,5 @@
 using UnityEngine.UIElements;
-using MyCode.GameData.GameSettings;
+using MyCode.GameData;
 
 public class DifficultyButton : VisualElement
 {

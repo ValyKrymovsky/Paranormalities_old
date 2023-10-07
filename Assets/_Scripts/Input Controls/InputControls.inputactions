@@ -6,7 +6,7 @@
             "id": "e877a4c2-fc42-407c-ae14-e87ecb36d1e0",
             "actions": [
                 {
-                    "name": "Move",
+                    "name": "Walk",
                     "type": "Value",
                     "id": "139c8294-1cfe-4071-aceb-1692b723461a",
                     "expectedControlType": "Vector2",
@@ -15,7 +15,7 @@
                     "initialStateCheck": true
                 },
                 {
-                    "name": "Look",
+                    "name": "CameraMove",
                     "type": "Value",
                     "id": "c0fc7b39-46e7-4c0f-8913-3308add7720a",
                     "expectedControlType": "Vector2",
@@ -51,7 +51,7 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "Pickup Zoom",
+                    "name": "Zoom Object",
                     "type": "PassThrough",
                     "id": "44fc24b0-8562-49d0-adaf-703fb011b5e6",
                     "expectedControlType": "Axis",
@@ -60,7 +60,7 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "Throw",
+                    "name": "Throw Object",
                     "type": "Button",
                     "id": "161ec41a-9050-4f1c-9384-0102ceaec7e5",
                     "expectedControlType": "Button",
@@ -69,7 +69,7 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "Drop item",
+                    "name": "Drop Object",
                     "type": "Button",
                     "id": "9a1c23c0-1bfb-40b3-9236-42a4b0f4c07c",
                     "expectedControlType": "Button",
@@ -94,15 +94,6 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
-                },
-                {
-                    "name": "Test Sound",
-                    "type": "Button",
-                    "id": "9030733b-04b2-420b-ac46-387748918686",
-                    "expectedControlType": "Button",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -113,7 +104,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "Move",
+                    "action": "Walk",
                     "isComposite": true,
                     "isPartOfComposite": false
                 },
@@ -124,7 +115,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "Keyboard&Mouse",
-                    "action": "Move",
+                    "action": "Walk",
                     "isComposite": false,
                     "isPartOfComposite": true
                 },
@@ -135,7 +126,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "Keyboard&Mouse",
-                    "action": "Move",
+                    "action": "Walk",
                     "isComposite": false,
                     "isPartOfComposite": true
                 },
@@ -146,7 +137,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "Keyboard&Mouse",
-                    "action": "Move",
+                    "action": "Walk",
                     "isComposite": false,
                     "isPartOfComposite": true
                 },
@@ -157,7 +148,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "Keyboard&Mouse",
-                    "action": "Move",
+                    "action": "Walk",
                     "isComposite": false,
                     "isPartOfComposite": true
                 },
@@ -168,7 +159,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "Keyboard&Mouse",
-                    "action": "Move",
+                    "action": "Walk",
                     "isComposite": false,
                     "isPartOfComposite": true
                 },
@@ -179,7 +170,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "Keyboard&Mouse",
-                    "action": "Move",
+                    "action": "Walk",
                     "isComposite": false,
                     "isPartOfComposite": true
                 },
@@ -190,7 +181,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "Keyboard&Mouse",
-                    "action": "Move",
+                    "action": "Walk",
                     "isComposite": false,
                     "isPartOfComposite": true
                 },
@@ -201,7 +192,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "Keyboard&Mouse",
-                    "action": "Move",
+                    "action": "Walk",
                     "isComposite": false,
                     "isPartOfComposite": true
                 },
@@ -212,7 +203,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "Move",
+                    "action": "Walk",
                     "isComposite": true,
                     "isPartOfComposite": false
                 },
@@ -223,7 +214,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "Gamepad",
-                    "action": "Move",
+                    "action": "Walk",
                     "isComposite": false,
                     "isPartOfComposite": true
                 },
@@ -234,7 +225,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "Gamepad",
-                    "action": "Move",
+                    "action": "Walk",
                     "isComposite": false,
                     "isPartOfComposite": true
                 },
@@ -245,7 +236,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "Gamepad",
-                    "action": "Move",
+                    "action": "Walk",
                     "isComposite": false,
                     "isPartOfComposite": true
                 },
@@ -256,7 +247,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "Gamepad",
-                    "action": "Move",
+                    "action": "Walk",
                     "isComposite": false,
                     "isPartOfComposite": true
                 },
@@ -267,7 +258,7 @@
                     "interactions": "",
                     "processors": "ScaleVector2(x=10,y=10)",
                     "groups": "Gamepad",
-                    "action": "Look",
+                    "action": "CameraMove",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -278,7 +269,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "Keyboard&Mouse",
-                    "action": "Look",
+                    "action": "CameraMove",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -333,7 +324,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "Keyboard&Mouse",
-                    "action": "Drop item",
+                    "action": "Drop Object",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -344,7 +335,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "Gamepad",
-                    "action": "Drop item",
+                    "action": "Drop Object",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -421,7 +412,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "Keyboard&Mouse",
-                    "action": "Pickup Zoom",
+                    "action": "Zoom Object",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -432,7 +423,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "Keyboard&Mouse",
-                    "action": "Throw",
+                    "action": "Throw Object",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -457,25 +448,8 @@
                     "action": "Toggle Inventory",
                     "isComposite": false,
                     "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "c9cd71d4-385b-4776-8493-8508dcc4c95d",
-                    "path": "<Keyboard>/z",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "Keyboard&Mouse",
-                    "action": "Test Sound",
-                    "isComposite": false,
-                    "isPartOfComposite": false
                 }
             ]
-        },
-        {
-            "name": "UI",
-            "id": "93cd5b43-07fc-4b4b-8bb9-07522085a3e2",
-            "actions": [],
-            "bindings": []
         }
     ],
     "controlSchemes": [

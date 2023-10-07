@@ -17,7 +17,7 @@ MonoBehaviour:
   perspectiveCorrectionFactor: 1
   SOFAFiles: []
   defaultMaterial: {fileID: 11400000, guid: 5c0320d65bcecce4abf2efe02ff313aa, type: 2}
-  sceneType: 1
+  sceneType: 0
   layerMask:
     serializedVersion: 2
     m_Bits: 0
@@ -44,7 +44,7 @@ MonoBehaviour:
   bakingPathRange: 1000
   bakedPathingCPUCoresPercentage: 50
   simulationUpdateInterval: 0.1
-  reflectionEffectType: 3
+  reflectionEffectType: 2
   hybridReverbTransitionTime: 1
   hybridReverbOverlapPercent: 25
   deviceType: 2

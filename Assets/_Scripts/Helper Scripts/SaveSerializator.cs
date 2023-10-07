@@ -3,7 +3,7 @@ using Cysharp.Threading.Tasks;
 using System.IO;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
-using MyCode.GameData.GameSave;
+using MyCode.GameData;
 using System.Collections.Generic;
 using System.Reflection;
 
@@ -54,13 +54,9 @@ namespace MyCode.Helper.Serializer
             return saveArray;
         }
 
-        public static async UniTask<GameSave> UpdateSaveAsync(GameSave _newGameSave, GameSave _gameSaveToUpdate)
+        public static void UpdateSave(GameSave newSave, ref GameSave oldSave)
         {
-            await UniTask.RunOnThreadPool(() => {
-                _gameSaveToUpdate = _newGameSave;
-            });
-
-            return _gameSaveToUpdate;
+            oldSave = newSave;
         }
 
         public static async UniTask<bool> SerializeObjectAsync(JsonSerializer _serializer, GameSave _data, string _savePath)
@@ -73,6 +69,17 @@ namespace MyCode.Helper.Serializer
 
                 file.Close();
             });
+
+            return true;
+        }
+
+        public static bool SerializeObject(JsonSerializer _serializer, GameSave _data, string _savePath)
+        {
+            StreamWriter file = File.CreateText(_savePath);
+
+            _serializer.Serialize(file, _data);
+
+            file.Close();
 
             return true;
         }

@@ -28,7 +28,7 @@ public partial class @InputControls: IInputActionCollection2, IDisposable
             ""id"": ""e877a4c2-fc42-407c-ae14-e87ecb36d1e0"",
             ""actions"": [
                 {
-                    ""name"": ""Move"",
+                    ""name"": ""Walk"",
                     ""type"": ""Value"",
                     ""id"": ""139c8294-1cfe-4071-aceb-1692b723461a"",
                     ""expectedControlType"": ""Vector2"",
@@ -37,7 +37,7 @@ public partial class @InputControls: IInputActionCollection2, IDisposable
                     ""initialStateCheck"": true
                 },
                 {
-                    ""name"": ""Look"",
+                    ""name"": ""CameraMove"",
                     ""type"": ""Value"",
                     ""id"": ""c0fc7b39-46e7-4c0f-8913-3308add7720a"",
                     ""expectedControlType"": ""Vector2"",
@@ -73,7 +73,7 @@ public partial class @InputControls: IInputActionCollection2, IDisposable
                     ""initialStateCheck"": false
                 },
                 {
-                    ""name"": ""Pickup Zoom"",
+                    ""name"": ""Zoom Object"",
                     ""type"": ""PassThrough"",
                     ""id"": ""44fc24b0-8562-49d0-adaf-703fb011b5e6"",
                     ""expectedControlType"": ""Axis"",
@@ -82,7 +82,7 @@ public partial class @InputControls: IInputActionCollection2, IDisposable
                     ""initialStateCheck"": false
                 },
                 {
-                    ""name"": ""Throw"",
+                    ""name"": ""Throw Object"",
                     ""type"": ""Button"",
                     ""id"": ""161ec41a-9050-4f1c-9384-0102ceaec7e5"",
                     ""expectedControlType"": ""Button"",
@@ -91,7 +91,7 @@ public partial class @InputControls: IInputActionCollection2, IDisposable
                     ""initialStateCheck"": false
                 },
                 {
-                    ""name"": ""Drop item"",
+                    ""name"": ""Drop Object"",
                     ""type"": ""Button"",
                     ""id"": ""9a1c23c0-1bfb-40b3-9236-42a4b0f4c07c"",
                     ""expectedControlType"": ""Button"",
@@ -116,15 +116,6 @@ public partial class @InputControls: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
-                },
-                {
-                    ""name"": ""Test Sound"",
-                    ""type"": ""Button"",
-                    ""id"": ""9030733b-04b2-420b-ac46-387748918686"",
-                    ""expectedControlType"": ""Button"",
-                    ""processors"": """",
-                    ""interactions"": """",
-                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -135,7 +126,7 @@ public partial class @InputControls: IInputActionCollection2, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""Move"",
+                    ""action"": ""Walk"",
                     ""isComposite"": true,
                     ""isPartOfComposite"": false
                 },
@@ -146,7 +137,7 @@ public partial class @InputControls: IInputActionCollection2, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Keyboard&Mouse"",
-                    ""action"": ""Move"",
+                    ""action"": ""Walk"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
                 },
@@ -157,7 +148,7 @@ public partial class @InputControls: IInputActionCollection2, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Keyboard&Mouse"",
-                    ""action"": ""Move"",
+                    ""action"": ""Walk"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
                 },
@@ -168,7 +159,7 @@ public partial class @InputControls: IInputActionCollection2, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Keyboard&Mouse"",
-                    ""action"": ""Move"",
+                    ""action"": ""Walk"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
                 },
@@ -179,7 +170,7 @@ public partial class @InputControls: IInputActionCollection2, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Keyboard&Mouse"",
-                    ""action"": ""Move"",
+                    ""action"": ""Walk"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
                 },
@@ -190,7 +181,7 @@ public partial class @InputControls: IInputActionCollection2, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Keyboard&Mouse"",
-                    ""action"": ""Move"",
+                    ""action"": ""Walk"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
                 },
@@ -201,7 +192,7 @@ public partial class @InputControls: IInputActionCollection2, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Keyboard&Mouse"",
-                    ""action"": ""Move"",
+                    ""action"": ""Walk"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
                 },
@@ -212,7 +203,7 @@ public partial class @InputControls: IInputActionCollection2, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Keyboard&Mouse"",
-                    ""action"": ""Move"",
+                    ""action"": ""Walk"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
                 },
@@ -223,7 +214,7 @@ public partial class @InputControls: IInputActionCollection2, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Keyboard&Mouse"",
-                    ""action"": ""Move"",
+                    ""action"": ""Walk"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
                 },
@@ -234,7 +225,7 @@ public partial class @InputControls: IInputActionCollection2, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""Move"",
+                    ""action"": ""Walk"",
                     ""isComposite"": true,
                     ""isPartOfComposite"": false
                 },
@@ -245,7 +236,7 @@ public partial class @InputControls: IInputActionCollection2, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Gamepad"",
-                    ""action"": ""Move"",
+                    ""action"": ""Walk"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
                 },
@@ -256,7 +247,7 @@ public partial class @InputControls: IInputActionCollection2, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Gamepad"",
-                    ""action"": ""Move"",
+                    ""action"": ""Walk"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
                 },
@@ -267,7 +258,7 @@ public partial class @InputControls: IInputActionCollection2, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Gamepad"",
-                    ""action"": ""Move"",
+                    ""action"": ""Walk"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
                 },
@@ -278,7 +269,7 @@ public partial class @InputControls: IInputActionCollection2, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Gamepad"",
-                    ""action"": ""Move"",
+                    ""action"": ""Walk"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
                 },
@@ -289,7 +280,7 @@ public partial class @InputControls: IInputActionCollection2, IDisposable
                     ""interactions"": """",
                     ""processors"": ""ScaleVector2(x=10,y=10)"",
                     ""groups"": ""Gamepad"",
-                    ""action"": ""Look"",
+                    ""action"": ""CameraMove"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -300,7 +291,7 @@ public partial class @InputControls: IInputActionCollection2, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Keyboard&Mouse"",
-                    ""action"": ""Look"",
+                    ""action"": ""CameraMove"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -355,7 +346,7 @@ public partial class @InputControls: IInputActionCollection2, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Keyboard&Mouse"",
-                    ""action"": ""Drop item"",
+                    ""action"": ""Drop Object"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -366,7 +357,7 @@ public partial class @InputControls: IInputActionCollection2, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Gamepad"",
-                    ""action"": ""Drop item"",
+                    ""action"": ""Drop Object"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -443,7 +434,7 @@ public partial class @InputControls: IInputActionCollection2, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Keyboard&Mouse"",
-                    ""action"": ""Pickup Zoom"",
+                    ""action"": ""Zoom Object"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -454,7 +445,7 @@ public partial class @InputControls: IInputActionCollection2, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Keyboard&Mouse"",
-                    ""action"": ""Throw"",
+                    ""action"": ""Throw Object"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -479,25 +470,8 @@ public partial class @InputControls: IInputActionCollection2, IDisposable
                     ""action"": ""Toggle Inventory"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""c9cd71d4-385b-4776-8493-8508dcc4c95d"",
-                    ""path"": ""<Keyboard>/z"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": ""Keyboard&Mouse"",
-                    ""action"": ""Test Sound"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
                 }
             ]
-        },
-        {
-            ""name"": ""UI"",
-            ""id"": ""93cd5b43-07fc-4b4b-8bb9-07522085a3e2"",
-            ""actions"": [],
-            ""bindings"": []
         }
     ],
     ""controlSchemes"": [
@@ -543,19 +517,16 @@ public partial class @InputControls: IInputActionCollection2, IDisposable
 }");
         // Gameplay
         m_Gameplay = asset.FindActionMap("Gameplay", throwIfNotFound: true);
-        m_Gameplay_Move = m_Gameplay.FindAction("Move", throwIfNotFound: true);
-        m_Gameplay_Look = m_Gameplay.FindAction("Look", throwIfNotFound: true);
+        m_Gameplay_Walk = m_Gameplay.FindAction("Walk", throwIfNotFound: true);
+        m_Gameplay_CameraMove = m_Gameplay.FindAction("CameraMove", throwIfNotFound: true);
         m_Gameplay_Sneak = m_Gameplay.FindAction("Sneak", throwIfNotFound: true);
         m_Gameplay_Sprint = m_Gameplay.FindAction("Sprint", throwIfNotFound: true);
         m_Gameplay_Interact = m_Gameplay.FindAction("Interact", throwIfNotFound: true);
-        m_Gameplay_PickupZoom = m_Gameplay.FindAction("Pickup Zoom", throwIfNotFound: true);
-        m_Gameplay_Throw = m_Gameplay.FindAction("Throw", throwIfNotFound: true);
-        m_Gameplay_Dropitem = m_Gameplay.FindAction("Drop item", throwIfNotFound: true);
+        m_Gameplay_ZoomObject = m_Gameplay.FindAction("Zoom Object", throwIfNotFound: true);
+        m_Gameplay_ThrowObject = m_Gameplay.FindAction("Throw Object", throwIfNotFound: true);
+        m_Gameplay_DropObject = m_Gameplay.FindAction("Drop Object", throwIfNotFound: true);
         m_Gameplay_ToggleInventory = m_Gameplay.FindAction("Toggle Inventory", throwIfNotFound: true);
         m_Gameplay_ToggleMainMenu = m_Gameplay.FindAction("Toggle Main Menu", throwIfNotFound: true);
-        m_Gameplay_TestSound = m_Gameplay.FindAction("Test Sound", throwIfNotFound: true);
-        // UI
-        m_UI = asset.FindActionMap("UI", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -617,32 +588,30 @@ public partial class @InputControls: IInputActionCollection2, IDisposable
     // Gameplay
     private readonly InputActionMap m_Gameplay;
     private List<IGameplayActions> m_GameplayActionsCallbackInterfaces = new List<IGameplayActions>();
-    private readonly InputAction m_Gameplay_Move;
-    private readonly InputAction m_Gameplay_Look;
+    private readonly InputAction m_Gameplay_Walk;
+    private readonly InputAction m_Gameplay_CameraMove;
     private readonly InputAction m_Gameplay_Sneak;
     private readonly InputAction m_Gameplay_Sprint;
     private readonly InputAction m_Gameplay_Interact;
-    private readonly InputAction m_Gameplay_PickupZoom;
-    private readonly InputAction m_Gameplay_Throw;
-    private readonly InputAction m_Gameplay_Dropitem;
+    private readonly InputAction m_Gameplay_ZoomObject;
+    private readonly InputAction m_Gameplay_ThrowObject;
+    private readonly InputAction m_Gameplay_DropObject;
     private readonly InputAction m_Gameplay_ToggleInventory;
     private readonly InputAction m_Gameplay_ToggleMainMenu;
-    private readonly InputAction m_Gameplay_TestSound;
     public struct GameplayActions
     {
         private @InputControls m_Wrapper;
         public GameplayActions(@InputControls wrapper) { m_Wrapper = wrapper; }
-        public InputAction @Move => m_Wrapper.m_Gameplay_Move;
-        public InputAction @Look => m_Wrapper.m_Gameplay_Look;
+        public InputAction @Walk => m_Wrapper.m_Gameplay_Walk;
+        public InputAction @CameraMove => m_Wrapper.m_Gameplay_CameraMove;
         public InputAction @Sneak => m_Wrapper.m_Gameplay_Sneak;
         public InputAction @Sprint => m_Wrapper.m_Gameplay_Sprint;
         public InputAction @Interact => m_Wrapper.m_Gameplay_Interact;
-        public InputAction @PickupZoom => m_Wrapper.m_Gameplay_PickupZoom;
-        public InputAction @Throw => m_Wrapper.m_Gameplay_Throw;
-        public InputAction @Dropitem => m_Wrapper.m_Gameplay_Dropitem;
+        public InputAction @ZoomObject => m_Wrapper.m_Gameplay_ZoomObject;
+        public InputAction @ThrowObject => m_Wrapper.m_Gameplay_ThrowObject;
+        public InputAction @DropObject => m_Wrapper.m_Gameplay_DropObject;
         public InputAction @ToggleInventory => m_Wrapper.m_Gameplay_ToggleInventory;
         public InputAction @ToggleMainMenu => m_Wrapper.m_Gameplay_ToggleMainMenu;
-        public InputAction @TestSound => m_Wrapper.m_Gameplay_TestSound;
         public InputActionMap Get() { return m_Wrapper.m_Gameplay; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -652,12 +621,12 @@ public partial class @InputControls: IInputActionCollection2, IDisposable
         {
             if (instance == null || m_Wrapper.m_GameplayActionsCallbackInterfaces.Contains(instance)) return;
             m_Wrapper.m_GameplayActionsCallbackInterfaces.Add(instance);
-            @Move.started += instance.OnMove;
-            @Move.performed += instance.OnMove;
-            @Move.canceled += instance.OnMove;
-            @Look.started += instance.OnLook;
-            @Look.performed += instance.OnLook;
-            @Look.canceled += instance.OnLook;
+            @Walk.started += instance.OnWalk;
+            @Walk.performed += instance.OnWalk;
+            @Walk.canceled += instance.OnWalk;
+            @CameraMove.started += instance.OnCameraMove;
+            @CameraMove.performed += instance.OnCameraMove;
+            @CameraMove.canceled += instance.OnCameraMove;
             @Sneak.started += instance.OnSneak;
             @Sneak.performed += instance.OnSneak;
             @Sneak.canceled += instance.OnSneak;
@@ -667,34 +636,31 @@ public partial class @InputControls: IInputActionCollection2, IDisposable
             @Interact.started += instance.OnInteract;
             @Interact.performed += instance.OnInteract;
             @Interact.canceled += instance.OnInteract;
-            @PickupZoom.started += instance.OnPickupZoom;
-            @PickupZoom.performed += instance.OnPickupZoom;
-            @PickupZoom.canceled += instance.OnPickupZoom;
-            @Throw.started += instance.OnThrow;
-            @Throw.performed += instance.OnThrow;
-            @Throw.canceled += instance.OnThrow;
-            @Dropitem.started += instance.OnDropitem;
-            @Dropitem.performed += instance.OnDropitem;
-            @Dropitem.canceled += instance.OnDropitem;
+            @ZoomObject.started += instance.OnZoomObject;
+            @ZoomObject.performed += instance.OnZoomObject;
+            @ZoomObject.canceled += instance.OnZoomObject;
+            @ThrowObject.started += instance.OnThrowObject;
+            @ThrowObject.performed += instance.OnThrowObject;
+            @ThrowObject.canceled += instance.OnThrowObject;
+            @DropObject.started += instance.OnDropObject;
+            @DropObject.performed += instance.OnDropObject;
+            @DropObject.canceled += instance.OnDropObject;
             @ToggleInventory.started += instance.OnToggleInventory;
             @ToggleInventory.performed += instance.OnToggleInventory;
             @ToggleInventory.canceled += instance.OnToggleInventory;
             @ToggleMainMenu.started += instance.OnToggleMainMenu;
             @ToggleMainMenu.performed += instance.OnToggleMainMenu;
             @ToggleMainMenu.canceled += instance.OnToggleMainMenu;
-            @TestSound.started += instance.OnTestSound;
-            @TestSound.performed += instance.OnTestSound;
-            @TestSound.canceled += instance.OnTestSound;
         }
 
         private void UnregisterCallbacks(IGameplayActions instance)
         {
-            @Move.started -= instance.OnMove;
-            @Move.performed -= instance.OnMove;
-            @Move.canceled -= instance.OnMove;
-            @Look.started -= instance.OnLook;
-            @Look.performed -= instance.OnLook;
-            @Look.canceled -= instance.OnLook;
+            @Walk.started -= instance.OnWalk;
+            @Walk.performed -= instance.OnWalk;
+            @Walk.canceled -= instance.OnWalk;
+            @CameraMove.started -= instance.OnCameraMove;
+            @CameraMove.performed -= instance.OnCameraMove;
+            @CameraMove.canceled -= instance.OnCameraMove;
             @Sneak.started -= instance.OnSneak;
             @Sneak.performed -= instance.OnSneak;
             @Sneak.canceled -= instance.OnSneak;
@@ -704,24 +670,21 @@ public partial class @InputControls: IInputActionCollection2, IDisposable
             @Interact.started -= instance.OnInteract;
             @Interact.performed -= instance.OnInteract;
             @Interact.canceled -= instance.OnInteract;
-            @PickupZoom.started -= instance.OnPickupZoom;
-            @PickupZoom.performed -= instance.OnPickupZoom;
-            @PickupZoom.canceled -= instance.OnPickupZoom;
-            @Throw.started -= instance.OnThrow;
-            @Throw.performed -= instance.OnThrow;
-            @Throw.canceled -= instance.OnThrow;
-            @Dropitem.started -= instance.OnDropitem;
-            @Dropitem.performed -= instance.OnDropitem;
-            @Dropitem.canceled -= instance.OnDropitem;
+            @ZoomObject.started -= instance.OnZoomObject;
+            @ZoomObject.performed -= instance.OnZoomObject;
+            @ZoomObject.canceled -= instance.OnZoomObject;
+            @ThrowObject.started -= instance.OnThrowObject;
+            @ThrowObject.performed -= instance.OnThrowObject;
+            @ThrowObject.canceled -= instance.OnThrowObject;
+            @DropObject.started -= instance.OnDropObject;
+            @DropObject.performed -= instance.OnDropObject;
+            @DropObject.canceled -= instance.OnDropObject;
             @ToggleInventory.started -= instance.OnToggleInventory;
             @ToggleInventory.performed -= instance.OnToggleInventory;
             @ToggleInventory.canceled -= instance.OnToggleInventory;
             @ToggleMainMenu.started -= instance.OnToggleMainMenu;
             @ToggleMainMenu.performed -= instance.OnToggleMainMenu;
             @ToggleMainMenu.canceled -= instance.OnToggleMainMenu;
-            @TestSound.started -= instance.OnTestSound;
-            @TestSound.performed -= instance.OnTestSound;
-            @TestSound.canceled -= instance.OnTestSound;
         }
 
         public void RemoveCallbacks(IGameplayActions instance)
@@ -739,44 +702,6 @@ public partial class @InputControls: IInputActionCollection2, IDisposable
         }
     }
     public GameplayActions @Gameplay => new GameplayActions(this);
-
-    // UI
-    private readonly InputActionMap m_UI;
-    private List<IUIActions> m_UIActionsCallbackInterfaces = new List<IUIActions>();
-    public struct UIActions
-    {
-        private @InputControls m_Wrapper;
-        public UIActions(@InputControls wrapper) { m_Wrapper = wrapper; }
-        public InputActionMap Get() { return m_Wrapper.m_UI; }
-        public void Enable() { Get().Enable(); }
-        public void Disable() { Get().Disable(); }
-        public bool enabled => Get().enabled;
-        public static implicit operator InputActionMap(UIActions set) { return set.Get(); }
-        public void AddCallbacks(IUIActions instance)
-        {
-            if (instance == null || m_Wrapper.m_UIActionsCallbackInterfaces.Contains(instance)) return;
-            m_Wrapper.m_UIActionsCallbackInterfaces.Add(instance);
-        }
-
-        private void UnregisterCallbacks(IUIActions instance)
-        {
-        }
-
-        public void RemoveCallbacks(IUIActions instance)
-        {
-            if (m_Wrapper.m_UIActionsCallbackInterfaces.Remove(instance))
-                UnregisterCallbacks(instance);
-        }
-
-        public void SetCallbacks(IUIActions instance)
-        {
-            foreach (var item in m_Wrapper.m_UIActionsCallbackInterfaces)
-                UnregisterCallbacks(item);
-            m_Wrapper.m_UIActionsCallbackInterfaces.Clear();
-            AddCallbacks(instance);
-        }
-    }
-    public UIActions @UI => new UIActions(this);
     private int m_KeyboardMouseSchemeIndex = -1;
     public InputControlScheme KeyboardMouseScheme
     {
@@ -806,19 +731,15 @@ public partial class @InputControls: IInputActionCollection2, IDisposable
     }
     public interface IGameplayActions
     {
-        void OnMove(InputAction.CallbackContext context);
-        void OnLook(InputAction.CallbackContext context);
+        void OnWalk(InputAction.CallbackContext context);
+        void OnCameraMove(InputAction.CallbackContext context);
         void OnSneak(InputAction.CallbackContext context);
         void OnSprint(InputAction.CallbackContext context);
         void OnInteract(InputAction.CallbackContext context);
-        void OnPickupZoom(InputAction.CallbackContext context);
-        void OnThrow(InputAction.CallbackContext context);
-        void OnDropitem(InputAction.CallbackContext context);
+        void OnZoomObject(InputAction.CallbackContext context);
+        void OnThrowObject(InputAction.CallbackContext context);
+        void OnDropObject(InputAction.CallbackContext context);
         void OnToggleInventory(InputAction.CallbackContext context);
         void OnToggleMainMenu(InputAction.CallbackContext context);
-        void OnTestSound(InputAction.CallbackContext context);
-    }
-    public interface IUIActions
-    {
     }
 }

@@ -132,6 +132,23 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: -2928075188011797533, guid: 63ccdc0ce13e12443b327db12086a835,
+        type: 3}
+      propertyPath: objectives.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: -2928075188011797533, guid: 63ccdc0ce13e12443b327db12086a835,
+        type: 3}
+      propertyPath: objectives.Array.data[0]
+      value: 
+      objectReference: {fileID: 11400000, guid: 2645f12f918fd2d42881bc2180afe8d2,
+        type: 2}
+    - target: {fileID: -2928075188011797533, guid: 63ccdc0ce13e12443b327db12086a835,
+        type: 3}
+      propertyPath: objectives.Array.data[1]
+      value: 
+      objectReference: {fileID: 11400000, guid: 522f01b9d17d68847adde226f8c84b06,
+        type: 2}
     - target: {fileID: 3197091880555606436, guid: 63ccdc0ce13e12443b327db12086a835,
         type: 3}
       propertyPath: m_RootOrder
@@ -251,8 +268,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 992712817}
+  - component: {fileID: 992712820}
   - component: {fileID: 992712816}
-  - component: {fileID: 992712814}
   - component: {fileID: 992712818}
   - component: {fileID: 992712819}
   m_Layer: 0
@@ -262,18 +279,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &992712814
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 992712813}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a79441f348de89743a2939f4d699eac1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!20 &992712816
 Camera:
   m_ObjectHideFlags: 0
@@ -498,6 +503,14 @@ MonoBehaviour:
       enableFptlForForwardOpaque: 0
       enableBigTilePrepass: 0
       isFptlEnabled: 0
+--- !u!81 &992712820
+AudioListener:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 992712813}
+  m_Enabled: 1
 --- !u!1 &1049677345
 GameObject:
   m_ObjectHideFlags: 0

@@ -1,6 +1,6 @@
 
 
-namespace MyCode.GameData.Interaction
+namespace MyCode.GameData
 {
     public interface IInteraction
     {
