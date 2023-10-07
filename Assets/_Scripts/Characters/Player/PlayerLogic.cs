@@ -594,7 +594,6 @@ namespace MyCode.Characters
                 _closestCollider = null;
                 _activeController = null;
                 _interactibleIndicator.indicatorText.enabled = false;
-                _hitPosition = Vector3.zero;
                 return;
             }
 
@@ -626,7 +625,9 @@ namespace MyCode.Characters
             // Cast ray in front of the camera with InteractRange as its max distance
             Physics.Raycast(r, out RaycastHit hitInfo, PlayerManager.InteractionData.InteractRange);
 
-            while(hitInfo.collider != null)
+            _hitPosition = hitInfo.collider != null ? hitInfo.point : _camera.transform.position + _camera.transform.forward * PlayerManager.InteractionData.InteractRange;
+
+            while (hitInfo.collider != null)
             {
                 if (!hitInfo.collider.TryGetComponent(out InteractionController controller)) break;
                 if (!controller.Interactible) break;
@@ -638,7 +639,7 @@ namespace MyCode.Characters
                 return new Collider[1] { hitInfo.collider };
             }
 
-            _hitPosition = hitInfo.collider != null ? hitInfo.point : _camera.transform.position + _camera.transform.forward * PlayerManager.InteractionData.InteractRange;
+            
 
             // Number of new detected colliders from OverlapSphereNonAlloc
             int results = Physics.OverlapSphereNonAlloc(_hitPosition, PlayerManager.InteractionData.SphereCheckRange, _colliderArray, PlayerManager.InteractionData.InteractiblesMask);
@@ -837,7 +838,7 @@ namespace MyCode.Characters
                 Gizmos.color = Color.red;
             }
 
-            Gizmos.DrawWireSphere(_camera.transform.position + (_camera.transform.forward * PlayerManager.InteractionData.InteractRange), PlayerManager.InteractionData.SphereCheckRange);
+            Gizmos.DrawWireSphere(_hitPosition, PlayerManager.InteractionData.SphereCheckRange);
 
             if (_closestCollider != null)
             {
