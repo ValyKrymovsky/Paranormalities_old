@@ -4,8 +4,8 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [Serializable]
-[CreateAssetMenu(fileName = "NewSuperObjective", menuName = "Game Objectives/Super/Objective")]
+[CreateAssetMenu(fileName = "NewSuperObjective", menuName = "DataObjects/Objectives/Super/Basic Objective")]
 public class SuperObjective : Objective
 {
-    public Objective[] subObjectives;
+    public SubObjective[] subObjectives;
 }

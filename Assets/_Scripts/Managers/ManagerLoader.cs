@@ -27,15 +27,17 @@ namespace MyCode.Managers
 
         public async void CreateManagers(DifficultyProperties _difficultyProp)
         {
-            PlayerManager playerManager = new PlayerManager();
-            GameSaveManager gameSaveManager = new GameSaveManager();
+            PlayerManager.Instance.SetPlayerProperties(_difficultyProp);
 
-            playerManager.SetPlayerProperties(_difficultyProp);
-
-            gameSaveManager.CreateNewSave(_difficultyProp);
-            
             // Load Main Scene
             await SceneLoader.LoadScene(MyScene.DebugScene);
+
+            ObjectiveManager.Instance.Objectives = this.objectives;
+            ObjectiveManager.Instance.CurrentSuperObjective = this.objectives[0];
+            ObjectiveManager.Instance.CurrentSubObjective = this.objectives[0].subObjectives[0];
+
+            GameSaveManager.Instance.CreateNewSave(_difficultyProp);
+
             SceneLoader.SetActiveScene(MyScene.DebugScene);
 
             OnNewGame?.Invoke();
@@ -43,12 +45,8 @@ namespace MyCode.Managers
 
         public async void LoadManagers(GameSave _gameSave)
         {
-            GameSaveManager gameSaveManager = new GameSaveManager();
-            PlayerManager playerManager = new PlayerManager();
-
-
-            gameSaveManager.SetSave(_gameSave);
-            playerManager.SetUpExistingManager(_gameSave);
+            GameSaveManager.Instance.SetSave(_gameSave);
+            PlayerManager.Instance.SetUpExistingManager(_gameSave);
             //playerSoundManager.SetUpExistingManager(_gameSave);
 
             // Load Main Scene
@@ -58,7 +56,7 @@ namespace MyCode.Managers
 
             OnLoadGame?.Invoke();
 
-            PlayerManager.InvokeOnPlayerTeleport(_gameSave);
+            PlayerManager.Instance.InvokeOnPlayerTeleport(_gameSave);
         }
     }
 

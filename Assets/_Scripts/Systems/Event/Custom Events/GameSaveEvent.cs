@@ -40,37 +40,37 @@ namespace MyCode.Systems
         private void SaveGame()
         {
             // checks if current save index is smaller than this events save index
-            if (_saveIndex <= GameSaveManager.CurrentGameSave.SaveIndex) return;
+            if (_saveIndex <= GameSaveManager.Instance.CurrentGameSave.SaveIndex) return;
 
             GameSave oldSave = new GameSave();
 
             // Reads save file into a string
-            string saveString = SaveSerializer.ReadSaveFile(GameSaveManager.saveFilePath);
+            string saveString = SaveSerializer.ReadSaveFile(GameSaveManager.Instance.saveFilePath);
 
             // Deserializes save string into a GameSave object
             oldSave = SaveSerializer.DeserializeGameSave(saveString, oldSave);
 
             List<int> itemIds = new List<int>();
-            foreach (Item item in PlayerManager.InventoryData.Inventory.InventoryArray.Where(i => i != Item.empty))
+            foreach (Item item in PlayerManager.Instance.InventoryData.Inventory.InventoryArray.Where(i => i != Item.empty))
             {
                 itemIds.Add(item.id);
             }
 
-            if (PlayerManager.InventoryData.Inventory.PrimaryEquipment != Item.empty)
-                itemIds.Add(PlayerManager.InventoryData.Inventory.PrimaryEquipment.id);
-            if (PlayerManager.InventoryData.Inventory.SecondaryEquipment != Item.empty)
-                itemIds.Add(PlayerManager.InventoryData.Inventory.SecondaryEquipment.id);
+            if (PlayerManager.Instance.InventoryData.Inventory.PrimaryEquipment != Item.empty)
+                itemIds.Add(PlayerManager.Instance.InventoryData.Inventory.PrimaryEquipment.id);
+            if (PlayerManager.Instance.InventoryData.Inventory.SecondaryEquipment != Item.empty)
+                itemIds.Add(PlayerManager.Instance.InventoryData.Inventory.SecondaryEquipment.id);
 
             GameSave newSave = new GameSave()
             {
                 CheckpointLocation = _saveLocation,
                 Health = 100,
                 Inventory = itemIds.ToArray(),
-                GameDifficulty = GameSaveManager.CurrentGameSave.GameDifficulty,
+                GameDifficulty = GameSaveManager.Instance.CurrentGameSave.GameDifficulty,
                 SaveIndex = _saveIndex,
                 SaveName = oldSave.SaveName,
                 SaveTime = System.DateTime.Now.ToString("MM/dd/yyyy HH:mm"),
-                SavePath = GameSaveManager.CurrentGameSave.SavePath
+                SavePath = GameSaveManager.Instance.CurrentGameSave.SavePath
             };
 
             SaveSerializer.UpdateSave(newSave, ref oldSave);
@@ -79,9 +79,9 @@ namespace MyCode.Systems
             serializer.Formatting = Formatting.Indented;
             serializer.ContractResolver = new IgnorePropertiesResolver(new[] { "name", "hideFlags" });
 
-            SaveSerializer.SerializeObject(serializer, newSave, GameSaveManager.saveFilePath);
+            SaveSerializer.SerializeObject(serializer, newSave, GameSaveManager.Instance.saveFilePath);
 
-            GameSaveManager.CurrentGameSave = newSave;
+            GameSaveManager.Instance.CurrentGameSave = newSave;
         }
 
     }

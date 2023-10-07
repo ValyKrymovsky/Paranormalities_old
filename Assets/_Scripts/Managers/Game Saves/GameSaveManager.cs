@@ -12,6 +12,20 @@ namespace MyCode.Managers
 {
     public class GameSaveManager
     {
+        private static readonly object _lock = new object();
+        private static GameSaveManager _instance;
+        public static GameSaveManager Instance
+        {
+            get
+            {
+                lock (_lock)
+                {
+                    if (_instance == null)
+                        _instance = new GameSaveManager();
+                }
+                return _instance;
+            }
+        }
 
         public void SetSave(GameSave _save)
         {
@@ -19,7 +33,7 @@ namespace MyCode.Managers
             saveFilePath = _save.SavePath;
         }
 
-        public async UniTask CreateNewSave(DifficultyProperties _properties)
+        public async UniTaskVoid CreateNewSave(DifficultyProperties _properties)
         {
             string savePath = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments).Replace('\\', '/') + "/My Games/Paranormalities/Saves/";
 
@@ -62,8 +76,8 @@ namespace MyCode.Managers
             CurrentGameSave = gs;
         }
 
-        [field: SerializeField] public static GameSave CurrentGameSave { get; set; }
-        public static string saveFilePath;
+        [field: SerializeField] public GameSave CurrentGameSave { get; set; }
+        public string saveFilePath;
     }
 
 }

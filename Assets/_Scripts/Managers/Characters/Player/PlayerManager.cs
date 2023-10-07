@@ -7,12 +7,27 @@ namespace MyCode.Managers
 {
     public class PlayerManager
     {
-        [field: SerializeField] public static PlayerCameraData CameraData { get; set; }
-        [field: SerializeField] public static PlayerMovementData MovementData { get; set; }
-        [field: SerializeField] public static PlayerInventoryData InventoryData { get; set; }
-        [field: SerializeField] public static PlayerInteractionData InteractionData { get; set; }
+        private static readonly object _lock = new object();
+        private static PlayerManager _instance;
+        public static PlayerManager Instance
+        {
+            get
+            {
+                lock (_lock)
+                {
+                    if (_instance == null)
+                        _instance = new PlayerManager();
+                }
+                return _instance;
+            }
+        }
 
-        public static event Action<Vector3> OnPlayerTeleport;
+        [field: SerializeField] public PlayerCameraData CameraData { get; set; }
+        [field: SerializeField] public PlayerMovementData MovementData { get; set; }
+        [field: SerializeField] public PlayerInventoryData InventoryData { get; set; }
+        [field: SerializeField] public PlayerInteractionData InteractionData { get; set; }
+
+        public event Action<Vector3> OnPlayerTeleport;
 
         public ManagerLoader Loader { get; set; }
 
@@ -47,7 +62,7 @@ namespace MyCode.Managers
             InteractionData = _properties.playerInteractionData;
         }
 
-        public static void InvokeOnPlayerTeleport(GameSave _save)
+        public void InvokeOnPlayerTeleport(GameSave _save)
         {
             OnPlayerTeleport?.Invoke(_save.CheckpointLocation.ToVector3());
         }

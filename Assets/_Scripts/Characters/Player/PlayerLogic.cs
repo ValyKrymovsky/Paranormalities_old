@@ -175,14 +175,14 @@ namespace MyCode.Characters
             _inputZoom.action.performed += _ctx => Zoom(_ctx);
 
             _inputCamera.action.performed += ctx => Look(ctx.ReadValue<Vector2>());
-            PlayerManager.InventoryData.OnInventoryStateChange += value => canLook = !value;
+            PlayerManager.Instance.InventoryData.OnInventoryStateChange += value => canLook = !value;
 
-            PlayerManager.OnPlayerTeleport += (position) =>
+            PlayerManager.Instance.OnPlayerTeleport += (position) =>
             {
                 transform.position = position;
             };
 
-            PlayerManager.InventoryData.OnInventoryStateChange += value => canMove = !value;
+            PlayerManager.Instance.InventoryData.OnInventoryStateChange += value => canMove = !value;
         }
 
         private void OnDisable()
@@ -207,9 +207,9 @@ namespace MyCode.Characters
             _inputZoom.action.performed -= _ctx => Zoom(_ctx);
 
             _inputCamera.action.performed -= ctx => Look(ctx.ReadValue<Vector2>());
-            PlayerManager.InventoryData.OnInventoryStateChange -= value => canLook = !value;
+            PlayerManager.Instance.InventoryData.OnInventoryStateChange -= value => canLook = !value;
 
-            PlayerManager.InventoryData.OnInventoryStateChange -= value => canMove = !value;
+            PlayerManager.Instance.InventoryData.OnInventoryStateChange -= value => canMove = !value;
         }
 
         void Start()
@@ -221,19 +221,19 @@ namespace MyCode.Characters
             _movementState = MovementState.none;
             _smoothMoveValue = Vector3.zero;
 
-            PlayerManager.MovementData.IsMoving = false;
-            PlayerManager.MovementData.IsMovingForward = false;
+            PlayerManager.Instance.MovementData.IsMoving = false;
+            PlayerManager.Instance.MovementData.IsMovingForward = false;
             _smoothMoveValue = Vector2.zero;
 
-            PlayerManager.MovementData.IsGrounded = false;
+            PlayerManager.Instance.MovementData.IsGrounded = false;
 
             // Interaction logic
-            PlayerManager.InteractionData.PickupPointDistance = Vector3.Distance(transform.position, _pickupPoint.transform.position);
+            PlayerManager.Instance.InteractionData.PickupPointDistance = Vector3.Distance(_camera.transform.position, _pickupPoint.transform.position);
             PickupPointDistanceCorrection();
 
-            PlayerManager.InteractionData.ZoomInterval = (PlayerManager.InteractionData.MaxPickupPointDistance - PlayerManager.InteractionData.MinPickupPointDistance) / PlayerManager.InteractionData.IntervalCount;
+            PlayerManager.Instance.InteractionData.ZoomInterval = (PlayerManager.Instance.InteractionData.MaxPickupPointDistance - PlayerManager.Instance.InteractionData.MinPickupPointDistance) / PlayerManager.Instance.InteractionData.IntervalCount;
 
-            _colliderArray = new Collider[PlayerManager.InteractionData.ColliderAraySize];
+            _colliderArray = new Collider[PlayerManager.Instance.InteractionData.ColliderAraySize];
         }
 
         private void Update()
@@ -244,13 +244,13 @@ namespace MyCode.Characters
 
         private void FixedUpdate()
         {
-            PlayerManager.InteractionData.PickupPointDistance = Vector3.Distance(transform.position, _pickupPoint.transform.position);
+            PlayerManager.Instance.InteractionData.PickupPointDistance = Vector3.Distance(_camera.transform.position, _pickupPoint.transform.position);
 
             PickupPointDistanceCorrection();
 
             if (!_rb) return;
 
-            if (Vector3.Distance(_rb.transform.position, _pickupPoint.transform.position) > PlayerManager.InteractionData.MaxDistanceFromPoint)
+            if (Vector3.Distance(_rb.transform.position, _pickupPoint.transform.position) > PlayerManager.Instance.InteractionData.MaxDistanceFromPoint)
             {
                 DropObject();
                 return;
@@ -259,7 +259,7 @@ namespace MyCode.Characters
             // Object movement
             _rb.angularVelocity = Vector3.zero;
             Vector3 DirectionToPoint = _pickupPoint.transform.position - _rb.transform.position;
-            _rb.AddForce(DirectionToPoint * PlayerManager.InteractionData.PickupPointDistance * 500f, ForceMode.Acceleration);
+            _rb.AddForce(DirectionToPoint * PlayerManager.Instance.InteractionData.PickupPointDistance * 500f, ForceMode.Acceleration);
 
             _rb.velocity = Vector3.zero;
         }
@@ -275,9 +275,9 @@ namespace MyCode.Characters
             if (!canMove)
                 return;
 
-            PlayerManager.MovementData.IsMoving = IsPlayerMoving();
-            PlayerManager.MovementData.IsMovingForward = IsPlayerMovingForward();
-            PlayerManager.MovementData.IsGrounded = IsGrounded();
+            PlayerManager.Instance.MovementData.IsMoving = IsPlayerMoving();
+            PlayerManager.Instance.MovementData.IsMovingForward = IsPlayerMovingForward();
+            PlayerManager.Instance.MovementData.IsGrounded = IsGrounded();
 
             UpdateMovementDirection();
 
@@ -287,7 +287,7 @@ namespace MyCode.Characters
             ApplyGravity();
             CheckForMovementUpdate();
 
-            _characterController.Move(_directionToMove * PlayerManager.MovementData.WalkSpeed * _internalSpeedMultiplier * Time.deltaTime);
+            _characterController.Move(_directionToMove * PlayerManager.Instance.MovementData.WalkSpeed * _internalSpeedMultiplier * Time.deltaTime);
         }
 
         private float GetJoystickWeight()
@@ -300,7 +300,7 @@ namespace MyCode.Characters
         private Vector3 CalculateMovementDirection()
         {
             // increases/decreases initial speed over time for smooth movement
-            _smoothMoveValue = Vector2.SmoothDamp(_smoothMoveValue, _moveValue, ref _currentVelocity, PlayerManager.MovementData.SmoothTime);
+            _smoothMoveValue = Vector2.SmoothDamp(_smoothMoveValue, _moveValue, ref _currentVelocity, PlayerManager.Instance.MovementData.SmoothTime);
             if (!IsPlayerMoving())
             {
                 _smoothMoveValue.x = _smoothMoveValue.x < .0001 ? 0 : _smoothMoveValue.x;
@@ -334,7 +334,7 @@ namespace MyCode.Characters
             if (!IsPlayerMovingForward()) return;
 
             _sprintValue = value.ReadValue<float>();
-            _internalSpeedMultiplier = PlayerManager.MovementData.SprintMultiplier;
+            _internalSpeedMultiplier = PlayerManager.Instance.MovementData.SprintMultiplier;
             _movementState = MovementState.sprint;
         }
 
@@ -343,7 +343,7 @@ namespace MyCode.Characters
             if (_movementState == MovementState.sprint) return;
 
             _sneakValue = value.ReadValue<float>();
-            _internalSpeedMultiplier = PlayerManager.MovementData.SneakMultiplier;
+            _internalSpeedMultiplier = PlayerManager.Instance.MovementData.SneakMultiplier;
             _movementState = MovementState.sneak;
         }
 
@@ -361,7 +361,7 @@ namespace MyCode.Characters
 
             if (_sneakValue != 0)
             {
-                _internalSpeedMultiplier = PlayerManager.MovementData.SneakMultiplier;
+                _internalSpeedMultiplier = PlayerManager.Instance.MovementData.SneakMultiplier;
                 _movementState = MovementState.sneak;
                 return;
             }
@@ -382,7 +382,7 @@ namespace MyCode.Characters
             _sneakValue = 0;
             if (_sprintValue != 0)
             {
-                _internalSpeedMultiplier = PlayerManager.MovementData.SprintMultiplier;
+                _internalSpeedMultiplier = PlayerManager.Instance.MovementData.SprintMultiplier;
                 _movementState = MovementState.sprint;
                 return;
             }
@@ -406,10 +406,10 @@ namespace MyCode.Characters
             }
             else
             {
-                if (PlayerManager.MovementData.UseCustomGravity)
-                    _currentGravityVelocity += (PlayerManager.MovementData.CustomGravity * PlayerManager.MovementData.GravityMultiplier) * Time.deltaTime;
+                if (PlayerManager.Instance.MovementData.UseCustomGravity)
+                    _currentGravityVelocity += (PlayerManager.Instance.MovementData.CustomGravity * PlayerManager.Instance.MovementData.GravityMultiplier) * Time.deltaTime;
                 else
-                    _currentGravityVelocity += (Physics.gravity.y * PlayerManager.MovementData.GravityMultiplier) * Time.deltaTime;
+                    _currentGravityVelocity += (Physics.gravity.y * PlayerManager.Instance.MovementData.GravityMultiplier) * Time.deltaTime;
             }
 
 
@@ -494,7 +494,7 @@ namespace MyCode.Characters
 
             if (_sneakValue != 0)
             {
-                _internalSpeedMultiplier = PlayerManager.MovementData.SneakMultiplier;
+                _internalSpeedMultiplier = PlayerManager.Instance.MovementData.SneakMultiplier;
                 _movementState = MovementState.sneak;
                 return;
             }
@@ -519,25 +519,25 @@ namespace MyCode.Characters
             if (!canLook)
                 return;
 
-            valueX = _valueXY.x * PlayerManager.CameraData.Sensetivity * Time.deltaTime;
-            valueY = _valueXY.y * PlayerManager.CameraData.Sensetivity * Time.deltaTime;
+            valueX = _valueXY.x * PlayerManager.Instance.CameraData.Sensetivity * Time.deltaTime;
+            valueY = _valueXY.y * PlayerManager.Instance.CameraData.Sensetivity * Time.deltaTime;
 
             mouseRotation -= valueY;
-            mouseRotation = Mathf.Clamp(mouseRotation, PlayerManager.CameraData.BottomRotationLimit, PlayerManager.CameraData.TopRotationLimit);
+            mouseRotation = Mathf.Clamp(mouseRotation, PlayerManager.Instance.CameraData.BottomRotationLimit, PlayerManager.Instance.CameraData.TopRotationLimit);
             _camera.transform.localRotation = Quaternion.Euler(mouseRotation, 0, 0);
             transform.Rotate(Vector3.up * valueX);
-            if (PlayerManager.CameraData.UseStabilization)
+            if (PlayerManager.Instance.CameraData.UseStabilization)
             {
                 camStabilizationObject.transform.localRotation = Quaternion.Euler(mouseRotation, 0, 0);
                 _camera.transform.LookAt(FocusTarget());
-                transform.position = FollowHeadJoint(headJoint, eyeJoint, .2f, PlayerManager.CameraData.StabilizationAmount);
+                transform.position = FollowHeadJoint(headJoint, eyeJoint, .2f, PlayerManager.Instance.CameraData.StabilizationAmount);
             }
         }
 
         private Vector3 FocusTarget()
         {
-            PlayerManager.CameraData.FocusPointStabilizationDistance = PlayerManager.CameraData.FocusPointStabilizationDistance <= 0 ? 1f : PlayerManager.CameraData.FocusPointStabilizationDistance;
-            Vector3 pos = camStabilizationObject.transform.position + camStabilizationObject.transform.forward * PlayerManager.CameraData.FocusPointStabilizationDistance;
+            PlayerManager.Instance.CameraData.FocusPointStabilizationDistance = PlayerManager.Instance.CameraData.FocusPointStabilizationDistance <= 0 ? 1f : PlayerManager.Instance.CameraData.FocusPointStabilizationDistance;
+            Vector3 pos = camStabilizationObject.transform.position + camStabilizationObject.transform.forward * PlayerManager.Instance.CameraData.FocusPointStabilizationDistance;
             return pos;
         }
 
@@ -567,7 +567,7 @@ namespace MyCode.Characters
             if (_closestCollider == null)
                 return;
 
-            if (_colliderHitDistance > PlayerManager.InteractionData.MaxInteractDistance)
+            if (_colliderHitDistance > PlayerManager.Instance.InteractionData.MaxInteractDistance)
                 return;
 
             if (_activeController.InteractionType == InteractionType.Interact)
@@ -608,7 +608,7 @@ namespace MyCode.Characters
 
             Vector3 pointOnScreen = _activeController.CustomPopupLocation ? _camera.WorldToScreenPoint(_activeController.PopupLocation) : _camera.WorldToScreenPoint(_closestCollider.transform.position);
             _interactibleIndicator.indicatorTransform.position = pointOnScreen;
-            float proximityTextOpacity = Mathf.InverseLerp(PlayerManager.InteractionData.SphereCheckRange, 0, _colliderHitDistance);
+            float proximityTextOpacity = Mathf.InverseLerp(PlayerManager.Instance.InteractionData.SphereCheckRange, 0, _colliderHitDistance);
 
             _interactibleIndicator.indicatorText.alpha = proximityTextOpacity;
 
@@ -623,9 +623,9 @@ namespace MyCode.Characters
             Ray r = new Ray(_camera.transform.position, _camera.transform.forward);
 
             // Cast ray in front of the camera with InteractRange as its max distance
-            Physics.Raycast(r, out RaycastHit hitInfo, PlayerManager.InteractionData.InteractRange);
+            Physics.Raycast(r, out RaycastHit hitInfo, PlayerManager.Instance.InteractionData.InteractRange);
 
-            _hitPosition = hitInfo.collider != null ? hitInfo.point : _camera.transform.position + _camera.transform.forward * PlayerManager.InteractionData.InteractRange;
+            _hitPosition = hitInfo.collider != null ? hitInfo.point : _camera.transform.position + _camera.transform.forward * PlayerManager.Instance.InteractionData.InteractRange;
 
             while (hitInfo.collider != null)
             {
@@ -642,7 +642,7 @@ namespace MyCode.Characters
             
 
             // Number of new detected colliders from OverlapSphereNonAlloc
-            int results = Physics.OverlapSphereNonAlloc(_hitPosition, PlayerManager.InteractionData.SphereCheckRange, _colliderArray, PlayerManager.InteractionData.InteractiblesMask);
+            int results = Physics.OverlapSphereNonAlloc(_hitPosition, PlayerManager.Instance.InteractionData.SphereCheckRange, _colliderArray, PlayerManager.Instance.InteractionData.InteractiblesMask);
             if (results == 0) return null;
 
             Collider[] colliders = new Collider[results];
@@ -669,7 +669,7 @@ namespace MyCode.Characters
             if (_colliders.Count() == 1)
             {
                 Ray ray = new Ray(_hitPosition, _colliders[0].transform.position - _hitPosition);
-                Physics.Raycast(ray, out RaycastHit hitInfo, PlayerManager.InteractionData.SphereCheckRange);
+                Physics.Raycast(ray, out RaycastHit hitInfo, PlayerManager.Instance.InteractionData.SphereCheckRange);
                 if (hitInfo.point == Vector3.zero) return null;
                 _colliderHitPosition = hitInfo.point;
                 _colliderHitDistance = Vector3.Distance(_hitPosition, hitInfo.point);
@@ -682,7 +682,7 @@ namespace MyCode.Characters
             for (int i = 0; i < _colliders.Count(); i++)
             {
                 Ray ray = new Ray(_hitPosition, _colliders[i].transform.position - _hitPosition);
-                _colliders[i].Raycast(ray, out RaycastHit perColliderHitInfo, PlayerManager.InteractionData.SphereCheckRange);
+                _colliders[i].Raycast(ray, out RaycastHit perColliderHitInfo, PlayerManager.Instance.InteractionData.SphereCheckRange);
                 if (perColliderHitInfo.point == Vector3.zero) continue;
                 if (lowestDistance == -1 || perColliderHitInfo.distance < lowestDistance)
                 {
@@ -708,16 +708,16 @@ namespace MyCode.Characters
             _rb = _closestCollider.GetComponent<Rigidbody>();
             float objectWeight = _rb.mass;
 
-            if (objectWeight >= PlayerManager.InteractionData.MaxObjectWeight)
+            if (objectWeight >= PlayerManager.Instance.InteractionData.MaxObjectWeight)
             {
                 Debug.Log("Object too heavy!");
                 _rb = null;
                 return;
             }
 
-            PlayerManager.InteractionData.ExcludeCollisionMask = _closestCollider.excludeLayers;
+            PlayerManager.Instance.InteractionData.ExcludeCollisionMask = _closestCollider.excludeLayers;
 
-            _closestCollider.excludeLayers = PlayerManager.InteractionData.PlayerLayerMask;
+            _closestCollider.excludeLayers = PlayerManager.Instance.InteractionData.PlayerLayerMask;
 
             _mass = _rb.mass;
             _drag = _rb.drag;
@@ -725,8 +725,8 @@ namespace MyCode.Characters
 
             _rb.useGravity = false;
             _rb.angularDrag = 200f;
-            float distanceToObject = Vector2.Distance(new Vector2(transform.position.x, transform.position.z), new Vector2(_rb.transform.position.x, _rb.transform.position.z));
-            _pickupPoint.transform.position = transform.position + transform.forward * distanceToObject;
+            float distanceToObject = Vector2.Distance(new Vector2(_camera.transform.position.x, _camera.transform.position.z), new Vector2(_rb.transform.position.x, _rb.transform.position.z));
+            _pickupPoint.transform.position = _camera.transform.position + _camera.transform.forward * distanceToObject;
 
             _interactibleIndicator.indicatorText.enabled = false;
             canCheckInteractibles = false;
@@ -739,7 +739,7 @@ namespace MyCode.Characters
                 return;
             }
 
-            _closestCollider.excludeLayers = PlayerManager.InteractionData.ExcludeCollisionMask;
+            _closestCollider.excludeLayers = PlayerManager.Instance.InteractionData.ExcludeCollisionMask;
 
             ResetRigidbodyParameters();
             _closestCollider = null;
@@ -755,7 +755,7 @@ namespace MyCode.Characters
                 return;
             }
 
-            _closestCollider.excludeLayers = PlayerManager.InteractionData.ExcludeCollisionMask;
+            _closestCollider.excludeLayers = PlayerManager.Instance.InteractionData.ExcludeCollisionMask;
 
             ResetRigidbodyParameters();
             _closestCollider = null;
@@ -773,10 +773,10 @@ namespace MyCode.Characters
 
             if (_context.phase == InputActionPhase.Performed)
             {
-                _rb.AddForce(transform.position + transform.forward * (PlayerManager.InteractionData.ThrowStrength * 100), ForceMode.Acceleration);
+                _rb.AddForce(_camera.transform.position + _camera.transform.forward * (PlayerManager.Instance.InteractionData.ThrowStrength * 100), ForceMode.Acceleration);
 
 
-                _closestCollider.excludeLayers = PlayerManager.InteractionData.ExcludeCollisionMask;
+                _closestCollider.excludeLayers = PlayerManager.Instance.InteractionData.ExcludeCollisionMask;
 
                 ResetRigidbodyParameters();
 
@@ -791,34 +791,34 @@ namespace MyCode.Characters
 
             if (zoomValue == 0) return;
 
-            _pickupPoint.transform.position = transform.position + transform.forward * (PlayerManager.InteractionData.PickupPointDistance + PlayerManager.InteractionData.ZoomInterval * zoomValue);
+            _pickupPoint.transform.position = _camera.transform.position + _camera.transform.forward * (PlayerManager.Instance.InteractionData.PickupPointDistance + PlayerManager.Instance.InteractionData.ZoomInterval * zoomValue);
             PickupPointDistanceCorrection();
         }
 
         private void PickupPointDistanceCorrection()
         {
-            if (PlayerManager.InteractionData.PickupPointDistance > PlayerManager.InteractionData.MaxPickupPointDistance)
+            if (PlayerManager.Instance.InteractionData.PickupPointDistance > PlayerManager.Instance.InteractionData.MaxPickupPointDistance)
             {
-                _pickupPoint.transform.position = transform.position + transform.forward * PlayerManager.InteractionData.MaxPickupPointDistance;
-                PlayerManager.InteractionData.PickupPointDistance = PlayerManager.InteractionData.MaxPickupPointDistance;
+                _pickupPoint.transform.position = _camera.transform.position + _camera.transform.forward * PlayerManager.Instance.InteractionData.MaxPickupPointDistance;
+                PlayerManager.Instance.InteractionData.PickupPointDistance = PlayerManager.Instance.InteractionData.MaxPickupPointDistance;
             }
-            else if (PlayerManager.InteractionData.PickupPointDistance < PlayerManager.InteractionData.MinPickupPointDistance)
+            else if (PlayerManager.Instance.InteractionData.PickupPointDistance < PlayerManager.Instance.InteractionData.MinPickupPointDistance)
             {
-                _pickupPoint.transform.position = transform.position + transform.forward * PlayerManager.InteractionData.MinPickupPointDistance;
-                PlayerManager.InteractionData.PickupPointDistance = PlayerManager.InteractionData.MinPickupPointDistance;
+                _pickupPoint.transform.position = _camera.transform.position + _camera.transform.forward * PlayerManager.Instance.InteractionData.MinPickupPointDistance;
+                PlayerManager.Instance.InteractionData.PickupPointDistance = PlayerManager.Instance.InteractionData.MinPickupPointDistance;
             }
         }
 
         public void ResetRigidbodyParameters()
         {
-            _rb.excludeLayers = PlayerManager.InteractionData.ExcludeCollisionMask;
+            _rb.excludeLayers = PlayerManager.Instance.InteractionData.ExcludeCollisionMask;
 
             _rb.useGravity = true;
             _rb.angularDrag = _angularDrag;
             _rb.drag = _drag;
             _rb.mass = _mass;
 
-            _rb.velocity /= PlayerManager.InteractionData.DropVelocityReduction;
+            _rb.velocity /= PlayerManager.Instance.InteractionData.DropVelocityReduction;
             _rb = null;
 
             _angularDrag = 0;
@@ -838,7 +838,7 @@ namespace MyCode.Characters
                 Gizmos.color = Color.red;
             }
 
-            Gizmos.DrawWireSphere(_hitPosition, PlayerManager.InteractionData.SphereCheckRange);
+            Gizmos.DrawWireSphere(_hitPosition, PlayerManager.Instance.InteractionData.SphereCheckRange);
 
             if (_closestCollider != null)
             {

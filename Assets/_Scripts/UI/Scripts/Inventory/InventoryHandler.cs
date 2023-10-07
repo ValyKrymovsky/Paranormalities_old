@@ -91,7 +91,7 @@ namespace MyCode.UI.Inventory
             _input_DropItem.action.Enable();
 
             _input_ToggleInventory.action.performed += ToggleInventoryUI;
-            PlayerManager.InventoryData.Inventory.OnAddItem += AddItemToUI;
+            PlayerManager.Instance.InventoryData.Inventory.OnAddItem += AddItemToUI;
         }
 
         private void OnDisable()
@@ -100,7 +100,7 @@ namespace MyCode.UI.Inventory
             _input_DropItem.action.Disable();
 
             _input_ToggleInventory.action.performed -= ToggleInventoryUI;
-            PlayerManager.InventoryData.Inventory.OnAddItem -= AddItemToUI;
+            PlayerManager.Instance.InventoryData.Inventory.OnAddItem -= AddItemToUI;
             
         }
 
@@ -164,21 +164,21 @@ namespace MyCode.UI.Inventory
         {
             if (root.style.display == DisplayStyle.Flex)
             {
-                if (PlayerManager.MovementData.FreezeOnInventory)
+                if (PlayerManager.Instance.MovementData.FreezeOnInventory)
                     Time.timeScale = 1;
 
                 root.style.display = DisplayStyle.None;
                 UnityEngine.Cursor.lockState = CursorLockMode.Locked;
-                PlayerManager.InventoryData.InvokeOnInventoryStateChange(false);
+                PlayerManager.Instance.InventoryData.InvokeOnInventoryStateChange(false);
                 return;
             }
 
-            if (PlayerManager.MovementData.FreezeOnInventory)
+            if (PlayerManager.Instance.MovementData.FreezeOnInventory)
                 Time.timeScale = 0;
 
             root.style.display = DisplayStyle.Flex;
             UnityEngine.Cursor.lockState = CursorLockMode.Confined;
-            PlayerManager.InventoryData.InvokeOnInventoryStateChange(true);
+            PlayerManager.Instance.InventoryData.InvokeOnInventoryStateChange(true);
         }
     }
 

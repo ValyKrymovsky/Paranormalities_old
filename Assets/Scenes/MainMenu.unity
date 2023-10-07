@@ -135,8 +135,20 @@ PrefabInstance:
     - target: {fileID: -2928075188011797533, guid: 63ccdc0ce13e12443b327db12086a835,
         type: 3}
       propertyPath: objectives.Array.size
-      value: 1
+      value: 2
       objectReference: {fileID: 0}
+    - target: {fileID: -2928075188011797533, guid: 63ccdc0ce13e12443b327db12086a835,
+        type: 3}
+      propertyPath: objectives.Array.data[0]
+      value: 
+      objectReference: {fileID: 11400000, guid: 2645f12f918fd2d42881bc2180afe8d2,
+        type: 2}
+    - target: {fileID: -2928075188011797533, guid: 63ccdc0ce13e12443b327db12086a835,
+        type: 3}
+      propertyPath: objectives.Array.data[1]
+      value: 
+      objectReference: {fileID: 11400000, guid: 522f01b9d17d68847adde226f8c84b06,
+        type: 2}
     - target: {fileID: 3197091880555606436, guid: 63ccdc0ce13e12443b327db12086a835,
         type: 3}
       propertyPath: m_RootOrder

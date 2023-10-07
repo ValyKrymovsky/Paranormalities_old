@@ -35,7 +35,7 @@ namespace MyCode.Interactibles
 
         public void AddToInventory()
         {
-            if (!PlayerManager.InventoryData.Inventory.AddItem(_item)) return;
+            if (!PlayerManager.Instance.InventoryData.Inventory.AddItem(_item)) return;
             
             this.gameObject.SetActive(false);
         }

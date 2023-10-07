@@ -7,7 +7,7 @@ namespace MyCode.Systems
 {
     public class DestinationObjectiveEvent : EventSystem
     {
-        [SerializeField] private Objective _objective;
+        [SerializeField] private SubObjective _objective;
 
         private void OnEnable()
         {
