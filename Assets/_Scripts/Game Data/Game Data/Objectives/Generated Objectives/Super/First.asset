@@ -15,6 +15,8 @@ MonoBehaviour:
   id: 0
   name: Prologue
   isCompleted: 0
+  completionType: 2
   subObjectives:
+  - {fileID: 11400000, guid: 308a684e65c51b943a7dc5680482ee65, type: 2}
   - {fileID: 11400000, guid: 660156c41dc682a43985dffdaa6525f5, type: 2}
   - {fileID: 11400000, guid: f961202799434c348afc44c8beddc70f, type: 2}

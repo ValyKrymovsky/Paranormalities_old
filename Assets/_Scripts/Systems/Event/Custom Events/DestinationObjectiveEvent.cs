@@ -1,7 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.EventSystems;
+using MyCode.GameData;
+using MyCode.Managers;
+using System.Linq;
 
 namespace MyCode.Systems
 {
@@ -11,12 +13,32 @@ namespace MyCode.Systems
 
         private void OnEnable()
         {
-            OnEventStart += () => _objective.InvokeOnCompleted();
+            OnEventStart += CompleteObjective;
         }
 
         private void OnDisable()
         {
-            OnEventStart -= () => _objective.InvokeOnCompleted();
+            OnEventStart -= CompleteObjective;
+        }
+
+        private void CompleteObjective()
+        {
+            ObjectiveCompletionType completionType = ObjectiveManager.Instance.CurrentSuperObjective.completionType;
+
+            if (completionType == ObjectiveCompletionType.Indexed || completionType == ObjectiveCompletionType.Random)
+            {
+                if (ObjectiveManager.Instance.CurrentSubObjective != _objective || _objective.isCompleted) return;
+
+                _objective.InvokeOnCompleted();
+                ObjectiveManager.Instance.NextSubObjective();
+                return;
+            }
+            else if(completionType == ObjectiveCompletionType.Concurrent)
+            {
+                if (!ObjectiveManager.Instance.CurrentSuperObjective.subObjectives.Contains(_objective)) return;
+
+                ObjectiveManager.Instance.PerformObjectiveCheck();
+            }
         }
     }
 }

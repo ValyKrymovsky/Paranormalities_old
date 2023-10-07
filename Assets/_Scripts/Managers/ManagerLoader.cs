@@ -29,15 +29,21 @@ namespace MyCode.Managers
         {
             PlayerManager.Instance.SetPlayerProperties(_difficultyProp);
 
-            // Load Main Scene
+            // Load main scene
             await SceneLoader.LoadScene(MyScene.DebugScene);
 
+            // Setting up first objective in objective system
             ObjectiveManager.Instance.Objectives = this.objectives;
             ObjectiveManager.Instance.CurrentSuperObjective = this.objectives[0];
+            ObjectiveManager.Instance.InvokeOnSuperObjectiveChange(this.objectives[0]);
+            if (ObjectiveManager.Instance.CurrentSuperObjective.completionType == ObjectiveCompletionType.Random) ObjectiveManager.Instance.CurrentSuperObjective.RandomizeObjectives();
             ObjectiveManager.Instance.CurrentSubObjective = this.objectives[0].subObjectives[0];
+            ObjectiveManager.Instance.InvokeOnSubObjectiveChange(this.objectives[0].subObjectives[0]);
 
+            // Creating new save file with initial save info
             GameSaveManager.Instance.CreateNewSave(_difficultyProp);
 
+            // Activates main scene
             SceneLoader.SetActiveScene(MyScene.DebugScene);
 
             OnNewGame?.Invoke();

@@ -1,19 +1,28 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using Cysharp.Threading.Tasks;
-using MyCode.GameData;
 
-public class SceneLoader
+namespace MyCode.Managers
 {
-    public static async UniTask<MyScene> LoadScene(MyScene _scene)
+    public enum MyScene
     {
-        await SceneManager.LoadSceneAsync(_scene.ToString(), LoadSceneMode.Single);
-
-        return _scene;
+        MainMenu,
+        DebugScene
     }
 
-    public static void SetActiveScene(MyScene _scene)
+    public class SceneLoader
     {
-        SceneManager.SetActiveScene(SceneManager.GetSceneByName(_scene.ToString()));
+        public static async UniTask<MyScene> LoadScene(MyScene _scene)
+        {
+            await SceneManager.LoadSceneAsync(_scene.ToString(), LoadSceneMode.Single);
+
+            return _scene;
+        }
+
+        public static void SetActiveScene(MyScene _scene)
+        {
+            SceneManager.SetActiveScene(SceneManager.GetSceneByName(_scene.ToString()));
+
+        }
     }
 }

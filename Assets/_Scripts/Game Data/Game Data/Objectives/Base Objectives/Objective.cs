@@ -3,29 +3,34 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[Serializable]
-public class Objective : ScriptableObject
+namespace MyCode.GameData
 {
-    public int id;
-    public new string name;
-
-    public bool isCompleted;
-
-    public event Action OnCompleted;
-    public event Action OnFailed;
-
-    public void InvokeOnCompleted() => OnCompleted?.Invoke();
-    public void InvokeOnFailed() => OnFailed?.Invoke();
-
-    private void OnEnable()
+    [Serializable]
+    public class Objective : ScriptableObject
     {
-        OnCompleted += () => isCompleted = true;
-        OnFailed += () => isCompleted = false;
-    }
+        public int id;
+        public new string name;
 
-    private void OnDisable()
-    {
-        OnCompleted -= () => isCompleted = true;
-        OnFailed -= () => isCompleted = false;
+        public bool isCompleted;
+
+        public event Action OnCompleted;
+        public event Action OnFailed;
+
+        public void InvokeOnCompleted() => OnCompleted?.Invoke();
+        public void InvokeOnFailed() => OnFailed?.Invoke();
+
+        private void OnEnable()
+        {
+            OnCompleted += () => isCompleted = true;
+            OnFailed += () => isCompleted = false;
+        }
+
+        private void OnDisable()
+        {
+            OnCompleted -= () => isCompleted = true;
+            OnFailed -= () => isCompleted = false;
+        }
     }
 }
+
+

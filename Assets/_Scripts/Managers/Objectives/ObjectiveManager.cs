@@ -1,3 +1,4 @@
+using MyCode.GameData;
 using MyCode.Managers;
 using System;
 using System.Collections;
@@ -5,78 +6,106 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-public class ObjectiveManager
+namespace MyCode.Managers
 {
-    private static readonly object _lock = new object();
-    private static ObjectiveManager _instance;
-    public static ObjectiveManager Instance
+    public class ObjectiveManager
     {
-        get
+        private static readonly object _lock = new object();
+        private static ObjectiveManager _instance;
+        public static ObjectiveManager Instance
         {
-            lock (_lock)
+            get
             {
-                if (_instance == null)
-                    _instance = new ObjectiveManager();
-            }
-            return _instance;
-        }
-    }
-
-    public List<SuperObjective> Objectives { get; set; }
-    private SuperObjective _currentSuperObjective;
-    private SubObjective _currentSubObjective;
-
-    public event Action<SuperObjective> OnSuperObjectiveChange;
-    public event Action<SubObjective> OnSubObjectiveChange;
-
-    public SuperObjective CurrentSuperObjective
-    {
-        get
-        {
-            return _currentSuperObjective;
-        }
-        set
-        {
-            _currentSuperObjective = value;
-            Debug.Log("New super objective set");
-            OnSuperObjectiveChange?.Invoke(_currentSuperObjective);
-        }
-    }
-
-    public SubObjective CurrentSubObjective
-    {
-        get
-        {
-            return _currentSubObjective;
-        }
-        set
-        {
-            _currentSubObjective = value;
-            Debug.Log("New sub objective set");
-            OnSubObjectiveChange?.Invoke(_currentSubObjective);
-            _currentSubObjective.OnCompleted += () =>
-            {
-                int nextSubId = _currentSubObjective.id + 1;
-                if (nextSubId > _currentSuperObjective.subObjectives.Count() - 1)
+                lock (_lock)
                 {
-                    Debug.Log("There is no next sub objective");
-                    int nextSuperId = _currentSuperObjective.id + 1;
-                    if (nextSuperId > Objectives.Count() - 1)
-                        Debug.Log("There is no next super objective");
-                    else
-                    {
-                        CurrentSuperObjective = Objectives[_currentSuperObjective.id + 1];
-                        CurrentSubObjective = _currentSuperObjective.subObjectives[0];
-                    }
-                    
+                    if (_instance == null)
+                        _instance = new ObjectiveManager();
                 }
-                else
-                    CurrentSubObjective = _currentSuperObjective.subObjectives[nextSubId];
-            };
-
-
-            
-            
+                return _instance;
+            }
         }
+
+        public List<SuperObjective> Objectives { get; set; }
+        public SuperObjective CurrentSuperObjective { get; set; }
+        public SubObjective CurrentSubObjective { get; set; }
+
+        public event Action<SuperObjective> OnSuperObjectiveChange;
+        public event Action<SubObjective> OnSubObjectiveChange;
+
+        public void InvokeOnSuperObjectiveChange(SuperObjective objective)
+        {
+            OnSuperObjectiveChange?.Invoke(objective);
+        }
+
+        public void InvokeOnSubObjectiveChange(SubObjective objective)
+        {
+            OnSubObjectiveChange?.Invoke(objective);
+        }
+
+        public void NextSubObjective()
+        {
+            if (CurrentSubObjective.superObjective.completionType == ObjectiveCompletionType.Random)
+            {
+                int currentIndex = CurrentSuperObjective.subObjectives.ToList().IndexOf(CurrentSubObjective);
+                if (currentIndex >= CurrentSuperObjective.subObjectives.Count() - 1)
+                {
+                    Debug.Log("Called for next super objective");
+                    NextSuperObjective();
+                    return;
+                }
+
+                CurrentSubObjective.InvokeOnCompleted();
+
+                CurrentSubObjective = CurrentSuperObjective.subObjectives[currentIndex + 1];
+                OnSubObjectiveChange?.Invoke(CurrentSubObjective);
+                return;
+            }
+
+            int nextSubId = CurrentSubObjective.id + 1;
+            if (nextSubId > CurrentSuperObjective.subObjectives.Count() - 1)
+            {
+                NextSuperObjective();
+                return;
+            }
+
+            CurrentSubObjective = CurrentSuperObjective.subObjectives[nextSubId];
+            OnSubObjectiveChange?.Invoke(CurrentSubObjective);
+        }
+
+        public void NextSuperObjective()
+        {
+            int nextSuperId = CurrentSuperObjective.id + 1;
+            if (nextSuperId > Objectives.Count() - 1)
+            {
+                Debug.Log("There are no more super objectives!");
+                return;
+            }
+
+            CurrentSuperObjective?.InvokeOnCompleted();
+
+            CurrentSuperObjective = Objectives[nextSuperId];
+            if (CurrentSuperObjective.completionType == ObjectiveCompletionType.Random) CurrentSuperObjective.RandomizeObjectives();
+            CurrentSubObjective = CurrentSuperObjective.subObjectives[0];
+            OnSuperObjectiveChange?.Invoke(CurrentSuperObjective);
+            OnSubObjectiveChange?.Invoke(CurrentSubObjective);
+        }
+
+        public void PerformObjectiveCheck()
+        {
+            bool allCompleted = true;
+            for (int i = 0; i < CurrentSuperObjective.subObjectives.Count() - 1; i++)
+            {
+                if (!CurrentSuperObjective.subObjectives[i].isCompleted)
+                {
+                    allCompleted = false;
+                    break;
+                }
+            }
+
+            if (allCompleted) NextSuperObjective();
+        }
+
+
     }
 }
+

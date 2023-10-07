@@ -1,6 +1,6 @@
 {
     "name": "MyCode.Managers",
-    "rootNamespace": "",
+    "rootNamespace": "MyCode.Managers",
     "references": [
         "GUID:769ba3316ebb4f54e849cfe7443358a7",
         "GUID:4c85c4a074dc82148928ee6dd2f0f526",
