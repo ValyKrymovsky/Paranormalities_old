@@ -37,6 +37,8 @@ namespace MyCode.Systems
             {
                 if (!ObjectiveManager.Instance.CurrentSuperObjective.subObjectives.Contains(_objective)) return;
 
+                _objective.InvokeOnCompleted();
+
                 ObjectiveManager.Instance.PerformObjectiveCheck();
             }
         }

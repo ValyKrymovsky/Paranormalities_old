@@ -31,8 +31,6 @@ public class InventorySlot : VisualElement
 
     public Item item;
 
-
-    public VisualElement slot;
     public VisualElement slotImage;
 
 
@@ -42,19 +40,14 @@ public class InventorySlot : VisualElement
 
     public InventorySlot()
     {
-        slot = new VisualElement();
-        slot.name = "InventorySlot";
-        slot.AddToClassList("inventorySlot");
-        hierarchy.Add(slot);
-
         slotImage = new VisualElement();
         slotImage.name = "Image";
         slotImage.AddToClassList("inventorySlotImage");
-        slot.Add(slotImage);
+        hierarchy.Add(slotImage);
 
         item = Item.empty;
 
-        slot.RegisterCallback<ClickEvent>(SelectItem);
+        slotImage.RegisterCallback<ClickEvent>(SelectItem);
     }
 
     public void SetItemParameters(Item _slotItem)

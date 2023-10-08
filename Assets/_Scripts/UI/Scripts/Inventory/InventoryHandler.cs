@@ -11,53 +11,66 @@ namespace MyCode.UI.Inventory
 {
     public class InventoryHandler : MonoBehaviour
     {
-
-        //             //
-        // UI Elements //
-        //             //
-
         [Separator("Inventory UI", true)]
         [SerializeField] private UIDocument inventoryUI;
-        public VisualElement root;
-        public VisualElement descriptionElement;
-        public VisualElement descriptionImage;
-        public Label descriptionText;
+        private VisualElement _root;
 
-        [Space]
-        [Header("Inventory Slots")]
-        public VisualElement inventoryGrid;
-        public List<InventorySlot> inventorySlots = new List<InventorySlot>();
+        // Main panels
+        private VisualElement _informationPanelL;
+        private VisualElement _inventoryPanel;
+        private VisualElement _informationPanelR;
 
-        [Space]
-        [Header("Equipment Slots")]
-        private VisualElement equipment;
-        public InventorySlot primarySlot;
-        public InventorySlot secondarySlot;
+        // Information panel left
+        private VisualElement _healthElement;
+        private VisualElement _notesElement;
+
+        // Inventory panel
+        private VisualElement _inventoryGrid;
+        private VisualElement _itemInformation;
+        private Label _itemName;
+        private Label _itemDescription;
+
+        // Information panel right
+        private VisualElement _equipmentElement;
+        private VisualElement _mapElement;
+
+
+        private List<InventorySlot> inventorySlots = new List<InventorySlot>();
+
+        private InventorySlot primarySlot;
+        private InventorySlot secondarySlot;
 
         [SerializeField] private InputActionReference _input_DropItem;
         [SerializeField] private InputActionReference _input_ToggleInventory;
 
         private void Awake()
         {
-
-            //             //
-            // UI Elements //
-            //             //
-
             inventoryUI = GetComponent<UIDocument>();
-            root = inventoryUI.rootVisualElement;
+            _root = inventoryUI.rootVisualElement;
 
-            descriptionElement = root.Q<VisualElement>("ItemDescription");
-            descriptionImage = descriptionElement.Q<VisualElement>("Image");
-            descriptionText = descriptionElement.Q<Label>("Description");
+            // Main panels
+            _informationPanelL = _root.Q<VisualElement>("InformationPanelLeft");
+            _inventoryPanel = _root.Q<VisualElement>("InventoryPanel");
+            _informationPanelR = _root.Q<VisualElement>("InformationPanelRight");
 
-            inventoryGrid = root.Q<VisualElement>("InventoryGrid");
+            // Information panel left
+            _healthElement = _informationPanelL.Q<VisualElement>("Health");
+            _notesElement = _informationPanelL.Q<VisualElement>("Notes");
 
-            equipment = root.Q<VisualElement>("Equipment");
-            primarySlot = equipment.Q<InventorySlot>("PrimarySlot");
-            secondarySlot = equipment.Q<InventorySlot>("SecondarySlot");
+            // Inventory panel
+            _inventoryGrid = _inventoryPanel.Q<VisualElement>("InventoryGrid");
+            _itemInformation = _inventoryPanel.Q<VisualElement>("ItemDescription");
+            _itemName = _itemInformation.Q<Label>("Name");
+            _itemDescription = _itemInformation.Q<Label>("Description");
 
-            foreach (InventorySlot inventorySlot in inventoryGrid.Children())
+            // Information panel right
+            _equipmentElement = _informationPanelR.Q<VisualElement>("Equipment");
+            _mapElement = _informationPanelR.Q<VisualElement>("Map");
+
+            primarySlot = _equipmentElement.Q<InventorySlot>("PrimarySlot");
+            secondarySlot = _equipmentElement.Q<InventorySlot>("SecondarySlot");
+
+            foreach (InventorySlot inventorySlot in _inventoryGrid.Children())
             {
                 inventorySlots.Add(inventorySlot);
             }
@@ -71,18 +84,18 @@ namespace MyCode.UI.Inventory
                 {
                     if (inventorySlot.item != Item.empty)
                     {
-                        UpdateDescription(inventorySlot.item.description, inventorySlot.item.sprite);
+                        UpdateDescription(inventorySlot.item);
                     }
                 });
 
                 inventorySlot.RegisterCallback<MouseOutEvent>((type) =>
                 {
                     if (inventorySlot.item != Item.empty)
-                        UpdateDescription(null, null);
+                        ResetDescription();
                 });
             }
 
-            root.style.display = DisplayStyle.None;
+            _root.style.display = DisplayStyle.None;
         }
 
         private void OnEnable()
@@ -104,10 +117,16 @@ namespace MyCode.UI.Inventory
             
         }
 
-        private void UpdateDescription(string _description, Sprite _itemImage)
+        private void UpdateDescription(Item item)
         {
-            descriptionImage.style.backgroundImage = new StyleBackground(_itemImage);
-            descriptionText.text = _description;
+            _itemName.text = item.itemName;
+            _itemDescription.text = item.description;
+        }
+
+        private void ResetDescription()
+        {
+            _itemName.text = string.Empty;
+            _itemDescription.text = string.Empty;
         }
 
 
@@ -162,12 +181,12 @@ namespace MyCode.UI.Inventory
 
         private void ToggleInventoryUI(InputAction.CallbackContext _ctx)
         {
-            if (root.style.display == DisplayStyle.Flex)
+            if (_root.style.display == DisplayStyle.Flex)
             {
                 if (PlayerManager.Instance.MovementData.FreezeOnInventory)
                     Time.timeScale = 1;
 
-                root.style.display = DisplayStyle.None;
+                _root.style.display = DisplayStyle.None;
                 UnityEngine.Cursor.lockState = CursorLockMode.Locked;
                 PlayerManager.Instance.InventoryData.InvokeOnInventoryStateChange(false);
                 return;
@@ -176,7 +195,7 @@ namespace MyCode.UI.Inventory
             if (PlayerManager.Instance.MovementData.FreezeOnInventory)
                 Time.timeScale = 0;
 
-            root.style.display = DisplayStyle.Flex;
+            _root.style.display = DisplayStyle.Flex;
             UnityEngine.Cursor.lockState = CursorLockMode.Confined;
             PlayerManager.Instance.InventoryData.InvokeOnInventoryStateChange(true);
         }
