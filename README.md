@@ -1,5 +1,4 @@
 # **Paranormalities**
-Paranormalities Logo
 
 **Paranormalities** is a spine-chilling horror game that will take you on a terrifying journey through a haunted mansion filled with supernatural phenomena. Are you brave enough to uncover the dark secrets that lie within?
 
@@ -19,9 +18,7 @@ Paranormalities Logo
 **Terrifying Encounters**: Face off against paranormal entities that will test your survival skills.
 **Multiple Endings**: Your choices in the game will lead to different outcomes, ensuring replayability.
 ##**Screenshots**
-Screenshot 1
-Screenshot 2
-Screenshot 3
+
 
 ## **Getting Started**
 Before you start your paranormal adventure, make sure you have the following prerequisites:
