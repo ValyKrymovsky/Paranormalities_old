@@ -13,9 +13,13 @@
 
 ## **Features**
 **Immersive Horror Atmosphere**: Experience a gripping horror story with a hauntingly realistic environment.
+
 **Challenging Puzzles**: Solve intricate puzzles to progress through the game.
+
 **Spine-tingling Sound Design**: Utilizing Steam Sound, the game's sound effects and soundtrack will keep you on the edge of your seat.
+
 **Terrifying Encounters**: Face off against paranormal entities that will test your survival skills.
+
 **Complex Systems**: Using complex system in almost all departments, each playthrough will differ from one another.
 
 ## **Screenshots**
