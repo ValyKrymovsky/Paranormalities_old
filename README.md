@@ -13,12 +13,12 @@
 
 ## **Features**
 **Immersive Horror Atmosphere**: Experience a gripping horror story with a hauntingly realistic environment.
-**Challenging Puzzles**: Solve intricate puzzles to progress through the game and reveal the mansion's mysteries.
-**Spine-tingling Sound Design**: The game's sound effects and soundtrack will keep you on the edge of your seat.
+**Challenging Puzzles**: Solve intricate puzzles to progress through the game.
+**Spine-tingling Sound Design**: Utilizing Steam Sound, the game's sound effects and soundtrack will keep you on the edge of your seat.
 **Terrifying Encounters**: Face off against paranormal entities that will test your survival skills.
-**Multiple Endings**: Your choices in the game will lead to different outcomes, ensuring replayability.
-##**Screenshots**
+**Complex Systems**: Using complex system in almost all departments, each playthrough will differ from one another.
 
+## **Screenshots**
 
 ## **Getting Started**
 Before you start your paranormal adventure, make sure you have the following prerequisites:
@@ -27,34 +27,18 @@ Before you start your paranormal adventure, make sure you have the following pre
 * A strong heart and nerves of steel.
 
 ## **Installation**
-1. Clone this repository to your local machine.
-
-```shell
-git clone https://github.com/yourusername/paranormalities.git
-```
-2. Navigate to the project directory.
-
-```shell
-cd paranormalities
-```
-3. Install dependencies.
-
-```shell
-npm install
-```
-4. Start the game.
-
-```shell
-npm start
-```
+1. Head to releases section
+2. Download the latest version
+3. Run paranormalities.exe
+4. Enjoy
 
 ## **Controls**
 * **W, A, S, D**: Move character
 * **Mouse**: Look around
-* **E**: Interact with objects
-* **F**: Toggle flashlight
+* **MB0**: Interact with objects
 * **Shift**: Run
-* **Ctrl**: Crouch
+* **Ctrl**: Sneal
+* **Tab**: Inventory
 * **Esc**: Pause menu
 
 ## **License**
