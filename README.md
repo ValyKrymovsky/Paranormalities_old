@@ -1,9 +1,9 @@
-#Paranormalities
+# Paranormalities
 Paranormalities Logo
 
 **Paranormalities** is a spine-chilling horror game that will take you on a terrifying journey through a haunted mansion filled with supernatural phenomena. Are you brave enough to uncover the dark secrets that lie within?
 
-##**Table of Contents**
+## **Table of Contents**
 * Features
 * Screenshots
 * Getting Started
@@ -12,7 +12,7 @@ Paranormalities Logo
 * Contributing
 * License
 
-##**Features**
+## **Features**
 **Immersive Horror Atmosphere**: Experience a gripping horror story with a hauntingly realistic environment.
 **Challenging Puzzles**: Solve intricate puzzles to progress through the game and reveal the mansion's mysteries.
 **Spine-tingling Sound Design**: The game's sound effects and soundtrack will keep you on the edge of your seat.
@@ -23,13 +23,13 @@ Screenshot 1
 Screenshot 2
 Screenshot 3
 
-##**Getting Started**
+## **Getting Started**
 Before you start your paranormal adventure, make sure you have the following prerequisites:
 
 * A computer with at least system requirements.
 * A strong heart and nerves of steel.
 
-##**Installation**
+## **Installation**
 1. Clone this repository to your local machine.
 
 ```shell
@@ -51,7 +51,7 @@ npm install
 npm start
 ```
 
-##**Controls**
+## **Controls**
 * W, A, S, D: Move character
 * Mouse: Look around
 * E: Interact with objects
