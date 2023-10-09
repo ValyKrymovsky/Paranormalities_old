@@ -1,4 +1,4 @@
-# Paranormalities
+# **Paranormalities**
 Paranormalities Logo
 
 **Paranormalities** is a spine-chilling horror game that will take you on a terrifying journey through a haunted mansion filled with supernatural phenomena. Are you brave enough to uncover the dark secrets that lie within?
@@ -52,15 +52,15 @@ npm start
 ```
 
 ## **Controls**
-* W, A, S, D: Move character
-* Mouse: Look around
-* E: Interact with objects
-* F: Toggle flashlight
-* Shift: Run
-* Ctrl: Crouch
-* Esc: Pause menu
+* **W, A, S, D**: Move character
+* **Mouse**: Look around
+* **E**: Interact with objects
+* **F**: Toggle flashlight
+* **Shift**: Run
+* **Ctrl**: Crouch
+* **Esc**: Pause menu
 
-##**License**
+## **License**
 This project is licensed under the MIT License - see the LICENSE file for details.
 
 Thank you for choosing Paranormalities for your horror gaming experience. We hope you enjoy your stay in the haunted mansion. Good luck, and may your courage prevail!
