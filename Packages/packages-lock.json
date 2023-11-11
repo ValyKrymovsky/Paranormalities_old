@@ -21,7 +21,7 @@
       "dependencies": {
         "com.unity.ugui": "1.0.0"
       },
-      "hash": "e250b932c64c9624f807ff2dad658da80dc09b8e"
+      "hash": "f9a7c863fee22b227afe9af52dff9257cbe02094"
     },
     "com.unity.2d.sprite": {
       "version": "1.0.0",
@@ -210,6 +210,15 @@
       "dependencies": {},
       "url": "https://packages.unity.com"
     },
+    "com.unity.postprocessing": {
+      "version": "3.2.2",
+      "depth": 0,
+      "source": "registry",
+      "dependencies": {
+        "com.unity.modules.physics": "1.0.0"
+      },
+      "url": "https://packages.unity.com"
+    },
     "com.unity.render-pipelines.core": {
       "version": "14.0.8",
       "depth": 1,
@@ -284,6 +293,16 @@
         "com.unity.settings-manager": "1.0.3",
         "com.unity.mathematics": "1.2.1",
         "com.unity.ugui": "1.0.0"
+      },
+      "url": "https://packages.unity.com"
+    },
+    "com.unity.terrain-tools": {
+      "version": "5.0.3",
+      "depth": 0,
+      "source": "registry",
+      "dependencies": {
+        "com.unity.modules.terrain": "1.0.0",
+        "com.unity.modules.terrainphysics": "1.0.0"
       },
       "url": "https://packages.unity.com"
     },

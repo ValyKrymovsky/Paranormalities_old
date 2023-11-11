@@ -7,7 +7,8 @@ namespace MyCode.Managers
     public enum MyScene
     {
         MainMenu,
-        DebugScene
+        DebugScene,
+        Game
     }
 
     public class SceneLoader

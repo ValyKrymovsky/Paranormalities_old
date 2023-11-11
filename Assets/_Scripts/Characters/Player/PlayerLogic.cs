@@ -1,6 +1,7 @@
 using MyBox;
 using MyCode.GameData;
 using MyCode.Managers;
+using System;
 using System.Linq;
 using System.Text;
 using TMPro;
@@ -837,8 +838,11 @@ namespace MyCode.Characters
             {
                 Gizmos.color = Color.red;
             }
-
-            Gizmos.DrawWireSphere(_hitPosition, PlayerManager.Instance.InteractionData.SphereCheckRange);
+            try
+            {
+                Gizmos.DrawWireSphere(_hitPosition, PlayerManager.Instance.InteractionData.SphereCheckRange);
+            } catch (NullReferenceException) { }
+            
 
             if (_closestCollider != null)
             {

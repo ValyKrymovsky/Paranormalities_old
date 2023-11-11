@@ -3,7 +3,6 @@ using UnityEngine;
 using MyCode.GameData;
 using UnityEngine.AddressableAssets;
 using System;
-using UnityEngine.ResourceManagement.AsyncOperations;
 
 namespace MyCode.Managers
 {
@@ -30,7 +29,7 @@ namespace MyCode.Managers
             PlayerManager.Instance.SetPlayerProperties(_difficultyProp);
 
             // Load main scene
-            await SceneLoader.LoadScene(MyScene.DebugScene);
+            await SceneLoader.LoadScene(MyScene.Game);
 
             // Setting up first objective in objective system
             ObjectiveManager.Instance.Objectives = this.objectives;
@@ -44,7 +43,7 @@ namespace MyCode.Managers
             GameSaveManager.Instance.CreateNewSave(_difficultyProp);
 
             // Activates main scene
-            SceneLoader.SetActiveScene(MyScene.DebugScene);
+            SceneLoader.SetActiveScene(MyScene.Game);
 
             OnNewGame?.Invoke();
         }
@@ -56,9 +55,9 @@ namespace MyCode.Managers
             //playerSoundManager.SetUpExistingManager(_gameSave);
 
             // Load Main Scene
-            await SceneLoader.LoadScene(MyScene.DebugScene);
+            await SceneLoader.LoadScene(MyScene.Game);
 
-            SceneLoader.SetActiveScene(MyScene.DebugScene);
+            SceneLoader.SetActiveScene(MyScene.Game);
 
             OnLoadGame?.Invoke();
 

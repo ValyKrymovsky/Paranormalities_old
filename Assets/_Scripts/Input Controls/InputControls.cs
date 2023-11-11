@@ -116,6 +116,15 @@ public partial class @InputControls: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Terrain Load"",
+                    ""type"": ""Button"",
+                    ""id"": ""f0376ad9-90f0-4a92-9d32-f19bb11892f7"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -470,6 +479,17 @@ public partial class @InputControls: IInputActionCollection2, IDisposable
                     ""action"": ""Toggle Inventory"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""917f2083-f0c6-436f-b5af-6df6cea72247"",
+                    ""path"": ""<Keyboard>/p"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard&Mouse"",
+                    ""action"": ""Terrain Load"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -527,6 +547,7 @@ public partial class @InputControls: IInputActionCollection2, IDisposable
         m_Gameplay_DropObject = m_Gameplay.FindAction("Drop Object", throwIfNotFound: true);
         m_Gameplay_ToggleInventory = m_Gameplay.FindAction("Toggle Inventory", throwIfNotFound: true);
         m_Gameplay_ToggleMainMenu = m_Gameplay.FindAction("Toggle Main Menu", throwIfNotFound: true);
+        m_Gameplay_TerrainLoad = m_Gameplay.FindAction("Terrain Load", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -598,6 +619,7 @@ public partial class @InputControls: IInputActionCollection2, IDisposable
     private readonly InputAction m_Gameplay_DropObject;
     private readonly InputAction m_Gameplay_ToggleInventory;
     private readonly InputAction m_Gameplay_ToggleMainMenu;
+    private readonly InputAction m_Gameplay_TerrainLoad;
     public struct GameplayActions
     {
         private @InputControls m_Wrapper;
@@ -612,6 +634,7 @@ public partial class @InputControls: IInputActionCollection2, IDisposable
         public InputAction @DropObject => m_Wrapper.m_Gameplay_DropObject;
         public InputAction @ToggleInventory => m_Wrapper.m_Gameplay_ToggleInventory;
         public InputAction @ToggleMainMenu => m_Wrapper.m_Gameplay_ToggleMainMenu;
+        public InputAction @TerrainLoad => m_Wrapper.m_Gameplay_TerrainLoad;
         public InputActionMap Get() { return m_Wrapper.m_Gameplay; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -651,6 +674,9 @@ public partial class @InputControls: IInputActionCollection2, IDisposable
             @ToggleMainMenu.started += instance.OnToggleMainMenu;
             @ToggleMainMenu.performed += instance.OnToggleMainMenu;
             @ToggleMainMenu.canceled += instance.OnToggleMainMenu;
+            @TerrainLoad.started += instance.OnTerrainLoad;
+            @TerrainLoad.performed += instance.OnTerrainLoad;
+            @TerrainLoad.canceled += instance.OnTerrainLoad;
         }
 
         private void UnregisterCallbacks(IGameplayActions instance)
@@ -685,6 +711,9 @@ public partial class @InputControls: IInputActionCollection2, IDisposable
             @ToggleMainMenu.started -= instance.OnToggleMainMenu;
             @ToggleMainMenu.performed -= instance.OnToggleMainMenu;
             @ToggleMainMenu.canceled -= instance.OnToggleMainMenu;
+            @TerrainLoad.started -= instance.OnTerrainLoad;
+            @TerrainLoad.performed -= instance.OnTerrainLoad;
+            @TerrainLoad.canceled -= instance.OnTerrainLoad;
         }
 
         public void RemoveCallbacks(IGameplayActions instance)
@@ -741,5 +770,6 @@ public partial class @InputControls: IInputActionCollection2, IDisposable
         void OnDropObject(InputAction.CallbackContext context);
         void OnToggleInventory(InputAction.CallbackContext context);
         void OnToggleMainMenu(InputAction.CallbackContext context);
+        void OnTerrainLoad(InputAction.CallbackContext context);
     }
 }

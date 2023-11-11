@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Gameplay Text Settings
   m_EditorClassIdentifier: 
   m_Version: 
-  m_DefaultFontAsset: {fileID: 11400000, guid: ef00b26ddf4e40f4495363dda20223bb, type: 2}
+  m_DefaultFontAsset: {fileID: 0}
   m_DefaultFontAssetPath: Fonts & Materials/
   m_FallbackFontAssets: []
   m_MatchMaterialPreset: 0
